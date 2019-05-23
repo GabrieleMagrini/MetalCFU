@@ -36,6 +36,8 @@ public:
 
     void setMovementSpeed(int movementSpeed);
 
+    void move(int x, int y);
+
 private:
     int posY;
     int strenght;

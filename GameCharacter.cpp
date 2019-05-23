@@ -43,3 +43,9 @@ int GameCharacter::getMovementSpeed() const {
 void GameCharacter::setMovementSpeed(int movementSpeed) {
     GameCharacter::movementSpeed = movementSpeed;
 }
+
+void GameCharacter::move(int x, int y) {
+    this->posX=x;
+    this->posY=y;
+
+}
