@@ -8,13 +8,11 @@
 
 class GameCharacter {
 public:
-    GameCharacter();
+    GameCharacter(int hp, int x, int y, int s, int ms);
 
     ~GameCharacter();
 
-private:
-    int HP;
-    int posX;
+
 public:
     int getHp() const;
 
@@ -39,6 +37,8 @@ public:
     void move(int x, int y);
 
 private:
+    int HP;
+    int posX;
     int posY;
     int strenght;
 

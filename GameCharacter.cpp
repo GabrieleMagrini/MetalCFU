@@ -49,3 +49,7 @@ void GameCharacter::move(int x, int y) {
     this->posY=y;
 
 }
+
+GameCharacter::GameCharacter(int hp, int x, int y, int s, int ms): HP(hp), posX(x), posY(y), strenght(s), movementSpeed(ms){
+
+}
