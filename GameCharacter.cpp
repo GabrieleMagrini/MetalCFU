@@ -3,6 +3,7 @@
 //
 
 #include "GameCharacter.h"
+#include "Weapon.h"
 
 int GameCharacter::getHp() const {
     return HP;
@@ -50,6 +51,13 @@ void GameCharacter::move(int x, int y) {
 
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, int ms): HP(hp), posX(x), posY(y), strenght(s), movementSpeed(ms){
+void GameCharacter::setWeapon(Weapon* weapon) {
+    this->weapon = weapon;
+}
+
+
+
+GameCharacter::GameCharacter(int hp, int x, int y, int s,Weapon * w, int ms): HP(hp), posX(x), posY(y), strenght(s),weapon(w), movementSpeed(ms){
 
 }
+

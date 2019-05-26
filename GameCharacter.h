@@ -5,10 +5,13 @@
 #ifndef METALCFUREPO_GAMECHARACTER_H
 #define METALCFUREPO_GAMECHARACTER_H
 
+#include <memory>
+#include "Weapon.h"
+
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, int ms);
+    GameCharacter(int hp, int x, int y, int s,Weapon* w, int ms);
 
     ~GameCharacter();
 
@@ -36,12 +39,17 @@ public:
 
     void move(int x, int y);
 
+    const std::shared_ptr<Weapon> &getWeapon() const;
+
+    void setWeapon(Weapon* weapon);
+
+
 private:
     int HP;
     int posX;
     int posY;
     int strenght;
-
+    Weapon* weapon;
     int movementSpeed;
 
 };
