@@ -120,7 +120,11 @@ const Weapon *GameCharacter::getWeapon(int idx) const {
         return weaponInventory[idx];
 
 }
-
+/**
+ * remove a weapon from the inventory
+ * @param idx index of the slot
+ * @return the weapon
+ */
 Weapon *GameCharacter::removeWeapon(int idx) {
     if (idx < 0 || idx >= maxWeapon)
         return nullptr;
@@ -132,7 +136,11 @@ Weapon *GameCharacter::removeWeapon(int idx) {
 
 
 }
-
+/**
+ * remove an Usable from the inventory
+ * @param idx index of the slot
+ * @return the Usable
+ */
 Usable *GameCharacter::removeUsable(int idx) {
     if (idx < 0 || idx > usableInventory.size())
         return nullptr;
