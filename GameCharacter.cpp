@@ -45,19 +45,101 @@ void GameCharacter::setMovementSpeed(int movementSpeed) {
     GameCharacter::movementSpeed = movementSpeed;
 }
 
+/***
+ * move the player in the map
+ * @param x axis
+ * @param y axis
+ */
 void GameCharacter::move(int x, int y) {
-    this->posX=x;
-    this->posY=y;
+    this->posX = x;
+    this->posY = y;
 
 }
 
-void GameCharacter::setWeapon(Weapon* weapon) {
-    this->weapon = weapon;
+/***
+ * set a Weapon to the weaponInventory in the first free slot
+ * @param weapon the weapon to add
+ * @return true if the operation has been successful, false if the inventory is full
+ */
+bool GameCharacter::setWeapon(Weapon *weapon) {
+    bool isNotFull = false;
+    for (int i = 0; i < maxWeapon && !isNotFull; i++) {
+        if (this->weaponInventory[i] == nullptr) {
+            this->weaponInventory[i] = weapon;
+            isNotFull = true;
+        }
+    }
+    return isNotFull;
 }
 
+/**
+ *
+ * @param idx index of the slot of the inventory
+ * @return a pointer to an Usable
+ */
+Usable *GameCharacter::getUsable(int idx) const {
+    if (idx < 0 || idx >= usableInventory.size())
+        return nullptr;
+    else
+        return usableInventory[idx];
+}
+
+/***
+ * set an usable in the "usable" inventory
+ * @param usable the usable to insert in the inventory
+ * @return true if the operation has been successful, false if the inventory is full
+ */
+bool GameCharacter::setUsable(Usable *usable) {
+    bool isNotFull = false;
+    for (int i = 0; i < this->usableInventory.size() && !isNotFull; i++) {
+        if (this->usableInventory[i] == nullptr) {
+            this->usableInventory[i] = usable;
+            isNotFull = true;
+        }
+    }
+    return isNotFull;
+}
+
+int GameCharacter::getMaxWeapon() const {
+    return this->maxWeapon;
+}
+
+void GameCharacter::setMaxWeapon(int maxWeapon) {
+    GameCharacter::maxWeapon = maxWeapon;
+}
+
+/**
+ * @param idx number of the slot
+ * @return a pointer to a weapon in the "idx" slot
+ */
+const Weapon *GameCharacter::getWeapon(int idx) const {
+
+    if (idx < 0 || idx >= maxWeapon)
+        return nullptr;
+    else
+        return weaponInventory[idx];
+
+}
+
+Weapon *GameCharacter::removeWeapon(int idx) {
+    if (idx < 0 || idx >= maxWeapon)
+        return nullptr;
+    else {
+        Weapon *w = weaponInventory[idx];
+        weaponInventory.erase(weaponInventory.begin() + idx);
+        return w;
+    }
 
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s,Weapon * w, int ms): HP(hp), posX(x), posY(y), strenght(s),weapon(w), movementSpeed(ms){
+}
 
+Usable *GameCharacter::removeUsable(int idx) {
+    if (idx < 0 || idx > usableInventory.size())
+        return nullptr;
+    else {
+        Usable *u = usableInventory[idx];
+        usableInventory.erase(usableInventory.begin() + idx);
+        return u;
+    }
 }
 

@@ -7,11 +7,13 @@
 
 #include <memory>
 #include "Weapon.h"
+#include "Usable.h"
+#include <vector>
 
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s,Weapon* w, int ms);
+    GameCharacter(int hp, int x, int y, int s, int ms);
 
     ~GameCharacter();
 
@@ -39,17 +41,30 @@ public:
 
     void move(int x, int y);
 
-    const std::shared_ptr<Weapon> &getWeapon() const;
+    const  Weapon* getWeapon(int idx) const;
 
-    void setWeapon(Weapon* weapon);
+    bool setWeapon(Weapon* weapon);
 
+    Usable *getUsable(int idx) const;
+
+    bool setUsable(Usable *usable);
+
+    int getMaxWeapon() const;
+
+    void setMaxWeapon(int maxWeapon);
+
+    Weapon* removeWeapon(int idx);
+
+    Usable* removeUsable(int idx);
 
 private:
     int HP;
     int posX;
     int posY;
     int strenght;
-    Weapon* weapon;
+    std::vector<Weapon*> weaponInventory;
+    std::vector<Usable*> usableInventory;
+    int maxWeapon;
     int movementSpeed;
 
 };
