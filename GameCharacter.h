@@ -57,6 +57,8 @@ public:
 
     Usable* removeUsable(int idx);
 
+    void releaseInventory(std::vector<Weapon*>& wi, std::vector<Usable*>& ui);
+
 private:
     int HP;
     int posX;
@@ -65,6 +67,7 @@ private:
     std::vector<Weapon*> weaponInventory;
     std::vector<Usable*> usableInventory;
     int maxWeapon;
+    int maxUsable;
     int movementSpeed;
 
 };

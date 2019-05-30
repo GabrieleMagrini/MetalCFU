@@ -150,4 +150,21 @@ Usable *GameCharacter::removeUsable(int idx) {
         return u;
     }
 }
+/**
+ * function that drop from the inventory of the GameCharacter to the map any Weapon or Usable
+ * the object will save in the parameters list
+ * @param wi dropped weapon inventory
+ * @param ui dropped Usable inventory
+ */
+void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usable *> &ui) {
+    for(int i=0;i<maxWeapon;i++){
+        wi.push_back(new Weapon(*weaponInventory[i]));
+        weaponInventory.erase((weaponInventory.begin()+i));
+    }
+
+    for(int i=0;i<maxUsable;i++){
+       // ui.push_back(new Usable(*usableInventory[i]));
+     //   weaponInventory.erase((weaponInventory.begin()+i));
+    }
+}
 

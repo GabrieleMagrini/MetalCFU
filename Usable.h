@@ -11,11 +11,9 @@ public:
     Usable();
 
     virtual ~Usable() = default;
-    void use();
+    virtual void use() = 0;
 private:
-    int size;
-    int maxObj;// da definire
-    int currObj;
+    //da definire
 };
 
 
