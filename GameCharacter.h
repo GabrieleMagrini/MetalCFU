@@ -13,7 +13,7 @@
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, int ms);
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw=4, int mu=4,int mv=10);
 
     ~GameCharacter();
 
