@@ -31,6 +31,8 @@ public:
 
     void setMaxAmmo(const Ammo &maxAmmo);
 
+    bool shoot();
+
     virtual ~Weapon() = default;
 
 private:

@@ -41,5 +41,14 @@ void Weapon::setMaxAmmo(const Ammo &maxAmmo) {
     Weapon::maxAmmo = maxAmmo;
 }
 
+bool Weapon::shoot() {
+    if(currentAmmo.getQuantity()>0){
+        currentAmmo.setQuantity(currentAmmo.getQuantity()-1);
+        return true;
+    }
+    else
+        return false;
+}
+
 
 
