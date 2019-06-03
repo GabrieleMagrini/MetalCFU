@@ -6,12 +6,14 @@
 #define METALCFU_USABLE_H
 
 
+#include "GameCharacter.h"
+
 class Usable {
 public:
     Usable();
 
     virtual ~Usable() = default;
-    virtual void use() = 0;
+    virtual void use(GameCharacter * g) = 0;
 private:
     //da definire
 };
