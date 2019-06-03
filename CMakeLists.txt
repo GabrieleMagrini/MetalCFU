@@ -3,4 +3,4 @@ project(MetalCFU)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(MetalCFU main.cpp GameCharacter.h GameCharacter.cpp Ammo.cpp Ammo.h Weapon.cpp Weapon.h Usable.cpp Usable.h MedKit.cpp MedKit.h Interactable.cpp Interactable.h)
+add_executable(MetalCFU main.cpp GameCharacter.h GameCharacter.cpp Ammo.cpp Ammo.h Weapon.cpp Weapon.h Usable.cpp Usable.h MedKit.cpp MedKit.h Interactable.cpp Interactable.h Trampoline.cpp Trampoline.h)
