@@ -3,6 +3,7 @@
 //
 
 #include "GameCharacter.h"
+#include "Usable.h"
 #include "Weapon.h"
 
 int GameCharacter::getHp() const {

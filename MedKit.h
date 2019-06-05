@@ -14,7 +14,6 @@ public:
     ~MedKit() override = default;
 
 
-    void use(GameCharacter* g) override;
 
     int getHealerPoints() const;
 

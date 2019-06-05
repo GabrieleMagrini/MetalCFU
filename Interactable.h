@@ -9,9 +9,9 @@
 class Interactable {
 public:
     Interactable(int r,int x,int y);
-    virtual ~Interactable();
+    virtual ~Interactable() = default;
 
-    virtual void effect()= 0;
+    virtual void effect()=0;
 
     int getResistancePoint() const;
 
