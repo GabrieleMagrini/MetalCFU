@@ -174,3 +174,12 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
     usableInventory.push_back(p);
 }
 
+int GameCharacter::getMaxUsable() const {
+    return maxUsable;
+}
+
+void GameCharacter::setMaxUsable(int maxUsable) {
+    GameCharacter::maxUsable = maxUsable;
+}
+
+
