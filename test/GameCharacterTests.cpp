@@ -20,3 +20,15 @@ TEST(GameCharacter,Constructor){
     ASSERT_EQ(c->getMovementSpeed(),10);
     delete c;
 }
+
+TEST(GameCharacter, positionUpdate) {
+    auto c = new GameCharacter(20,0,0,10,nullptr,nullptr);
+    c->setPosX(5);
+    ASSERT_EQ(c->getPosX(),5);
+    c->setPosY(5);
+    ASSERT_EQ(c->getPosY(),5);
+
+    c->move(12,12);
+    ASSERT_EQ(c->getPosX(),12);
+    ASSERT_EQ(c->getPosY(),12);
+}
