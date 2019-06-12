@@ -51,13 +51,15 @@ TEST(GameCharacter, hpUpdate) {
 }
 
 TEST(GameCharacter, movementSpeedupdate) {
-        auto c = GameCharacter(20, 0, 0, 10, nullptr, nullptr);
-    } catch (std::exception &e) {
-        std::cout<<e.what();
 
+        auto c = GameCharacter(20, 0, 0, 10, nullptr, nullptr);
+        ASSERT_EQ(c.getMovementSpeed(),10);
+        c.setMovementSpeed(20);
+        ASSERT_EQ(c.getMovementSpeed(),20);
 }
 
 TEST(GameCharacter, isTwoGameCharacterNearby) {
+
         auto c = new GameCharacter(20, 0, 0, 10, nullptr, nullptr);
         auto b = new GameCharacter(20, 0, 0, 10, nullptr, nullptr);
         c->move(1, 0);
@@ -68,4 +70,5 @@ TEST(GameCharacter, isTwoGameCharacterNearby) {
         c->move(2, 3);
 
         ASSERT_EQ(GameCharacter::isTwoGameCharacterNearby(c, b), false);
+
 }

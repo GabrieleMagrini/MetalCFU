@@ -169,7 +169,7 @@ void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usab
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int mv): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu), movementSpeed(mv) {
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu), movementSpeed(ms) {
     weaponInventory.push_back(w);
     usableInventory.push_back(p);
 }
