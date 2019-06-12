@@ -79,6 +79,7 @@ public:
 
     void getDamage(unsigned int damage);
 
+    void fight(GameCharacter* enemy);
 private:
     int HP;
     int posX;

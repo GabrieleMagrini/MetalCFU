@@ -221,3 +221,11 @@ void GameCharacter::getDamage(unsigned int damage) {
         HP = 0;
     }
 }
+
+void GameCharacter::fight(GameCharacter *enemy) {
+    if(isTwoGameCharacterNearby(this,enemy)){
+        enemy->getDamage(this->strenght);
+    } else{
+        weaponInventory[selectedWeapon]->shoot();
+    }
+}
