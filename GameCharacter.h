@@ -77,6 +77,8 @@ public:
 
     static bool isTwoGameCharacterNearby(GameCharacter* gc1,GameCharacter* gc2);
 
+    void getDamage(unsigned int damage);
+
 private:
     int HP;
     int posX;

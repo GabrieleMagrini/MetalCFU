@@ -206,7 +206,18 @@ void GameCharacter::setWeaponInventory(const std::vector<Weapon *> &weaponInvent
 const std::vector<Usable *> &GameCharacter::getUsableInventory() const {
     return usableInventory;
 }
-
 void GameCharacter::setUsableInventory(const std::vector<Usable *> &usableInventory) {
     GameCharacter::usableInventory = usableInventory;
+}
+
+/**
+ * function that take the damage from "damage" and calculate the new HP
+ * @param damage
+ */
+void GameCharacter::getDamage(unsigned int damage) {
+    HP=HP-damage;
+
+    if(HP<=0) {
+        HP = 0;
+    }
 }

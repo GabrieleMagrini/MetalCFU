@@ -72,3 +72,9 @@ TEST(GameCharacter, isTwoGameCharacterNearby) {
         ASSERT_EQ(GameCharacter::isTwoGameCharacterNearby(c, b), false);
 
 }
+
+TEST(GameCharacter, getDamage){
+    auto c = GameCharacter(20, 0, 0, 10, nullptr, nullptr);
+    c.getDamage(10);
+    ASSERT_EQ(c.getHp(),10);
+}
