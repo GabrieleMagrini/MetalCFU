@@ -159,13 +159,11 @@ Usable *GameCharacter::removeUsable(int idx) {
  */
 void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usable *> &ui) {
     for(int i=0;i<maxWeapon;i++){
-        wi.push_back(new Weapon(*weaponInventory[i]));
-        weaponInventory.erase((weaponInventory.begin()+i));
+        wi.push_back(*weaponInventory.erase((weaponInventory.begin()+i)));
     }
 
     for(int i=0;i<maxUsable;i++){
-       // ui.push_back(new Usable(*usableInventory[i]));
-     //   weaponInventory.erase((weaponInventory.begin()+i));
+        ui.push_back(*usableInventory.erase(usableInventory.begin()+i));
     }
 }
 
