@@ -62,6 +62,7 @@ public:
 
     void releaseInventory(std::vector<Weapon*>& wi, std::vector<Usable*>& ui);
 
+    static bool isTwoGameCharacterNearby(GameCharacter* gc1,GameCharacter* gc2);
 private:
     int HP;
     int posX;

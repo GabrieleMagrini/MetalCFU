@@ -182,4 +182,9 @@ void GameCharacter::setMaxUsable(int maxUsable) {
     GameCharacter::maxUsable = maxUsable;
 }
 
-
+bool GameCharacter::isTwoGameCharacterNearby(GameCharacter *gc1, GameCharacter *gc2) {
+    bool b=false;
+    if(abs(gc1->getPosX()-gc2->getPosX())<=1 && abs(gc1->getPosY()-gc2->getPosY())<=1)
+        b=true;
+    return b;
+}
