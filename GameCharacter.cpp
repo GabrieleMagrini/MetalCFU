@@ -167,7 +167,7 @@ void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usab
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu), movementSpeed(ms) {
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms,int sw): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu), movementSpeed(ms), selectedWeapon(sw) {
     weaponInventory.push_back(w);
     usableInventory.push_back(p);
 }
@@ -185,4 +185,28 @@ bool GameCharacter::isTwoGameCharacterNearby(GameCharacter *gc1, GameCharacter *
     if(abs(gc1->getPosX()-gc2->getPosX())<=1 && abs(gc1->getPosY()-gc2->getPosY())<=1)
         b=true;
     return b;
+}
+
+int GameCharacter::getSelectedWeapon() const {
+    return selectedWeapon;
+}
+
+void GameCharacter::setSelectedWeapon(int selectedWeapon) {
+    GameCharacter::selectedWeapon = selectedWeapon;
+}
+
+const std::vector<Weapon *> &GameCharacter::getWeaponInventory() const {
+    return weaponInventory;
+}
+
+void GameCharacter::setWeaponInventory(const std::vector<Weapon *> &weaponInventory) {
+    GameCharacter::weaponInventory = weaponInventory;
+}
+
+const std::vector<Usable *> &GameCharacter::getUsableInventory() const {
+    return usableInventory;
+}
+
+void GameCharacter::setUsableInventory(const std::vector<Usable *> &usableInventory) {
+    GameCharacter::usableInventory = usableInventory;
 }
