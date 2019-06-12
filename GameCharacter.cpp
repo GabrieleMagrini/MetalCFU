@@ -221,7 +221,10 @@ void GameCharacter::getDamage(unsigned int damage) {
         HP = 0;
     }
 }
-
+/**
+ * function that: if the enemy is nearby, player will do melee attack, else he fire with the gun.
+ * @param enemy
+ */
 void GameCharacter::fight(GameCharacter *enemy) {
     if(isTwoGameCharacterNearby(this,enemy)){
         enemy->getDamage(this->strenght);
