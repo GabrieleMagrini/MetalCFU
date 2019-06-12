@@ -13,7 +13,7 @@
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw=4, int mu=4,int ms=10);
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw=4, int mu=4,int ms=10,int sw=0);
 
     virtual ~GameCharacter() = default;
 
@@ -60,9 +60,23 @@ public:
 
     Usable* removeUsable(int idx);
 
+    int getSelectedWeapon() const;
+
+    const std::vector<Weapon *> &getWeaponInventory() const;
+
+    void setWeaponInventory(const std::vector<Weapon *> &weaponInventory);
+
+    const std::vector<Usable *> &getUsableInventory() const;
+
+    void setUsableInventory(const std::vector<Usable *> &usableInventory);
+
+
+    void setSelectedWeapon(int selectedWeapon);
+
     void releaseInventory(std::vector<Weapon*>& wi, std::vector<Usable*>& ui);
 
     static bool isTwoGameCharacterNearby(GameCharacter* gc1,GameCharacter* gc2);
+
 private:
     int HP;
     int posX;
@@ -72,6 +86,7 @@ private:
     std::vector<Usable*> usableInventory;
     int maxWeapon;
     int maxUsable;
+    int selectedWeapon;
     int movementSpeed;
 
 };
