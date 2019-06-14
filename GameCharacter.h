@@ -42,7 +42,7 @@ public:
 
     const  Weapon* getWeapon(int idx) const;
 
-    bool setWeapon(Weapon* weapon);
+    Weapon * setWeapon(Weapon *weapon);
 
     Usable *getUsable(int idx) const;
 

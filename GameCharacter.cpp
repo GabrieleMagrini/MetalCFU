@@ -59,19 +59,25 @@ void GameCharacter::move(int x, int y) {
 }
 
 /***
- * set a Weapon to the weaponInventory in the first free slot
+ * set a Weapon to the weaponInventory in the first free slot or in a selected slot, the new weapon replace the older, this one will drop in the map.
  * @param weapon the weapon to add
  * @return true if the operation has been successful, false if the inventory is full
  */
-bool GameCharacter::setWeapon(Weapon *weapon) {
+Weapon * GameCharacter::setWeapon(Weapon *weapon) {
     bool isNotFull = false;
+    Weapon* w= nullptr;
+
     for (int i = 0; i < maxWeapon && !isNotFull; i++) {
         if (this->weaponInventory[i] == nullptr) {
             this->weaponInventory[i] = weapon;
             isNotFull = true;
         }
     }
-    return isNotFull;
+    if(!isNotFull){
+       w= weaponInventory[selectedWeapon];
+       weaponInventory[selectedWeapon]=weapon;
+    }
+    return w;
 }
 
 /**
