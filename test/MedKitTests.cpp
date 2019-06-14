@@ -8,7 +8,7 @@
 
 
 
-TEST(MedKit,ConstructorTest){
+TEST(MedKit,constructorTest){
    MedKit mk = MedKit{15};
 
    ASSERT_EQ(mk.use(),15);

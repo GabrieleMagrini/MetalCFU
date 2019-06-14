@@ -8,3 +8,11 @@ int Granade::use() {
     //TODO trow granade
     return 0;
 }
+
+int Granade::getDamage() const {
+    return damage;
+}
+
+void Granade::setDamage(int damage) {
+    Granade::damage = damage;
+}

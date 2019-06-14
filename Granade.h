@@ -14,6 +14,10 @@ public:
 
     ~Granade() override = default;
 
+    int getDamage() const;
+
+    void setDamage(int damage);
+
     int use() override;
 private:
     int damage;
