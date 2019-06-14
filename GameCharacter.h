@@ -13,7 +13,7 @@
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw=4, int mu=4,int ms=10,int sw=0);
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw=4, int mu=4,int ms=10,int sw=0, int su=0);
 
     virtual ~GameCharacter() = default;
 
@@ -46,7 +46,7 @@ public:
 
     Usable *getUsable(int idx) const;
 
-    bool setUsable(Usable *usable);
+    Usable * setUsable(Usable *usable);
 
     int getMaxWeapon() const;
 
@@ -93,6 +93,7 @@ private:
     int maxWeapon;
     int maxUsable;
     int selectedWeapon;
+    int selectedUsable;
     int movementSpeed;
 
 };

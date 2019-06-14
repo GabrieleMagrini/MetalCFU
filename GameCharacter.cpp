@@ -93,19 +93,24 @@ Usable *GameCharacter::getUsable(int idx) const {
 }
 
 /***
- * set an usable in the "usable" inventory
+ * set an usable in the "usable" inventory in a free slot or in the selectedSlot
  * @param usable the usable to insert in the inventory
  * @return true if the operation has been successful, false if the inventory is full
  */
-bool GameCharacter::setUsable(Usable *usable) {
+Usable * GameCharacter::setUsable(Usable *usable) {
     bool isNotFull = false;
+    Usable * u=nullptr;
     for (int i = 0; i < this->usableInventory.size() && !isNotFull; i++) {
         if (this->usableInventory[i] == nullptr) {
             this->usableInventory[i] = usable;
             isNotFull = true;
         }
     }
-    return isNotFull;
+    if(!isNotFull){
+        u=usableInventory[selectedWeapon];
+        usableInventory[selectedUsable]=usable;
+    }
+    return u;
 }
 
 int GameCharacter::getMaxWeapon() const {
@@ -174,7 +179,8 @@ void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usab
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms,int sw): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu), movementSpeed(ms), selectedWeapon(sw) {
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms,int sw,int su): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu),
+movementSpeed(ms), selectedWeapon(sw), selectedUsable(su){
     weaponInventory.push_back(w);
     usableInventory.push_back(p);
 }
