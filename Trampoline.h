@@ -13,7 +13,7 @@ class Trampoline: public Interactable {
 public:
     explicit Trampoline(int h,int r, int x, int y ,bool l):height(h), Interactable(x,y) , lift(l){};
 
-    bool liftUp(int  height,int *player);
+    bool liftUp(int  height,Player *player);
 
 
 private:
