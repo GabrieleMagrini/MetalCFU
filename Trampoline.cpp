@@ -4,7 +4,17 @@
 
 #include "Trampoline.h"
 #include "Player.h"
+ //The function is called until the bool value "liftUp" get value "false"
+bool Trampoline::liftUp(int height,int *player) {
 
-void Trampoline::liftUp(int height) {
-    //TODO 
+    bool valid;
+
+        if (player.posY = height)
+            valid = false;
+        else {
+            player.posY + player.movementSpeed;
+            valid = true;
+        }
+
+     return valid;
 }

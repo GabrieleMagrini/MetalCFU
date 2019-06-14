@@ -7,16 +7,18 @@
 
 
 #include "Interactable.h"
+#include "Player.h"
 
 class Trampoline: public Interactable {
 public:
-    explicit Trampoline(int h,int r, int x, int y):height(h), Interactable(x,y){};
+    explicit Trampoline(int h,int r, int x, int y ,bool l):height(h), Interactable(x,y) , lift(l){};
 
-    void liftUp(int  height);
+    bool liftUp(int  height,int *player);
 
 
 private:
     int height;
+    bool lift;
 };
 
 
