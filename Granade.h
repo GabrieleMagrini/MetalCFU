@@ -9,6 +9,7 @@
 #include "Usable.h"
 
 class Granade: public Usable {
+public:
     explicit Granade(int d):damage(d){};
 
     ~Granade() override = default;

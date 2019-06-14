@@ -6,6 +6,7 @@
 #include "Usable.h"
 #include "Weapon.h"
 #include "MedKit.h"
+#include "Granade.h"
 
 int GameCharacter::getHp() const {
     return HP;
@@ -245,9 +246,12 @@ void GameCharacter::useUsable(int invIdx) {
     if(invIdx>=0 && invIdx<maxUsable){
         if(auto mk=dynamic_cast<MedKit*>(usableInventory[invIdx])){
             HP=HP+mk->use();
-
+            usableInventory.erase(usableInventory.begin() +invIdx);
         }
 
+    }else if(auto g= dynamic_cast<Granade*>(usableInventory[invIdx])){
+        g->use();
+        usableInventory.erase(usableInventory.begin() +invIdx);
     }
 
 }
