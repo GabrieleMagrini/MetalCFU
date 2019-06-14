@@ -5,6 +5,7 @@
 #include "GameCharacter.h"
 #include "Usable.h"
 #include "Weapon.h"
+#include "MedKit.h"
 
 int GameCharacter::getHp() const {
     return HP;
@@ -231,4 +232,18 @@ void GameCharacter::fight(GameCharacter *enemy) {
     } else{
         weaponInventory[selectedWeapon]->shoot();
     }
+}
+/***
+ * function that use usable
+ * @param invIdx
+ */
+void GameCharacter::useUsable(int invIdx) {
+    if(invIdx>=0 && invIdx<maxUsable){
+        if(auto mk=dynamic_cast<MedKit*>(usableInventory[invIdx])){
+            HP=HP+mk->use();
+
+        }
+
+    }
+
 }

@@ -80,6 +80,9 @@ public:
     void getDamage(unsigned int damage);
 
     void fight(GameCharacter* enemy);
+
+    void useUsable(int invIdx);
+
 private:
     int HP;
     int posX;

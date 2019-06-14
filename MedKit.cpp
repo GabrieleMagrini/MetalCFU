@@ -10,6 +10,6 @@ int MedKit::getHealerPoints() const {
     return healerPoints;
 }
 
-void MedKit::setHealerPoints(int healerPoints) {
-    MedKit::healerPoints = healerPoints;
+int MedKit::use() {
+    return healerPoints;
 }

@@ -16,8 +16,7 @@ public:
 
 
     int getHealerPoints() const;
-
-    void setHealerPoints(int healerPoints);
+    int use() override;
 
 private:
     int healerPoints;
