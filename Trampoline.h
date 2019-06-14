@@ -12,6 +12,8 @@ class Trampoline: public Interactable {
 public:
     explicit Trampoline(int h,int r, int x, int y):height(h), Interactable(r,x,y){};
 
+    void liftUp(height);
+
     void effect() override;
 
 private:
