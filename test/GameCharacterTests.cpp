@@ -13,7 +13,7 @@ TEST(GameCharacter, Constructor) {
         ASSERT_EQ(c->getPosX(), 0);
         ASSERT_EQ(c->getPosY(), 0);
         ASSERT_EQ(c->getStrenght(), 10);
-        ASSERT_EQ(c->getWeapon(0), nullptr);
+        ASSERT_EQ(c->getWeapon(), nullptr);
         ASSERT_EQ(c->getUsable(0), nullptr);
         ASSERT_EQ(c->getMaxWeapon(), 4);
         ASSERT_EQ(c->getMaxUsable(), 4);

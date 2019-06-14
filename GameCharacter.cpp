@@ -97,20 +97,15 @@ Usable *GameCharacter::getUsable(int idx) const {
  * @param usable the usable to insert in the inventory
  * @return true if the operation has been successful, false if the inventory is full
  */
-Usable * GameCharacter::setUsable(Usable *usable) {
+bool GameCharacter::setUsable(Usable *usable) {
     bool isNotFull = false;
-    Usable * u=nullptr;
     for (int i = 0; i < this->usableInventory.size() && !isNotFull; i++) {
         if (this->usableInventory[i] == nullptr) {
             this->usableInventory[i] = usable;
             isNotFull = true;
         }
     }
-    if(!isNotFull){
-        u=usableInventory[selectedWeapon];
-        usableInventory[selectedUsable]=usable;
-    }
-    return u;
+    return isNotFull;
 }
 
 int GameCharacter::getMaxWeapon() const {
@@ -122,15 +117,12 @@ void GameCharacter::setMaxWeapon(int maxWeapon) {
 }
 
 /**
- * @param idx number of the slot
- * @return a pointer to a weapon in the "idx" slot
+ *
+ * @return a pointer to a weapon in the selected slot
  */
-const Weapon *GameCharacter::getWeapon(int idx) const {
+const Weapon *GameCharacter::getWeapon() const {
 
-    if (idx < 0 || idx >= maxWeapon)
-        return nullptr;
-    else
-        return weaponInventory[idx];
+        return weaponInventory[selectedWeapon];
 
 }
 /**
@@ -258,4 +250,19 @@ void GameCharacter::useUsable(int invIdx) {
 
     }
 
+}
+/**
+ * function that change an usable, in the "idx" slot, with usable
+ * @param usable pointer to an usable
+ * @param idx the slot
+ * @return the older usable
+ */
+Usable *GameCharacter::changeUsable(Usable *usable, int idx) {
+    Usable * u= nullptr;
+    if(idx>0 && idx<maxUsable) {
+        u= usableInventory[idx];
+        usableInventory[idx]=usable;
+
+    }
+    return u;
 }

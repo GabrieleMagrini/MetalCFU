@@ -40,13 +40,13 @@ public:
 
     void move(int x, int y);
 
-    const  Weapon* getWeapon(int idx) const;
+    const Weapon *getWeapon() const;
 
     Weapon * setWeapon(Weapon *weapon);
 
     Usable *getUsable(int idx) const;
 
-    Usable * setUsable(Usable *usable);
+    bool setUsable(Usable *usable);
 
     int getMaxWeapon() const;
 
@@ -83,6 +83,8 @@ public:
 
     void useUsable(int invIdx);
 
+    Usable *changeUsable(Usable *usable, int idx);
+
 private:
     int HP;
     int posX;
@@ -93,7 +95,6 @@ private:
     int maxWeapon;
     int maxUsable;
     int selectedWeapon;
-    int selectedUsable;
     int movementSpeed;
 
 };
