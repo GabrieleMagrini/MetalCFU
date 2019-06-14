@@ -8,14 +8,10 @@
 
 class Interactable {
 public:
-    Interactable(int r,int x,int y);
+    Interactable(int x,int y);
     virtual ~Interactable() = default;
 
     virtual void effect()=0;
-
-    int getResistancePoint() const;
-
-    void setResistancePoint(int resistancePoint);
 
     int getPosX() const;
 
@@ -26,7 +22,7 @@ public:
     void setPosY(int posY);
 
 private:
-    int resistancePoint;
+
     int posX;
     int posY;
 };

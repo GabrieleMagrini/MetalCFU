@@ -4,15 +4,8 @@
 
 #include "Interactable.h"
 
-Interactable::Interactable(int r, int x, int y): resistancePoint(r), posX(x), posY(y){}
+Interactable::Interactable( int x, int y):posX(x), posY(y){}
 
-int Interactable::getResistancePoint() const {
-    return resistancePoint;
-}
-
-void Interactable::setResistancePoint(int resistancePoint) {
-    Interactable::resistancePoint = resistancePoint;
-}
 
 int Interactable::getPosX() const {
     return posX;
