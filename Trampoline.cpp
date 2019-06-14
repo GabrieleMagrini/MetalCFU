@@ -5,3 +5,6 @@
 #include "Trampoline.h"
 #include "Player.h"
 
+void Trampoline::liftUp(int height) {
+    //TODO 
+}

@@ -10,9 +10,9 @@
 
 class Trampoline: public Interactable {
 public:
-    explicit Trampoline(int h,int r, int x, int y):height(h), Interactable(r,x,y){};
+    explicit Trampoline(int h,int r, int x, int y):height(h), Interactable(x,y){};
 
-    void liftUp(height);
+    void liftUp(int  height);
 
     void effect() override;
 
