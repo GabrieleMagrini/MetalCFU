@@ -14,7 +14,6 @@ public:
 
     void liftUp(int  height);
 
-    void effect() override;
 
 private:
     int height;

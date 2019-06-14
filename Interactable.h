@@ -11,8 +11,6 @@ public:
     Interactable(int x,int y);
     virtual ~Interactable() = default;
 
-    virtual void effect()=0;
-
     int getPosX() const;
 
     void setPosX(int posX);
