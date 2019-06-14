@@ -9,7 +9,7 @@
 class Ammo {
 public:
 
-    explicit Ammo(int q): quantity(q){};
+    explicit Ammo(int q=1): quantity(q){};
     Ammo(const Ammo& a) = default ;
 
     virtual ~Ammo()= default;

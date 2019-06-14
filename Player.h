@@ -21,5 +21,4 @@ private:
 
 
 
-
 #endif //METALCFU_PLAYER_H

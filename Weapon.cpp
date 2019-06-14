@@ -50,5 +50,32 @@ bool Weapon::shoot() {
         return false;
 }
 
+Weapon::Weapon(WeaponType type) {
+    switch (type) {
+        default: //pistol
+            damage=15;
+            range=4;
+            maxAmmo=Ammo{-1};
+            currentAmmo=Ammo{-1};
+            break;
+        case WeaponType::M4 :
+            damage=40;
+            range=15;
+            maxAmmo=Ammo{300};
+            currentAmmo=Ammo{45};
+            break;
+        case WeaponType::AK_47:
+            damage=50;
+            range=10;
+            maxAmmo=Ammo{250};
+            currentAmmo=Ammo{30};
+            break;
+        case WeaponType ::AWP:
+            damage=95;
+            range=30;
+            maxAmmo=Ammo{20};
+            currentAmmo=Ammo{5};
+    }
+}
 
 
