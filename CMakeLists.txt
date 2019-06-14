@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES GameCharacter.h GameCharacter.cpp Ammo.cpp Ammo.h Weapon.cpp Weapon.h Usable.cpp Usable.h MedKit.cpp MedKit.h Interactable.cpp Interactable.h Trampoline.cpp Trampoline.h)
 
 add_subdirectory(test)
-add_executable(MetalCFU main.cpp ${SOURCE_FILES})
+add_executable(MetalCFU main.cpp ${SOURCE_FILES} Granade.cpp Granade.h)
 
 add_library(core ${SOURCE_FILES})
 target_link_libraries(MetalCFU core)
