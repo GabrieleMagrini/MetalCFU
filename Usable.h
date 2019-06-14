@@ -9,7 +9,6 @@
 
 class Usable {
 public:
-    Usable();
     virtual int use()=0;
     virtual ~Usable() = default;
 private:

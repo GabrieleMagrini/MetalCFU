@@ -239,7 +239,7 @@ void GameCharacter::fight(GameCharacter *enemy) {
     }
 }
 /***
- * function that use usable
+ * function that use the usable at slot "invIdx"
  * @param invIdx
  */
 void GameCharacter::useUsable(int invIdx) {

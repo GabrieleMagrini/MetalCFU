@@ -10,12 +10,11 @@
 
 class MedKit: public Usable {
 public:
-    explicit MedKit(int h):healerPoints(h){};
+    explicit MedKit(int hp):healerPoints(hp){};
     ~MedKit() override = default;
 
+    void setHealerPoints(int healerPoints);
 
-
-    int getHealerPoints() const;
     int use() override;
 
 private:

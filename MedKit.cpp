@@ -5,11 +5,10 @@
 #include "MedKit.h"
 
 
-
-int MedKit::getHealerPoints() const {
+int MedKit::use() {
     return healerPoints;
 }
 
-int MedKit::use() {
-    return healerPoints;
+void MedKit::setHealerPoints(int healerPoints) {
+    MedKit::healerPoints = healerPoints;
 }
