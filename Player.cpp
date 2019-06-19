@@ -6,6 +6,4 @@
 
 void Player::lootPickUp() {
 
-    setUsable();
-
 }

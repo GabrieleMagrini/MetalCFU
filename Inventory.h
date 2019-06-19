@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+
 #include "Weapon.h"
 
 using namespace std;
@@ -26,7 +27,7 @@ public:
 
     bool removeElement(int i, T &a) const;
 
-    T* getElement(int i) const;
+    T *getElement(int i) const;
 
     int getDim() const;
 
@@ -35,7 +36,6 @@ public:
     int getFirstFree() const;
 
 private:
-    void copy(Inventory<T> &i);
 
 
     vector<T> buffer;
@@ -68,7 +68,6 @@ T *Inventory<T>::setElement(int i, T a) {
         if (!usedSlot[i]) {
             usedSlot[i] = true;
             buffer[i] = a;
-            return;
         } else {
             ab = new T{buffer[i]};
             buffer[i] = a;
@@ -86,13 +85,12 @@ T *Inventory<T>::setElement(int i, T a) {
  * @return true if the operation has been successful
  */
 template<typename T>
-bool Inventory<T>::removeElement(int i, T &a) const{
+bool Inventory<T>::removeElement(int i, T &a) const {
 
     if (i >= 0 && i < dim) {
         if (usedSlot[i]) {
             usedSlot[i] = false;
             a = buffer[i];
-
         }
     }
     return !usedSlot[i];
@@ -104,32 +102,28 @@ int Inventory<T>::getDim() const {
 }
 
 template<typename T>
-Inventory<T>::~Inventory() {
-    delete[] buffer;
-    delete[] usedSlot;
-}
+Inventory<T>::~Inventory() = default;
 
 template<typename T>
 Inventory<T>::Inventory(Inventory<T> &i):dim(i.dim) {
-    copy(i);
-}
-
-template<typename T>
-Inventory<T> &Inventory<T>::operator=(const Inventory<T> &i) {
-    dim = i.dim;
-    copy(i);
-    return *this;
-
-}
-
-template<typename T>
-void Inventory<T>::copy(Inventory<T> &i) {
     buffer = vector<T>(dim);
     usedSlot = vector<bool>(dim);
     for (int idx = 0; idx < dim; idx++) {
         buffer[idx] = i.buffer[idx];
         usedSlot[idx] = i.usedSlot[idx];
     }
+}
+
+template<typename T>
+Inventory<T> &Inventory<T>::operator=(const Inventory<T> &i) {
+    dim = i.dim;
+    buffer = vector<T>(dim);
+    usedSlot = vector<bool>(dim);
+    for (int idx = 0; idx < dim; idx++) {
+        buffer[idx] = i.buffer[idx];
+        usedSlot[idx] = i.usedSlot[idx];
+    }
+    return *this;
 }
 
 /**
@@ -143,7 +137,7 @@ bool Inventory<T>::setDim(int d) {
     bool done = false;
     if (d > dim) {
         for (int i = dim; i < d; i++) {
-            buffer.push_back();
+            buffer.push_back(T{});
             usedSlot.push_back(false);
         }
         dim = d;
@@ -154,17 +148,20 @@ bool Inventory<T>::setDim(int d) {
 
 template<typename T>
 int Inventory<T>::getFirstFree() const {
-    for(int i=0;i<dim;i++)
-        if(!usedSlot[i])
-            return i;
+    int i;
+    for (i = 0; i < usedSlot.size(); i++)
+        if (!usedSlot[i])
+            break;
+    return i;
 }
 
 template<typename T>
-T* Inventory<T>::getElement(int i) const {
-    if(i>=0 && i<dim){
-        if(usedSlot[i])
+T *Inventory<T>::getElement(int i) const {
+    if (i >= 0 && i < dim) {
+        if (usedSlot[i])
             return new T{buffer[i]};
     }
+    return nullptr;
 }
 
 

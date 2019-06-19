@@ -13,6 +13,7 @@ public:
     explicit Player(int l,Weapon *w, int hp=100,int s=20,int x=10,int y=10) : lives(l), GameCharacter(hp,x,y,s,w,nullptr){}
     ~Player()override = default;
 
+    void lootPickUp();
 private:
 
     int lives;
