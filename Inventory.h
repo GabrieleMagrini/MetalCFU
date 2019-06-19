@@ -24,15 +24,15 @@ public:
 
     T *setElement(int i, T a);
 
-    bool getElement(int i, T &a);
+    bool removeElement(int i, T &a) const;
 
+    T* getElement(int i) const;
 
     int getDim() const;
 
     bool setDim(int d);
 
-
-    const vector<bool> &getUsedSlot() const;
+    int getFirstFree() const;
 
 private:
     void copy(Inventory<T> &i);
@@ -86,7 +86,7 @@ T *Inventory<T>::setElement(int i, T a) {
  * @return true if the operation has been successful
  */
 template<typename T>
-bool Inventory<T>::getElement(int i, T &a) {
+bool Inventory<T>::removeElement(int i, T &a) const{
 
     if (i >= 0 && i < dim) {
         if (usedSlot[i]) {
@@ -153,8 +153,18 @@ bool Inventory<T>::setDim(int d) {
 }
 
 template<typename T>
-const vector<bool> &Inventory<T>::getUsedSlot() const {
-    return usedSlot;
+int Inventory<T>::getFirstFree() const {
+    for(int i=0;i<dim;i++)
+        if(!usedSlot[i])
+            return i;
+}
+
+template<typename T>
+T* Inventory<T>::getElement(int i) const {
+    if(i>=0 && i<dim){
+        if(usedSlot[i])
+            return new T{buffer[i]};
+    }
 }
 
 
