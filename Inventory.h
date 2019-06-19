@@ -15,6 +15,9 @@ template <typename T>
 class Inventory {
 public:
     explicit Inventory(int d);
+    Inventory(Inventory &i);
+
+    ~Inventory();
     T setElement(int i,T a);
     bool getElemet(int i,T &a);
     bool getElement(int i,Weapon &a);
@@ -98,6 +101,22 @@ bool Inventory<Weapon>::getElement(int i, Weapon &a) {
 template<typename T>
 int Inventory<T>::getDim() const {
     return dim;
+}
+
+template<typename T>
+Inventory<T>::~Inventory() {
+    delete[] buffer;
+    delete[] usedElements;
+}
+
+template<typename T>
+Inventory<T>::Inventory(Inventory &i):dim(i.dim) {
+    buffer= vector<T>(dim);
+    usedElements= vector<bool>(dim);
+    for(int idx=0;idx<dim;idx++){
+        buffer[idx]=i.buffer[idx];
+        usedElements[idx]=i.usedElements[idx];
+    }
 }
 
 
