@@ -7,7 +7,7 @@
 #include "../Weapon.h"
 
 
-TEST(Weapon,WeaponConstructor) {
+TEST(Weapon,WeaponConstructorTest) {
     auto w = new Weapon{WeaponType::M4};
 
     ASSERT_EQ(w->getDamage(), 40);
@@ -35,4 +35,11 @@ TEST(Weapon,WeaponConstructor) {
     ASSERT_EQ(w->getCurrentAmmo().getQuantity(),30);
     ASSERT_EQ(w->getMaxAmmo().getQuantity(),20);
     ASSERT_EQ(w->getRange(),5);
+}
+
+TEST(Weapon,ShootTest) {
+    auto w= new Weapon(WeaponType::M4);
+
+    ASSERT_EQ(w->shoot(),true);
+    ASSERT_EQ(w->getCurrentAmmo(),39);
 }
