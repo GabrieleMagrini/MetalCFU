@@ -24,13 +24,15 @@ public:
 
     T *setElement(int i, T a);
 
-    bool getElemet(int i, T &a);
+    bool getElement(int i, T &a);
 
-    bool getElement(int i, Weapon &a) const;
 
     int getDim() const;
 
     bool setDim(int d);
+
+
+    const vector<bool> &getUsedSlot() const;
 
 private:
     void copy(Inventory<T> &i);
@@ -84,7 +86,7 @@ T *Inventory<T>::setElement(int i, T a) {
  * @return true if the operation has been successful
  */
 template<typename T>
-bool Inventory<T>::getElemet(int i, T &a) {
+bool Inventory<T>::getElement(int i, T &a) {
 
     if (i >= 0 && i < dim) {
         if (usedSlot[i]) {
@@ -148,6 +150,11 @@ bool Inventory<T>::setDim(int d) {
         done = true;
     }
     return done;
+}
+
+template<typename T>
+const vector<bool> &Inventory<T>::getUsedSlot() const {
+    return usedSlot;
 }
 
 
