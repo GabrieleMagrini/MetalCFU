@@ -78,4 +78,5 @@ Weapon::Weapon(WeaponType type) {
     }
 }
 
+Weapon::Weapon(): currentAmmo(0), damage(0), range(0),maxAmmo(0){}
 
