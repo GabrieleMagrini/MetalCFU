@@ -154,7 +154,7 @@ void Inventory<T>::copy(Inventory<T> &i) {
  */
 template<typename T>
 bool Inventory<T>::setDim(int d) {
-    bool done=false
+    bool done=false;
     if(d>dim) {
         for (int i = dim; i < d; i++) {
             buffer.push_back(0);
