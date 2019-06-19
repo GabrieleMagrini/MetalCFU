@@ -18,15 +18,15 @@ public:
 
     Inventory(Inventory<T> &i);
 
-    Inventory& operator=(const Inventory<T> &i);
+    Inventory &operator=(const Inventory<T> &i);
 
     ~Inventory();
 
-    T setElement(int i, T a);
+    T *setElement(int i, T a);
 
     bool getElemet(int i, T &a);
 
-    bool getElement(int i, Weapon &a);
+    bool getElement(int i, Weapon &a) const;
 
     int getDim() const;
 
@@ -37,7 +37,7 @@ private:
 
 
     vector<T> buffer;
-    vector<bool> usedElements;
+    vector<bool> usedSlot;
     int dim;
 
 };
@@ -47,7 +47,7 @@ Inventory<T>::Inventory(int d): dim(d) {
 
     buffer = vector<T>(dim);
     for (int i = 0; i < dim; i++) {
-        usedElements.push_back(false);
+        usedSlot.push_back(false);
     }
 
 }
@@ -60,24 +60,24 @@ Inventory<T>::Inventory(int d): dim(d) {
  * @return
  */
 template<typename T>
-T Inventory<T>::setElement(int i, T a) {
+T *Inventory<T>::setElement(int i, T a) {
+    T *ab = nullptr;
     if (i >= 0 && i < dim) {
-        if (usedElements[i]) {
-            usedElements[i] = false;
+        if (!usedSlot[i]) {
+            usedSlot[i] = true;
             buffer[i] = a;
             return;
         } else {
-            T a = buffer[i];
+            ab = new T{buffer[i]};
             buffer[i] = a;
-            return a;
         }
     }
 
-    return;
+    return ab;
 }
 
 /***
- * function that return an element of the vector in the parameter a if the element is not used.
+ * function that return an element of the vector in the parameter a if the element is not used and remove it from the inventory
  * @tparam T
  * @param i
  * @param a
@@ -87,30 +87,13 @@ template<typename T>
 bool Inventory<T>::getElemet(int i, T &a) {
 
     if (i >= 0 && i < dim) {
-        if (!usedElements[i]) {
-            usedElements[i] = true;
+        if (usedSlot[i]) {
+            usedSlot[i] = false;
             a = buffer[i];
 
         }
     }
-    return usedElements[i];
-}
-
-/***
- * function getElement for Weapon type, it should get the weapon always.
- * @param i
- * @param a
- * @return
- */
-template<>
-bool Inventory<Weapon>::getElement(int i, Weapon &a) {
-    bool done = false;
-    if (i >= 0 && i < dim) {
-        a = buffer[i];
-        done = true;
-    }
-
-    return done;
+    return !usedSlot[i];
 }
 
 template<typename T>
@@ -121,7 +104,7 @@ int Inventory<T>::getDim() const {
 template<typename T>
 Inventory<T>::~Inventory() {
     delete[] buffer;
-    delete[] usedElements;
+    delete[] usedSlot;
 }
 
 template<typename T>
@@ -130,8 +113,8 @@ Inventory<T>::Inventory(Inventory<T> &i):dim(i.dim) {
 }
 
 template<typename T>
-Inventory<T>& Inventory<T>::operator=(const Inventory<T> &i) {
-    dim=i.dim;
+Inventory<T> &Inventory<T>::operator=(const Inventory<T> &i) {
+    dim = i.dim;
     copy(i);
     return *this;
 
@@ -140,12 +123,13 @@ Inventory<T>& Inventory<T>::operator=(const Inventory<T> &i) {
 template<typename T>
 void Inventory<T>::copy(Inventory<T> &i) {
     buffer = vector<T>(dim);
-    usedElements = vector<bool>(dim);
+    usedSlot = vector<bool>(dim);
     for (int idx = 0; idx < dim; idx++) {
         buffer[idx] = i.buffer[idx];
-        usedElements[idx] = i.usedElements[idx];
+        usedSlot[idx] = i.usedSlot[idx];
     }
 }
+
 /**
  * method that can incraese the dimension of the inventory
  * @tparam T
@@ -154,14 +138,14 @@ void Inventory<T>::copy(Inventory<T> &i) {
  */
 template<typename T>
 bool Inventory<T>::setDim(int d) {
-    bool done=false;
-    if(d>dim) {
+    bool done = false;
+    if (d > dim) {
         for (int i = dim; i < d; i++) {
-            buffer.push_back(0);
-            usedElements.push_back(false);
+            buffer.push_back();
+            usedSlot.push_back(false);
         }
-        dim=d;
-        done=true;
+        dim = d;
+        done = true;
     }
     return done;
 }
