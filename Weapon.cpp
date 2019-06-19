@@ -52,7 +52,7 @@ bool Weapon::shoot() {
 
 Weapon::Weapon(WeaponType type) {
     switch (type) {
-        default: //pistol
+        case WeaponType::pistol: //pistol
             damage=15;
             range=4;
             maxAmmo=Ammo{-1};

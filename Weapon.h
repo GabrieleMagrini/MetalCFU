@@ -7,7 +7,7 @@
 
 #include "Ammo.h"
 
-enum class WeaponType{AK_47, M4, AWP };
+enum class WeaponType{pistol,AK_47, M4, AWP };
 
 class Weapon {
 public:
