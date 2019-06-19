@@ -65,19 +65,13 @@ void GameCharacter::move(int x, int y) {
  * @return true if the operation has been successful, false if the inventory is full
  */
 Weapon * GameCharacter::setWeapon(Weapon *weapon) {
-    bool isNotFull = false;
-    Weapon* w= nullptr;
+    Weapon *w= nullptr;
+    int i= weaponInventory.getFirstFree();
 
-    for (int i = 0; i < maxWeapon && !isNotFull; i++) {
-        if (this->weaponInventory[i] == nullptr) {
-            this->weaponInventory[i] = weapon;
-            isNotFull = true;
-        }
-    }
-    if(!isNotFull){
-       w= weaponInventory[selectedWeapon];
-       weaponInventory[selectedWeapon]=weapon;
-    }
+    if(i==weaponInventory.getDim())
+        weaponInventory.setElement(selectedWeapon,*weapon);
+    else
+        w=weaponInventory.setElement(i,*weapon);
     return w;
 }
 
@@ -87,43 +81,43 @@ Weapon * GameCharacter::setWeapon(Weapon *weapon) {
  * @return a pointer to an Usable
  */
 Usable *GameCharacter::getUsable(int idx) const {
-    if (idx < 0 || idx >= usableInventory.size())
-        return nullptr;
-    else
-        return usableInventory[idx];
+    Usable* us=nullptr;
+    if(idx>=0 && idx<usableInventory.getDim())
+        usableInventory.removeElement(idx, us);
+    return us;
 }
 
 /***
- * set an usable in the "usable" inventory in a free slot or in the selectedSlot
+ * set an usable to the usableInventory in the first free slot or in a selected slot, the new usable replace the older, this one will drop in the map.
  * @param usable the usable to insert in the inventory
  * @return true if the operation has been successful, false if the inventory is full
  */
-bool GameCharacter::setUsable(Usable *usable) {
-    bool isNotFull = false;
-    for (int i = 0; i < this->usableInventory.size() && !isNotFull; i++) {
-        if (this->usableInventory[i] == nullptr) {
-            this->usableInventory[i] = usable;
-            isNotFull = true;
-        }
-    }
-    return isNotFull;
+Usable *GameCharacter::setUsable(Usable *usable) {
+    Usable *u=nullptr;
+    int i=usableInventory.getFirstFree();
+    if(i==weaponInventory.getDim())
+        u=*usableInventory.setElement(selectedUsable,usable);
+    else
+        u=*usableInventory.setElement(i,usable);
+    return u;
 }
 
-int GameCharacter::getMaxWeapon() const {
-    return this->maxWeapon;
+int GameCharacter::getDimWeapon() const {
+    return weaponInventory.getDim();
 }
 
-void GameCharacter::setMaxWeapon(int maxWeapon) {
-    GameCharacter::maxWeapon = maxWeapon;
+void GameCharacter::setDimWeapon(int dw) {
+    weaponInventory.setDim(dw);
 }
 
 /**
  *
- * @return a pointer to a weapon in the selected slot
+ * @return  a weapon in the selected slot
  */
-const Weapon *GameCharacter::getWeapon() const {
-
-        return weaponInventory[selectedWeapon];
+const Weapon GameCharacter::getWeapon() const {
+    Weapon a;
+    weaponInventory.removeElement(selectedWeapon, a);
+    return a;
 
 }
 /**
@@ -132,15 +126,13 @@ const Weapon *GameCharacter::getWeapon() const {
  * @return the weapon
  */
 Weapon *GameCharacter::removeWeapon(int idx) {
-    if (idx < 0 || idx >= maxWeapon)
-        return nullptr;
-    else {
-        Weapon *w = weaponInventory[idx];
-        weaponInventory.erase(weaponInventory.begin() + idx);
-        return w;
+    Weapon a;
+    if (idx >= 0 && idx < usableInventory.getDim()) {
+        weaponInventory.removeElement(idx, a);
+        if (a.getDamage() > 0)
+            return new Weapon(a);
     }
-
-
+    return nullptr;
 }
 /**
  * remove an Usable from the inventory
@@ -148,13 +140,11 @@ Weapon *GameCharacter::removeWeapon(int idx) {
  * @return the Usable
  */
 Usable *GameCharacter::removeUsable(int idx) {
-    if (idx < 0 || idx > usableInventory.size())
-        return nullptr;
-    else {
-        Usable *u = usableInventory[idx];
-        usableInventory.erase(usableInventory.begin() + idx);
-        return u;
-    }
+    Usable *u=nullptr;
+    if (idx > 0 && idx < usableInventory.getDim())
+        usableInventory.removeElement(idx, u);
+
+    return u;
 }
 /**
  * function that drop from the inventory of the GameCharacter to the map any Weapon or Usable
@@ -162,18 +152,18 @@ Usable *GameCharacter::removeUsable(int idx) {
  * @param wi dropped weapon inventory
  * @param ui dropped Usable inventory
  */
-void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usable *> &ui) {
-    for(int i=0;i<maxWeapon;i++){
-        wi.push_back(*weaponInventory.erase((weaponInventory.begin()+i)));
+void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> &ui) {
+    for(int i=0;i<weaponInventory.getDim();i++){
+        wi =  Inventory<Weapon>{weaponInventory};
     }
 
-    for(int i=0;i<maxUsable;i++){
-        ui.push_back(*usableInventory.erase(usableInventory.begin()+i));
+    for(int i=0;i<usableInventory.getDim();i++){
+        ui =  Inventory<Usable*>{usableInventory};
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw): HP(hp), posX(x), posY(y), strenght(s),
-movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw),usableInventory(mu){
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw,int su): HP(hp), posX(x), posY(y), strenght(s),
+movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw),usableInventory(mu),selectedUsable(su){
    weaponInventory.setElement(0,*w);
    usableInventory.setElement(0,p);
 }
@@ -182,8 +172,8 @@ int GameCharacter::getDimUsable() const {
     return usableInventory.getDim();
 }
 
-void GameCharacter::setMaxUsable(int maxUsable) {
-    GameCharacter::maxUsable = maxUsable;
+void GameCharacter::setDimUsable(int ud) {
+    usableInventory.setDim(ud);
 }
 
 bool GameCharacter::isTwoGameCharacterNearby(GameCharacter *gc1, GameCharacter *gc2) {
@@ -201,18 +191,18 @@ void GameCharacter::setSelectedWeapon(int selectedWeapon) {
     GameCharacter::selectedWeapon = selectedWeapon;
 }
 
-const std::vector<Weapon *> &GameCharacter::getWeaponInventory() const {
+const Inventory<Weapon> & GameCharacter::getWeaponInventory() const {
     return weaponInventory;
 }
 
-void GameCharacter::setWeaponInventory(const std::vector<Weapon *> &weaponInventory) {
+void GameCharacter::setWeaponInventory(const Inventory<Weapon> &weaponInventory) {
     GameCharacter::weaponInventory = weaponInventory;
 }
 
-const std::vector<Usable *> &GameCharacter::getUsableInventory() const {
+const Inventory<Usable *> &GameCharacter::getUsableInventory() const {
     return usableInventory;
 }
-void GameCharacter::setUsableInventory(const std::vector<Usable *> &usableInventory) {
+void GameCharacter::setUsableInventory(const Inventory<Usable *> &usableInventory) {
     GameCharacter::usableInventory = usableInventory;
 }
 
@@ -235,7 +225,7 @@ void GameCharacter::fight(GameCharacter *enemy) {
     if(isTwoGameCharacterNearby(this,enemy)){
         enemy->getDamage(this->strenght);
     } else{
-        weaponInventory[selectedWeapon]->shoot();
+        weaponInventory.getElement(selectedWeapon)->shoot();
     }
 }
 /***
@@ -243,30 +233,8 @@ void GameCharacter::fight(GameCharacter *enemy) {
  * @param invIdx
  */
 void GameCharacter::useUsable(int invIdx) {
-    if(invIdx>=0 && invIdx<maxUsable){
-        if(auto mk=dynamic_cast<MedKit*>(usableInventory[invIdx])){
-            HP=HP+mk->use();
-            usableInventory.erase(usableInventory.begin() +invIdx);
-        }
-
-    }else if(auto g= dynamic_cast<Granade*>(usableInventory[invIdx])){
-        g->use();
-        usableInventory.erase(usableInventory.begin() +invIdx);
-    }
-
-}
-/**
- * function that change an usable, in the "idx" slot, with usable
- * @param usable pointer to an usable
- * @param idx the slot
- * @return the older usable
- */
-Usable *GameCharacter::changeUsable(Usable *usable, int idx) {
-    Usable * u= nullptr;
-    if(idx>0 && idx<maxUsable) {
-        u= usableInventory[idx];
-        usableInventory[idx]=usable;
-
-    }
-    return u;
+    Usable *u=nullptr;
+    usableInventory.removeElement(invIdx,u);
+    if(u!=nullptr)
+        u->use();
 }

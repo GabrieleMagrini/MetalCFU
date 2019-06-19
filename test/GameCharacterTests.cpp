@@ -15,13 +15,13 @@ TEST(GameCharacter, Constructor) {
         ASSERT_EQ(c->getStrenght(), 10);
         ASSERT_EQ(c->getWeapon(), nullptr);
         ASSERT_EQ(c->getUsable(0), nullptr);
-        ASSERT_EQ(c->getMaxWeapon(), 4);
-        ASSERT_EQ(c->getMaxUsable(), 4);
+        ASSERT_EQ(c->getDimWeapon(), 4);
+        ASSERT_EQ(c->getDimUsable(), 4);
         ASSERT_EQ(c->getMovementSpeed(), 10);
 
         c = new GameCharacter(20, 0, 0, 10, nullptr, nullptr, 5, 2, 20);
-        ASSERT_EQ(c->getMaxWeapon(), 5);
-        ASSERT_EQ(c->getMaxUsable(), 2);
+        ASSERT_EQ(c->getDimWeapon(), 5);
+        ASSERT_EQ(c->getDimUsable(), 2);
         ASSERT_EQ(c->getMovementSpeed(), 20);
         delete c;
 

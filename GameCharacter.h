@@ -14,7 +14,7 @@
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0);
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0,int su=4);
 
     virtual ~GameCharacter() = default;
 
@@ -41,21 +41,21 @@ public:
 
     void move(int x, int y);
 
-    const Weapon *getWeapon() const;
+    const Weapon getWeapon() const;
 
     Weapon * setWeapon(Weapon *weapon);
 
     Usable *getUsable(int idx) const;
 
-    bool setUsable(Usable *usable);
+    Usable *setUsable(Usable *usable);
 
-    int getMaxWeapon() const;
+    int getDimWeapon() const;
 
-    void setMaxWeapon(int maxWeapon);
+    void setDimWeapon(int dw);
 
     int getDimUsable() const;
 
-    void setMaxUsable(int maxUsable);
+    void setDimUsable(int ud);
 
     Weapon* removeWeapon(int idx);
 
@@ -63,18 +63,18 @@ public:
 
     int getSelectedWeapon() const;
 
-    const std::vector<Weapon *> &getWeaponInventory() const;
+    const Inventory<Weapon> & getWeaponInventory() const;
 
-    void setWeaponInventory(const std::vector<Weapon *> &weaponInventory);
+    void setWeaponInventory(const Inventory<Weapon> &weaponInventory);
 
-    const std::vector<Usable *> &getUsableInventory() const;
+    const Inventory<Usable *> &getUsableInventory() const;
 
-    void setUsableInventory(const std::vector<Usable *> &usableInventory);
+    void setUsableInventory(const Inventory<Usable *> &usableInventory);
 
 
     void setSelectedWeapon(int selectedWeapon);
 
-    void releaseInventory(std::vector<Weapon*>& wi, std::vector<Usable*>& ui);
+    void releaseInventory(Inventory<Weapon> &wi, Inventory<Usable*>& ui);
 
     static bool isTwoGameCharacterNearby(GameCharacter* gc1,GameCharacter* gc2);
 
@@ -84,8 +84,6 @@ public:
 
     void useUsable(int invIdx);
 
-    Usable *changeUsable(Usable *usable, int idx);
-
 private:
     int HP;
     int posX;
@@ -94,6 +92,7 @@ private:
     Inventory<Weapon> weaponInventory;
     Inventory<Usable*> usableInventory;
     int selectedWeapon;
+    int selectedUsable;
     int movementSpeed;
 
 };
