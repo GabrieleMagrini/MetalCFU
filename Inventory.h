@@ -30,6 +30,8 @@ public:
 
     int getDim() const;
 
+    bool setDim(int d);
+
 private:
     void copy(Inventory<T> &i);
 
@@ -143,6 +145,25 @@ void Inventory<T>::copy(Inventory<T> &i) {
         buffer[idx] = i.buffer[idx];
         usedElements[idx] = i.usedElements[idx];
     }
+}
+/**
+ * method that can incraese the dimension of the inventory
+ * @tparam T
+ * @param d
+ * @return true if the dimension is incresed
+ */
+template<typename T>
+bool Inventory<T>::setDim(int d) {
+    bool done=false
+    if(d>dim) {
+        for (int i = dim; i < d; i++) {
+            buffer.push_back(0);
+            usedElements.push_back(false);
+        }
+        dim=d;
+        done=true;
+    }
+    return done;
 }
 
 

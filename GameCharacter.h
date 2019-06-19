@@ -4,16 +4,17 @@
 
 #ifndef METALCFUREPO_GAMECHARACTER_H
 #define METALCFUREPO_GAMECHARACTER_H
-
+#include <vector>
 #include <memory>
+
 #include "Weapon.h"
 #include "Usable.h"
-#include <vector>
+#include "Inventory.h"
 
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw=4, int mu=4,int ms=10,int sw=0);
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0);
 
     virtual ~GameCharacter() = default;
 
@@ -52,7 +53,7 @@ public:
 
     void setMaxWeapon(int maxWeapon);
 
-    int getMaxUsable() const;
+    int getDimUsable() const;
 
     void setMaxUsable(int maxUsable);
 
@@ -90,10 +91,8 @@ private:
     int posX;
     int posY;
     int strenght;
-    std::vector<Weapon*> weaponInventory;
-    std::vector<Usable*> usableInventory;
-    int maxWeapon;
-    int maxUsable;
+    Inventory<Weapon> weaponInventory;
+    Inventory<Usable*> usableInventory;
     int selectedWeapon;
     int movementSpeed;
 

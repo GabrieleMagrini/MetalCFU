@@ -172,14 +172,14 @@ void GameCharacter::releaseInventory(std::vector<Weapon *> &wi, std::vector<Usab
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms,int sw): HP(hp), posX(x), posY(y), strenght(s), maxWeapon(mw), maxUsable(mu),
-movementSpeed(ms), selectedWeapon(sw){
-    weaponInventory.push_back(w);
-    usableInventory.push_back(p);
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw): HP(hp), posX(x), posY(y), strenght(s),
+movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw),usableInventory(mu){
+   weaponInventory.setElement(0,*w);
+   usableInventory.setElement(0,p);
 }
 
-int GameCharacter::getMaxUsable() const {
-    return maxUsable;
+int GameCharacter::getDimUsable() const {
+    return usableInventory.getDim();
 }
 
 void GameCharacter::setMaxUsable(int maxUsable) {
