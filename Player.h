@@ -6,6 +6,7 @@
 #define METALCFU_PLAYER_H
 
 #include "GameCharacter.h"
+#include "Inventory.h"
 
 class Player: virtual public GameCharacter{
 public:

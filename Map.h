@@ -7,7 +7,6 @@
 
 #include "GameCharacter.h"
 #include "Interactable.h"
-#include "Usable.h"
 #include "Weapon.h"
 #include "Ammo.h"
 
@@ -23,7 +22,7 @@ class Map {
 
     void setInteractable(Interactable);
 
-    void setObjects(Usable,Ammo,Weapon);
+    void setObjects(Ammo,Weapon);
 
 
 
