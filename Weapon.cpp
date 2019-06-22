@@ -52,7 +52,7 @@ bool Weapon::shoot() {
 
 Weapon::Weapon(WeaponType type) {
     switch (type) {
-        case WeaponType::pistol: //pistol
+        case WeaponType::pistol: //pistol        //TODO aggiorna a factory method
             damage=15;
             range=4;
             maxAmmo=Ammo{-1};

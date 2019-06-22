@@ -25,7 +25,7 @@ public:
 
     T *setElement(int i, T a);
 
-    bool removeElement(int i, T &a) const;
+    bool removeElement(int i, T &a);
 
     T *getElement(int i) const;
 
@@ -85,11 +85,11 @@ T *Inventory<T>::setElement(int i, T a) {
  * @return true if the operation has been successful
  */
 template<typename T>
-bool Inventory<T>::removeElement(int i, T &a) const {
+bool Inventory<T>::removeElement(int i, T &a) {
 
     if (i >= 0 && i < dim) {
         if (usedSlot[i]) {
-            usedSlot[i] = false;
+           //  usedSlot[i] = false;
             a = buffer[i];
         }
     }

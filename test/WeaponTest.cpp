@@ -69,6 +69,6 @@ TEST(Weapon,ShootTest) {
     auto w= new Weapon(WeaponType::M4);
 
     ASSERT_EQ(w->shoot(),true);
-    ASSERT_EQ(w->getCurrentAmmo(),39);
+    ASSERT_EQ(w->getCurrentAmmo().getQuantity(),39);
 }
 

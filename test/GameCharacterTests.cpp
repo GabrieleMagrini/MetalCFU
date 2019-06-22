@@ -13,7 +13,7 @@ TEST(GameCharacter, Constructor) {
         ASSERT_EQ(c->getPosX(), 0);
         ASSERT_EQ(c->getPosY(), 0);
         ASSERT_EQ(c->getStrenght(), 10);
-        ASSERT_EQ(c->getWeapon(), nullptr);
+        //ASSERT_EQ(c->getWeapon(), nullptr);
         ASSERT_EQ(c->getUsable(0), nullptr);
         ASSERT_EQ(c->getDimWeapon(), 4);
         ASSERT_EQ(c->getDimUsable(), 4);
@@ -52,10 +52,10 @@ TEST(GameCharacter, hpUpdate) {
 
 TEST(GameCharacter, movementSpeedupdate) {
 
-        auto c = GameCharacter(20, 0, 0, 10, nullptr, nullptr);
-        ASSERT_EQ(c.getMovementSpeed(),10);
-        c.setMovementSpeed(20);
-        ASSERT_EQ(c.getMovementSpeed(),20);
+        auto c = new GameCharacter(20, 0, 0, 10, nullptr, nullptr);
+        ASSERT_EQ(c->getMovementSpeed(),10);
+        c->setMovementSpeed(20);
+        ASSERT_EQ(c->getMovementSpeed(),20);
 }
 
 TEST(GameCharacter, isTwoGameCharacterNearby) {
@@ -74,7 +74,7 @@ TEST(GameCharacter, isTwoGameCharacterNearby) {
 }
 
 TEST(GameCharacter, getDamage){
-    auto c = GameCharacter(20, 0, 0, 10, nullptr, nullptr);
-    c.getDamage(10);
-    ASSERT_EQ(c.getHp(),10);
+    auto c = new GameCharacter(20, 0, 0, 10, nullptr, nullptr);
+    c->getDamage(10);
+    ASSERT_EQ(c->getHp(),10);
 }
