@@ -32,7 +32,7 @@ public:
 
     const Ammo &getMaxAmmo() const;
 
-    void setMaxAmmo(const Ammo &maxAmmo);
+    void setMaxAmmo(int quantity);
 
     bool shoot();
 

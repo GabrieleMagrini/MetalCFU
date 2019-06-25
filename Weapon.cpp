@@ -37,8 +37,8 @@ const Ammo &Weapon::getMaxAmmo() const {
     return maxAmmo;
 }
 
-void Weapon::setMaxAmmo(const Ammo &maxAmmo) {
-    Weapon::maxAmmo = maxAmmo;
+void Weapon::setMaxAmmo(const int quantity) {
+    Weapon::maxAmmo.setQuantity(quantity);
 }
 
 bool Weapon::shoot() {
