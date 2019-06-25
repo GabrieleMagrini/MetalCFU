@@ -12,7 +12,7 @@ public:
     explicit PowerBarrel(int id=3): improveDamage(id) {};
     ~PowerBarrel() final = default;
 
-    void Improve(Weapon &w) override;
+    void improve(Weapon &w) override;
 private:
     int improveDamage;
 };

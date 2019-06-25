@@ -4,6 +4,6 @@
 
 #include "PowerBarrel.h"
 
-void PowerBarrel::Improve(Weapon &w) {
+void PowerBarrel::improve(Weapon &w) {
     w.setDamage(w.getDamage()+improveDamage);
 }

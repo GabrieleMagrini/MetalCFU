@@ -13,7 +13,7 @@ public:
 
       ~LongBarrel() final = default;
 
-    void Improve(Weapon &w) override;
+    void improve(Weapon &w) override;
 
 
 private:

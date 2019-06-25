@@ -10,7 +10,7 @@
 
 class Attachment {
 public:
-    virtual void Improve(Weapon &w)=0;
+    virtual void improve(Weapon &w)=0;
     virtual ~Attachment()= default;
 };
 
