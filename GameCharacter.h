@@ -45,7 +45,7 @@ public:
 
     Weapon * setWeapon(Weapon *weapon);
 
-    Usable *getUsable(int idx) const;
+    Usable *getUsable(int idx)const;
 
     Usable *setUsable(Usable *usable);
 

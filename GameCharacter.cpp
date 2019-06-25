@@ -80,10 +80,10 @@ Weapon * GameCharacter::setWeapon(Weapon *weapon) {
  * @param idx index of the slot of the inventory
  * @return a pointer to an Usable
  */
-Usable *GameCharacter::getUsable(int idx) const {
+Usable *GameCharacter::getUsable(int idx) const{
     Usable* us=nullptr;
     if(idx>=0 && idx<usableInventory.getDim())
-        usableInventory.removeElement(idx, us);
+        us=*usableInventory.getElement(idx);
     return us;
 }
 
@@ -114,9 +114,9 @@ void GameCharacter::setDimWeapon(int dw) {
  *
  * @return  a weapon in the selected slot
  */
-const Weapon GameCharacter::getWeapon() const {
+const Weapon GameCharacter::getWeapon() const{
     Weapon a;
-    weaponInventory.removeElement(selectedWeapon, a);
+    a=*weaponInventory.getElement(selectedWeapon);
     return a;
 
 }
