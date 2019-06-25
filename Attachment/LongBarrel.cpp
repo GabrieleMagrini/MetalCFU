@@ -3,3 +3,7 @@
 //
 
 #include "LongBarrel.h"
+
+void LongBarrel::Improve(Weapon &w) {
+    w.setRange(range);
+}
