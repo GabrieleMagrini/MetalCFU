@@ -9,12 +9,10 @@
 
 class PowerBarrel: public Attachment {
 public:
-    explicit PowerBarrel(int id=3): improveDamage(id) {};
+    explicit PowerBarrel(int id=3): Attachment{id} {};
     ~PowerBarrel() final = default;
 
     void improve(Weapon &w) override;
-private:
-    int improveDamage;
 };
 
 

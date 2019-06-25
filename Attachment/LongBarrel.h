@@ -9,15 +9,11 @@
 
 class LongBarrel: public Attachment{
 public:
-    explicit LongBarrel(int r = 15) : range(r) {};
+    explicit LongBarrel(int r = 15) : Attachment{r} {};
 
       ~LongBarrel() final = default;
 
     void improve(Weapon &w) override;
-
-
-private:
-    int range;
 };
 
 

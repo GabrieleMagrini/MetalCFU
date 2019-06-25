@@ -5,5 +5,5 @@
 #include "LongBarrel.h"
 
 void LongBarrel::improve(Weapon &w) {
-    w.setRange(range);
+    w.setRange(improvement);
 }
