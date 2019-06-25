@@ -8,6 +8,7 @@
 #include "../Attachment.h"
 
 class ExtendedMagazine:public Attachment {
+public:
     explicit ExtendedMagazine(int q=30):Attachment{q} {};
     ~ExtendedMagazine() final = default;
 

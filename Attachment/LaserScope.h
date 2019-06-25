@@ -7,6 +7,7 @@
 
 #include "../Attachment.h"
 class LaserScope: Attachment {
+public:
     LaserScope();
     ~LaserScope() final = default;
 
