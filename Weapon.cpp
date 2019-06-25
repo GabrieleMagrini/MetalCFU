@@ -5,9 +5,9 @@
 #include "Weapon.h"
 #include "Ammo.h"
 
-Weapon::Weapon(const Ammo& c, int d, int r,const Ammo& m):currentAmmo(c), damage(d), range(r),maxAmmo(m) {}
+Weapon::Weapon(const Ammo& c, int d, int r,const Ammo& m):currentAmmo(c), damage(d), range(r),maxAmmo(m),activeLaser(false) {}
 
-Weapon::Weapon(int cur, int d, int r, int m): currentAmmo(cur), damage(d),range(r),maxAmmo(m) {}
+Weapon::Weapon(int cur, int d, int r, int m): currentAmmo(cur), damage(d),range(r),maxAmmo(m),activeLaser(false) {}
 
 const Ammo &Weapon::getCurrentAmmo() const {
     return currentAmmo;
@@ -76,7 +76,16 @@ Weapon::Weapon(WeaponType type) {
             maxAmmo=Ammo{20};
             currentAmmo=Ammo{5};
     }
+    activeLaser=false;
 }
 
-Weapon::Weapon(): currentAmmo(0), damage(0), range(0),maxAmmo(0){}
+Weapon::Weapon(): currentAmmo(0), damage(0), range(0),maxAmmo(0),activeLaser(false){}
+
+bool Weapon::isActiveLaser() const {
+    return activeLaser;
+}
+
+void Weapon::setActiveLaser(bool activeLaser) {
+    Weapon::activeLaser = activeLaser;
+}
 

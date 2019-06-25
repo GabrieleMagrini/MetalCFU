@@ -38,11 +38,16 @@ public:
 
     virtual ~Weapon() = default;
 
+    bool isActiveLaser() const;
+
+    void setActiveLaser(bool activeLaser);
+
 private:
     Ammo currentAmmo;
     int damage;
     int range;
     Ammo maxAmmo;
+    bool activeLaser;
 };
 
 
