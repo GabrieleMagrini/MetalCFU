@@ -5,9 +5,16 @@
 #ifndef METALCFU_POWERBARREL_H
 #define METALCFU_POWERBARREL_H
 
+#include "../Attachment.h"
 
-class PowerBarrel {
+class PowerBarrel: public Attachment {
+public:
+    explicit PowerBarrel(int id=3): improveDamage(id) {};
+    ~PowerBarrel() final = default;
 
+    void Improve(Weapon &w) override;
+private:
+    int improveDamage;
 };
 
 
