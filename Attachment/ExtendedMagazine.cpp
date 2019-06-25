@@ -5,5 +5,7 @@
 #include "ExtendedMagazine.h"
 
 void ExtendedMagazine::improve(Weapon &w) {
-    w.setMaxAmmo(w.getMaxAmmo().getQuantity()+improvement);
+    if(w.getMaxAmmo().getQuantity()>0){
+        w.setMaxAmmo(w.getMaxAmmo().getQuantity()+improvement);
+    }
 }
