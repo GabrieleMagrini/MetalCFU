@@ -7,8 +7,11 @@
 
 #include "GameCharacter.h"
 
-class Enemy: public GameCharacter {
+enum class EnemyType {
+    Soldier, Kamikaze, Tank, Boss
+};
 
+class Enemy : public GameCharacter {
 };
 
 
