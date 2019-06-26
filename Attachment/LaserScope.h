@@ -6,9 +6,11 @@
 #define METALCFU_LASERSCOPE_H
 
 #include "../Attachment.h"
-class LaserScope: Attachment {
+
+class LaserScope : Attachment {
 public:
-    LaserScope();
+    LaserScope() = default;
+
     ~LaserScope() final = default;
 
     void improve(Weapon &w) override;

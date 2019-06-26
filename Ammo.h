@@ -9,10 +9,13 @@
 class Ammo {
 public:
 
-    explicit Ammo(int q=1): quantity(q){};
-    Ammo(const Ammo& a) = default ;
+    explicit Ammo(int q = 1) : quantity(q) {};
 
-    virtual ~Ammo()= default;
+    Ammo(const Ammo &a) = default;
+
+    bool operator==(const Ammo &a2);
+
+    virtual ~Ammo() = default;
 
     int getQuantity() const;
 

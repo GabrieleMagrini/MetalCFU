@@ -7,9 +7,10 @@
 
 #include "../Attachment.h"
 
-class PowerBarrel: public Attachment {
+class PowerBarrel : public Attachment {
 public:
-    explicit PowerBarrel(int id=3): Attachment{id} {};
+    explicit PowerBarrel(int id = 8) : Attachment{id} {};
+
     ~PowerBarrel() final = default;
 
     void improve(Weapon &w) override;
