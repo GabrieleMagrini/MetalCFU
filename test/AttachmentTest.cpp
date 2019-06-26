@@ -10,6 +10,7 @@
 #include "../Attachment/LongBarrel.h"
 #include "../Attachment/PowerBarrel.h"
 #include "../Attachment/LaserScope.h"
+#include "../Factory/WeaponFactory.h"
 
 
 TEST(Attachment, AttachmentConstructorTest) {
@@ -34,20 +35,23 @@ TEST(Attachment, AttachmentConstructorTest) {
 }
 
 TEST(Attachment, ImprovementTest) {
+    WeaponFactory w;
+
+    auto w1 = *(w.createWeapon(WeaponType::M4));
     ExtendedMagazine mg;
-    Weapon w = Weapon(WeaponType::M4);
-    mg.improve(w);
-    ASSERT_EQ(w.getMaxAmmo().getQuantity(), 390);
+
+    mg.improve(w1);
+    ASSERT_EQ(w1.getMaxAmmo().getQuantity(), 390);
 
     PowerBarrel pb;
-    pb.improve(w);
-    ASSERT_EQ(w.getDamage(), 43);
+    pb.improve(w1);
+    ASSERT_EQ(w1.getDamage(), 43);
 
     LaserScope sc;
-    sc.improve(w);
-    ASSERT_EQ(w.isActiveLaser(), true);
+    sc.improve(w1);
+    ASSERT_EQ(w1.isActiveLaser(), true);
 
     LongBarrel lb = LongBarrel(15);
-    lb.improve(w);
-    ASSERT_EQ(w.getRange(), 15);
+    lb.improve(w1);
+    ASSERT_EQ(w1.getRange(), 15);
 }

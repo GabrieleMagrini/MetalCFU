@@ -19,7 +19,7 @@ public:
 
 private:
     int startPosX;
-    //int startposY;
+    int startposY;
     int steps;
 };
 
