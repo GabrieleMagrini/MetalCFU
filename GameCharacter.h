@@ -14,7 +14,8 @@
 
 class GameCharacter {
 public:
-    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0,int su=4);
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0,
+                  int su = 4);
 
     virtual ~GameCharacter() = default;
 

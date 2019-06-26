@@ -64,14 +64,14 @@ void GameCharacter::move(int x, int y) {
  * @param weapon the weapon to add
  * @return true if the operation has been successful, false if the inventory is full
  */
-Weapon * GameCharacter::setWeapon(Weapon *weapon) {
-    Weapon *w= nullptr;
-    int i= weaponInventory.getFirstFree();
+Weapon *GameCharacter::setWeapon(Weapon *weapon) {
+    Weapon *w = nullptr;
+    int i = weaponInventory.getFirstFree();
 
-    if(i==weaponInventory.getDim())
-        weaponInventory.setElement(selectedWeapon,*weapon);
+    if (i == weaponInventory.getDim())
+        weaponInventory.setElement(selectedWeapon, *weapon);
     else
-        w=weaponInventory.setElement(i,*weapon);
+        w = weaponInventory.setElement(i, *weapon);
     return w;
 }
 
@@ -80,10 +80,10 @@ Weapon * GameCharacter::setWeapon(Weapon *weapon) {
  * @param idx index of the slot of the inventory
  * @return a pointer to an Usable
  */
-Usable *GameCharacter::getUsable(int idx) const{
-    Usable* us=nullptr;
-    if(idx>=0 && idx<usableInventory.getDim())
-        us=*usableInventory.getElement(idx);
+Usable *GameCharacter::getUsable(int idx) const {
+    Usable *us = nullptr;
+    if (idx >= 0 && idx < usableInventory.getDim())
+        us = *usableInventory.getElement(idx);
     return us;
 }
 
@@ -93,12 +93,12 @@ Usable *GameCharacter::getUsable(int idx) const{
  * @return true if the operation has been successful, false if the inventory is full
  */
 Usable *GameCharacter::setUsable(Usable *usable) {
-    Usable *u=nullptr;
-    int i=usableInventory.getFirstFree();
-    if(i==weaponInventory.getDim())
-        u=*usableInventory.setElement(selectedUsable,usable);
+    Usable *u = nullptr;
+    int i = usableInventory.getFirstFree();
+    if (i == weaponInventory.getDim())
+        u = *usableInventory.setElement(selectedUsable, usable);
     else
-        u=*usableInventory.setElement(i,usable);
+        u = *usableInventory.setElement(i, usable);
     return u;
 }
 
@@ -114,12 +114,13 @@ void GameCharacter::setDimWeapon(int dw) {
  *
  * @return  a weapon in the selected slot
  */
-const Weapon GameCharacter::getWeapon() const{
+const Weapon GameCharacter::getWeapon() const {
     Weapon a;
-    a=*weaponInventory.getElement(selectedWeapon);
+    a = *weaponInventory.getElement(selectedWeapon);
     return a;
 
 }
+
 /**
  * remove a weapon from the inventory
  * @param idx index of the slot
@@ -134,18 +135,20 @@ Weapon *GameCharacter::removeWeapon(int idx) {
     }
     return nullptr;
 }
+
 /**
  * remove an Usable from the inventory
  * @param idx index of the slot
  * @return the Usable
  */
 Usable *GameCharacter::removeUsable(int idx) {
-    Usable *u=nullptr;
+    Usable *u = nullptr;
     if (idx > 0 && idx < usableInventory.getDim())
         usableInventory.removeElement(idx, u);
 
     return u;
 }
+
 /**
  * function that drop from the inventory of the GameCharacter to the map any Weapon or Usable
  * the object will save in the parameters list
@@ -153,19 +156,20 @@ Usable *GameCharacter::removeUsable(int idx) {
  * @param ui dropped Usable inventory
  */
 void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> &ui) {
-    for(int i=0;i<weaponInventory.getDim();i++){
-        wi =  Inventory<Weapon>{weaponInventory};
+    for (int i = 0; i < weaponInventory.getDim(); i++) {
+        wi = Inventory<Weapon>{weaponInventory};
     }
 
-    for(int i=0;i<usableInventory.getDim();i++){
-        ui =  Inventory<Usable*>{usableInventory};
+    for (int i = 0; i < usableInventory.getDim(); i++) {
+        ui = Inventory<Usable *>{usableInventory};
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw,int su): HP(hp), posX(x), posY(y), strenght(s),
-movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw),usableInventory(mu),selectedUsable(su){
-   weaponInventory.setElement(0,*w);
-   usableInventory.setElement(0,p);
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su)
+        : HP(hp), posX(x), posY(y), strenght(s),
+          movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su) {
+    weaponInventory.setElement(0, *w);
+    usableInventory.setElement(0, p);
 }
 
 int GameCharacter::getDimUsable() const {
@@ -177,9 +181,9 @@ void GameCharacter::setDimUsable(int ud) {
 }
 
 bool GameCharacter::isTwoGameCharacterNearby(GameCharacter *gc1, GameCharacter *gc2) {
-    bool b=false;
-    if(abs(gc1->getPosX()-gc2->getPosX())<=1 && abs(gc1->getPosY()-gc2->getPosY())<=1)
-        b=true;
+    bool b = false;
+    if (abs(gc1->getPosX() - gc2->getPosX()) <= 1 && abs(gc1->getPosY() - gc2->getPosY()) <= 1)
+        b = true;
     return b;
 }
 
@@ -191,7 +195,7 @@ void GameCharacter::setSelectedWeapon(int selectedWeapon) {
     GameCharacter::selectedWeapon = selectedWeapon;
 }
 
-const Inventory<Weapon> & GameCharacter::getWeaponInventory() const {
+const Inventory<Weapon> &GameCharacter::getWeaponInventory() const {
     return weaponInventory;
 }
 
@@ -202,6 +206,7 @@ void GameCharacter::setWeaponInventory(const Inventory<Weapon> &weaponInventory)
 const Inventory<Usable *> &GameCharacter::getUsableInventory() const {
     return usableInventory;
 }
+
 void GameCharacter::setUsableInventory(const Inventory<Usable *> &usableInventory) {
     GameCharacter::usableInventory = usableInventory;
 }
@@ -211,30 +216,32 @@ void GameCharacter::setUsableInventory(const Inventory<Usable *> &usableInventor
  * @param damage
  */
 void GameCharacter::getDamage(unsigned int damage) {
-    HP=HP-damage;
+    HP = HP - damage;
 
-    if(HP<=0) {
+    if (HP <= 0) {
         HP = 0;
     }
 }
+
 /**
  * function that: if the enemy is nearby, player will do melee attack, else he fire with the gun.
  * @param enemy
  */
 void GameCharacter::fight(GameCharacter *enemy) {
-    if(isTwoGameCharacterNearby(this,enemy)){
+    if (isTwoGameCharacterNearby(this, enemy)) {
         enemy->getDamage(this->strenght);
-    } else{
+    } else {
         weaponInventory.getElement(selectedWeapon)->shoot();
     }
 }
+
 /***
  * function that use the usable at slot "invIdx"
  * @param invIdx
  */
 void GameCharacter::useUsable(int invIdx) {
-    Usable *u=nullptr;
-    usableInventory.removeElement(invIdx,u);
-    if(u!=nullptr)
+    Usable *u = nullptr;
+    usableInventory.removeElement(invIdx, u);
+    if (u != nullptr)
         u->use();
 }
