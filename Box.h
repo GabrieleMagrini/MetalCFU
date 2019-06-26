@@ -7,26 +7,34 @@
 
 #include <memory>
 
-#include "Weapon.h"
-#include "Usable.h"
-#include "Attachment.h"
 #include "Interactable.h"
 
 using namespace std;
 
+template<typename T>
 class Box : public Interactable {
 public:
-    Box(Weapon *w, Ammo *a, Usable *u, Attachment *at, int x, int y, int hp = 100);
+    explicit Box(T t, int hp=100);
 
     ~Box() override = default;
-
+    T dropGift();
 private:
-    unique_ptr<Weapon> giftWeapon;
-    unique_ptr<Ammo> giftAmmo;
-    unique_ptr<Usable> giftUsable;
-    unique_ptr<Attachment> giftAttach;
+    unique_ptr<T> gift;
     int hp;
 };
+
+template<typename T>
+Box<T>::Box(T t, int hp): gift(t), hp(hp) {
+
+}
+
+template<typename T>
+T Box<T>::dropGift() {
+    if(hp<=0)
+        return gift;
+    else
+        return nullptr;
+}
 
 
 #endif //METALCFU_BOX_H
