@@ -7,7 +7,7 @@
 void ExtendedMagazine::improve(Weapon &w) {
 
     if(w.getMaxAmmo().getQuantity()>0){
-        int percentual = static_cast<int>(static_cast<float>(improvement)/ static_cast<float>(w.getMaxAmmo().getQuantity())*100);
+        int percentual = static_cast<int>(improvement*w.getMaxAmmo().getQuantity()/100.f);
         w.setMaxAmmo(w.getMaxAmmo().getQuantity()+percentual);
     }
 }
