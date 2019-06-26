@@ -85,7 +85,7 @@ public:
 
     void useUsable(int invIdx);
 
-private:
+protected:
     int HP;
     int posX;
     int posY;
