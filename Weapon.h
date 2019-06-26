@@ -7,16 +7,16 @@
 
 #include "Ammo.h"
 
-enum class WeaponType{pistol,AK_47, M4, AWP};
 
 class Weapon {
 public:
     Weapon();
-    Weapon(const Ammo& c, int d, int r,const Ammo& m);
-    explicit Weapon(WeaponType type);
-    Weapon(int cur,int d,int r,int m);
 
-    Weapon(const Weapon& w)= default;
+    Weapon(const Ammo &c, int d, int r, const Ammo &m);
+
+    Weapon(int cur, int d, int r, int m);
+
+    Weapon(const Weapon &w) = default;
 
     const Ammo &getCurrentAmmo() const;
 

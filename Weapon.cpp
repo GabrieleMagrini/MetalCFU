@@ -50,35 +50,6 @@ bool Weapon::shoot() {
         return false;
 }
 
-Weapon::Weapon(WeaponType type) {
-    switch (type) {
-        case WeaponType::pistol: //pistol        //TODO aggiorna a factory method
-            damage = 15;
-            range = 4;
-            maxAmmo = Ammo{-1};
-            currentAmmo = Ammo{-1};
-            break;
-        case WeaponType::M4 :
-            damage = 40;
-            range = 15;
-            maxAmmo = Ammo{300};
-            currentAmmo = Ammo{45};
-            break;
-        case WeaponType::AK_47:
-            damage = 50;
-            range = 10;
-            maxAmmo = Ammo{250};
-            currentAmmo = Ammo{30};
-            break;
-        case WeaponType::AWP:
-            damage = 95;
-            range = 30;
-            maxAmmo = Ammo{20};
-            currentAmmo = Ammo{5};
-    }
-    activeLaser = false;
-}
-
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false) {}
 
 bool Weapon::isActiveLaser() const {
