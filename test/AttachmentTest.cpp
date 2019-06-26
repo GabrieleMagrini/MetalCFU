@@ -27,7 +27,7 @@ TEST(Attachment, AttachmentConstructorTest) {
 
     //test for PowerBarrel
     PowerBarrel pb = PowerBarrel{};
-    ASSERT_EQ(pb.getImprovement(), 3);
+    ASSERT_EQ(pb.getImprovement(), 8);
     pb = PowerBarrel{10};
     ASSERT_EQ(pb.getImprovement(), 10);
 
@@ -40,7 +40,7 @@ TEST(Attachment, ImprovementTest) {
     ASSERT_EQ(w.getMaxAmmo().getQuantity(), 390);
 
     PowerBarrel pb;
-    mg.improve(w);
+    pb.improve(w);
     ASSERT_EQ(w.getDamage(), 43);
 
     LaserScope sc;
