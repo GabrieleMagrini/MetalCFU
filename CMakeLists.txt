@@ -7,5 +7,5 @@ set(SOURCE_FILES GameCharacter.h GameCharacter.cpp Ammo.cpp Ammo.h Weapon.cpp We
 add_subdirectory(test)
 add_executable(MetalCFU main.cpp ${SOURCE_FILES} Box.h)
 
-add_library(core ${SOURCE_FILES})
+add_library(core ${SOURCE_FILES} SpecialAttack/Kamikaze.cpp SpecialAttack/Kamikaze.h)
 target_link_libraries(MetalCFU core)
