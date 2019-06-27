@@ -9,11 +9,14 @@
 
 #include "../Enemy.h"
 
+enum class EnemyType{Soldier,Tank,Kamikaze,Boss};
+
 class EnemyFactory {
 public:
 
     virtual ~EnemyFactory() = default;
 
+    std::unique_ptr<Enemy> createEnemy(EnemyType et);
 };
 
 
