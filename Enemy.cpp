@@ -4,9 +4,10 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su, int steps)
+Enemy::Enemy(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su, int steps,
+             SpecialAttack *sa)
         : GameCharacter(
-        hp, x, y, s, w, p, mw, mu, ms, sw, su), startPosX(x), startposY(y), steps(steps) {
+        hp, x, y, s, w, p, mw, mu, ms, sw, su), startPosX(x), startposY(y), steps(steps), specAttack(sa) {
 
 }
 
@@ -24,4 +25,10 @@ void Enemy::Behaviour() {
     else
         posX -= movementSpeed;
 
+}
+
+void Enemy::doSpecial() {
+    if(specAttack!= nullptr){
+        specAttack->doSpecial();
+    }
 }

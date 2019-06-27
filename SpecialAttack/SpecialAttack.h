@@ -7,7 +7,10 @@
 
 
 class SpecialAttack {
+public:
+    virtual ~SpecialAttack() = default;
 
+    virtual void doSpecial() = 0;
 };
 
 
