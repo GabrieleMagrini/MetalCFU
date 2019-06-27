@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../Attachment.h"
+#include "../Attachment/Attachment.h"
 #include "../Weapon.h"
 #include "../Attachment/ExtendedMagazine.h"
 #include "../Attachment/LongBarrel.h"

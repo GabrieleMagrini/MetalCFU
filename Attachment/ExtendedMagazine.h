@@ -5,7 +5,7 @@
 #ifndef METALCFU_EXTENDEDMAGAZINE_H
 #define METALCFU_EXTENDEDMAGAZINE_H
 
-#include "../Attachment.h"
+#include "Attachment.h"
 
 class ExtendedMagazine:public Attachment {
 public:

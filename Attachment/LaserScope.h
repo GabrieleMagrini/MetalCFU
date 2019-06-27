@@ -5,7 +5,7 @@
 #ifndef METALCFU_LASERSCOPE_H
 #define METALCFU_LASERSCOPE_H
 
-#include "../Attachment.h"
+#include "Attachment.h"
 
 class LaserScope : Attachment {
 public:

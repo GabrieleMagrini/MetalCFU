@@ -6,7 +6,7 @@
 #define METALCFU_ATTACHMENT_H
 
 
-#include "Weapon.h"
+#include "../Weapon.h"
 
 class Attachment {
 public:

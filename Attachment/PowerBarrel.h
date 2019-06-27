@@ -5,7 +5,7 @@
 #ifndef METALCFU_POWERBARREL_H
 #define METALCFU_POWERBARREL_H
 
-#include "../Attachment.h"
+#include "Attachment.h"
 
 class PowerBarrel : public Attachment {
 public:

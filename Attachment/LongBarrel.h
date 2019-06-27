@@ -5,7 +5,7 @@
 #ifndef METALCFU_LONGBARREL_H
 #define METALCFU_LONGBARREL_H
 
-#include "../Attachment.h"
+#include "Attachment.h"
 
 class LongBarrel: public Attachment{
 public:
