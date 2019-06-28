@@ -22,6 +22,10 @@ TEST(Inventory, int) {
     ASSERT_EQ(i.removeElement(4, x), false);
     ASSERT_EQ(i.removeElement(3, x), true);
     ASSERT_EQ(x, 10);
+
+    i.setElement(0,15);
+
+    ASSERT_EQ(*i.getElement(0),15);
 }
 
 TEST(Inventory, setDim) {
