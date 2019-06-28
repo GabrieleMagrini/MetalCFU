@@ -86,14 +86,15 @@ T *Inventory<T>::setElement(int i, T a) {
  */
 template<typename T>
 bool Inventory<T>::removeElement(int i, T &a) {
-
+    bool done=false;
     if (i >= 0 && i < dim) {
         if (usedSlot[i]) {
            //  usedSlot[i] = false;
             a = buffer[i];
+            done =true;
         }
     }
-    return !usedSlot[i];
+    return done;
 }
 
 template<typename T>
