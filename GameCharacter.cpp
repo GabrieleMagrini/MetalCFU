@@ -156,12 +156,19 @@ Usable *GameCharacter::removeUsable(int idx) {
  * @param ui dropped Usable inventory
  */
 void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> &ui) {
+    wi = Inventory<Weapon>{weaponInventory.getDim()};
+    ui = Inventory<Usable *>{usableInventory.getDim()};
+    Weapon w;
     for (int i = 0; i < weaponInventory.getDim(); i++) {
-        wi = Inventory<Weapon>{weaponInventory};
+        weaponInventory.removeElement(i, w);
+        wi.setElement(i, w);
     }
 
+    Usable *u;
+
     for (int i = 0; i < usableInventory.getDim(); i++) {
-        ui = Inventory<Usable *>{usableInventory};
+        usableInventory.removeElement(i, u);
+        ui.setElement(i, u);
     }
 }
 
