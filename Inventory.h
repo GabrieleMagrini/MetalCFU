@@ -89,7 +89,7 @@ bool Inventory<T>::removeElement(int i, T &a) {
     bool done = false;
     if (i >= 0 && i < dim) {
         if (usedSlot[i]) {
-              usedSlot[i] = false;
+            usedSlot[i] = false;
             a = buffer[i];
             done = true;
         }

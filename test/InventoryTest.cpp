@@ -23,8 +23,8 @@ TEST(Inventory, int) {
     ASSERT_EQ(i.removeElement(3, x), true);
     ASSERT_EQ(x, 10);
 
-    i.setElement(0,15);
-
+    int y = *i.setElement(0,15);
+    ASSERT_EQ(4,y);
     ASSERT_EQ(*i.getElement(0),15);
 }
 
