@@ -17,9 +17,11 @@ class Inventory {
 public:
     explicit Inventory(int d = 4);
 
-    Inventory(Inventory<T> &i);
+    Inventory(const Inventory<T> &i);
 
     Inventory &operator=(const Inventory<T> &i);
+
+    bool operator==(Inventory<T> i);
 
     ~Inventory();
 
@@ -106,7 +108,7 @@ template<typename T>
 Inventory<T>::~Inventory() = default;
 
 template<typename T>
-Inventory<T>::Inventory(Inventory<T> &i):dim(i.dim) {
+Inventory<T>::Inventory(const Inventory<T> &i):dim(i.dim) {
     buffer = vector<T>(dim);
     usedSlot = vector<bool>(dim);
     for (int idx = 0; idx < dim; idx++) {
@@ -163,6 +165,21 @@ T *Inventory<T>::getElement(int i) const {
             return new T{buffer[i]};
     }
     return nullptr;
+}
+
+template<typename T>
+bool Inventory<T>::operator==(const Inventory<T> i) {
+    int j = 0;
+    bool isEqual = false;
+    if (dim == i.dim)
+        while (j < dim)
+            if (usedSlot[j] && i.usedSlot[j])
+                if (buffer[j] == i.buffer[j])
+                    j++;
+    if (j > dim)
+        isEqual = true;
+
+    return isEqual;
 }
 
 
