@@ -12,7 +12,7 @@ void Ammo::setQuantity(int quantity) {
     Ammo::quantity = quantity;
 }
 
-bool Ammo::operator==(const Ammo &a2) {
+bool Ammo::operator==(const Ammo &a2) const{
     bool us = false;
     if (quantity == a2.quantity)
         us = true;

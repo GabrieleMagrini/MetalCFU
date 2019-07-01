@@ -13,7 +13,7 @@ public:
 
     Ammo(const Ammo &a) = default;
 
-    bool operator==(const Ammo &a2);
+    bool operator==(const Ammo &a2) const;
 
     virtual ~Ammo() = default;
 
