@@ -60,7 +60,7 @@ void Weapon::setActiveLaser(bool activeLaser) {
     Weapon::activeLaser = activeLaser;
 }
 
-bool Weapon::operator==(const Weapon &w1) {
+bool Weapon::operator==(const Weapon &w1) const {
     bool us = true;
     if (range != w1.range)
         us = false;

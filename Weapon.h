@@ -42,7 +42,7 @@ public:
 
     void setActiveLaser(bool activeLaser);
 
-    bool operator==(const Weapon &w1);
+    bool operator==(const Weapon &w1) const;
 
 private:
     Ammo currentAmmo;
