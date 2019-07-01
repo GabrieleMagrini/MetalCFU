@@ -123,3 +123,13 @@ TEST(GameCharacter, releaseInventory){
     ASSERT_EQ(iu,iu2);
 
 }
+
+TEST(GameCharacter, strenghtUpdate) {
+    WeaponFactory w;
+
+    auto w1 = w.createWeapon(WeaponType::M4);
+    auto c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
+
+    c->setStrenght(26);
+    ASSERT_EQ(c->getStrenght(),26);
+}
