@@ -93,13 +93,16 @@ Usable *GameCharacter::getUsable(int idx) const {
  * @return true if the operation has been successful, false if the inventory is full
  */
 Usable *GameCharacter::setUsable(Usable *usable) {
-    Usable *u = nullptr;
+    Usable **u = nullptr;
     int i = usableInventory.getFirstFree();
-    if (i == weaponInventory.getDim())
-        u = *usableInventory.setElement(selectedUsable, usable);
+    if (i == usableInventory.getDim())
+        u = usableInventory.setElement(selectedUsable, usable);
     else
-        u = *usableInventory.setElement(i, usable);
-    return u;
+        u = usableInventory.setElement(i, usable);
+    if(u== nullptr)
+        return nullptr;
+
+    return *u;
 }
 
 int GameCharacter::getDimWeapon() const {
@@ -160,15 +163,15 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
     ui = Inventory<Usable *>{usableInventory.getDim()};
     Weapon w;
     for (int i = 0; i < weaponInventory.getDim(); i++) {
-        weaponInventory.removeElement(i, w);
-        wi.setElement(i, w);
+        if(weaponInventory.removeElement(i, w))
+            wi.setElement(i, w);
     }
 
     Usable *u;
 
     for (int i = 0; i < usableInventory.getDim(); i++) {
-        usableInventory.removeElement(i, u);
-        ui.setElement(i, u);
+        if(usableInventory.removeElement(i, u))
+            ui.setElement(i, u);
     }
 }
 

@@ -5,6 +5,8 @@
 #include "gtest/gtest.h"
 #include "../GameCharacter.h"
 #include "../Factory/WeaponFactory.h"
+#include "../MedKit.h"
+#include "../Granade.h"
 
 
 TEST(GameCharacter, Constructor) {
@@ -93,4 +95,31 @@ TEST(GameCharacter, getDamage) {
     auto c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
     c->getDamage(10);
     ASSERT_EQ(c->getHp(), 10);
+}
+
+TEST(GameCharacter, releaseInventory){
+
+    WeaponFactory w;
+    auto w1 = w.createWeapon(WeaponType::pistol);
+    auto w2 = w.createWeapon(WeaponType::AWP);
+
+    Usable *u1 = new MedKit{10};
+    Usable *u2 = new Granade{15};
+    auto gc = new GameCharacter{20,0,0,10,w1.get(),u1};
+    auto u3 = gc->setUsable(u2);
+    ASSERT_EQ(u3,nullptr);
+    auto w3 = gc->setWeapon(w2.get());
+    ASSERT_EQ(w3, nullptr);
+
+    const Inventory<Weapon> iw = gc->getWeaponInventory();
+    const Inventory<Usable*> iu = gc->getUsableInventory();
+
+     Inventory<Weapon> iw2(4);
+     Inventory<Usable*> iu2(4);
+
+    gc->releaseInventory(iw2,iu2);
+
+    ASSERT_EQ(iw,iw2);
+    ASSERT_EQ(iu,iu2);
+
 }
