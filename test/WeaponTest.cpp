@@ -42,3 +42,13 @@ TEST(Weapon, ShootTest) {
     ASSERT_EQ(w->getCurrentAmmo().getQuantity(), 9);
 }
 
+TEST(Weapon, equalTest){
+    auto w1 = new Weapon{10,20,15,15};
+    auto w2 = new Weapon{10,21,15,15};
+    ASSERT_EQ(*w1==*w2,false);
+
+    w2= new Weapon{10,20,15,15};
+
+    ASSERT_EQ(*w1==*w2,true);
+}
+
