@@ -99,7 +99,7 @@ Usable *GameCharacter::setUsable(Usable *usable) {
         u = usableInventory.setElement(selectedUsable, usable);
     else
         u = usableInventory.setElement(i, usable);
-    if(u== nullptr)
+    if (u == nullptr)
         return nullptr;
 
     return *u;
@@ -163,14 +163,14 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
     ui = Inventory<Usable *>{usableInventory.getDim()};
     Weapon w;
     for (int i = 0; i < weaponInventory.getDim(); i++) {
-        if(weaponInventory.removeElement(i, w))
+        if (weaponInventory.removeElement(i, w))
             wi.setElement(i, w);
     }
 
     Usable *u;
 
     for (int i = 0; i < usableInventory.getDim(); i++) {
-        if(usableInventory.removeElement(i, u))
+        if (usableInventory.removeElement(i, u))
             ui.setElement(i, u);
     }
 }

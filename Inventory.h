@@ -176,7 +176,7 @@ bool Inventory<T>::operator==(const Inventory<T> i) const {
             if (usedSlot[idx] != i.usedSlot[idx]) {
                 break;
             }
-            if(usedSlot[idx])
+            if (usedSlot[idx])
                 if (!(buffer[idx] == i.buffer[idx]))
                     break;
 
