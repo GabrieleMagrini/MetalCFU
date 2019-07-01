@@ -114,7 +114,7 @@ void GameCharacter::setDimWeapon(int dw) {
  *
  * @return  a weapon in the selected slot
  */
-const Weapon GameCharacter::getWeapon() const {
+Weapon GameCharacter::getWeapon() const {
     Weapon a;
     a = *weaponInventory.getElement(selectedWeapon);
     return a;

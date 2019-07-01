@@ -42,7 +42,7 @@ public:
 
     void move(int x, int y);
 
-    const Weapon getWeapon() const;
+    Weapon getWeapon() const;
 
     Weapon * setWeapon(Weapon *weapon);
 
