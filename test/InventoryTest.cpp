@@ -40,3 +40,31 @@ TEST(Inventory, setDim) {
     wi.setElement(9, 4);
     ASSERT_EQ(*wi.getElement(9), 4);
 }
+
+TEST(Inventory, equalOperatorTest){
+    Inventory<int> i1;
+    Inventory<int>i2{2};
+
+    ASSERT_EQ(i1==i2,false);
+
+    i2.setDim(4);
+
+    i1.setElement(0,3);
+    i1.setElement(1,2);
+    i1.setElement(2,1);
+
+    ASSERT_EQ(i1==i2,false);
+
+    i2.setElement(0,3);
+    i2.setElement(1,2);
+    i2.setElement(2,1);
+    i2.setElement(3,1);
+
+    ASSERT_EQ(i1==i2,false);
+
+    int a;
+    i2.removeElement(3,a);
+
+    ASSERT_EQ(i1==i2,true);
+
+}

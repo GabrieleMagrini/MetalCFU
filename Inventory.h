@@ -21,7 +21,7 @@ public:
 
     Inventory &operator=(const Inventory<T> &i);
 
-    bool operator==(Inventory<T> i);
+    bool operator==(Inventory<T> i) const;
 
     ~Inventory();
 
@@ -168,15 +168,22 @@ T *Inventory<T>::getElement(int i) const {
 }
 
 template<typename T>
-bool Inventory<T>::operator==(const Inventory<T> i) {
-    int j = 0;
+bool Inventory<T>::operator==(Inventory<T> i) const {
+    int idx = 0;
     bool isEqual = false;
     if (dim == i.dim)
-        while (j < dim)
-            if (usedSlot[j] && i.usedSlot[j])
-                if (buffer[j] == i.buffer[j])
-                    j++;
-    if (j > dim)
+        while (idx < dim) {
+            if (usedSlot[idx] != i.usedSlot[idx]) {
+                break;
+            }
+            if(usedSlot[idx])
+                if (buffer[idx] != i.buffer[idx])
+                    break;
+
+            idx++;
+
+        }
+    if (idx >= dim)
         isEqual = true;
 
     return isEqual;
