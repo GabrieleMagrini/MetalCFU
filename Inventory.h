@@ -168,7 +168,7 @@ T *Inventory<T>::getElement(int i) const {
 }
 
 template<typename T>
-bool Inventory<T>::operator==(Inventory<T> i) const {
+bool Inventory<T>::operator==(const Inventory<T> i) const {
     int idx = 0;
     bool isEqual = false;
     if (dim == i.dim)
@@ -177,7 +177,7 @@ bool Inventory<T>::operator==(Inventory<T> i) const {
                 break;
             }
             if(usedSlot[idx])
-                if (buffer[idx] != i.buffer[idx])
+                if (!(buffer[idx] == i.buffer[idx]))
                     break;
 
             idx++;
