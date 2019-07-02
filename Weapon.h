@@ -17,7 +17,7 @@ public:
 
     Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr);
 
-    Weapon(int cur, int d, int r, int m, Texture *txt);
+    Weapon(int cur, int d, int r, int m, Texture *txt=nullptr);
 
     Weapon(const Weapon &w) = default;
 
