@@ -16,20 +16,13 @@ void GameCharacter::setHp(int hp) {
     HP = hp;
 }
 
-int GameCharacter::getPosX() const {
-    return posX;
+float GameCharacter::getPosX() const {
+    return getPosition().x;
 }
 
-void GameCharacter::setPosX(int posX) {
-    GameCharacter::posX = posX;
-}
 
-int GameCharacter::getPosY() const {
-    return posY;
-}
-
-void GameCharacter::setPosY(int posY) {
-    GameCharacter::posY = posY;
+float GameCharacter::getPosY() const {
+    return getPosition().y;
 }
 
 int GameCharacter::getStrenght() const {
@@ -49,14 +42,12 @@ void GameCharacter::setMovementSpeed(int movementSpeed) {
 }
 
 /***
- * move the player in the map
+ * teleport the player in the map in the coordinated
  * @param x axis
  * @param y axis
  */
-void GameCharacter::move(int x, int y) {
-    this->posX = x;
-    this->posY = y;
-
+void GameCharacter::teleport(float x, float y) {
+    setPosition(x, y);
 }
 
 /***
@@ -175,11 +166,15 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su)
-        : HP(hp), posX(x), posY(y), strenght(s),
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su,
+                             Texture *txt)
+        : HP(hp), strenght(s),
           movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su) {
     weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
+    setPosition(x, y);
+    if (txt != nullptr)
+        setTexture(*txt);
 }
 
 int GameCharacter::getDimUsable() const {
@@ -254,4 +249,19 @@ void GameCharacter::useUsable(int invIdx) {
     usableInventory.removeElement(invIdx, u);
     if (u != nullptr)
         u->use();
+}
+
+/**
+ * funzione che effettua lo spostamento del personaggio
+ * @param direction direzione sui 4 assi su cui spostarsi
+ */
+void GameCharacter::move(int direction) {
+    if (direction == 0)
+        setPosition(getPosX(), getPosY() + movementSpeed);
+    if (direction == 1)
+        setPosition(getPosX() + movementSpeed, getPosY());
+
+    if (direction == 3)
+        setPosition(getPosX() - movementSpeed, getPosY());
+
 }

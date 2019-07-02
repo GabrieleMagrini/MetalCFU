@@ -16,15 +16,15 @@ Enemy::Enemy(int hp, int x, int y, int s, Weapon *w, Usable *p, SpecialAttack *s
  * function that make do a patrol to the enemy
  */
 void Enemy::Behaviour() {
-    if (posX > startPosX)
-        if (abs(posX - startPosX) < steps)
-            posX += movementSpeed;
+    if (getPosX() > startPosX)
+        if (abs(getPosY() - startPosX) < steps)
+            setPosition(getPosX(),getPosY()+movementSpeed);
         else
-            posX -= movementSpeed;
-    else if (abs(posX - startPosX) < steps)
-        posX--;
+            setPosition(getPosX()-movementSpeed,getPosY());
+    else if (abs(getPosX() - startPosX) < steps)
+        setPosition(getPosX()-1,getPosY());
     else
-        posX -= movementSpeed;
+        setPosition(getPosX()-movementSpeed,getPosY());
 
 }
 

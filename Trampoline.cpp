@@ -13,7 +13,7 @@ bool Trampoline::liftUp(int height, Player *player) {
     if (player->getPosY() == height)
         valid = false;
     else {
-        player->setPosY(player->getPosY() + player->getMovementSpeed());
+        player->move(0);
         valid = true;
     }
 

@@ -40,12 +40,12 @@ TEST(GameCharacter, positionUpdate) {
     auto w1 = w.createWeapon(WeaponType::M4);
 
     auto c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
-    c->setPosX(5);
+    c->teleport(5, c->getPosY());
     ASSERT_EQ(c->getPosX(), 5);
-    c->setPosY(5);
+    c->teleport(c->getPosX(), 5);
     ASSERT_EQ(c->getPosY(), 5);
 
-    c->move(12, 12);
+    c->teleport(12, 12);
     ASSERT_EQ(c->getPosX(), 12);
     ASSERT_EQ(c->getPosY(), 12);
 
@@ -77,12 +77,12 @@ TEST(GameCharacter, isTwoGameCharacterNearby) {
     auto w1 = w.createWeapon(WeaponType::M4);
     auto c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
     auto b = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
-    c->move(1, 0);
+    c->teleport(1, 0);
     ASSERT_EQ(GameCharacter::isTwoGameCharacterNearby(c, b), true);
-    c->move(1, 1);
+    c->teleport(1, 1);
 
     ASSERT_EQ(GameCharacter::isTwoGameCharacterNearby(c, b), true);
-    c->move(2, 3);
+    c->teleport(2, 3);
 
     ASSERT_EQ(GameCharacter::isTwoGameCharacterNearby(c, b), false);
 
@@ -97,7 +97,7 @@ TEST(GameCharacter, getDamage) {
     ASSERT_EQ(c->getHp(), 10);
 }
 
-TEST(GameCharacter, releaseInventory){
+TEST(GameCharacter, releaseInventory) {
 
     WeaponFactory w;
     auto w1 = w.createWeapon(WeaponType::pistol);
@@ -105,22 +105,22 @@ TEST(GameCharacter, releaseInventory){
 
     Usable *u1 = new MedKit{10};
     Usable *u2 = new Granade{15};
-    auto gc = new GameCharacter{20,0,0,10,w1.get(),u1};
+    auto gc = new GameCharacter{20, 0, 0, 10, w1.get(), u1};
     auto u3 = gc->setUsable(u2);
-    ASSERT_EQ(u3,nullptr);
+    ASSERT_EQ(u3, nullptr);
     auto w3 = gc->setWeapon(w2.get());
     ASSERT_EQ(w3, nullptr);
 
     const Inventory<Weapon> iw = gc->getWeaponInventory();
-    const Inventory<Usable*> iu = gc->getUsableInventory();
+    const Inventory<Usable *> iu = gc->getUsableInventory();
 
-     Inventory<Weapon> iw2(4);
-     Inventory<Usable*> iu2(4);
+    Inventory<Weapon> iw2(4);
+    Inventory<Usable *> iu2(4);
 
-    gc->releaseInventory(iw2,iu2);
+    gc->releaseInventory(iw2, iu2);
 
-    ASSERT_EQ(iw,iw2);
-    ASSERT_EQ(iu,iu2);
+    ASSERT_EQ(iw, iw2);
+    ASSERT_EQ(iu, iu2);
 
 }
 
@@ -131,5 +131,5 @@ TEST(GameCharacter, strenghtUpdate) {
     auto c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
 
     c->setStrenght(26);
-    ASSERT_EQ(c->getStrenght(),26);
+    ASSERT_EQ(c->getStrenght(), 26);
 }

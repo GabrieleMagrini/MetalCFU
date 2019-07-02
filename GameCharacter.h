@@ -4,33 +4,32 @@
 
 #ifndef METALCFUREPO_GAMECHARACTER_H
 #define METALCFUREPO_GAMECHARACTER_H
+
 #include <vector>
 #include <memory>
+#include <SFML/Graphics.hpp>
 
 #include "Weapon.h"
 #include "Usable.h"
 #include "Inventory.h"
 
+using namespace sf;
 
-class GameCharacter {
+class GameCharacter : public Sprite {
 public:
     GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0,
-                  int su = 4);
+                  int su = 4, Texture *txt = nullptr);
 
-    virtual ~GameCharacter() = default;
+    ~GameCharacter() override= default;
 
 
     int getHp() const;
 
     void setHp(int hp);
 
-    int getPosX() const;
+    float getPosX() const;
 
-    void setPosX(int posX);
-
-    int getPosY() const;
-
-    void setPosY(int posY);
+    float getPosY() const;
 
     int getStrenght() const;
 
@@ -40,13 +39,15 @@ public:
 
     void setMovementSpeed(int movementSpeed);
 
-    void move(int x, int y);
+    void teleport(float x, float y);
+
+    void move(int direction);
 
     Weapon getWeapon() const;
 
-    Weapon * setWeapon(Weapon *weapon);
+    Weapon *setWeapon(Weapon *weapon);
 
-    Usable *getUsable(int idx)const;
+    Usable *getUsable(int idx) const;
 
     Usable *setUsable(Usable *usable);
 
@@ -58,13 +59,13 @@ public:
 
     void setDimUsable(int ud);
 
-    Weapon* removeWeapon(int idx);
+    Weapon *removeWeapon(int idx);
 
-    Usable* removeUsable(int idx);
+    Usable *removeUsable(int idx);
 
     int getSelectedWeapon() const;
 
-    const Inventory<Weapon> & getWeaponInventory() const;
+    const Inventory<Weapon> &getWeaponInventory() const;
 
     void setWeaponInventory(const Inventory<Weapon> &weaponInventory);
 
@@ -75,23 +76,21 @@ public:
 
     void setSelectedWeapon(int selectedWeapon);
 
-    void releaseInventory(Inventory<Weapon> &wi, Inventory<Usable*>& ui);
+    void releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> &ui);
 
-    static bool isTwoGameCharacterNearby(GameCharacter* gc1,GameCharacter* gc2);
+    static bool isTwoGameCharacterNearby(GameCharacter *gc1, GameCharacter *gc2);
 
     void getDamage(unsigned int damage);
 
-    void fight(GameCharacter* enemy);
+    void fight(GameCharacter *enemy);
 
     void useUsable(int invIdx);
 
 protected:
     int HP;
-    int posX;
-    int posY;
     int strenght;
     Inventory<Weapon> weaponInventory;
-    Inventory<Usable*> usableInventory;
+    Inventory<Usable *> usableInventory;
     int selectedWeapon;
     int selectedUsable;
     int movementSpeed;
