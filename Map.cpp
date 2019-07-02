@@ -24,6 +24,8 @@ void Map::createMap(TerrainType) {
                     break;
                 case 0:
                     break;
+                case /:
+                    z += 1;
                 default:break;
             }
         }
