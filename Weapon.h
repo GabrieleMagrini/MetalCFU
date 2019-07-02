@@ -5,16 +5,19 @@
 #ifndef METALCFU_WEAPON_H
 #define METALCFU_WEAPON_H
 
+#include <SFML/Graphics.hpp>
+
 #include "Ammo.h"
 
+using namespace sf;
 
-class Weapon {
+class Weapon : public sf::Sprite {
 public:
     Weapon();
 
-    Weapon(const Ammo &c, int d, int r, const Ammo &m);
+    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr);
 
-    Weapon(int cur, int d, int r, int m);
+    Weapon(int cur, int d, int r, int m, Texture *txt);
 
     Weapon(const Weapon &w) = default;
 
@@ -36,13 +39,22 @@ public:
 
     bool shoot();
 
-    virtual ~Weapon() = default;
+    ~Weapon() override = default;
 
     bool isActiveLaser() const;
 
     void setActiveLaser(bool activeLaser);
 
     bool operator==(const Weapon &w1) const;
+
+    float getPosX() const;
+
+    void setPosX(int posX);
+
+    float getPosY() const;
+
+    void setPosY(int posY);
+
 
 private:
     Ammo currentAmmo;

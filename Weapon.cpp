@@ -5,10 +5,17 @@
 #include "Weapon.h"
 #include "Ammo.h"
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m) : currentAmmo(c), damage(d), range(r), maxAmmo(m),
-                                                             activeLaser(false) {}
+Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt) : currentAmmo(c), damage(d), range(r),
+                                                                           maxAmmo(m), activeLaser(false) {
+    if (txt != nullptr)
+        setTexture(*txt);
+}
 
-Weapon::Weapon(int cur, int d, int r, int m) : currentAmmo(cur), damage(d), range(r), maxAmmo(m), activeLaser(false) {}
+Weapon::Weapon(int cur, int d, int r, int m, Texture *txt) : currentAmmo(cur), damage(d), range(r), maxAmmo(m),
+                                                             activeLaser(false) {
+    if (txt != nullptr)
+        setTexture(*txt);
+}
 
 const Ammo &Weapon::getCurrentAmmo() const {
     return currentAmmo;
@@ -73,4 +80,12 @@ bool Weapon::operator==(const Weapon &w1) const {
     else if (activeLaser != w1.activeLaser)
         us = false;
     return us;
+}
+
+float Weapon::getPosX() const {
+    return getPosition().x;
+}
+
+float Weapon::getPosY() const {
+    return getPosition().y;
 }
