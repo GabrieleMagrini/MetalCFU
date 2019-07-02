@@ -36,7 +36,7 @@ class Map {
     void setObjects(Ammo,Weapon);
 
 
-    void loadFiles();
+    char loadFiles();
 
 
 private:
