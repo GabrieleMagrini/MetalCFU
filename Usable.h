@@ -5,12 +5,13 @@
 #ifndef METALCFU_USABLE_H
 #define METALCFU_USABLE_H
 
+#include <SFML/Graphics.hpp>
 
 
-class Usable {
+class Usable: public sf::Sprite {
 public:
     virtual int use()=0;
-    virtual ~Usable() = default;
+    ~Usable() override = default;
 private:
     //da definire
 };

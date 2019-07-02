@@ -5,11 +5,13 @@
 #ifndef METALCFU_INTERACTABLE_H
 #define METALCFU_INTERACTABLE_H
 
+#include <SFML/Graphics.hpp>
 
-class Interactable {
+class Interactable : public sf::Sprite {
 public:
-    Interactable(int x,int y);
-    virtual ~Interactable() = default;
+    Interactable(int x, int y);
+
+    ~Interactable() override = default;
 
     int getPosX() const;
 
