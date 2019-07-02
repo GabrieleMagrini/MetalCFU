@@ -9,6 +9,14 @@
 #include "Interactable.h"
 #include "Weapon.h"
 #include "Ammo.h"
+#include <iostream>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <ctime>
+#include <vector>
+#include <fstream>
+
+
 #include "Terrain.h"
 
 
@@ -28,10 +36,15 @@ class Map {
     void setObjects(Ammo,Weapon);
 
 
+    void loadFiles();
+
 
 private:
     int sizeX;
     int sizeY;
+    sf::Texture wallpaper;
+    std::ifstream my_file;
+
 };
 
 

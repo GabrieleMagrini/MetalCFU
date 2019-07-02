@@ -3,3 +3,37 @@
 //
 
 #include "Map.h"
+
+void Map::createMap(TerrainType) {
+
+
+    for (unsigned t = 0; t < n; ++t) {
+        for (unsigned z = 0; z < m; ++z) {
+            switch (map[t][z]) {
+                case 1:
+                    sprites.resize(sprites.size() + 1);
+                    sprites.back().setTexture(groundTex);
+                    sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
+                    break;
+                case 0:
+                    break;
+                default:break;
+            }
+        }
+    }
+
+}
+
+
+void Map::loadFiles() {
+
+
+    char map_array[sizeX][sizeY];
+
+
+    for (int i=0;i<sizeX;++i){
+        for (int j = 0;j<sizeY;++j) {
+            my_file >> map_array[i][j];
+        }
+    }
+}
