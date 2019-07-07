@@ -14,7 +14,7 @@
 
 enum class TerrainType{Dirt,Water,Grass};
 
-class Terrain {                                                                    //enum class,various types of block as various blocks effects
+class Terrain :public Sprite{                                                                    //enum class,various types of block as various blocks effects
 public:
     Terrain();
 
@@ -31,6 +31,7 @@ public:
 
 private:
     int bonusSpeedMovement;
+
 };
 
 
