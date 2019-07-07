@@ -25,7 +25,7 @@ class Map {
     explicit Map(int x=10000 ,int y=100) : sizeX(x),sizeY(y){}
     ~Map() = default;
 
-    void createMap(TerrainType);
+    void createMap(Terrain);
 
     void setPlayer(GameCharacter);
 
@@ -44,6 +44,7 @@ private:
     int sizeY;
     sf::Texture wallpaper;
     std::ifstream my_file;
+    Terrain *t;
 
 };
 

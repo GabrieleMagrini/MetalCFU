@@ -4,7 +4,7 @@
 
 #include "Map.h"
 
-void Map::createMap(TerrainType) {
+void Map::createMap(Terrain g) {
 
     char map_array[sizeX][sizeY];
 
@@ -16,10 +16,9 @@ void Map::createMap(TerrainType) {
     }
     for (unsigned t = 0; t < sizeX; ++t) {
         for (unsigned z = 0; z < sizeY; ++z) {
-            switch (map[t][z]) {
+            switch (map_array[t][z]) {
                 case '1':
-                    sprites.resize(sprites.size() + 1);
-                    sprites.back().setTexture(groundTex);
+                    sprites.back().setTexture(g);
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 case '0':
