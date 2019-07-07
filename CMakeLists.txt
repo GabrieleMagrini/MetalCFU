@@ -10,7 +10,7 @@ include_directories(SFML)
 include_directories(${SFML_INCLUDE_DIR})
 
 add_subdirectory(test)
-add_executable(MetalCFU main.cpp ${SOURCE_FILES} )
+add_executable(MetalCFU main.cpp ${SOURCE_FILES} Factory/TerrainFactory.cpp Factory/TerrainFactory.h)
 
 add_library(core ${SOURCE_FILES} )
 target_link_libraries(MetalCFU core sfml-graphics sfml-window sfml-system sfml-audio)

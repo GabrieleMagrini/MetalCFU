@@ -12,15 +12,11 @@
 
 
 
-enum class TerrainType{Dirt,Water,Grass};
-
 class Terrain :public Sprite{                                                                    //enum class,various types of block as various blocks effects
 public:
     Terrain();
 
-    explicit Terrain(int s = 10):bonusSpeedMovement(s){}
-
-    explicit Terrain(TerrainType type);
+    explicit Terrain(int s = 0):bonusSpeedMovement(s){}
 
     virtual ~Terrain() = default;
 
