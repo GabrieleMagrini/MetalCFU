@@ -5,7 +5,8 @@
 #ifndef METALCFU_MAP_H
 #define METALCFU_MAP_H
 
-#include "GameCharacter.h"
+#include "Player.h"
+#include "Enemy.h"
 #include "Interactable.h"
 #include "Weapon.h"
 #include "Ammo.h"
@@ -25,15 +26,15 @@ class Map {
     explicit Map(int x=10000 ,int y=100) : sizeX(x),sizeY(y){}
     ~Map() = default;
 
-    void createMap(Terrain);
+    void createMap(std::ifstream my_file);
 
-    void setPlayer(GameCharacter);
+    void setPlayer(Player *player);
 
-    void setEnemies(GameCharacter);
+    void setEnemies();
 
-    void setInteractable(Interactable);
+    void setInteractable(Enemy *enemy);
 
-    void setObjects(Ammo,Weapon);
+    void setObjects(Ammo *ammo,Weapon *weapon);
 
 
     char loadFiles();
@@ -42,9 +43,8 @@ class Map {
 private:
     int sizeX;
     int sizeY;
-    sf::Texture wallpaper;
     std::ifstream my_file;
-    Terrain *t;
+
 
 };
 

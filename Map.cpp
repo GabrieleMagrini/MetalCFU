@@ -4,7 +4,7 @@
 
 #include "Map.h"
 
-void Map::createMap(Terrain g) {
+void Map::createMap(std::ifstream my_file) {
 
     char map_array[sizeX][sizeY];
 
