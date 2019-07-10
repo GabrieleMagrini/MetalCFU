@@ -8,8 +8,8 @@
 #include "../Terrain.h"
 #include <memory>
 
-enum class TerrainType{
-    Dirt,Water,Grass,Mud,Flag
+enum class TerrainType {
+    Dirt, Water, Grass, Mud, Flag
 };
 
 
