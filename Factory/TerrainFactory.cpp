@@ -20,5 +20,7 @@ std::unique_ptr<Terrain> TerrainFactory::createTerrain(TerrainType t) {
         case TerrainType ::Mud:
             terrainResult = std::unique_ptr<Terrain> (new Terrain{-7});
             break;
+        case TerrainType ::Flag:
+            terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
     }
 };

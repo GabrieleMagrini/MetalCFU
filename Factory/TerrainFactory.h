@@ -9,7 +9,7 @@
 #include <memory>
 
 enum class TerrainType{
-    Dirt,Water,Grass,Mud
+    Dirt,Water,Grass,Mud,Flag
 };
 
 
