@@ -17,13 +17,13 @@ int Map::createMap(std::ifstream my_file) {
     }
 
     sf::Texture groundTex;
-    if (!groundTex.loadFromFile("Pngs/tile.png"))
+    if (!groundTex.loadFromFile("Sources/Pngs/tile.png"))
         return 0;
     sf::Texture dirt;
-    if (!dirt.loadFromFile("Pngs/dirt.png"))
+    if (!dirt.loadFromFile("Sources/Pngs/dirt.png"))
         return 0;
     sf::Texture bot;
-    if (!bot.loadFromFile("Pngs/bottom.png"))
+    if (!bot.loadFromFile("Sources/Pngs/bottom.png"))
         return 0;
 
     auto gbounds = groundTex.getSize();
