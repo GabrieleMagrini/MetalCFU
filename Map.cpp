@@ -4,7 +4,8 @@
 
 #include "Map.h"
 
-void Map::createMap(std::ifstream my_file) {
+
+int Map::createMap(std::ifstream my_file) {
 
     char map_array[sizeX][sizeY];
 
@@ -14,15 +15,40 @@ void Map::createMap(std::ifstream my_file) {
             my_file >> map_array[i][j];
         }
     }
+
+    sf::Texture groundTex;
+    if (!groundTex.loadFromFile("Pngs/tile.png"))
+        return 0;
+    sf::Texture dirt;
+    if (!dirt.loadFromFile("Pngs/dirt.png"))
+        return 0;
+    sf::Texture bot;
+    if (!bot.loadFromFile("Pngs/bottom.png"))
+        return 0;
+
+    auto gbounds = groundTex.getSize();
+    std::vector<sf::Sprite> sprites;
+    sprites.reserve(5 * 5);
+
     for (unsigned t = 0; t < sizeX; ++t) {
         for (unsigned z = 0; z < sizeY; ++z) {
             switch (map_array[t][z]) {
                 case '1':
-                    sprites.back().setTexture(g);
+                    sprites.resize(sprites.size() + 1);
+                    sprites.back().setTexture(groundTex);
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 case '0':
                     break;
+                case '2':
+                    sprites.resize(sprites.size() + 1);
+                    sprites.back().setTexture(dirt);
+                    sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
+                    break;
+                case '3':
+                    sprites.resize(sprites.size() + 1);
+                    sprites.back().setTexture(bot);
+                    sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                 default:break;
             }
         }

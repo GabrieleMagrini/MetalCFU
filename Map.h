@@ -26,7 +26,7 @@ class Map {
     explicit Map(int x=10000 ,int y=100) : sizeX(x),sizeY(y){}
     ~Map() = default;
 
-    void createMap(std::ifstream my_file);
+    int createMap(std::ifstream my_file);
 
     void setPlayer(Player *player);
 
