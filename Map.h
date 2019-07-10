@@ -28,16 +28,7 @@ class Map {
 
     int createMap(std::ifstream my_file);
 
-    void setPlayer(Player *player);
-
-    void setEnemies();
-
-    void setInteractable(Enemy *enemy);
-
-    void setObjects(Ammo *ammo,Weapon *weapon);
-
-
-    char loadFiles();
+    void setEntities(Player *player,Enemy *enemy,Weapon *weapon,Interactable *interactable);
 
 
 private:
