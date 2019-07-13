@@ -9,25 +9,24 @@
 
 #include "GameCharacter.h"
 #include "SpecialAttack/SpecialAttack.h"
+#include "Behaviour.h"
 
 using namespace std;
 
 class Enemy : public GameCharacter {
 public:
-    Enemy(int hp, int x, int y, int s, Weapon *w, Usable *p, SpecialAttack *sa = nullptr, int mw = 1, int mu = 1,
+    Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, int mw = 1, int mu = 1,
           int ms = 10, int sw = 0, int su = 0, int steps = 50);
 
     ~Enemy() final = default;
 
-    void Behaviour();
-    void doSpecial();
+    void Action(Behaviour *b);
 
 private:
     int startPosX;
     int startposY;
     int steps;
-    unique_ptr<SpecialAttack> specAttack;
-
+    Behaviour *behaviour;
 };
 
 

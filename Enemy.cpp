@@ -4,18 +4,18 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(int hp, int x, int y, int s, Weapon *w, Usable *p, SpecialAttack *sa, int mw, int mu, int ms, int sw,
+Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, int mw, int mu, int ms, int sw,
              int su,
              int steps)
         : GameCharacter(
-        hp, x, y, s, w, p, mw, mu, ms, sw, su), startPosX(x), startposY(y), steps(steps), specAttack(sa) {
+        hp, x, y, s, w, p, mw, mu, ms, sw, su), startPosX(x), startposY(y), steps(steps), behaviour(b) {
 
 }
 
 /****
  * function that make do a patrol to the enemy
  */
-void Enemy::Behaviour() {
+void Enemy::Action(Behaviour *b) {
     if (getPosX() > startPosX)
         if (abs(getPosY() - startPosX) < steps)
             setPosition(getPosX(),getPosY()+movementSpeed);
@@ -26,10 +26,4 @@ void Enemy::Behaviour() {
     else
         setPosition(getPosX()-movementSpeed,getPosY());
 
-}
-
-void Enemy::doSpecial() {
-    if(specAttack!= nullptr){
-        specAttack->doSpecial();
-    }
 }
