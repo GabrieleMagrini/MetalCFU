@@ -55,6 +55,7 @@ public:
 
     void setPosY(int posY);
 
+    void setCollision(bool v);
 
 private:
     Ammo currentAmmo;

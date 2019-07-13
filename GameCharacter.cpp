@@ -266,3 +266,8 @@ void GameCharacter::move(int direction) {
         setPosition(getPosX() - movementSpeed, getPosY());
 
 }
+
+
+void GameCharacter::setCollision(bool v) {
+    collision = v;
+}

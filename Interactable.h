@@ -21,6 +21,8 @@ public:
 
     void setPosY(int posY);
 
+    void setCollision(bool v);
+
 private:
 
     int posX;

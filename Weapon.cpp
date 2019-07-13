@@ -90,3 +90,8 @@ float Weapon::getPosX() const {
 float Weapon::getPosY() const {
     return getPosition().y;
 }
+
+
+void Weapon::setCollision(bool v) {
+    collision = v;
+}

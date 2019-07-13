@@ -86,6 +86,8 @@ public:
 
     void useUsable(int invIdx);
 
+    void setCollision(bool v);
+
 protected:
     int HP;
     int strenght;

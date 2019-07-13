@@ -19,3 +19,6 @@ bool Ammo::operator==(const Ammo &a2) const{
     return us;
 }
 
+void Ammo::setCollision(bool v) {
+    collision = v;
+}

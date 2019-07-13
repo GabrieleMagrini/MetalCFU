@@ -21,6 +21,8 @@ public:
 
     void setQuantity(int quantity);
 
+    void setCollision(bool v);
+
 private:
     int quantity;
     bool collision;

@@ -22,3 +22,7 @@ int Interactable::getPosY() const {
 void Interactable::setPosY(int posY) {
     Interactable::posY = posY;
 }
+
+void Interactable::setCollision(bool v) {
+    collision = v;
+}
