@@ -4,6 +4,7 @@
 
 #include "Player.h"
 
-void Player::lootPickUp() {
+void Player::lootPickUp(Player *p) {
+
 
 }

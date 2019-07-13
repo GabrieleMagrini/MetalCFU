@@ -20,9 +20,10 @@ public:
 
     virtual ~Terrain() = default;
 
-    int checkCollision(GameCharacter,Ammo,Weapon,Interactable);       //the block will have as only function to check the collision with the other elements
+    int checkCollision(GameCharacter *g, Ammo *a, Weapon *w,
+                       Interactable *i);       //the block will have as only function to check the collision with the other elements
 
-    int setBonus(GameCharacter,int bonusSpeedMovement);
+    int setBonus(GameCharacter *g, int bonusSpeedMovement);
 
 
 private:
