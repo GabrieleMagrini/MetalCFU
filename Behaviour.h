@@ -8,7 +8,7 @@
 
 class Behaviour {
 public:
-
+    void action();
 };
 
 class patrolBehaviour : public Behaviour {
