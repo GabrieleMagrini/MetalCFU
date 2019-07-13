@@ -5,8 +5,9 @@
 #ifndef METALCFU_AMMO_H
 #define METALCFU_AMMO_H
 
+#include <SFML/Graphics.hpp>
 
-class Ammo {
+class Ammo : public sf::Sprite {
 public:
 
     explicit Ammo(int q = 1, bool c = false) : quantity(q), collision(c) {};
