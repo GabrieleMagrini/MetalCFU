@@ -5,14 +5,15 @@
 #include "Weapon.h"
 #include "Ammo.h"
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt) : currentAmmo(c), damage(d), range(r),
-                                                                           maxAmmo(m), activeLaser(false) {
+Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k) : currentAmmo(c), damage(d), range(r),
+                                                                                   maxAmmo(m), activeLaser(false),
+                                                                                   collision(k) {
     if (txt != nullptr)
         setTexture(*txt);
 }
 
 Weapon::Weapon(int cur, int d, int r, int m, Texture *txt) : currentAmmo(cur), damage(d), range(r), maxAmmo(m),
-                                                             activeLaser(false) {
+                                                             activeLaser(false), collision(false) {
     if (txt != nullptr)
         setTexture(*txt);
 }
@@ -57,7 +58,7 @@ bool Weapon::shoot() {
         return false;
 }
 
-Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false) {}
+Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;

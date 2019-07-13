@@ -167,9 +167,10 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
 }
 
 GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su,
-                             Texture *txt)
+                             Texture *txt, bool c)
         : HP(hp), strenght(s),
-          movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su) {
+          movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
+          collision(c) {
     weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);

@@ -4,7 +4,7 @@
 
 #include "Interactable.h"
 
-Interactable::Interactable( int x, int y):posX(x), posY(y){}
+Interactable::Interactable(int x, int y, bool c) : posX(x), posY(y), collision(c) {}
 
 
 int Interactable::getPosX() const {

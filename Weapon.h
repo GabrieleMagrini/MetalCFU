@@ -15,7 +15,7 @@ class Weapon : public sf::Sprite {
 public:
     Weapon();
 
-    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr);
+    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr, bool k = false);
 
     Weapon(int cur, int d, int r, int m, Texture *txt=nullptr);
 
@@ -62,6 +62,7 @@ private:
     int range;
     Ammo maxAmmo;
     bool activeLaser;
+    bool collision;
 };
 
 

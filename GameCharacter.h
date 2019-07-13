@@ -18,7 +18,7 @@ using namespace sf;
 class GameCharacter : public Sprite {
 public:
     GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0,
-                  int su = 4, Texture *txt = nullptr);
+                  int su = 4, Texture *txt = nullptr, bool c = false);
 
     ~GameCharacter() override= default;
 
@@ -94,6 +94,7 @@ protected:
     int selectedWeapon;
     int selectedUsable;
     int movementSpeed;
+    bool collision;
 
 };
 

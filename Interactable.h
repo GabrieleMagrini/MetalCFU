@@ -9,7 +9,7 @@
 
 class Interactable : public sf::Sprite {
 public:
-    Interactable(int x, int y);
+    Interactable(int x, int y, bool c = false);
 
     ~Interactable() override = default;
 
@@ -25,6 +25,7 @@ private:
 
     int posX;
     int posY;
+    bool collision;
 };
 
 

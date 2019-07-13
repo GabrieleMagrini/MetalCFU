@@ -9,7 +9,7 @@
 class Ammo {
 public:
 
-    explicit Ammo(int q = 1) : quantity(q) {};
+    explicit Ammo(int q = 1, bool c = false) : quantity(q), collision(c) {};
 
     Ammo(const Ammo &a) = default;
 
@@ -23,6 +23,7 @@ public:
 
 private:
     int quantity;
+    bool collision;
 };
 
 

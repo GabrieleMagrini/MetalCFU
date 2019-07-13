@@ -3,3 +3,7 @@
 //
 
 #include "Terrain.h"
+
+
+int Terrain::checkCollision(GameCharacter *g, Ammo *a, Weapon *w, Interactable *i) {
+}
