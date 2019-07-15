@@ -57,6 +57,8 @@ public:
 
     void setCollision(bool v);
 
+    bool getCollision();
+
 private:
     Ammo currentAmmo;
     int damage;

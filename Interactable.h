@@ -23,6 +23,8 @@ public:
 
     void setCollision(bool v);
 
+    bool getCollision();
+
 private:
 
     int posX;

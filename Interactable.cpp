@@ -26,3 +26,7 @@ void Interactable::setPosY(int posY) {
 void Interactable::setCollision(bool v) {
     collision = v;
 }
+
+bool Interactable::getCollision() {
+    return collision;
+}
