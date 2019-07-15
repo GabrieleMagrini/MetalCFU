@@ -23,17 +23,18 @@
 
 class Map {
 
-    explicit Map(int x=10000 ,int y=100) : sizeX(x),sizeY(y){}
+    explicit Map(int x = 10000, int y = 100, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
     ~Map() = default;
 
     int createMap(std::ifstream my_file);
 
-    void setEntities(Player *player,Enemy *enemy,Weapon *weapon,Interactable *interactable);
 
+    void gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable);
 
 private:
     int sizeX;
     int sizeY;
+    int gravity;
     std::ifstream my_file;
 
 

@@ -57,3 +57,9 @@ int Map::createMap(std::ifstream my_file) {
 
     return 1;
 }
+
+
+void Map::gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable) {
+
+
+}
