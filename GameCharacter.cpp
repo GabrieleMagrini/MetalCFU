@@ -279,3 +279,7 @@ void GameCharacter::move(int direction) {
 void GameCharacter::setCollision(bool v) {
     collision = v;
 }
+
+bool GameCharacter::getCollision() {
+    return collision;
+}

@@ -92,6 +92,8 @@ public:
 
     void setCollision(bool v);
 
+    bool getCollision();
+
 protected:
     int HP;
     int strenght;
