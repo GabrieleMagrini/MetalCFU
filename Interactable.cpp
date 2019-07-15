@@ -4,7 +4,7 @@
 
 #include "Interactable.h"
 
-Interactable::Interactable(int x, int y, bool c) : posX(x), posY(y), collision(c) {}
+Interactable::Interactable(int x, int y, bool c, int sy) : posX(x), posY(y), collision(c), speedY(sy) {}
 
 
 int Interactable::getPosX() const {
@@ -29,4 +29,12 @@ void Interactable::setCollision(bool v) {
 
 bool Interactable::getCollision() {
     return collision;
+}
+
+int Interactable::getSpeedY() const {
+    return speedY;
+}
+
+void Interactable::setSpeedY(int speedY) {
+    Interactable::speedY = speedY;
 }

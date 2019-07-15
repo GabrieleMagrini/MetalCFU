@@ -5,15 +5,16 @@
 #include "Weapon.h"
 #include "Ammo.h"
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k) : currentAmmo(c), damage(d), range(r),
-                                                                                   maxAmmo(m), activeLaser(false),
-                                                                                   collision(k) {
+Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k, int sy) : currentAmmo(c), damage(d),
+                                                                                           range(r),
+                                                                                           maxAmmo(m), activeLaser(false),
+                                                                                           collision(k), speedY(sy) {
     if (txt != nullptr)
         setTexture(*txt);
 }
 
-Weapon::Weapon(int cur, int d, int r, int m, Texture *txt) : currentAmmo(cur), damage(d), range(r), maxAmmo(m),
-                                                             activeLaser(false), collision(false) {
+Weapon::Weapon(int cur, int d, int r, int m, Texture *txt, int sy) : currentAmmo(cur), damage(d), range(r), maxAmmo(m),
+                                                                     activeLaser(false), collision(false), speedY(sy) {
     if (txt != nullptr)
         setTexture(*txt);
 }
@@ -58,7 +59,7 @@ bool Weapon::shoot() {
         return false;
 }
 
-Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false) {}
+Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;
@@ -98,4 +99,12 @@ void Weapon::setCollision(bool v) {
 
 bool Weapon::getCollision() {
     return collision;
+}
+
+int Weapon::getSpeedY() const {
+    return speedY;
+}
+
+void Weapon::setSpeedY(int speedY) {
+    Weapon::speedY = speedY;
 }

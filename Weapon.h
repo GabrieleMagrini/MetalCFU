@@ -15,9 +15,9 @@ class Weapon : public sf::Sprite {
 public:
     Weapon();
 
-    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr, bool k = false);
+    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr, bool k = false, int sy = 10);
 
-    Weapon(int cur, int d, int r, int m, Texture *txt=nullptr);
+    Weapon(int cur, int d, int r, int m, Texture *txt = nullptr, int sy = 10);
 
     Weapon(const Weapon &w) = default;
 
@@ -59,6 +59,10 @@ public:
 
     bool getCollision();
 
+    int getSpeedY() const;
+
+    void setSpeedY(int speedY);
+
 private:
     Ammo currentAmmo;
     int damage;
@@ -66,6 +70,7 @@ private:
     Ammo maxAmmo;
     bool activeLaser;
     bool collision;
+    int speedY;
 };
 
 
