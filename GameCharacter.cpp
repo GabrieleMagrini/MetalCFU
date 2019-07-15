@@ -33,14 +33,21 @@ void GameCharacter::setStrenght(int strenght) {
     GameCharacter::strenght = strenght;
 }
 
-int GameCharacter::getMovementSpeed() const {
-    return movementSpeed;
+int GameCharacter::getSpeedX() const {
+    return SpeedX;
 }
 
-void GameCharacter::setMovementSpeed(int movementSpeed) {
-    GameCharacter::movementSpeed = movementSpeed;
+void GameCharacter::setSpeedX(int SpeedX) {
+    GameCharacter::SpeedX = SpeedX;
 }
 
+int GameCharacter::getSpeedY() const {
+    return SpeedY;
+}
+
+void GameCharacter::setSpeedY(int SpeedY) {
+    GameCharacter::SpeedY = SpeedY;
+}
 /***
  * teleport the player in the map in the coordinated
  * @param x axis
@@ -166,10 +173,11 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
     }
 }
 
-GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int ms, int sw, int su,
+GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int sx, int sy, int sw,
+                             int su,
                              Texture *txt, bool c)
         : HP(hp), strenght(s),
-          movementSpeed(ms), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
+          SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
           collision(c) {
     weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
@@ -257,14 +265,14 @@ void GameCharacter::useUsable(int invIdx) {
  * @param direction direzione sui 4 assi su cui spostarsi
  */
 void GameCharacter::move(int direction) {
-    if (direction == 0)
+    /*if (direction == 0)
         setPosition(getPosX(), getPosY() + movementSpeed);
     if (direction == 1)
         setPosition(getPosX() + movementSpeed, getPosY());
 
     if (direction == 3)
         setPosition(getPosX() - movementSpeed, getPosY());
-
+*/
 }
 
 

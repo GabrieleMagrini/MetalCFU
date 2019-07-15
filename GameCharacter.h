@@ -17,11 +17,11 @@ using namespace sf;
 
 class GameCharacter : public Sprite {
 public:
-    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int ms = 10, int sw = 0,
+    GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int sx = 10, int sy = -10,
+                  int sw = 0,
                   int su = 4, Texture *txt = nullptr, bool c = false);
 
     ~GameCharacter() override= default;
-
 
     int getHp() const;
 
@@ -35,9 +35,13 @@ public:
 
     void setStrenght(int strenght);
 
-    int getMovementSpeed() const;
+    int getSpeedX() const;
 
-    void setMovementSpeed(int movementSpeed);
+    void setSpeedX(int SpeedX);
+
+    int getSpeedY() const;
+
+    void setSpeedY(int SpeedY);
 
     void teleport(float x, float y);
 
@@ -95,7 +99,8 @@ protected:
     Inventory<Usable *> usableInventory;
     int selectedWeapon;
     int selectedUsable;
-    int movementSpeed;
+    int SpeedX;
+    int SpeedY;
     bool collision;
 
 };
