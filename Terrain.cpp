@@ -8,10 +8,18 @@
 int Terrain::checkCollision(GameCharacter *g, Ammo *a, Weapon *w, Interactable *i) {
     if (g->getLocalBounds().intersects(this->getLocalBounds()))
         g->setCollision(true);
+    else
+        g->setCollision(false);
     if (a->getLocalBounds().intersects(this->getLocalBounds()))
         a->setCollision(true);
+    else
+        a->setCollision(false);
     if (w->getLocalBounds().intersects(this->getLocalBounds()))
         w->setCollision(true);
+    else
+        w->setCollision(false);
     if (i->getLocalBounds().intersects(this->getLocalBounds()))
         i->setCollision(true);
+    else
+        i->setCollision(false);
 }
