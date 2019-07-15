@@ -3,3 +3,7 @@
 //
 
 #include "Behaviour.h"
+
+void Behaviour::action() {
+
+}
