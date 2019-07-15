@@ -61,5 +61,13 @@ int Map::createMap(std::ifstream my_file) {
 
 void Map::gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable) {
 
+    if (!player->getCollision())
+        player->setSpeedY(gravity);
+    else
+        player->setSpeedY(0);
+    if (!enemy->getCollision())
+        enemy->setSpeedY(gravity);
+    else
+        enemy->setSpeedY(0);
 
 }
