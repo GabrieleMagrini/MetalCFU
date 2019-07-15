@@ -24,12 +24,12 @@ TEST(GameCharacter, Constructor) {
     ASSERT_EQ(c->getUsable(0), nullptr);
     ASSERT_EQ(c->getDimWeapon(), 4);
     ASSERT_EQ(c->getDimUsable(), 4);
-    ASSERT_EQ(c->getMovementSpeed(), 10);
+    ASSERT_EQ(c->getSpeedY(), 10);
 
     c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr, 5, 2, 20);
     ASSERT_EQ(c->getDimWeapon(), 5);
     ASSERT_EQ(c->getDimUsable(), 2);
-    ASSERT_EQ(c->getMovementSpeed(), 20);
+    ASSERT_EQ(c->getSpeedY(), 20);
     delete c;
 
 }
@@ -66,9 +66,9 @@ TEST(GameCharacter, movementSpeedupdate) {
 
     auto w1 = w.createWeapon(WeaponType::M4);
     auto c = new GameCharacter(20, 0, 0, 10, w1.get(), nullptr);
-    ASSERT_EQ(c->getMovementSpeed(), 10);
-    c->setMovementSpeed(20);
-    ASSERT_EQ(c->getMovementSpeed(), 20);
+    ASSERT_EQ(c->getSpeedY(), 10);
+    c->setSpeedY(20);
+    ASSERT_EQ(c->getSpeedY(), 20);
 }
 
 TEST(GameCharacter, isTwoGameCharacterNearby) {
