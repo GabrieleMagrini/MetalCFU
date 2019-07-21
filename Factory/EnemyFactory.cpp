@@ -4,9 +4,7 @@
 
 #include "EnemyFactory.h"
 #include "WeaponFactory.h"
-#include "../SpecialAttack/Charge.h"
-#include "../SpecialAttack/Kamikaze.h"
-#include "../SpecialAttack/BossAttack.h"
+
 
 std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
     unique_ptr<Enemy> result;

@@ -8,16 +8,9 @@
 
 class Behaviour {
 public:
-    void action();
+    virtual int action() = 0;
 };
 
-class patrolBehaviour : public Behaviour {
-};
 
-class attackBehaviour : public Behaviour {
-};
-
-class specialBehaviour : public Behaviour {
-};
 
 #endif //METALCFU_BEHAVIOUR_H

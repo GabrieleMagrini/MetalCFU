@@ -8,8 +8,8 @@
 #include <memory>
 
 #include "GameCharacter.h"
-#include "SpecialAttack/SpecialAttack.h"
-#include "Behaviour.h"
+
+#include "Behaviour/Behaviour.h"
 
 using namespace std;
 
