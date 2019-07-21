@@ -23,4 +23,5 @@ std::unique_ptr<Terrain> TerrainFactory::createTerrain(TerrainType t) {
         case TerrainType ::Flag:
             terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
     }
+    return terrainResult;
 };
