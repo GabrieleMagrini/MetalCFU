@@ -3,3 +3,7 @@
 //
 
 #include "attackBehaviour.h"
+
+int attackBehaviour::action() {
+    return 0;
+}

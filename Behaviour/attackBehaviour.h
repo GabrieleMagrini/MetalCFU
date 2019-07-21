@@ -10,6 +10,7 @@
 
 class attackBehaviour : public Behaviour {
 
+    int action() override;
 };
 
 
