@@ -22,20 +22,21 @@
 
 
 class Map {
-
-    explicit Map(int x = 10000, int y = 100, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
+public:
     ~Map() = default;
 
-    int createMap(std::ifstream my_file);
+    std::vector<sf::Sprite> createMap(std::ifstream my_file);
 
 
     void gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable);
+
+
+    explicit Map(int x = 10000, int y = 100, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
 
 private:
     int sizeX;
     int sizeY;
     int gravity;
-    std::ifstream my_file;
 
 
 };

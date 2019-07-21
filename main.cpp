@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include "Player.h"
+#include "Map.h"
 
 int main(){
 
