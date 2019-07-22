@@ -31,7 +31,7 @@ public:
     void gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable);
 
 
-    explicit Map(int x = 10000, int y = 100, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
+    explicit Map(int x = 7, int y = 30, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
 
 private:
     int sizeX;
