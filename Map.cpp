@@ -18,9 +18,9 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
     }
 
     TerrainFactory c;
-    std::unique_ptr<Terrain> bot = c.createTerrain(TerrainType::Dirt);
+    std::unique_ptr<Terrain> mid = c.createTerrain(TerrainType::Dirt);
     std::unique_ptr<Terrain> grass = c.createTerrain(TerrainType::Grass);
-    std::unique_ptr<Terrain> mud = c.createTerrain(TerrainType::Mud);
+    std::unique_ptr<Terrain> bot = c.createTerrain(TerrainType::Mud);
 
     auto gbounds = bot->getTexture()->getSize();
     std::vector<sf::Sprite> sprites;
@@ -38,7 +38,7 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
                     break;
                 case '2':
                     sprites.resize(sprites.size() + 1);
-                    sprites.back().setTexture(*mud->getTexture());
+                    sprites.back().setTexture(*mid->getTexture());
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 case '3':

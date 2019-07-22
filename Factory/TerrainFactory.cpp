@@ -7,30 +7,37 @@
 
 std::unique_ptr<Terrain> TerrainFactory::createTerrain(TerrainType t) {
     std::unique_ptr<Terrain> terrainResult;
-    sf::Texture groundTex;
-    groundTex.loadFromFile("Sources/Pngs/tile.png");
-    sf::Texture dirt;
-    dirt.loadFromFile("Sources/Pngs/dirt.png");
-    sf::Texture bot;
-    bot.loadFromFile("Sources/Pngs/bottom.png");
+
+    auto groundTex = new sf::Texture();
+    groundTex->loadFromFile(
+            "/run/media/emanuele/Volume/Dati/Università/Progetto Programmazione/MetalCFU/Sources/Pngs/tile.png");
+
+    auto dirt = new sf::Texture();
+    dirt->loadFromFile(
+            "/run/media/emanuele/Volume/Dati/Università/Progetto Programmazione/MetalCFU/Sources/Pngs/mid.png");
+
+    auto bot = new sf::Texture();
+    bot->loadFromFile(
+            "/run/media/emanuele/Volume/Dati/Università/Progetto Programmazione/MetalCFU/Sources/Pngs/bottom.png");
+
     switch (t) {
         case TerrainType::Dirt:
-            terrainResult = std::unique_ptr<Terrain> (new Terrain{0});
-            terrainResult->setTexture(dirt);
+            terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
+            terrainResult->setTexture(*dirt);
             break;
         case TerrainType::Water:
-            terrainResult = std::unique_ptr<Terrain> (new Terrain{-5});
+            terrainResult = std::unique_ptr<Terrain>(new Terrain{-5});
             break;
         case TerrainType::Grass:
-            terrainResult = std::unique_ptr<Terrain> (new Terrain{5});
-            terrainResult->setTexture(groundTex);
+            terrainResult = std::unique_ptr<Terrain>(new Terrain{5});
+            terrainResult->setTexture(*groundTex);
             break;
-        case TerrainType ::Mud:
-            terrainResult = std::unique_ptr<Terrain> (new Terrain{-7});
-            terrainResult->setTexture(bot);
+        case TerrainType::Mud:
+            terrainResult = std::unique_ptr<Terrain>(new Terrain{-7});
+            terrainResult->setTexture(*bot);
             break;
-        case TerrainType ::Flag:
+        case TerrainType::Flag:
             terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
     }
     return terrainResult;
-};
+}
