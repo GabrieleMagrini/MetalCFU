@@ -16,8 +16,8 @@ Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, in
 /****
  * function that make do a patrol to the enemy
  */
-void Enemy::Action(Behaviour *b) {
-    b->action();
+void Enemy::Action() {
+    Enemy::behaviour->action();
 
 }
 
