@@ -20,7 +20,7 @@ public:
 
     ~Enemy() final = default;
 
-    void Action(Behaviour *b);
+    void Action();
 
     Behaviour *getBehaviour() const;
 
