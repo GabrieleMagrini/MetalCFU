@@ -10,7 +10,7 @@
 
 class GameState {
 public:
-    GameState();
+    explicit GameState(std::string sn);
 
     virtual ~GameState() = default;
 
@@ -20,14 +20,18 @@ public:
 
     virtual void mainMenuState();
 
-    virtual void OptionState();
+    virtual void optionMenuState();
 
     virtual void startGameState();
 
     virtual void pauseGameState();
 
+    const std::string &getStateName() const;
+
+     void setStateName(const std::string &stateName);
+
 private:
-    IllegalStateException ex;
+    std::string stateName;
 };
 
 
