@@ -12,17 +12,16 @@ public:
 
     virtual ~GameState() = default;
 
-    virtual void gameOverState() = 0;
+    virtual void gameOverState();
 
-    virtual void exitGameState() = 0;
+    virtual void exitGameState();
+    virtual void mainMenuState();
 
-    virtual void mainMenuState() = 0;
+    virtual void OptionState();
 
-    virtual void OptionState() = 0;
+    virtual void startGameState();
 
-    virtual void startGameState() = 0;
-
-    virtual void pauseGameState() = 0;
+    virtual void pauseGameState();
 
 };
 
