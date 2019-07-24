@@ -3,11 +3,12 @@
 //
 
 #include "GameOverState.h"
+#include "../Game.h"
 
-GameOverState::GameOverState(std::string desc) : GameState(std::move(desc)) {
+GameOverState::GameOverState() : GameState("GameOver") {
 
 }
 
-void GameOverState::exitGameState(Game &g) {
-    g.setState(GState::ExitGame);
+void GameOverState::exitGameState(Game *g) {
+    g->setState(GState::ExitGame);
 }

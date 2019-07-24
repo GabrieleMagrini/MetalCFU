@@ -7,11 +7,13 @@
 
 #include "GameState.h"
 
+class Game;
+
 class GameOverState : public GameState {
 public:
-    explicit GameOverState(std::string desc);
+    GameOverState();
 
-    void exitGameState(Game &g) override;
+    void exitGameState(Game *g) override;
 };
 
 
