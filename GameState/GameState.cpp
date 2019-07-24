@@ -10,7 +10,7 @@ void GameState::gameOverState(Game &g) {
 }
 
 void GameState::exitGameState(Game &g) {
-    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to exitGame state");
+
 }
 
 void GameState::mainMenuState(Game &g) {
