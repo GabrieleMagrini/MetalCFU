@@ -90,9 +90,13 @@ public:
 
     void useUsable(int invIdx);
 
-    void setCollision(bool v);
+    void setCollisionX(bool v);
 
-    bool getCollision();
+    bool getCollisionX();
+
+    void setCollisionY(bool v);
+
+    bool getCollisionY();
 
 protected:
     int HP;
@@ -103,7 +107,8 @@ protected:
     int selectedUsable;
     int SpeedX;
     int SpeedY;
-    bool collision;
+    bool collisionX;
+    bool collisionY;
 
 };
 

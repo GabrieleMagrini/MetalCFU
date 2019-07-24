@@ -178,7 +178,7 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
                              Texture *txt, bool c)
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
-          collision(c) {
+          collisionX(c), collisionY(c) {
     weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);
@@ -276,10 +276,18 @@ void GameCharacter::move(int direction) {
 }
 
 
-void GameCharacter::setCollision(bool v) {
-    collision = v;
+void GameCharacter::setCollisionX(bool v) {
+    collisionX = v;
 }
 
-bool GameCharacter::getCollision() {
-    return collision;
+bool GameCharacter::getCollisionX() {
+    return collisionX;
+}
+
+void GameCharacter::setCollisionY(bool v) {
+    collisionY = v;
+}
+
+bool GameCharacter::getCollisionY() {
+    return collisionY;
 }
