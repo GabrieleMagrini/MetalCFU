@@ -10,6 +10,7 @@
 #include "GameCharacter.h"
 
 #include "Behaviour/Behaviour.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -20,11 +21,13 @@ public:
 
     ~Enemy() final = default;
 
-    void Action();
+    void Action(Player *p);
 
     Behaviour *getBehaviour() const;
 
     void setBehaviour(Behaviour *behaviour);
+
+    void checkBehaviour(Player *p);
 
 private:
     int startPosX;
