@@ -4,9 +4,7 @@
 
 #include "IllegalStateException.h"
 
-IllegalStateException::IllegalStateException(std::string &desc) : desc(desc), exception() {
-
-}
+IllegalStateException::IllegalStateException(std::string desc) : desc(std::move(desc)), exception() {}
 
 std::string IllegalStateException::what() {
     return desc;

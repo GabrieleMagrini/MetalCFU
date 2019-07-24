@@ -10,7 +10,7 @@
 
 class IllegalStateException : public std::exception {
 public:
-    explicit IllegalStateException(std::string &desc);
+    explicit IllegalStateException(std::string desc);
 
     std::string what();
 
