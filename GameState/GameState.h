@@ -6,15 +6,18 @@
 #define METALCFU_GAMESTATE_H
 
 
+#include "IllegalStateException.h"
+
 class GameState {
 public:
-    GameState() = default;
+    GameState();
 
     virtual ~GameState() = default;
 
     virtual void gameOverState();
 
     virtual void exitGameState();
+
     virtual void mainMenuState();
 
     virtual void OptionState();
@@ -23,6 +26,8 @@ public:
 
     virtual void pauseGameState();
 
+private:
+    IllegalStateException ex;
 };
 
 
