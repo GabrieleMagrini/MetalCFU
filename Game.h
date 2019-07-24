@@ -8,7 +8,8 @@
 #include <memory>
 
 #include "Map.h"
-#include "GameState/GameState.h"
+
+class GameState;
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
@@ -16,15 +17,25 @@ enum class GState {
 
 class Game {
 public:
-    explicit Game(Player p, Map m = Map());
+    explicit Game();
+
+    virtual ~Game() = default;
+
+    void gameOverState();
+
+    void exitGameState();
+
+    void mainMenuState();
+
+    void optionMenuState();
+
+    void startGameState();
+
+    void pauseGameState();
 
     void setState(GState state);
 
 private:
-
-    Map map;
-    Player player;
-    std::vector<Enemy> enemies;
     std::unique_ptr<GameState> gameState;
     //TODO
 };

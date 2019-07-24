@@ -6,7 +6,7 @@
 #include "IllegalStateException.h"
 
 void GameState::gameOverState(Game *) {
-    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to gameOver state");
+    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to gameOverState state");
 }
 
 void GameState::exitGameState(Game *) {
@@ -14,19 +14,19 @@ void GameState::exitGameState(Game *) {
 }
 
 void GameState::mainMenuState(Game *) {
-    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to mainMenu state");
+    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to mainMenuState state");
 }
 
 void GameState::optionMenuState(Game *) {
-    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to optionMenu state");
+    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to optionMenuState state");
 }
 
 void GameState::startGameState(Game *) {
-    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to startGame state");
+    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to startGameState state");
 }
 
 void GameState::pauseGameState(Game *) {
-    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to pauseGame state");
+    throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to pauseGameState state");
 }
 
 GameState::GameState(std::string sn) : stateName(std::move(sn)) {}
