@@ -16,7 +16,7 @@ void Terrain::checkCollision(GameCharacter *g, Ammo *a, Weapon *w, Interactable 
 
 int Terrain::setBonus(GameCharacter *g, int bonusSpeedMovement) {
     auto X = g->getPosX();
-    while ((this->getPosition().x == X) && (g->getCollision() == true))
+    while ((this->getPosition().x == X) && (Collision::PixelPerfectTest(*g, *this) == true))
         g->setSpeedX(g->getSpeedX() + bonusSpeedMovement);
 
 }
