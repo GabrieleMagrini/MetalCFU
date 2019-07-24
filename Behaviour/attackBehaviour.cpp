@@ -4,6 +4,6 @@
 
 #include "attackBehaviour.h"
 
-int attackBehaviour::action() {
+int attackBehaviour::action(Player *p) {
     return 0;
 }
