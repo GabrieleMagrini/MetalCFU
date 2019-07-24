@@ -9,8 +9,12 @@
 #include "Behaviour.h"
 
 class attackBehaviour : public Behaviour {
+public:
+    attackBehaviour() {}
 
-    int action() override;
+    virtual ~attackBehaviour() {}
+
+    int action(Player *p) override;
 };
 
 

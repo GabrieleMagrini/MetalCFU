@@ -9,7 +9,12 @@
 #include "Behaviour.h"
 
 class patrolBehaviour : public Behaviour {
+public:
+    patrolBehaviour() {}
 
+    virtual ~patrolBehaviour() {}
+
+    int action(Player *p) override;
 };
 
 

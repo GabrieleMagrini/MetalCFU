@@ -3,6 +3,9 @@
 //
 
 #include "Enemy.h"
+#include "Player.h"
+#include "Behaviour/attackBehaviour.h"
+#include "Behaviour/patrolBehaviour.h"
 
 Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, int mw, int mu, int sx, int sy, int sw,
              int su,
@@ -16,8 +19,8 @@ Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, in
 /****
  * function that make do a patrol to the enemy
  */
-void Enemy::Action() {
-    Enemy::behaviour->action();
+void Enemy::Action(Player *p) {
+    Enemy::behaviour->action(p);
 
 }
 
@@ -27,4 +30,16 @@ Behaviour *Enemy::getBehaviour() const {
 
 void Enemy::setBehaviour(Behaviour *behaviour) {
     Enemy::behaviour = behaviour;
+}
+
+void Enemy::checkBehaviour(Player *p) {
+    auto attack = new attackBehaviour();
+    auto patrol = new patrolBehaviour();
+    auto Y = p->getPosY();
+    auto X = p->getPosX();
+    if ((abs(getPosY() - Y)) < 3 && (abs(getPosX() - X)) < 7)
+        setBehaviour(attack);
+    else
+        setBehaviour(patrol);
+
 }

@@ -3,3 +3,7 @@
 //
 
 #include "patrolBehaviour.h"
+
+int patrolBehaviour::action() {
+    return 0;
+}

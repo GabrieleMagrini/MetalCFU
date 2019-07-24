@@ -6,9 +6,13 @@
 #define METALCFU_BEHAVIOUR_H
 
 
+#include "../Player.h"
+
 class Behaviour {
 public:
-    virtual int action() = 0;
+    virtual ~Behaviour() {}
+
+    virtual int action(Player *p) = 0;
 };
 
 
