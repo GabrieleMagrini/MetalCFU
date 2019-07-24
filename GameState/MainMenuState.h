@@ -6,16 +6,17 @@
 #define METALCFU_MAINMENUSTATE_H
 
 #include "GameState.h"
+#include "../Game.h"
 
 class MainMenuState : public GameState {
 public:
     explicit MainMenuState(std::string ns);
 
-    void exitGameState() override;
+    void exitGameState(Game &g) override;
 
-    void optionMenuState() override;
+    void optionMenuState(Game &g) override;
 
-    void startGameState() override;
+    void startGameState(Game &g) override;
 
 
 };
