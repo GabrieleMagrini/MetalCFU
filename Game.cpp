@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "GameState/MainMenuState.h"
 #include "GameState/GameOverState.h"
+#include "GameState/OptionMenuState.h"
 
 void Game::gameOverState() {
 }
@@ -36,11 +37,15 @@ void Game::pauseGameState() {
 void Game::setState(GState state) {
     switch (state) {
         case GState::GameOver:
-
             gameState = std::unique_ptr<GameState>(new GameOverState());
             break;
+
         case GState::MainMenu:
             gameState = std::unique_ptr<GameState>(new MainMenuState());
+            break;
+
+        case GState::OptionMenu:
+            gameState = std::unique_ptr<GameState>(new OptionMenuState());
             break;
     }
 }
