@@ -7,7 +7,8 @@
 
 
 #include "IllegalStateException.h"
-#include "../Game.h"
+
+class Game;
 
 class GameState {
 public:
@@ -15,21 +16,21 @@ public:
 
     virtual ~GameState() = default;
 
-    virtual void gameOverState(Game &g);
+    virtual void gameOverState(Game *g);
 
-    virtual void exitGameState(Game &g);
+    virtual void exitGameState(Game *g);
 
-    virtual void mainMenuState(Game &g);
+    virtual void mainMenuState(Game *g);
 
-    virtual void optionMenuState(Game &g);
+    virtual void optionMenuState(Game *g);
 
-    virtual void startGameState(Game &g);
+    virtual void startGameState(Game *g);
 
-    virtual void pauseGameState(Game &g);
+    virtual void pauseGameState(Game *g);
 
     const std::string &getStateName() const;
 
-     void setStateName(const std::string &stateName);
+    void setStateName(const std::string &stateName);
 
 private:
     std::string stateName;

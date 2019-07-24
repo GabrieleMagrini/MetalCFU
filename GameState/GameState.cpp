@@ -5,27 +5,27 @@
 #include "GameState.h"
 #include "IllegalStateException.h"
 
-void GameState::gameOverState(Game &g) {
+void GameState::gameOverState(Game *) {
     throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to gameOver state");
 }
 
-void GameState::exitGameState(Game &g) {
+void GameState::exitGameState(Game *) {
 
 }
 
-void GameState::mainMenuState(Game &g) {
+void GameState::mainMenuState(Game *) {
     throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to mainMenu state");
 }
 
-void GameState::optionMenuState(Game &g) {
+void GameState::optionMenuState(Game *) {
     throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to optionMenu state");
 }
 
-void GameState::startGameState(Game &g) {
+void GameState::startGameState(Game *) {
     throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to startGame state");
 }
 
-void GameState::pauseGameState(Game &g) {
+void GameState::pauseGameState(Game *) {
     throw IllegalStateException("Illegal state tarnsiction from " + stateName + " to pauseGame state");
 }
 
