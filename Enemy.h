@@ -8,9 +8,9 @@
 #include <memory>
 
 #include "GameCharacter.h"
-
-#include "Behaviour/Behaviour.h"
 #include "Player.h"
+
+class Behaviour;
 
 using namespace std;
 
@@ -21,7 +21,7 @@ public:
 
     ~Enemy() final = default;
 
-    void Action(Player *p);
+    void Action(Player *p, Enemy *e);
 
     Behaviour *getBehaviour() const;
 
