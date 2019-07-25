@@ -35,12 +35,12 @@ TEST(Weapon, WeaponConstructorTest) {
     delete w;
 }
 
-TEST(Weapon, ShootTest) {
+/*TEST(Weapon, ShootTest) {
     auto w = new Weapon{10, 20, 15, 15};
 
     ASSERT_EQ(w->shoot(), true);
     ASSERT_EQ(w->getCurrentAmmo().getQuantity(), 9);
-}
+}*/
 
 TEST(Weapon, equalTest){
     auto w1 = new Weapon{10,20,15,15};

@@ -6,16 +6,22 @@
 #include "Ammo.h"
 #include <math.h>
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k, int sy) : currentAmmo(c), damage(d),
-                                                                                           range(r),
-                                                                                           maxAmmo(m), activeLaser(false),
-                                                                                           collision(k), speedY(sy) {
+Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k, int sy, int bs) : currentAmmo(c),
+                                                                                                   damage(d),
+                                                                                                   range(r),
+                                                                                                   maxAmmo(m),
+                                                                                                   activeLaser(false),
+                                                                                                   collision(k),
+                                                                                                   speedY(sy),
+                                                                                                   bulletSpeed(bs) {
     if (txt != nullptr)
         setTexture(*txt);
 }
 
-Weapon::Weapon(int cur, int d, int r, int m, Texture *txt, int sy) : currentAmmo(cur), damage(d), range(r), maxAmmo(m),
-                                                                     activeLaser(false), collision(false), speedY(sy) {
+Weapon::Weapon(int cur, int d, int r, int m, Texture *txt, int sy, int bs) : currentAmmo(cur), damage(d), range(r),
+                                                                             maxAmmo(m),
+                                                                             activeLaser(false), collision(false),
+                                                                             speedY(sy), bulletSpeed(bs) {
     if (txt != nullptr)
         setTexture(*txt);
 }
@@ -52,19 +58,23 @@ void Weapon::setMaxAmmo(const int quantity) {
     Weapon::maxAmmo.setQuantity(quantity);
 }
 
-bool Weapon::shoot(Vector2f pos) {
+bool Weapon::shoot(Vector2f posRif, Vector2f posFin) {
     if (currentAmmo.getQuantity() > 0) {
         currentAmmo.setQuantity(currentAmmo.getQuantity() - 1);
-        float rect = (pos.x / pos.y);
-        float degrees = atan(rect);
-        float direction = cos(degrees);
-        currentAmmo.move(sf::Vector2f(direction, 0.5));
+        float angolarCoefficient = static_cast<float> (posFin.y - posRif.y) / static_cast<float>(posFin.x - posRif.x);
+        double degrees = atan(angolarCoefficient);
+        if (posFin.x - posRif.x < 0)
+            bulletSpeed = abs(bulletSpeed);
+        else
+            bulletSpeed = -abs(bulletSpeed);
+        currentAmmo.move(bulletSpeed * cos(degrees), bulletSpeed * sin(degrees));
         return true;
     } else
         return false;
 }
 
-Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10) {}
+Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
+                   bulletSpeed(10) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;
@@ -112,4 +122,12 @@ int Weapon::getSpeedY() const {
 
 void Weapon::setSpeedY(int speedY) {
     Weapon::speedY = speedY;
+}
+
+int Weapon::getBulletSpeed() const {
+    return bulletSpeed;
+}
+
+void Weapon::setBulletSpeed(int bulletspeed) {
+    Weapon::bulletSpeed = bulletspeed;
 }

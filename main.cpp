@@ -20,7 +20,7 @@ int main() {
 
     sf::Texture wallpaper;
     wallpaper.loadFromFile(
-            "/run/media/emanuele/Volume/Dati/Università/Progetto Programmazione/MetalCFU/Sources/Pngs/wallpaper_1.jpeg");
+            "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Pngs/wallpaper_1.jpeg");
     sf::Sprite lol;
     sf::Vector2u size = wallpaper.getSize();
     lol.setTexture(wallpaper);
@@ -35,7 +35,7 @@ int main() {
 
     Map a;
     std::vector<sf::Sprite> sprites = a.createMap(std::ifstream(
-            "/run/media/emanuele/Volume/Dati/Università/Progetto Programmazione/MetalCFU/Sources/Maps/mappa.txt"));
+            "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Maps/mappa.txt"));
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {

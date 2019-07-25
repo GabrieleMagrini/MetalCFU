@@ -15,9 +15,10 @@ class Weapon : public sf::Sprite {
 public:
     Weapon();
 
-    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr, bool k = false, int sy = 10);
+    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr, bool k = false, int sy = 10,
+           int bs = 10);
 
-    Weapon(int cur, int d, int r, int m, Texture *txt = nullptr, int sy = 10);
+    Weapon(int cur, int d, int r, int m, Texture *txt = nullptr, int sy = 10, int bs = 10);
 
     Weapon(const Weapon &w) = default;
 
@@ -37,7 +38,7 @@ public:
 
     void setMaxAmmo(int quantity);
 
-    bool shoot(sf::Vector2f pos);
+    bool shoot(sf::Vector2f posFin, sf::Vector2f posRif);
 
     ~Weapon() override = default;
 
@@ -63,6 +64,10 @@ public:
 
     void setSpeedY(int speedY);
 
+    int getBulletSpeed() const;
+
+    void setBulletSpeed(int bulletSpeed);
+
 private:
     Ammo currentAmmo;
     int damage;
@@ -71,6 +76,7 @@ private:
     bool activeLaser;
     bool collision;
     int speedY;
+    int bulletSpeed;
 };
 
 
