@@ -61,6 +61,6 @@ void Game::setState(GState state) {
 
 
         case GState::ExitGame:
-            gameState() = std::unique_ptr<GameState>(new ExitGameState());
+            gameState = std::unique_ptr<GameState>(new ExitGameState());
     }
 }

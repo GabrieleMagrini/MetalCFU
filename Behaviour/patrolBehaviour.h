@@ -14,7 +14,7 @@ public:
 
     virtual ~patrolBehaviour() {}
 
-    int action(Player *p) override;
+    int action(Player *p, Enemy *e) override;
 };
 
 
