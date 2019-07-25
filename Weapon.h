@@ -37,7 +37,7 @@ public:
 
     void setMaxAmmo(int quantity);
 
-    bool shoot();
+    bool shoot(sf::Vector2f pos);
 
     ~Weapon() override = default;
 

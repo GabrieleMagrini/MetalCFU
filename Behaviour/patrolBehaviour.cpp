@@ -5,5 +5,6 @@
 #include "patrolBehaviour.h"
 
 int patrolBehaviour::action(Player *p, Enemy *e) {
+
     return 0;
 }

@@ -7,8 +7,8 @@
 
 
 #include "Behaviour.h"
+#include "../Enemy.h"
 
-class Enemy;
 
 class attackBehaviour : public Behaviour {
 public:

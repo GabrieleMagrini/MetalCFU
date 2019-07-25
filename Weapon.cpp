@@ -4,6 +4,7 @@
 
 #include "Weapon.h"
 #include "Ammo.h"
+#include <math.h>
 
 Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k, int sy) : currentAmmo(c), damage(d),
                                                                                            range(r),
@@ -51,9 +52,13 @@ void Weapon::setMaxAmmo(const int quantity) {
     Weapon::maxAmmo.setQuantity(quantity);
 }
 
-bool Weapon::shoot() {
+bool Weapon::shoot(Vector2f pos) {
     if (currentAmmo.getQuantity() > 0) {
         currentAmmo.setQuantity(currentAmmo.getQuantity() - 1);
+        float rect = (pos.x / pos.y);
+        float degrees = atan(rect);
+        float direction = cos(degrees);
+        currentAmmo.move(sf::Vector2f(direction, 0.5));
         return true;
     } else
         return false;

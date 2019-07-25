@@ -7,6 +7,7 @@
 
 
 #include "Behaviour.h"
+#include "../Enemy.h"
 
 class patrolBehaviour : public Behaviour {
 public:
