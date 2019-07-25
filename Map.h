@@ -28,7 +28,7 @@ public:
     std::vector<sf::Sprite> createMap(std::ifstream my_file);
 
 
-    void gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable);
+    void gravityApply(int gravity, Player *player, Enemy *enemy);
 
 
     explicit Map(int x = 7, int y = 30, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}

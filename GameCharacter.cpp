@@ -244,9 +244,9 @@ void GameCharacter::getDamage(unsigned int damage) {
 void GameCharacter::fight(GameCharacter *enemy) {
     if (isTwoGameCharacterNearby(this, enemy)) {
         enemy->getDamage(this->strenght);
-    } else {
+    }/* else {
         weaponInventory.getElement(selectedWeapon)->shoot();
-    }
+    }*/
 }
 
 /***
@@ -266,15 +266,14 @@ void GameCharacter::useUsable(int invIdx) {
  */
 void GameCharacter::move(int direction) {
     /*
-     * do{
+     *int oldPosX = posX;
      * if (direction == 0)
         setPosition(getPosX(), getPosY() + movementSpeed);
     if (direction == 1)
         setPosition(getPosX() + movementSpeed, getPosY());
     if (direction == 3)
         setPosition(getPosX() - movementSpeed, getPosY());
-        int oldPosX = posX;
-        }while(!collisionX)
+
         if (collisionX)
         setPosition(oldPosx);
 */

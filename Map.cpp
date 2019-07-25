@@ -55,15 +55,11 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
 }
 
 
-void Map::gravityApply(int gravity, Player *player, Enemy *enemy, Weapon *weapon, Interactable *interactable) {
+void Map::gravityApply(int gravity, Player *player, Enemy *enemy) {
 
-    if (!player->getCollisionY())
-        player->setSpeedY(gravity);
-    else
-        player->setSpeedY(0);
-    if (!enemy->getCollisionY())
-        enemy->setSpeedY(gravity);
-    else
-        enemy->setSpeedY(0);
+    float oldPosY = player->getPosY();
+    player->setPosition(player->getPosX(), player->getPosY() - gravity);
+    if (player->getCollisionY())
+        player->setPosition(player->getPosX(), oldPosY);
 
 }

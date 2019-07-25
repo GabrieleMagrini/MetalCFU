@@ -4,18 +4,12 @@
 
 #include "Trampoline.h"
 #include "Player.h"
+#include "Collision.h"
 
 //The function is called until the bool value "liftUp" get value "false"
-bool Trampoline::liftUp(int height, Player *player) {
+void Trampoline::liftUp(int height, Player *player) {
 
-    bool valid;
+    if (Collision::PixelPerfectTest(*player, *this))
+        player->setSpeedY(player->getSpeedY() + height);
 
-    if (player->getPosY() == height)
-        valid = false;
-    else {
-        player->move(0);
-        valid = true;
-    }
-
-    return valid;
 }
