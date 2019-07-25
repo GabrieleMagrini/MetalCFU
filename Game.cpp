@@ -7,6 +7,7 @@
 #include "GameState/GameOverState.h"
 #include "GameState/OptionMenuState.h"
 #include "GameState/StartGameState.h"
+#include "GameState/PauseGameState.h"
 
 void Game::gameOverState() {
 }
@@ -52,5 +53,10 @@ void Game::setState(GState state) {
         case GState::StartGame:
             gameState = std::unique_ptr<GameState>(new StartGameState());
             break;
+
+        case GState::PauseGame:
+            gameState = std::unique_ptr<GameState>(new PauseGameState());
+            break;
+
     }
 }
