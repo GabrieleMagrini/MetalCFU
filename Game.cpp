@@ -66,3 +66,7 @@ void Game::setState(GState state) {
             gameState = std::unique_ptr<GameState>(new ExitGameState());
     }
 }
+
+void Game::loop() {
+
+}
