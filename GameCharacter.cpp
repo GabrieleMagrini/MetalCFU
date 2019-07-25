@@ -265,13 +265,18 @@ void GameCharacter::useUsable(int invIdx) {
  * @param direction direzione sui 4 assi su cui spostarsi
  */
 void GameCharacter::move(int direction) {
-    /*if (direction == 0)
+    /*
+     * do{
+     * if (direction == 0)
         setPosition(getPosX(), getPosY() + movementSpeed);
     if (direction == 1)
         setPosition(getPosX() + movementSpeed, getPosY());
-
     if (direction == 3)
         setPosition(getPosX() - movementSpeed, getPosY());
+        int oldPosX = posX;
+        }while(!collisionX)
+        if (collisionX)
+        setPosition(oldPosx);
 */
 }
 
