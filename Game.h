@@ -35,6 +35,8 @@ public:
 
     void setState(GState state);
 
+    void loop();
+
 private:
     std::unique_ptr<GameState> gameState;
     //TODO
