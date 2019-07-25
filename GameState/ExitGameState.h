@@ -8,7 +8,7 @@
 #include "GameState.h"
 
 
-class ExitGameState : GameState {
+class ExitGameState : public GameState {
 public:
     ExitGameState();
 };

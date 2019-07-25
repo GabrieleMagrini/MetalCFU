@@ -10,8 +10,6 @@
 #include "GameState/PauseGameState.h"
 #include "GameState/ExitGameState.h"
 
-void Game::gameOverState() {
-}
 
 Game::Game() : gameState(new MainMenuState()) {
 
@@ -35,6 +33,10 @@ void Game::startGameState() {
 
 void Game::pauseGameState() {
     gameState->pauseGameState(this);
+}
+
+void Game::gameOverState() {
+    gameState->gameOverState(this);
 }
 
 void Game::setState(GState state) {
@@ -61,6 +63,6 @@ void Game::setState(GState state) {
 
 
         case GState::ExitGame:
-            gameState() = std::unique_ptr<GameState>(new ExitGameState());
+            gameState = std::unique_ptr<GameState>(new ExitGameState());
     }
 }
