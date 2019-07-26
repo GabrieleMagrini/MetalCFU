@@ -8,12 +8,16 @@
 
 void Terrain::checkCollision(GameCharacter *g, Ammo *a, Weapon *w, Interactable *i) {
 
-    g->setCollisionX((g->getPosition().x + g->getTexture()->getSize().x) ==
-                     ((this->getPosition().x) - (this->getTexture()->getSize().x)) ||
-                     (g->getPosition().x - g->getTexture()->getSize().x) ==
-                     ((this->getPosition().x) + (this->getTexture()->getSize().x)));
-    g->setCollisionY((g->getPosition().y - g->getTexture()->getSize().y) ==
-                     ((this->getPosition().y) + (this->getTexture()->getSize().y)));
+    g->setCollisionX(((g->getPosition().x + g->getTexture()->getSize().x) -
+                      ((this->getPosition().x) - (this->getTexture()->getSize().x)))
+                     <= 0 || ((g->getPosition().x - g->getTexture()->getSize().x) -
+                              ((this->getPosition().x) + (this->getTexture()->getSize().x))) >= 0);
+
+    g->setCollisionY(((g->getPosition().y + g->getTexture()->getSize().y) -
+                      ((this->getPosition().y) - (this->getTexture()->getSize().y)))
+                     <= 0 || ((g->getPosition().y - g->getTexture()->getSize().y) -
+                              ((this->getPosition().y) + (this->getTexture()->getSize().y))) >= 0);
+
     a->setCollision(Collision::PixelPerfectTest(*a, *this));
     w->setCollision(Collision::PixelPerfectTest(*w, *this));
     i->setCollision(Collision::PixelPerfectTest(*i, *this));
