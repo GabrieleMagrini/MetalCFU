@@ -56,15 +56,12 @@ MainMenu::MainMenu(std::unique_ptr<sf::RenderWindow> rw, const std::string &file
     float scaley = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backText.getSize().x);
 
     backGround.setScale(scalex, scaley);
-
 }
 
 /***
  * function that draw all the button and background
  */
 void MainMenu::render() {
-    (*renderWin).clear();
-
     (*renderWin).draw(backGround);
 
     startButton.render(*renderWin);
@@ -85,4 +82,16 @@ void MainMenu::update() {
     exitButton.update(worldPos);
 
 
+}
+
+bool MainMenu::exitButtonPressed() {
+    return exitButton.isPressed();
+}
+
+bool MainMenu::optionButtonPressed() {
+    return optionButton.isPressed();
+}
+
+bool MainMenu::startButtonPressed() {
+    return startButton.isPressed();
 }

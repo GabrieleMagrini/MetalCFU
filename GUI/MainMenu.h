@@ -18,6 +18,12 @@ public:
 
     void update();
 
+    bool exitButtonPressed();
+
+    bool optionButtonPressed();
+
+    bool startButtonPressed();
+
 private:
     sf::Texture backText;
     sf::Sprite backGround;
