@@ -156,13 +156,14 @@ Button &Button::operator=(const Button &b) {
 }
 
 void Button::copy(const Button &b) {
+    this->buttonState = b.buttonState;
     this->shape = b.shape;
     this->text = b.text;
     this->font = std::unique_ptr<sf::Font>(new sf::Font(*b.font));
     this->idleTexture = b.idleTexture;
     this->hoverTexture = b.hoverTexture;
     this->pressedTexture = b.pressedTexture;
-    this->buttonState = b.buttonState;
+
 }
 
 /***
