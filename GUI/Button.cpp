@@ -134,6 +134,15 @@ void Button::inizialization(float x, float y, float width, float height, std::st
             this->text.getLocalBounds().height));
 }
 
+Button &Button::operator=(const Button &b) {
+    this->shape = b.shape;
+    this->text = b.text;
+    this->font = std::unique_ptr<sf::Font>(new sf::Font(*b.font));
+    this->idleTexture = b.idleTexture;
+    this->hoverTexture = b.hoverTexture;
+    this->pressedTexture = b.pressedTexture;
 
-
+    this->buttonState = b.buttonState;
+    return *this;
+}
 
