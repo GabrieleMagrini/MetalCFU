@@ -31,12 +31,14 @@ Button::Button(float x, float y, float width, float height, sf::Font &font, cons
     this->text.setFillColor(sf::Color::White);
     this->text.setCharacterSize(24);
 
-
     //center text in the rectangle shape
-    this->text.setPosition(
-            (shape.getPosition().x + shape.getGlobalBounds().width) / 2.f,
-            (shape.getPosition().y + shape.getGlobalBounds().height)
-    );
+    this->text.setOrigin(shape.getLocalBounds().left + shape.getLocalBounds().width / 2.0f,
+                         shape.getLocalBounds().top + shape.getLocalBounds().height / 2.0f);
+
+    this->text.setPosition(sf::Vector2f(
+            shape.getPosition().x + shape.getGlobalBounds().width - this->text.getLocalBounds().width / 2.0f,
+            shape.getPosition().y + shape.getGlobalBounds().height -
+            this->text.getLocalBounds().height));
 }
 
 /**
