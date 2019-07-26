@@ -101,6 +101,18 @@ void Button::update(const sf::Vector2f &mousePos) {
 
 }
 
+/***
+ * copy constructor
+ * @param b
+ */
+Button::Button(Button &b) {
+    copy(b);
+}
+
+/***
+ * function that check if the button is pressed
+ * @return
+ */
 const bool Button::isPressed() const {
     bool b = false;
 
@@ -135,6 +147,11 @@ void Button::inizialization(float x, float y, float width, float height, std::st
 }
 
 Button &Button::operator=(const Button &b) {
+    copy(b);
+    return *this;
+}
+
+void Button::copy(const Button &b) {
     this->shape = b.shape;
     this->text = b.text;
     this->font = std::unique_ptr<sf::Font>(new sf::Font(*b.font));
@@ -143,6 +160,4 @@ Button &Button::operator=(const Button &b) {
     this->pressedTexture = b.pressedTexture;
 
     this->buttonState = b.buttonState;
-    return *this;
 }
-

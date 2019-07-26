@@ -26,6 +26,7 @@ public:
     Button(float x, float y, float width, float height, sf::Font font, std::string text, sf::Texture idleText,
            sf::Texture hoverText, sf::Texture pressedText);
 
+    Button(Button &b);
     ~Button() = default;
 
     void render(sf::RenderTarget &target);
@@ -45,6 +46,8 @@ public:
 private:
 
     void inizialization(float x, float y, float width, float height, std::string text);
+
+    void copy(const Button &b);
 
     sf::RectangleShape shape;
     std::unique_ptr<sf::Font> font;
