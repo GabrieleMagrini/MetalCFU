@@ -39,7 +39,7 @@ public:
 
     Button &operator=(const Button &b);
 
-
+    void setCharacterSize(unsigned int size);
 
 
 

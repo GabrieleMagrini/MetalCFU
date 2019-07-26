@@ -161,3 +161,11 @@ void Button::copy(const Button &b) {
 
     this->buttonState = b.buttonState;
 }
+
+/***
+ * set the size of the character of the string, in pixel
+ * @param size
+ */
+void Button::setCharacterSize(unsigned int size) {
+    text.setCharacterSize(size);
+}
