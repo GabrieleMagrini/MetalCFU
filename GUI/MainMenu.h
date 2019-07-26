@@ -12,13 +12,14 @@
 
 class MainMenu {
 public:
-    MainMenu(std::unique_ptr<sf::RenderWindow> rw, std::string filename, sf::Font font);
+    MainMenu(std::unique_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font);
 
     void render();
 
     void update();
 
 private:
+    sf::Texture backText;
     sf::Sprite backGround;
     std::unique_ptr<sf::RenderWindow> renderWin;
     Button startButton;
