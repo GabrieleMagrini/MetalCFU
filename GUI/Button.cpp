@@ -4,10 +4,21 @@
 
 #include "Button.h"
 
-
-Button::Button(float x, float y, float width, float height, sf::Font &font, const std::string &text,
-               const std::string &textIdle,
-               const std::string &textHover, const std::string &textPressed) :
+/***
+ *
+ * @param x position x of the button
+ * @param y position y of the button
+ * @param width of the button
+ * @param height of the button
+ * @param font of the button
+ * @param text of the button
+ * @param textIdle file name of texture for button when mouse idle
+ * @param textHover file name of texture for button when mouse hover
+ * @param textPressed file name of texture for button when mouse press it
+ */
+Button::Button(float x, float y, float width, float height, sf::Font font, const std::string text,
+               const std::string textIdle,
+               const std::string textHover, const std::string textPressed) :
         font(std::unique_ptr<sf::Font>(new sf::Font(font))), text(), buttonState(ButtonState::IDLE) {
 
 
@@ -21,25 +32,29 @@ Button::Button(float x, float y, float width, float height, sf::Font &font, cons
         std::cerr << "can't access to file" << std::endl;
     }
 
-    shape.setSize(sf::Vector2f(width, height));
-    shape.setPosition(x, y);
-
-    shape.setTexture(&idleTexture);
-
-    this->text.setFont(*this->font);
-    this->text.setString(text);
-    this->text.setFillColor(sf::Color::White);
-    this->text.setCharacterSize(24);
-
-    //center text in the rectangle shape
-    this->text.setOrigin(shape.getLocalBounds().left + shape.getLocalBounds().width / 2.0f,
-                         shape.getLocalBounds().top + shape.getLocalBounds().height / 2.0f);
-
-    this->text.setPosition(sf::Vector2f(
-            shape.getPosition().x + shape.getGlobalBounds().width - this->text.getLocalBounds().width / 2.0f,
-            shape.getPosition().y + shape.getGlobalBounds().height -
-            this->text.getLocalBounds().height));
+    inizialization(x, y, width, height, text);
 }
+
+/***
+ *
+ * @param x position x of the button
+ * @param y position y of the button
+ * @param width of the button
+ * @param height of the button
+ * @param font of the button
+ * @param text of the button
+ * @param idleText texture for button when mouse idle
+ * @param hoverText texture for button when mouse hover
+ * @param pressedText texture for button when mouse press it
+ */
+Button::Button(float x, float y, float width, float height, sf::Font font, std::string text, sf::Texture idleText,
+               sf::Texture hoverText, sf::Texture pressedText) : font(std::unique_ptr<sf::Font>(new sf::Font(font))),
+                                                                 text(), buttonState(ButtonState::IDLE),
+                                                                 idleTexture(idleText), hoverTexture(hoverText),
+                                                                 pressedTexture(pressedText) {
+    inizialization(x, y, width, height, std::move(text));
+}
+
 
 /**
  * rendering the shape
@@ -97,3 +112,28 @@ const bool Button::isPressed() const {
 const sf::RectangleShape &Button::getShape() const {
     return shape;
 }
+
+void Button::inizialization(float x, float y, float width, float height, std::string text) {
+    shape.setSize(sf::Vector2f(width, height));
+    shape.setPosition(x, y);
+
+    shape.setTexture(&idleTexture);
+
+    this->text.setFont(*this->font);
+    this->text.setString(text);
+    this->text.setFillColor(sf::Color::White);
+    this->text.setCharacterSize(24);
+
+    //center text in the rectangle shape
+    this->text.setOrigin(shape.getLocalBounds().left + shape.getLocalBounds().width / 2.0f,
+                         shape.getLocalBounds().top + shape.getLocalBounds().height / 2.0f);
+
+    this->text.setPosition(sf::Vector2f(
+            shape.getPosition().x + shape.getGlobalBounds().width - this->text.getLocalBounds().width / 2.0f,
+            shape.getPosition().y + shape.getGlobalBounds().height -
+            this->text.getLocalBounds().height));
+}
+
+
+
+
