@@ -19,12 +19,13 @@ enum ButtonState {
 
 class Button {
 public:
-    Button(float x, float y, float width, float height, sf::Font font, std::string text,
-           std::string textIdle,
-           std::string textHover, std::string textPressed);
+    Button(float x, float y, float width, float height, const sf::Font &font, const std::string &text,
+           const std::string &textIdle,
+           const std::string &textHover, const std::string &textPressed);
 
-    Button(float x, float y, float width, float height, sf::Font font, std::string text, sf::Texture idleText,
-           sf::Texture hoverText, sf::Texture pressedText);
+    Button(float x, float y, float width, float height, const sf::Font &font, const std::string &text,
+           const sf::Texture &idleText,
+           const sf::Texture &hoverText, const sf::Texture &pressedText);
 
     Button(Button &b);
     ~Button() = default;
@@ -45,7 +46,7 @@ public:
 
 private:
 
-    void inizialization(float x, float y, float width, float height, std::string text);
+    void inizialization(float x, float y, float width, float height, const std::string &text);
 
     void copy(const Button &b);
 
