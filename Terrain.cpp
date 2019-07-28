@@ -19,7 +19,7 @@ void Terrain::checkCollision(GameCharacter *g) {
 }
 
 int Terrain::setBonus(GameCharacter *g, int bonusSpeedMovement) {
-    while ((g->getCollisionX()) && Collision::PixelPerfectTest(*g, *this))
+    while ((g->getCollisionY()) && Collision::PixelPerfectTest(*g, *this))
         g->setSpeedX(g->getSpeedX() + bonusSpeedMovement);
 
 }
