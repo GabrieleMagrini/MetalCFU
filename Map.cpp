@@ -23,28 +23,33 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
     std::unique_ptr<Terrain> bot = c.createTerrain(TerrainType::Mud);
 
     auto gbounds = bot->getTexture()->getSize();
-    std::vector<sf::Sprite> sprites;
+    std::vector<Sprite> sprites;
     sprites.reserve(sizeX * sizeY);
 
     for (unsigned t = 0; t < sizeX; ++t) {
         for (unsigned z = 0; z < sizeY; ++z) {
             switch (map_array[t][z]) {
-                case '1':
+                case '1': {
                     sprites.resize(sprites.size() + 1);
                     sprites.back().setTexture(*grass->getTexture());
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
-                case '0':
+                }
+                case '0': {
                     break;
-                case '2':
+                }
+                case '2': {
                     sprites.resize(sprites.size() + 1);
                     sprites.back().setTexture(*mid->getTexture());
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
-                case '3':
+                }
+                case '3': {
                     sprites.resize(sprites.size() + 1);
                     sprites.back().setTexture(*bot->getTexture());
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
+                    break;
+                }
                 default:
                     break;
             }
