@@ -18,8 +18,6 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
     }
 
     TerrainFactory c;
-    std::unique_ptr<Terrain> mid = c.createTerrain(TerrainType::Dirt);
-    std::unique_ptr<Terrain> grass = c.createTerrain(TerrainType::Grass);
     std::unique_ptr<Terrain> bot = c.createTerrain(TerrainType::Mud);
 
     auto gbounds = bot->getTexture()->getSize();
@@ -31,7 +29,7 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
             switch (map_array[t][z]) {
                 case '1': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.back().setTexture(*grass->getTexture());
+                    sprites.push_back(*c.createTerrain(TerrainType::Grass));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
@@ -40,13 +38,13 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
                 }
                 case '2': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.back().setTexture(*mid->getTexture());
+                    sprites.push_back(*c.createTerrain(TerrainType::Dirt));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
                 case '3': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.back().setTexture(*bot->getTexture());
+                    sprites.push_back(*c.createTerrain(TerrainType::Mud));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
