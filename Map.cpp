@@ -6,7 +6,7 @@
 #include "Factory/TerrainFactory.h"
 
 
-std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
+std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 
     char map_array[sizeX][sizeY];
 
@@ -21,7 +21,7 @@ std::vector<sf::Sprite> Map::createMap(std::ifstream my_file) {
     std::unique_ptr<Terrain> bot = c.createTerrain(TerrainType::Mud);
 
     auto gbounds = bot->getTexture()->getSize();
-    std::vector<Sprite> sprites;
+    std::vector<Terrain> sprites;
     sprites.reserve(sizeX * sizeY);
 
     for (unsigned t = 0; t < sizeX; ++t) {

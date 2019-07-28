@@ -14,7 +14,6 @@
 
 class Terrain :public Sprite{                                                                    //enum class,various types of block as various blocks effects
 public:
-    Terrain();
 
     explicit Terrain(int s = 0):bonusSpeedMovement(s){}
 
