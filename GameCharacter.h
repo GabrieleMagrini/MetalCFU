@@ -45,7 +45,7 @@ public:
 
     void teleport(float x, float y);
 
-    void move(int direction);
+    void walk(int direction);
 
     Weapon getWeapon() const;
 

@@ -264,7 +264,7 @@ void GameCharacter::useUsable(int invIdx) {
  * funzione che effettua lo spostamento del personaggio
  * @param direction direzione sui 4 assi su cui spostarsi
  */
-void GameCharacter::move(int direction) {
+void GameCharacter::walk(int direction) {
 
     int oldPosX = getPosX();
     int oldPosY = getPosY();
