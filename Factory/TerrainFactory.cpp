@@ -10,15 +10,15 @@ std::unique_ptr<Terrain> TerrainFactory::createTerrain(TerrainType t) {
 
     auto groundTex = new sf::Texture();
     groundTex->loadFromFile(
-            "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Pngs/tile.png");
+            "Sources/Pngs/tile.png");
 
     auto dirt = new sf::Texture();
     dirt->loadFromFile(
-            "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Pngs/mid.png");
+            "Sources/Pngs/mid.png");
 
     auto bot = new sf::Texture();
     bot->loadFromFile(
-            "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Pngs/bottom.png");
+            "Sources/Pngs/bottom.png");
 
     switch (t) {
         case TerrainType::Dirt:
