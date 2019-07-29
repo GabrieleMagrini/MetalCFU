@@ -20,6 +20,13 @@ public:
 
     void update();
 
+    bool isVolumeButtonPressed();
+
+    bool isResButtonPressed();
+
+    bool isCancelButtonPressed();
+
+    bool isSaveButtonPressed();
 private:
 
     sf::Texture backGrTexture;
@@ -31,7 +38,7 @@ private:
     sf::Texture onTextureHover;
     sf::Texture onTexturePressed;
 
-    sf::Texture offTextureidle;
+    sf::Texture offTextureIdle;
     sf::Texture offTextureHover;
     sf::Texture offTexturePressed;
 

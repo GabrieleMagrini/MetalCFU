@@ -31,7 +31,7 @@ OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &
     onTextureHover.loadFromFile("GUI/texture/hoverGreenButton.png");
     onTexturePressed.loadFromFile("GUI/texture/pressedGreenButton.png");
 
-    offTextureidle.loadFromFile("GUI/texture/idleRedButton.png");
+    offTextureIdle.loadFromFile("GUI/texture/idleRedButton.png");
     offTextureHover.loadFromFile("GUI/texture/hoverRedButton.png");
     offTexturePressed.loadFromFile("GUI/texture/pressedRedButton.png");
     volumeTxt.setFont(font);
@@ -84,4 +84,20 @@ void OptionMenu::update() {
     resButton.update(worldPos);
     saveButton.update(worldPos);
     cancelButton.update(worldPos);
+}
+
+bool OptionMenu::isVolumeButtonPressed() {
+    return volButton.isPressed();
+}
+
+bool OptionMenu::isResButtonPressed() {
+    return resButton.isPressed();
+}
+
+bool OptionMenu::isCancelButtonPressed() {
+    return cancelButton.isPressed();
+}
+
+bool OptionMenu::isSaveButtonPressed() {
+    return saveButton.isPressed();
 }
