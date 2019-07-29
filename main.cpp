@@ -34,7 +34,7 @@ int main() {
     window.setView(view);
 
     Map a;
-    std::vector<sf::Sprite> sprites = a.createMap(std::ifstream(
+    std::vector<Terrain> sprites = a.createMap(std::ifstream(
             "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Maps/mappa.txt"));
     while (window.isOpen()) {
         sf::Event event;

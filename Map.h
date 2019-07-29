@@ -25,7 +25,7 @@ class Map {
 public:
     ~Map() = default;
 
-    std::vector<sf::Sprite> createMap(std::ifstream my_file);
+    std::vector<Terrain> createMap(std::ifstream my_file);
 
 
     void gravityApply(int gravity, Player *player, Enemy *enemy);

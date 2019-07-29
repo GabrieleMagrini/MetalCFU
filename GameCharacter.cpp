@@ -275,7 +275,7 @@ void GameCharacter::move(int direction) {
         setPosition(getPosX() - movementSpeed, getPosY());
 
         if (collisionX)
-        setPosition(oldPosx);
+        setPosition(oldPosx,PosY);
 */
 }
 
