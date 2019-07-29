@@ -36,6 +36,7 @@ int main() {
     Map a;
     std::vector<Terrain> sprites = a.createMap(std::ifstream(
             "/home/madmag/Desktop/UniFi/Programmazione/Progetto/Sources/Maps/mappa.txt"));
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -46,8 +47,11 @@ int main() {
 
         }
         window.draw(lol);
-        for (auto &sprite : sprites)
+        for (auto &sprite : sprites) {
+            sprite.setOrigin(100, -310);
             window.draw(sprite);
+
+        }
         window.display();
     }
     return 0;
