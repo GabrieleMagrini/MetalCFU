@@ -96,3 +96,27 @@ TEST(Collision, playerCollided) {
 
 
 }
+
+
+TEST(Collision, collisionY) {
+    TerrainFactory f;
+    auto block = f.createTerrain(TerrainType::Dirt);
+
+    block->setPosition(100, 100);
+
+    WeaponFactory w;
+
+    auto w1 = w.createWeapon(WeaponType::M4);
+
+    auto player = new Player(2, w1.get());
+
+    player->setPosition(0, 100);
+    player->setTexture(*block->getTexture());
+
+    block->checkCollision(player);
+
+    ASSERT_EQ(player->getCollisionY(), false);
+
+
+}
+
