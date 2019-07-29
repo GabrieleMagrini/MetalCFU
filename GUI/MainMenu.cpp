@@ -84,14 +84,14 @@ void MainMenu::update() {
 
 }
 
-bool MainMenu::exitButtonPressed() {
+bool MainMenu::isExitButtonPressed() {
     return exitButton.isPressed();
 }
 
-bool MainMenu::optionButtonPressed() {
+bool MainMenu::isOptionButtonPressed() {
     return optionButton.isPressed();
 }
 
-bool MainMenu::startButtonPressed() {
+bool MainMenu::isStartButtonPressed() {
     return startButton.isPressed();
 }
