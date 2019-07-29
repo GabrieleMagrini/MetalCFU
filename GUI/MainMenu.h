@@ -12,7 +12,7 @@
 
 class MainMenu {
 public:
-    MainMenu(std::unique_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font);
+    MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font);
 
     void render();
 
@@ -27,10 +27,11 @@ public:
 private:
     sf::Texture backText;
     sf::Sprite backGround;
-    std::unique_ptr<sf::RenderWindow> renderWin;
+    std::shared_ptr<sf::RenderWindow> renderWin;
     Button startButton;
     Button optionButton;
     Button exitButton;
+
 };
 
 
