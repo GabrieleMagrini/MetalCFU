@@ -158,7 +158,10 @@ Button &Button::operator=(const Button &b) {
 void Button::copy(const Button &b) {
     this->buttonState = b.buttonState;
     this->shape = b.shape;
-    this->text = b.text;
+    this->text.setString(b.text.getString());
+    this->text.setFont(*b.text.getFont());
+    this->text.setCharacterSize(b.text.getCharacterSize());
+    this->text.setFillColor(b.text.getFillColor());
     this->font = std::unique_ptr<sf::Font>(new sf::Font(*b.font));
     this->idleTexture = b.idleTexture;
     this->hoverTexture = b.hoverTexture;
@@ -179,4 +182,13 @@ void Button::setCharacterSize(unsigned int size) {
             shape.getPosition().x + shape.getGlobalBounds().width - this->text.getLocalBounds().width / 2.0f,
             shape.getPosition().y + shape.getGlobalBounds().height -
             this->text.getLocalBounds().height));
+}
+
+void Button::setButtonTexture(const sf::Texture &idleTexture, const sf::Texture &hoverTexture,
+                              const sf::Texture &pressedTexture) {
+    this->idleTexture = idleTexture;
+    this->hoverTexture = hoverTexture;
+    this->pressedTexture = pressedTexture;
+
+    update(sf::Vector2f(0, 0));
 }
