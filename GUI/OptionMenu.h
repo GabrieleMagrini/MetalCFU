@@ -18,6 +18,8 @@ public:
 
     void render();
 
+    void update();
+
 private:
 
     sf::Texture backGrTexture;

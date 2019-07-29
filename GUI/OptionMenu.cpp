@@ -75,3 +75,13 @@ void OptionMenu::render() {
     (*renderWin).display();
 
 }
+
+void OptionMenu::update() {
+    auto mousePos = sf::Mouse::getPosition(*renderWin);
+    auto worldPos = (*renderWin).mapPixelToCoords(mousePos);
+
+    volButton.update(worldPos);
+    resButton.update(worldPos);
+    saveButton.update(worldPos);
+    cancelButton.update(worldPos);
+}
