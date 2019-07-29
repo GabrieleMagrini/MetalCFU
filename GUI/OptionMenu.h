@@ -27,7 +27,13 @@ public:
     bool isCancelButtonPressed();
 
     bool isSaveButtonPressed();
+
+    void volumeButtonUpdate(bool release);
 private:
+
+    bool volumeOn;
+
+    sf::Font font;
 
     sf::Texture backGrTexture;
     sf::Sprite backGround;

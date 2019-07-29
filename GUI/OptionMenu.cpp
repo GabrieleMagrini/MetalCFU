@@ -11,7 +11,7 @@
  * @param font of the Button
  */
 OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font)
-        : renderWin(std::move(rw)),
+        : renderWin(std::move(rw)), volumeOn(true),
           resButton((*renderWin).getSize().x / 2.0f + 10, 210, 80, 30, font, "1280x720",
                     "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
@@ -100,4 +100,22 @@ bool OptionMenu::isCancelButtonPressed() {
 
 bool OptionMenu::isSaveButtonPressed() {
     return saveButton.isPressed();
+}
+
+/***
+ * function that change the button color
+ * @param release bool that will not do this function
+ */
+void OptionMenu::volumeButtonUpdate(bool release) {
+
+    if (release)
+        if (volumeOn) {
+            volButton.setString("Off");
+            volButton.setButtonTexture(offTextureIdle, offTextureHover, offTexturePressed);
+            volumeOn = false;
+        } else {
+            volButton.setButtonTexture(onTextureIdle, onTextureHover, onTexturePressed);
+            volButton.setString("On");
+            volumeOn = true;
+        }
 }
