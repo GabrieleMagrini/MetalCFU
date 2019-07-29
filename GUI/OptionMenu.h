@@ -18,7 +18,22 @@ public:
 
     void render();
 
+    void update();
+
+    bool isVolumeButtonPressed();
+
+    bool isResButtonPressed();
+
+    bool isCancelButtonPressed();
+
+    bool isSaveButtonPressed();
+
+    void volumeButtonUpdate(bool release);
 private:
+
+    bool volumeOn;
+
+    sf::Font font;
 
     sf::Texture backGrTexture;
     sf::Sprite backGround;
@@ -29,7 +44,7 @@ private:
     sf::Texture onTextureHover;
     sf::Texture onTexturePressed;
 
-    sf::Texture offTextureidle;
+    sf::Texture offTextureIdle;
     sf::Texture offTextureHover;
     sf::Texture offTexturePressed;
 

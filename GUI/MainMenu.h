@@ -18,11 +18,11 @@ public:
 
     void update();
 
-    bool exitButtonPressed();
+    bool isExitButtonPressed();
 
-    bool optionButtonPressed();
+    bool isOptionButtonPressed();
 
-    bool startButtonPressed();
+    bool isStartButtonPressed();
 
 private:
     sf::Texture backText;

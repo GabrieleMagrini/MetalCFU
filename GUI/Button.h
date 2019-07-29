@@ -42,7 +42,10 @@ public:
 
     void setCharacterSize(unsigned int size);
 
+    void setButtonTexture(const sf::Texture &idleTexture, const sf::Texture &hoverTexture,
+                          const sf::Texture &pressedTexture);
 
+    void setString(const std::string &string);
 
 private:
 
