@@ -11,12 +11,12 @@
  * @param font of the Button
  */
 OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font)
-        : renderWin(std::move(rw)), volumeOn(true),
-          resButton((*renderWin).getSize().x / 2.0f + 10, 210, 80, 30, font, "1280x720",
+        : renderWin(std::move(rw)), volumeOn(true), highRes(false),
+          resButton((*renderWin).getSize().x / 2.0f + 10, 210, 100, 30, font, "1280x720",
                     "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
                     "GUI/texture/pressedGreenButton.png"),
-          volButton((*renderWin).getSize().x / 2.0f + 10, 100, 80, 30, font, "On", "GUI/texture/idleGreenButton.png",
+          volButton((*renderWin).getSize().x / 2.0f + 10, 100, 100, 30, font, "On", "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
                     "GUI/texture/pressedGreenButton.png"),
           cancelButton((*renderWin).getSize().x / 2.0f + 5, 500, 80, 50, font, "Cancel",
@@ -117,5 +117,20 @@ void OptionMenu::volumeButtonUpdate(bool release) {
             volButton.setButtonTexture(onTextureIdle, onTextureHover, onTexturePressed);
             volButton.setString("On");
             volumeOn = true;
+        }
+}
+
+/***
+ * function that change the resolution of the button
+ * @param release
+ */
+void OptionMenu::resButtonUpdate(bool release) {
+    if (release)
+        if (!highRes) {
+            resButton.setString("1920x1080");
+            highRes = true;
+        } else {
+            resButton.setString("1280x720");
+            highRes = false;
         }
 }

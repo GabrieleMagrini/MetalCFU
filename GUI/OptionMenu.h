@@ -29,9 +29,14 @@ public:
     bool isSaveButtonPressed();
 
     void volumeButtonUpdate(bool release);
+
+    void resButtonUpdate(bool release);
+
+    void saveButtonUpdate();
 private:
 
     bool volumeOn;
+    bool highRes; //booleano che indica se la risoluzione del gioco è alta o bassa.
 
     sf::Font font;
 
