@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Behaviour/attackBehaviour.h"
 #include "Behaviour/patrolBehaviour.h"
+#include "Behaviour/suicidalBehaviour.h"
 
 Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, int mw, int mu, int sx, int sy, int sw,
              int su,
@@ -35,10 +36,13 @@ void Enemy::setBehaviour(Behaviour *behaviour) {
 void Enemy::checkBehaviour(Player *p) {
     auto attack = new attackBehaviour();
     auto patrol = new patrolBehaviour();
+    auto suicidal = new suicidalBehaviour();
     auto Y = p->getPosY();
     auto X = p->getPosX();
     if ((abs(getPosY() - Y)) < 3 && (abs(getPosX() - X)) < 7)
         setBehaviour(attack);
+    else if (this->getHp() < 10)
+        setBehaviour(suicidal);
     else
         setBehaviour(patrol);
 
