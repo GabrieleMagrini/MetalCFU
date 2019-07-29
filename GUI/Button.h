@@ -45,6 +45,8 @@ public:
     void setButtonTexture(const sf::Texture &idleTexture, const sf::Texture &hoverTexture,
                           const sf::Texture &pressedTexture);
 
+    void setString(const std::string &string);
+
 private:
 
     void inizialization(float x, float y, float width, float height, const std::string &text);

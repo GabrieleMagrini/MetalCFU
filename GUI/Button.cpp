@@ -189,6 +189,8 @@ void Button::setButtonTexture(const sf::Texture &idleTexture, const sf::Texture 
     this->idleTexture = idleTexture;
     this->hoverTexture = hoverTexture;
     this->pressedTexture = pressedTexture;
+}
 
-    update(sf::Vector2f(0, 0));
+void Button::setString(const std::string &string) {
+    text.setString(string);
 }
