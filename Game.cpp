@@ -14,9 +14,12 @@
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState()), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font) {
+          opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))) {
     (*renderWin).setFramerateLimit(30);
     (*renderWin).setKeyRepeatEnabled(false);
+
+
 }
 
 void Game::exitGameState() {
@@ -94,6 +97,8 @@ void Game::loop() {
 
                 } else if (mainMenu.isExitButtonPressed()) {
                     (*renderWin).close();
+                } else if (mainMenu.isStartButtonPressed()) {
+                    startGameState();
                 }
                 action = false;
             }
@@ -129,8 +134,14 @@ void Game::loop() {
             opMenu.update();
             opMenu.render();
 
-        }
+        } else if ((*gameState).getStateName() == "StartGame") {
 
+            for (auto &sprite : blocks) {
+                sprite.setOrigin(100, -310);
+                (*renderWin).draw(sprite);
+            }
+            (*renderWin).display();
+        }
 
     }
 }

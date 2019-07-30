@@ -49,6 +49,9 @@ private:
     std::shared_ptr<sf::RenderWindow> renderWin;
     const std::string wallpaper1 = "Sources/Pngs/wallpaper_1.jpeg";
     sf::Font font;
+
+    Map map;
+    std::vector<Terrain> blocks;
     //TODO
 };
 
