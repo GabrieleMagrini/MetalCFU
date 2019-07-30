@@ -11,7 +11,7 @@
  * @param font of the Button
  */
 OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font)
-        : renderWin(std::move(rw)), volumeOn(true), highRes(false),
+        : renderWin(std::move(rw)), volumeOn(true), highRes(false), volInfo("On"), resInfo("1280x720"),
           resButton((*renderWin).getSize().x / 2.0f + 10, 210, 100, 30, font, "1280x720",
                     "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
@@ -135,4 +135,12 @@ void OptionMenu::resButtonUpdate(bool release) {
             highRes = false;
         }
     }
+}
+
+void OptionMenu::cancelButtonUpdate() {
+    if (resInfo != resButton.getString()) {
+        resButton.setString(resInfo);
+    }
+    if (volInfo != volButton.getString())
+        volButton.setString(volInfo);
 }

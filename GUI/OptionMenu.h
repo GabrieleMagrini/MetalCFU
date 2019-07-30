@@ -32,10 +32,14 @@ public:
 
     void resButtonUpdate(bool release);
 
+    void cancelButtonUpdate();
 private:
 
     bool volumeOn;
     bool highRes; //booleano che indica se la risoluzione del gioco è alta o bassa.
+
+    std::string volInfo;
+    std::string resInfo;
 
     sf::Font font;
 
