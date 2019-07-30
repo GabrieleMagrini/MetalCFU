@@ -3,7 +3,6 @@
 //
 
 #include "Terrain.h"
-#include "Collision.h"
 
 
 void Terrain::checkCollision(GameCharacter *g) {
@@ -19,7 +18,6 @@ void Terrain::checkCollision(GameCharacter *g) {
 }
 
 int Terrain::setBonus(GameCharacter *g, int bonusSpeedMovement) {
-    while ((g->getCollisionY()) && Collision::PixelPerfectTest(*g, *this))
-        g->setSpeedX(g->getSpeedX() + bonusSpeedMovement);
+
 
 }
