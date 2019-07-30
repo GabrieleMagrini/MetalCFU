@@ -72,7 +72,7 @@ void Game::setState(GState state) {
 }
 
 void Game::loop() {
-
+    bool action = true;  //one action to one single button pressed in GUI state
     while ((*renderWin).isOpen()) {
 
 
@@ -82,33 +82,50 @@ void Game::loop() {
             if (event.type == sf::Event::Closed)
                 (*renderWin).close();
 
+            if (event.type == sf::Event::MouseButtonReleased)
+                action = true;
         }
 
 
-        if ((*gameState).getStateName() == "MainMenu") {
+        if ((*gameState).getStateName() == "MainMenu") {    //MainMenu loop
+            if (action) {
+                if (mainMenu.isOptionButtonPressed()) {
+                    optionMenuState();
 
-            if (mainMenu.isOptionButtonPressed()) {
-                optionMenuState();
-
+                } else if (mainMenu.isExitButtonPressed()) {
+                    (*renderWin).close();
+                }
+                action = false;
             }
-            if (mainMenu.isExitButtonPressed()) {
-                (*renderWin).close();
-            }
-
-
             mainMenu.update();
             mainMenu.render();
 
-        } else if ((*gameState).getStateName() == "OptionMenu") {
 
-            if (opMenu.isVolumeButtonPressed()) {
-                opMenu.volumeButtonUpdate(true);
-            } else if (opMenu.isResButtonPressed()) {
-                opMenu.resButtonUpdate(true);
-            } else if (opMenu.isCancelButtonPressed()) {
-                mainMenuState();
+        } else if ((*gameState).getStateName() == "OptionMenu") {   //OptionMenu loop
+
+            if (action) {
+                if (opMenu.isVolumeButtonPressed()) {
+                    opMenu.volumeButtonUpdate(action);
+                } else if (opMenu.isResButtonPressed()) {
+                    opMenu.resButtonUpdate(action);
+                } else if (opMenu.isCancelButtonPressed()) {
+                    opMenu.cancelButtonUpdate();
+                    mainMenuState();
+                } else if (opMenu.isSaveButtonPressed()) {
+                    std::string resolution;
+                    bool volume;
+                    opMenu.saveButtonUpdate(resolution, volume);
+                    if (resolution != (*renderWin).getSize().x + "x" + (*renderWin).getSize().y) {
+                        //renderWin= std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(opMenu.getRes().x, opMenu.getResolution().y),"Metal CFU"));
+                        (*renderWin).setSize(opMenu.getResolution());
+                    }
+                    if (!volume) {
+                        //TODO
+                    }
+                    mainMenuState();
+                }
+                action = false;
             }
-
             opMenu.update();
             opMenu.render();
 
