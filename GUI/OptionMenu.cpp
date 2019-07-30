@@ -2,6 +2,8 @@
 // Created by emanuele on 26/07/19.
 //
 
+#include <cstring>
+
 #include "OptionMenu.h"
 
 /***
@@ -148,4 +150,54 @@ void OptionMenu::cancelButtonUpdate() {
         else
             volButton.setButtonTexture(offTextureIdle, offTextureHover, offTexturePressed);
     }
+}
+
+/***
+ * function that save change in the resInfo and volInfo attributes, return change of resolution and true or false the volume is on or off
+ * @param resolution
+ * @param vol
+ */
+void OptionMenu::saveButtonUpdate(std::string &resolution, bool &vol) {
+    resolution = "";
+    if (resInfo != resButton.getString()) {
+        resInfo = resButton.getString();
+        resolution = resInfo;
+    }
+    if (volInfo != volButton.getString()) {
+        volInfo = volButton.getString();
+        vol = false;
+
+        if (volInfo == "On")
+            vol = true;
+    }
+}
+
+/***
+ * trasform string "widthXheight" form to a Vector2u
+ * @return Vector2u
+ */
+sf::Vector2u OptionMenu::getResolution() {
+    char res[resInfo.size() + 1];
+
+    char width[5];
+    char height[5];
+
+    strcpy(res, resInfo.c_str());
+    int c = 0;
+    for (int i = 0; i < (resInfo.size() + 1); i++) {
+        if (res[c] != 'x') {
+            c++;
+        }
+
+        if (res[i] != 'x') {
+            if (c >= i) {
+                width[i] = res[i];
+            } else
+                height[i - c - 1] = res[i];
+        }
+    }
+
+    sf::Vector2u vec(std::atoi(width), std::atoi(height));
+
+    return vec;
 }

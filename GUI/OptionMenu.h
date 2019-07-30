@@ -33,6 +33,10 @@ public:
     void resButtonUpdate(bool release);
 
     void cancelButtonUpdate();
+
+    void saveButtonUpdate(std::string &resolution, bool &vol);
+
+    sf::Vector2u getResolution();
 private:
 
     bool volumeOn;
