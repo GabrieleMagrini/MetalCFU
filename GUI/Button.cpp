@@ -194,3 +194,7 @@ void Button::setButtonTexture(const sf::Texture &idleTexture, const sf::Texture 
 void Button::setString(const std::string &string) {
     text.setString(string);
 }
+
+std::string Button::getString() const {
+    return text.getString();
+}

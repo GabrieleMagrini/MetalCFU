@@ -47,6 +47,8 @@ public:
 
     void setString(const std::string &string);
 
+    std::string getString() const;
+
 private:
 
     void inizialization(float x, float y, float width, float height, const std::string &text);
