@@ -141,6 +141,11 @@ void OptionMenu::cancelButtonUpdate() {
     if (resInfo != resButton.getString()) {
         resButton.setString(resInfo);
     }
-    if (volInfo != volButton.getString())
+    if (volInfo != volButton.getString()) {
         volButton.setString(volInfo);
+        if (volInfo == "On")
+            volButton.setButtonTexture(onTextureIdle, onTextureHover, onTexturePressed);
+        else
+            volButton.setButtonTexture(offTextureIdle, offTextureHover, offTexturePressed);
+    }
 }
