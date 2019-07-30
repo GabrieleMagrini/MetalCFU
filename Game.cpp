@@ -79,6 +79,9 @@ void Game::setState(GState state) {
     }
 }
 
+/***
+ * Game loop and state pattern work through this method
+ */
 void Game::loop() {
     bool action = true;  //one action to one single button pressed in GUI state
     while ((*renderWin).isOpen()) {
