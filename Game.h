@@ -43,11 +43,16 @@ public:
     void loop();
 
 private:
+
+    void renderMap();
+
     std::unique_ptr<GameState> gameState;
     OptionMenu opMenu;
     MainMenu mainMenu;
     std::shared_ptr<sf::RenderWindow> renderWin;
     const std::string wallpaper1 = "Sources/Pngs/wallpaper_1.jpeg";
+    sf::Texture textBackGround;
+    sf::Sprite backGround;
     sf::Font font;
 
     Map map;

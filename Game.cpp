@@ -18,8 +18,13 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))) {
     (*renderWin).setFramerateLimit(30);
     (*renderWin).setKeyRepeatEnabled(false);
+    textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
+    backGround.setTexture(textBackGround);
+    backGround.setPosition(0, 0);
+    float scalex = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(textBackGround.getSize().x);
+    float scaley = static_cast<float>((*renderWin).getSize().y) / static_cast<float>(textBackGround.getSize().y);
 
-
+    backGround.setScale(scalex, scaley);
 }
 
 void Game::exitGameState() {
@@ -135,13 +140,21 @@ void Game::loop() {
             opMenu.render();
 
         } else if ((*gameState).getStateName() == "StartGame") {
+            renderMap();
 
-            for (auto &sprite : blocks) {
-                sprite.setOrigin(100, -310);
-                (*renderWin).draw(sprite);
-            }
-            (*renderWin).display();
         }
 
     }
+}
+
+/*****
+ * function that render the map of the game.
+ */
+void Game::renderMap() {
+    (*renderWin).draw(backGround);
+    for (auto &sprite : blocks) {
+        sprite.setOrigin(100, -310);
+        (*renderWin).draw(sprite);
+    }
+    (*renderWin).display();
 }
