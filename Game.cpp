@@ -11,7 +11,9 @@
 #include "GameState/ExitGameState.h"
 
 
-Game::Game() : gameState(new MainMenuState()) {
+Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
+        : gameState(new MainMenuState()), renderWin(rw), font(font), mainMenu(rw, wallpaper1, font),
+          opMenu(rw, wallpaper1, font) {
 
 }
 

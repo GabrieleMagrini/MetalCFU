@@ -6,8 +6,14 @@
 #define METALCFU_GAME_H
 
 #include <memory>
+#include "SFML/Graphics.hpp"
+#include "SFML/System.hpp"
+#include "SFML/Audio.hpp"
 
 #include "Map.h"
+#include "GUI/MainMenu.h"
+#include "GUI/OptionMenu.h"
+
 
 class GameState;
 
@@ -17,7 +23,7 @@ enum class GState {
 
 class Game {
 public:
-    explicit Game();
+    explicit Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font);
 
     virtual ~Game() = default;
 
@@ -39,6 +45,11 @@ public:
 
 private:
     std::unique_ptr<GameState> gameState;
+    OptionMenu opMenu;
+    MainMenu mainMenu;
+    std::shared_ptr<sf::RenderWindow> renderWin;
+    const std::string wallpaper1 = "Sources/Pngs/wallpaper_1.jpeg";
+    sf::Font font;
     //TODO
 };
 
