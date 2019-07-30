@@ -54,7 +54,7 @@ OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &
 
     backGround.setPosition(0, 0);
     float scalex = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backGrTexture.getSize().x);
-    float scaley = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backGrTexture.getSize().x);
+    float scaley = static_cast<float>((*renderWin).getSize().y) / static_cast<float>(backGrTexture.getSize().y);
 
     backGround.setScale(scalex, scaley);
 

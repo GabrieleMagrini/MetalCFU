@@ -53,7 +53,7 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
     backGround.setTexture(backText);
     backGround.setPosition(0, 0);
     float scalex = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backText.getSize().x);
-    float scaley = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backText.getSize().x);
+    float scaley = static_cast<float>((*renderWin).getSize().y) / static_cast<float>(backText.getSize().y);
 
     backGround.setScale(scalex, scaley);
 }
