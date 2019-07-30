@@ -9,13 +9,12 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Audio.hpp"
+#include "GameState/GameState.h"
 
 #include "Map.h"
 #include "GUI/MainMenu.h"
 #include "GUI/OptionMenu.h"
 
-
-class GameState;
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

@@ -12,9 +12,11 @@
 
 
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
-        : gameState(new MainMenuState()), renderWin(rw), font(font), mainMenu(rw, wallpaper1, font),
-          opMenu(rw, wallpaper1, font) {
-
+        : gameState(new MainMenuState()), renderWin(rw), font(font),
+          mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font) {
+    (*renderWin).setFramerateLimit(30);
+    (*renderWin).setKeyRepeatEnabled(false);
 }
 
 void Game::exitGameState() {
@@ -71,4 +73,47 @@ void Game::setState(GState state) {
 
 void Game::loop() {
 
+    while ((*renderWin).isOpen()) {
+
+
+        sf::Event event;
+        while ((*renderWin).pollEvent(event)) {
+
+            if (event.type == sf::Event::Closed)
+                (*renderWin).close();
+
+        }
+
+
+        if ((*gameState).getStateName() == "MainMenu") {
+
+            if (mainMenu.isOptionButtonPressed()) {
+                optionMenuState();
+
+            }
+            if (mainMenu.isExitButtonPressed()) {
+                (*renderWin).close();
+            }
+
+
+            mainMenu.update();
+            mainMenu.render();
+
+        } else if ((*gameState).getStateName() == "OptionMenu") {
+
+            if (opMenu.isVolumeButtonPressed()) {
+                opMenu.volumeButtonUpdate(true);
+            } else if (opMenu.isResButtonPressed()) {
+                opMenu.resButtonUpdate(true);
+            } else if (opMenu.isCancelButtonPressed()) {
+                mainMenuState();
+            }
+
+            opMenu.update();
+            opMenu.render();
+
+        }
+
+
+    }
 }
