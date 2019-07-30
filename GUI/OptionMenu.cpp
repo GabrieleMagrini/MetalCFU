@@ -108,7 +108,7 @@ bool OptionMenu::isSaveButtonPressed() {
  */
 void OptionMenu::volumeButtonUpdate(bool release) {
 
-    if (release)
+    if (release) {
         if (volumeOn) {
             volButton.setString("Off");
             volButton.setButtonTexture(offTextureIdle, offTextureHover, offTexturePressed);
@@ -118,6 +118,7 @@ void OptionMenu::volumeButtonUpdate(bool release) {
             volButton.setString("On");
             volumeOn = true;
         }
+    }
 }
 
 /***
@@ -125,7 +126,7 @@ void OptionMenu::volumeButtonUpdate(bool release) {
  * @param release
  */
 void OptionMenu::resButtonUpdate(bool release) {
-    if (release)
+    if (release) {
         if (!highRes) {
             resButton.setString("1920x1080");
             highRes = true;
@@ -133,4 +134,5 @@ void OptionMenu::resButtonUpdate(bool release) {
             resButton.setString("1280x720");
             highRes = false;
         }
+    }
 }

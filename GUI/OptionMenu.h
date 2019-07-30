@@ -32,7 +32,6 @@ public:
 
     void resButtonUpdate(bool release);
 
-    void saveButtonUpdate();
 private:
 
     bool volumeOn;
