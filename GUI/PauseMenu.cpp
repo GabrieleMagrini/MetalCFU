@@ -45,3 +45,11 @@ void PauseMenu::render() {
 
     (*renderWin).display();
 }
+
+bool PauseMenu::isBackGameButtonPressed() {
+    return backGameButton.isPressed();
+}
+
+bool PauseMenu::isMainMenuButtonPressed() {
+    return mainMenuButton.isPressed();
+}

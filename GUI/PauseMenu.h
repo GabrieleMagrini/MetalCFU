@@ -18,6 +18,10 @@ class PauseMenu {
     void update();
 
     void render();
+
+    bool isBackGameButtonPressed();
+
+    bool isMainMenuButtonPressed();
 private:
 
     std::shared_ptr<sf::RenderWindow> renderWin;
