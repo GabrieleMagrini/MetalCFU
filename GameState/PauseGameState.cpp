@@ -13,10 +13,6 @@ void PauseGameState::mainMenuState(Game *g) {
     g->setState(GState::MainMenu);
 }
 
-void PauseGameState::exitGameState(Game *g) {
-    g->setState(GState::ExitGame);
-}
-
 void PauseGameState::startGameState(Game *g) {
     g->setState(GState::StartGame);
 }

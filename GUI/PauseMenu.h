@@ -11,6 +11,7 @@
 
 class PauseMenu {
 
+public:
     PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &imageFileName, const sf::Font &font);
 
     ~PauseMenu() = default;

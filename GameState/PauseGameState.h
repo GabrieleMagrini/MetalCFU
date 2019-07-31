@@ -15,8 +15,6 @@ public:
 
     void mainMenuState(Game *g) override;
 
-    void exitGameState(Game *g) override;
-
     void startGameState(Game *g) override;
 };
 

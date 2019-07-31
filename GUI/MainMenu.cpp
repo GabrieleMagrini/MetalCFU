@@ -13,33 +13,42 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
         std::move(
                 rw)),
                                                                                                               startButton(
-                                                                                                        (*renderWin).getSize().x /
-                                                                                                        2.0f - 200, 100,
-                                                                                                        400, 100,
-                                                                                                        font,
-                                                                                                        "Start",
-                                                                                                        "GUI/texture/idleGreenButton.png",
-                                                                                                        "GUI/texture/hoverGreenButton.png",
-                                                                                                        "GUI/texture/pressedGreenButton.png"),
+                                                                                                                      renderWin->getSize().x /
+                                                                                                                      2.0f -
+                                                                                                                      200,
+                                                                                                                      100,
+                                                                                                                      400,
+                                                                                                                      100,
+                                                                                                                      font,
+                                                                                                                      "Start",
+                                                                                                                      "GUI/texture/idleGreenButton.png",
+                                                                                                                      "GUI/texture/hoverGreenButton.png",
+                                                                                                                      "GUI/texture/pressedGreenButton.png"),
 
                                                                                                               optionButton(
-                                                                                                        (*renderWin).getSize().x /
-                                                                                                        2.0f - 200, 210,
-                                                                                                        400, 100,
-                                                                                                        font,
-                                                                                                        "Option",
-                                                                                                        "GUI/texture/idleGreenButton.png",
-                                                                                                        "GUI/texture/hoverGreenButton.png",
-                                                                                                        "GUI/texture/pressedGreenButton.png"),
+                                                                                                                      renderWin->getSize().x /
+                                                                                                                      2.0f -
+                                                                                                                      200,
+                                                                                                                      210,
+                                                                                                                      400,
+                                                                                                                      100,
+                                                                                                                      font,
+                                                                                                                      "Option",
+                                                                                                                      "GUI/texture/idleGreenButton.png",
+                                                                                                                      "GUI/texture/hoverGreenButton.png",
+                                                                                                                      "GUI/texture/pressedGreenButton.png"),
                                                                                                               exitButton
-                                                                                                        ((*renderWin).getSize().x /
-                                                                                                         2.0f - 200,
-                                                                                                         320,
-                                                                                                         400, 100, font,
-                                                                                                         "Exit",
-                                                                                                         "GUI/texture/idleGreenButton.png",
-                                                                                                         "GUI/texture/hoverGreenButton.png",
-                                                                                                         "GUI/texture/pressedGreenButton.png") {
+                                                                                                                      (renderWin->getSize().x /
+                                                                                                                       2.0f -
+                                                                                                                       200,
+                                                                                                                       320,
+                                                                                                                       400,
+                                                                                                                       100,
+                                                                                                                       font,
+                                                                                                                       "Exit",
+                                                                                                                       "GUI/texture/idleGreenButton.png",
+                                                                                                                       "GUI/texture/hoverGreenButton.png",
+                                                                                                                       "GUI/texture/pressedGreenButton.png") {
     //buttons
     startButton.setCharacterSize(40);
     optionButton.setCharacterSize(40);
@@ -52,8 +61,8 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
 
     backGround.setTexture(backText);
     backGround.setPosition(0, 0);
-    float scalex = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backText.getSize().x);
-    float scaley = static_cast<float>((*renderWin).getSize().y) / static_cast<float>(backText.getSize().y);
+    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
+    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
 
     backGround.setScale(scalex, scaley);
 }
@@ -62,7 +71,7 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
  * function that draw all the button and background
  */
 void MainMenu::render() {
-    (*renderWin).draw(backGround);
+    renderWin->draw(backGround);
 
     startButton.render(*renderWin);
 
@@ -71,12 +80,12 @@ void MainMenu::render() {
     exitButton.render(*renderWin);
 
 
-    (*renderWin).display();
+    renderWin->display();
 }
 
 void MainMenu::update() {
     auto mousePos = sf::Mouse::getPosition(*renderWin);
-    auto worldPos = (*renderWin).mapPixelToCoords(mousePos);
+    auto worldPos = renderWin->mapPixelToCoords(mousePos);
     startButton.update(worldPos);
     optionButton.update(worldPos);
     exitButton.update(worldPos);
