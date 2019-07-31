@@ -5,9 +5,26 @@
 #ifndef METALCFU_PAUSEMENU_H
 #define METALCFU_PAUSEMENU_H
 
+#include <memory>
+
+#include "Button.h"
 
 class PauseMenu {
 
+    PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &imageFileName, const sf::Font &font);
+
+    ~PauseMenu() = default;
+
+
+private:
+
+    std::shared_ptr<sf::RenderWindow> renderWin;
+
+    sf::Texture textBackGround;
+    sf::Sprite backGround;
+
+    Button backGameButton;
+    Button mainMenuButton;
 };
 
 
