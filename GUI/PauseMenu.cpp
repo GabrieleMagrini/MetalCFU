@@ -20,6 +20,28 @@ PauseMenu::PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &im
                          "GUI/texture/idleGreenButton.png",
                          "GUI/texture/hoverGreenButton.png",
                          "GUI/texture/pressedGreenButton.png") {
+    textBackGround.loadFromFile(imageFileName);
+    backGround.setTexture(textBackGround);
 
+    backGround.setTexture(textBackGround);
+    backGround.setPosition(0, 0);
+    float scalex = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(textBackGround.getSize().x);
+    float scaley = static_cast<float>((*renderWin).getSize().y) / static_cast<float>(textBackGround.getSize().y);
 
+    backGround.setScale(scalex, scaley);
+}
+
+void PauseMenu::update() {
+    auto mousePos = sf::Mouse::getPosition(*renderWin);
+    auto worldPos = (*renderWin).mapPixelToCoords(mousePos);
+    mainMenuButton.update(worldPos);
+    backGameButton.update(worldPos);
+}
+
+void PauseMenu::render() {
+    (*renderWin).draw(backGround);
+    mainMenuButton.render((*renderWin));
+    backGameButton.render((*renderWin));
+
+    (*renderWin).display();
 }
