@@ -5,7 +5,7 @@
 #include "PauseMenu.h"
 
 PauseMenu::PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &imageFileName, const sf::Font &font)
-        : renderWin(std::move(rw)), backGameButton(renderWin->getSize().x / 2.0f - 200, 100,
+        : renderWin(std::move(rw)), backGameButton(renderWin->getSize().x / 2.0f - 400, 100,
                                                    400, 100,
                                                    font,
                                                    "Back to Game",
@@ -13,10 +13,10 @@ PauseMenu::PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &im
                                                    "GUI/texture/hoverGreenButton.png",
                                                    "GUI/texture/pressedGreenButton.png"),
 
-          mainMenuButton(renderWin->getSize().x / 2.0f - 200, 100,
+          mainMenuButton(renderWin->getSize().x / 2.0f + 10, 100,
                          400, 100,
                          font,
-                         "Start",
+                         "Main Menu",
                          "GUI/texture/idleGreenButton.png",
                          "GUI/texture/hoverGreenButton.png",
                          "GUI/texture/pressedGreenButton.png") {
