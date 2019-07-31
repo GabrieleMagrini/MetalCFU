@@ -14,18 +14,18 @@
  */
 OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font)
         : renderWin(std::move(rw)), volumeOn(true), highRes(false), volInfo("On"), resInfo("1280x720"),
-          resButton((*renderWin).getSize().x / 2.0f + 10, 210, 100, 30, font, "1280x720",
+          resButton(renderWin->getSize().x / 2.0f + 10, 210, 100, 30, font, "1280x720",
                     "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
                     "GUI/texture/pressedGreenButton.png"),
-          volButton((*renderWin).getSize().x / 2.0f + 10, 100, 100, 30, font, "On", "GUI/texture/idleGreenButton.png",
+          volButton(renderWin->getSize().x / 2.0f + 10, 100, 100, 30, font, "On", "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
                     "GUI/texture/pressedGreenButton.png"),
-          cancelButton((*renderWin).getSize().x / 2.0f + 5, 500, 80, 50, font, "Cancel",
+          cancelButton(renderWin->getSize().x / 2.0f + 5, 500, 80, 50, font, "Cancel",
                        "GUI/texture/idleGreenButton.png",
                        "GUI/texture/hoverGreenButton.png",
                        "GUI/texture/pressedGreenButton.png"),
-          saveButton((*renderWin).getSize().x / 2.0f - 85, 500, 80, 50, font, "Save", "GUI/texture/idleGreenButton.png",
+          saveButton(renderWin->getSize().x / 2.0f - 85, 500, 80, 50, font, "Save", "GUI/texture/idleGreenButton.png",
                      "GUI/texture/hoverGreenButton.png",
                      "GUI/texture/pressedGreenButton.png") {
 
@@ -40,12 +40,12 @@ OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &
     volumeTxt.setString("Volume");
     volumeTxt.setCharacterSize(24);
     volumeTxt.setFillColor(sf::Color::Black);
-    volumeTxt.setPosition((*renderWin).getSize().x / 2.0f - volumeTxt.getLocalBounds().width, 100);
+    volumeTxt.setPosition(renderWin->getSize().x / 2.0f - volumeTxt.getLocalBounds().width, 100);
 
     resTxt.setFont(font);
     resTxt.setString("Resolution");
     resTxt.setCharacterSize(24);
-    resTxt.setPosition((*renderWin).getSize().x / 2.0f - resTxt.getLocalBounds().width, 210);
+    resTxt.setPosition(renderWin->getSize().x / 2.0f - resTxt.getLocalBounds().width, 210);
     resTxt.setFillColor(sf::Color::Black);
     resButton.setCharacterSize(17);
 
@@ -53,8 +53,8 @@ OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &
     backGround.setTexture(backGrTexture);
 
     backGround.setPosition(0, 0);
-    float scalex = static_cast<float>((*renderWin).getSize().x) / static_cast<float>(backGrTexture.getSize().x);
-    float scaley = static_cast<float>((*renderWin).getSize().y) / static_cast<float>(backGrTexture.getSize().y);
+    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backGrTexture.getSize().x);
+    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backGrTexture.getSize().y);
 
     backGround.setScale(scalex, scaley);
 
@@ -63,24 +63,24 @@ OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &
 }
 
 void OptionMenu::render() {
-    (*renderWin).draw(backGround);
+    renderWin->draw(backGround);
 
-    (*renderWin).draw(volumeTxt);
+    renderWin->draw(volumeTxt);
     volButton.render(*renderWin);
 
-    (*renderWin).draw(resTxt);
+    renderWin->draw(resTxt);
     resButton.render(*renderWin);
     saveButton.render(*renderWin);
     cancelButton.render(*renderWin);
 
 
-    (*renderWin).display();
+    renderWin->display();
 
 }
 
 void OptionMenu::update() {
     auto mousePos = sf::Mouse::getPosition(*renderWin);
-    auto worldPos = (*renderWin).mapPixelToCoords(mousePos);
+    auto worldPos = renderWin->mapPixelToCoords(mousePos);
 
     volButton.update(worldPos);
     resButton.update(worldPos);

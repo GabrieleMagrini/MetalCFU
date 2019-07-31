@@ -10,5 +10,5 @@ StartGameState::StartGameState() : GameState("StartGame") {
 }
 
 void StartGameState::pauseGameState(Game *g) {
-    g->setState(GState::StartGame);
+    g->setState(GState::PauseGame);
 }
