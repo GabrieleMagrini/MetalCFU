@@ -22,6 +22,8 @@ class PauseMenu {
     bool isBackGameButtonPressed();
 
     bool isMainMenuButtonPressed();
+
+    void setTextureBackGround(const sf::Texture &texture);
 private:
 
     std::shared_ptr<sf::RenderWindow> renderWin;
