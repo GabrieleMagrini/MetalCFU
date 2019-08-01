@@ -43,9 +43,14 @@ public:
 
     void loop();
 
+
 private:
 
     void renderMap();
+
+    void render();
+
+    void update();
 
     std::unique_ptr<GameState> gameState;
     OptionMenu opMenu;

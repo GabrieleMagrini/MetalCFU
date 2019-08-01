@@ -108,9 +108,9 @@ bool OptionMenu::isSaveButtonPressed() {
  * function that change the button color
  * @param release bool that will not do this function
  */
-void OptionMenu::volumeButtonUpdate(bool release) {
+void OptionMenu::volumeButtonUpdate() {
 
-    if (release) {
+
         if (volumeOn) {
             volButton.setString("Off");
             volButton.setButtonTexture(offTextureIdle, offTextureHover, offTexturePressed);
@@ -120,15 +120,15 @@ void OptionMenu::volumeButtonUpdate(bool release) {
             volButton.setString("On");
             volumeOn = true;
         }
-    }
+
 }
 
 /***
  * function that change the resolution of the button
  * @param release
  */
-void OptionMenu::resButtonUpdate(bool release) {
-    if (release) {
+void OptionMenu::resButtonUpdate() {
+
         if (!highRes) {
             resButton.setString("1920x1080");
             highRes = true;
@@ -136,7 +136,7 @@ void OptionMenu::resButtonUpdate(bool release) {
             resButton.setString("1280x720");
             highRes = false;
         }
-    }
+
 }
 
 void OptionMenu::cancelButtonUpdate() {
