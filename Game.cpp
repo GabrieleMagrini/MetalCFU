@@ -149,8 +149,25 @@ void Game::render() {
  */
 void Game::update() {
 
+    if (gameState->getStateName() == "StartGame") {      //start Game
 
-    if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            if (gameState->getStateName() == "StartGame") {
+
+
+                sf::Texture texture;
+
+                texture.create(renderWin->getSize().x, renderWin->getSize().y);
+                texture.update(*renderWin);
+                pauseMenu.setTextureBackGround(texture);
+                pauseGameState();
+
+            }
+        }
+
+        renderMap();
+
+    } else if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
 
         if (mainMenu.isOptionButtonPressed()) {
             optionMenuState();
@@ -183,24 +200,6 @@ void Game::update() {
             }
             mainMenuState();
         }
-
-    } else if (gameState->getStateName() == "StartGame") {      //start Game
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            if (gameState->getStateName() == "StartGame") {
-
-
-                sf::Texture texture;
-
-                texture.create(renderWin->getSize().x, renderWin->getSize().y);
-                texture.update(*renderWin);
-                pauseMenu.setTextureBackGround(texture);
-                pauseGameState();
-
-            }
-        }
-
-        renderMap();
 
     } else if (gameState->getStateName() == "PauseGame") {      //pause menu
 
