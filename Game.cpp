@@ -92,7 +92,7 @@ void Game::loop() {
         while (renderWin->pollEvent(event)) {
 
             if (event.type == sf::Event::Closed)
-                renderWin->close();
+                exitGameState();
 
             if (event.type == sf::Event::MouseButtonReleased)
                 action = true;
@@ -108,7 +108,7 @@ void Game::loop() {
                     optionMenuState();
 
                 } else if (mainMenu.isExitButtonPressed()) {
-                    renderWin->close();
+                    exitGameState();
                 } else if (mainMenu.isStartButtonPressed()) {
                     startGameState();
                 }
@@ -174,6 +174,8 @@ void Game::loop() {
 
             pauseMenu.update();
             pauseMenu.render();
+        } else if (gameState->getStateName() == "ExitGame") {  // exit game
+            renderWin->close();
         }
 
     }
