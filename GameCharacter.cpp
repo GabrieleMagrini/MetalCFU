@@ -2,6 +2,7 @@
 // Created by emanuele on 23/05/19.
 //
 
+#include <sstream>
 #include "GameCharacter.h"
 #include "Usable.h"
 #include "Weapon.h"
@@ -48,6 +49,7 @@ int GameCharacter::getSpeedY() const {
 void GameCharacter::setSpeedY(int SpeedY) {
     GameCharacter::SpeedY = SpeedY;
 }
+
 /***
  * teleport the player in the map in the coordinated
  * @param x axis
@@ -174,16 +176,38 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
 }
 
 GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int sx, int sy, int sw,
-                             int su,
-                             Texture *txt, bool c)
+                             int su, bool c, const std::string &textDirectory)
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
           collisionX(c), collisionY(c) {
     weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);
-    if (txt != nullptr)
-        setTexture(*txt);
+
+    sf::Texture text;
+
+    int count = 1;
+
+    std::stringstream stream;
+
+    stream << textDirectory << "/dx" << count << ".png";
+    sf::Texture texture;
+    while (texture.loadFromFile(stream.str())) {
+        textureDx.push_back(texture);
+        count++;
+        stream.flush();
+        stream << textDirectory << "/dx" << count << ".png";
+    }
+    stream.flush();
+    stream << textDirectory << "/sx" << count << ".png";
+    while (texture.loadFromFile(stream.str())) {
+        textureSx.push_back(texture);
+        count++;
+        stream.flush();
+        stream << textDirectory << "/sx" << count << ".png";
+    }
+
+
 }
 
 int GameCharacter::getDimUsable() const {

@@ -19,7 +19,7 @@ class GameCharacter : public Sprite {
 public:
     GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int sx = 10, int sy = -10,
                   int sw = 0,
-                  int su = 4, Texture *txt = nullptr, bool c = false);
+                  int su = 4, bool c = false, const std::string &textDirectory = "");
 
     ~GameCharacter() override= default;
 
@@ -109,6 +109,9 @@ protected:
     int SpeedY;
     bool collisionX;
     bool collisionY;
+
+    std::vector<sf::Texture> textureDx;
+    std::vector<sf::Texture> textureSx;
 
 };
 
