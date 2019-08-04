@@ -180,7 +180,8 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
           collisionX(c), collisionY(c) {
-    weaponInventory.setElement(0, *w);
+    if (w != nullptr)
+        weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);
 
@@ -189,24 +190,27 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
     int count = 1;
 
     std::stringstream stream;
-
-    stream << textDirectory << "/dx" << count << ".png";
+    stream << textDirectory << "/dx/" << count << ".png";
     sf::Texture texture;
-    while (texture.loadFromFile(stream.str())) {
+    while (count <= 8 && texture.loadFromFile(stream.str())) {
         textureDx.push_back(texture);
         count++;
+        stream.str("");
         stream.flush();
-        stream << textDirectory << "/dx" << count << ".png";
+        stream << textDirectory << "/dx/" << count << ".png";
     }
     stream.flush();
-    stream << textDirectory << "/sx" << count << ".png";
-    while (texture.loadFromFile(stream.str())) {
+    count = 1;
+    stream << textDirectory << "/sx/" << count << ".png";
+    while (count <= 8 && texture.loadFromFile(stream.str())) {
         textureSx.push_back(texture);
         count++;
+        stream.str("");
         stream.flush();
-        stream << textDirectory << "/sx" << count << ".png";
+        stream << textDirectory << "/sx/" << count << ".png";
     }
 
+    this->setTexture(textureDx[0]);
 
 }
 

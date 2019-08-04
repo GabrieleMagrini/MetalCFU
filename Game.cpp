@@ -16,7 +16,8 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))) {
+          blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))),
+          player(3, nullptr, 100, 20, 100, 100) {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -26,6 +27,8 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y);
 
     backGround.setScale(scalex, scaley);
+
+
 }
 
 void Game::exitGameState() {
@@ -115,7 +118,7 @@ void Game::renderMap() {
         sprite.setOrigin(100, -310);
         renderWin->draw(sprite);
     }
-    renderWin->display();
+
 }
 
 /***
@@ -132,6 +135,8 @@ void Game::render() {
 
     } else if (gameState->getStateName() == "StartGame") {      //start Game
         renderMap();
+        renderWin->draw(player);
+        renderWin->display();
 
     } else if (gameState->getStateName() == "PauseGame") {      //pause menu
 
