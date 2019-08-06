@@ -48,11 +48,6 @@ private:
 
     void renderMap();
 
-    void render();
-
-    void update();
-
-
     Player player;
     std::unique_ptr<GameState> gameState;
     OptionMenu opMenu;

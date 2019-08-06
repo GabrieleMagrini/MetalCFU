@@ -88,23 +88,131 @@ void Game::setState(GState state) {
  */
 void Game::loop() {
     while (renderWin->isOpen()) {
-
-
         sf::Event event;
-        while (renderWin->pollEvent(event)) {
+        if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
 
-            if (event.type == sf::Event::Closed)
-                renderWin->close();
+            while (renderWin->pollEvent(event)) {
 
-            if (event.type == sf::Event::MouseButtonReleased)
-                update();
+                if (event.type == sf::Event::Closed)
+                    exitGameState();
 
-            if (event.type == sf::Event::KeyPressed) {
-                update();
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (mainMenu.isOptionButtonPressed()) {
+                        optionMenuState();
+
+                    } else if (mainMenu.isExitButtonPressed()) {
+                        exitGameState();
+                    } else if (mainMenu.isStartButtonPressed()) {
+                        startGameState();
+                    }
+                }
+
+                mainMenu.update();
+
             }
-        }
-        render();
 
+            mainMenu.render();
+
+        } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
+            while (renderWin->pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (opMenu.isVolumeButtonPressed()) {
+                        opMenu.volumeButtonUpdate();
+                    } else if (opMenu.isResButtonPressed()) {
+                        opMenu.resButtonUpdate();
+                    } else if (opMenu.isCancelButtonPressed()) {
+                        opMenu.cancelButtonUpdate();
+                        mainMenuState();
+                    } else if (opMenu.isSaveButtonPressed()) {
+                        std::string resolution;
+                        bool volume;
+                        opMenu.saveButtonUpdate(resolution, volume);
+                        stringstream ss;
+                        ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
+                        if (resolution != ss.str()) {
+                            //renderWin= std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(opMenu.getRes().x, opMenu.getResolution().y),"Metal CFU"));
+                            renderWin->setSize(opMenu.getResolution());
+                        }
+                        if (!volume) {
+                            //TODO
+                        }
+                        ss.str("");
+                        mainMenuState();
+                    }
+                }
+
+                opMenu.update();
+            }
+
+            opMenu.render();
+
+        } else if (gameState->getStateName() == "StartGame") {      //start Game
+
+            while (renderWin->pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+                if (event.type == sf::Event::MouseButtonReleased) {}
+
+                if (event.type == sf::Event::KeyPressed) {
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                        if (gameState->getStateName() == "StartGame") {
+
+
+                            sf::Texture texture;
+
+                            texture.create(renderWin->getSize().x, renderWin->getSize().y);
+                            texture.update(*renderWin);
+                            pauseMenu.setTextureBackGround(texture);
+                            pauseGameState();
+
+                        }
+                    }
+
+                }
+
+            }
+
+            //Adding gravity to the player
+            for (auto &sprite : blocks) {
+                sprite.checkCollision(&player);
+            }
+            map.gravityApply(-10, &player, nullptr);
+
+
+            //render
+            renderMap();
+            renderWin->draw(player);
+            renderWin->display();
+
+
+        } else if (gameState->getStateName() == "PauseGame") {      //pause menu
+            while (renderWin->pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (pauseMenu.isBackGameButtonPressed()) {
+                        startGameState();
+                    } else if (pauseMenu.isMainMenuButtonPressed()) {
+                        mainMenuState();
+                    }
+                }
+                pauseMenu.update();
+            }
+            pauseMenu.render();
+
+        } else if (gameState->getStateName() == "ExitGame") {  // exit game
+            renderWin->close();
+
+        }
     }
 }
 
@@ -117,104 +225,6 @@ void Game::renderMap() {
     for (auto &sprite : blocks) {
         sprite.setOrigin(100, -310);
         renderWin->draw(sprite);
-    }
-
-}
-
-/***
- * function that render all things.
- */
-void Game::render() {
-    if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
-        mainMenu.update();
-        mainMenu.render();
-
-    } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
-        opMenu.update();
-        opMenu.render();
-
-    } else if (gameState->getStateName() == "StartGame") {      //start Game
-        renderMap();
-        renderWin->draw(player);
-        renderWin->display();
-
-    } else if (gameState->getStateName() == "PauseGame") {      //pause menu
-
-        pauseMenu.update();
-        pauseMenu.render();
-
-    } else if (gameState->getStateName() == "ExitGame") {  // exit game
-        renderWin->close();
-
-    }
-}
-
-/***
- *  updates all objects that can be interacted with the user
- */
-void Game::update() {
-
-    if (gameState->getStateName() == "StartGame") {      //start Game
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            if (gameState->getStateName() == "StartGame") {
-
-
-                sf::Texture texture;
-
-                texture.create(renderWin->getSize().x, renderWin->getSize().y);
-                texture.update(*renderWin);
-                pauseMenu.setTextureBackGround(texture);
-                pauseGameState();
-
-            }
-        }
-
-        renderMap();
-
-    } else if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
-
-        if (mainMenu.isOptionButtonPressed()) {
-            optionMenuState();
-
-        } else if (mainMenu.isExitButtonPressed()) {
-            exitGameState();
-        } else if (mainMenu.isStartButtonPressed()) {
-            startGameState();
-        }
-    } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
-
-
-        if (opMenu.isVolumeButtonPressed()) {
-            opMenu.volumeButtonUpdate();
-        } else if (opMenu.isResButtonPressed()) {
-            opMenu.resButtonUpdate();
-        } else if (opMenu.isCancelButtonPressed()) {
-            opMenu.cancelButtonUpdate();
-            mainMenuState();
-        } else if (opMenu.isSaveButtonPressed()) {
-            std::string resolution;
-            bool volume;
-            opMenu.saveButtonUpdate(resolution, volume);
-            if (resolution != renderWin->getSize().x + "x" + renderWin->getSize().y) {
-                //renderWin= std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(opMenu.getRes().x, opMenu.getResolution().y),"Metal CFU"));
-                renderWin->setSize(opMenu.getResolution());
-            }
-            if (!volume) {
-                //TODO
-            }
-            mainMenuState();
-        }
-
-    } else if (gameState->getStateName() == "PauseGame") {      //pause menu
-
-        if (pauseMenu.isBackGameButtonPressed())
-            startGameState();
-        else if (pauseMenu.isMainMenuButtonPressed())
-            mainMenuState();
-    } else if (gameState->getStateName() == "ExitGame") {  // exit game
-        renderWin->close();
-
     }
 
 }
