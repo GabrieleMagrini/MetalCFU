@@ -199,6 +199,7 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
         stream.flush();
         stream << textDirectory << "/dx/" << count << ".png";
     }
+    stream.str("");
     stream.flush();
     count = 1;
     stream << textDirectory << "/sx/" << count << ".png";
@@ -209,8 +210,8 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
         stream.flush();
         stream << textDirectory << "/sx/" << count << ".png";
     }
-
-    this->setTexture(textureDx[0]);
+    if (!textureDx.empty())
+        this->setTexture(textureDx[0]);
 
 }
 
