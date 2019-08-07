@@ -60,9 +60,7 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 
 void Map::gravityApply(int gravity, Player *player, Enemy *enemy) {
 
-    float oldPosY = player->getPosY();
-    player->setPosition(player->getPosX(), player->getPosY() - gravity);
-    if (player->getCollisionY())
-        player->setPosition(player->getPosX(), oldPosY);
-
+    if (!player->getCollisionY())
+        player->setPosition(player->getPosX(), player->getPosY() - gravity);
+    //TODO
 }
