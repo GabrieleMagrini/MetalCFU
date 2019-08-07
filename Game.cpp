@@ -91,6 +91,7 @@ void Game::loop() {
 
     bool dKeyPressed = false;
     bool aKeyPressed = false;
+    bool spaceKeyPressed = false;
     while (renderWin->isOpen()) {
         sf::Event event;
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
@@ -156,6 +157,8 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "StartGame") {      // Game loop
 
+            float startY;
+
             while (renderWin->pollEvent(event)) {
 
                 if (event.type == sf::Event::Closed)
@@ -168,19 +171,27 @@ void Game::loop() {
                     sf::Texture texture;
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
-
                             texture.create(renderWin->getSize().x, renderWin->getSize().y);
                             texture.update(*renderWin);
                             pauseMenu.setTextureBackGround(texture);
                             pauseGameState();
                             break;
+
                         case sf::Keyboard::D:
                             dKeyPressed = true;
                             break;
+
                         case sf::Keyboard::A:
                             aKeyPressed = true;
                             break;
 
+                        case sf::Keyboard::Space:
+                            if (player.getCollisionY()) {
+                                startY = player.getPosition().y;
+                                player.setJumping(true);
+                                spaceKeyPressed = true;
+                            }
+                            break;
                     }
 
 
@@ -192,6 +203,9 @@ void Game::loop() {
                         case sf::Keyboard::A:
                             aKeyPressed = false;
                             break;
+                        case sf::Keyboard::Space:
+                            player.setJumping(false);
+                            spaceKeyPressed = false;
                     }
                 }
             }
@@ -202,13 +216,17 @@ void Game::loop() {
             } else if (aKeyPressed) {
                 player.walk(3);
             }
+            if (spaceKeyPressed) {
+                player.jump(70, startY);
+            }
 
             //Adding gravity to the player
-
+            player.setCollisionY(false);
             for (auto sprite : blocks) {
                 sprite.checkCollision(&player);
             }
-            map.gravityApply(-10, &player, nullptr);
+            if (!player.isJumping())
+                map.gravityApply(-10, &player, nullptr);
 
 
             //RENDER
