@@ -98,6 +98,11 @@ public:
 
     bool getCollisionY();
 
+    void jump(float height, float startY);
+
+    bool isJumping() const;
+
+    void setJumping(bool j);
 protected:
     int HP;
     int strenght;
@@ -109,6 +114,7 @@ protected:
     int SpeedY;
     bool collisionX;
     bool collisionY;
+    bool jumping;
 
     std::vector<sf::Texture> textureDx;
     std::vector<sf::Texture> textureSx;

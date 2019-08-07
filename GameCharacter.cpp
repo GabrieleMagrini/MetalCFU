@@ -179,7 +179,7 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
                              int su, bool c, const std::string &textDirectory)
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
-          collisionX(c), collisionY(c) {
+          collisionX(c), collisionY(c), jumping(false) {
     if (w != nullptr)
         weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
@@ -325,4 +325,31 @@ void GameCharacter::setCollisionY(bool v) {
 
 bool GameCharacter::getCollisionY() {
     return collisionY;
+}
+
+void GameCharacter::jump(float height, float startY) {
+    if (jumping) {
+        if ((startY - this->getPosition().y) <= height) {
+            this->setPosition(this->getPosition().x, this->getPosition().y - 10);
+
+            if (getCollisionY())
+                setCollisionY(false);
+        } else
+            jumping = false;
+
+
+        if (getCollisionY()) {
+            jumping = false;
+            this->setPosition(this->getPosition().x, this->getPosition().y + 5);
+            setCollisionY(false);
+        }
+    }
+}
+
+bool GameCharacter::isJumping() const {
+    return jumping;
+}
+
+void GameCharacter::setJumping(bool j) {
+    jumping = j;
 }
