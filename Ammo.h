@@ -24,6 +24,8 @@ public:
 
     void setCollision(bool v);
 
+    bool getCollision() const;
+
 private:
     int quantity;
     bool collision;

@@ -67,6 +67,7 @@ bool Weapon::shoot(Vector2f posRif, Vector2f posFin) {
             bulletSpeed = abs(bulletSpeed);
         else
             bulletSpeed = -abs(bulletSpeed);
+
         currentAmmo.move(bulletSpeed * cos(degrees), bulletSpeed * sin(degrees));
         return true;
     } else
