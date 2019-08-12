@@ -311,7 +311,7 @@ void GameCharacter::setCollisionUp(bool v) {
     collisionUp = v;
 }
 
-bool GameCharacter::getCollisionUp() {
+bool GameCharacter::isCollisionUp() {
     return collisionUp;
 }
 
@@ -319,7 +319,7 @@ void GameCharacter::setCollisionDown(bool v) {
     collisionDown = v;
 }
 
-bool GameCharacter::getCollisionDown() {
+bool GameCharacter::isCollisionDown() {
     return collisionDown;
 }
 
@@ -330,7 +330,7 @@ void GameCharacter::jump(float height, float startY) {
         if ((startY - this->getPosition().y) <= height) {
             setSpeedY(-10);
 
-            if (getCollisionDown())
+            if (isCollisionDown())
                 setCollisionDown(false);
 
         } else {
@@ -339,7 +339,7 @@ void GameCharacter::jump(float height, float startY) {
             setSpeedY(10);
         }
 
-        if (getCollisionUp()) {
+        if (isCollisionUp()) {
             jumping = false;
             this->setPosition(this->getPosition().x, this->getPosition().y + 5);
             setSpeedY(10);
