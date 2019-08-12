@@ -90,6 +90,7 @@ void Game::setState(GState state) {
  */
 void Game::loop() {
 
+    sf::View followYou(sf::FloatRect(0, 0, renderWin->getSize().x, renderWin->getSize().y));
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
@@ -239,11 +240,13 @@ void Game::loop() {
             if (!player.isJumping())
                 map.gravityApply(player);
 
-
+            followYou.setCenter(player.getPosition());
             //RENDER
             renderMap();
             renderWin->draw(player);
+            renderWin->setView(followYou);
             renderWin->display();
+            renderWin->clear();
 
 
         } else if (gameState->getStateName() == "PauseGame") {      //pause menu

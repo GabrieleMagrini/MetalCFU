@@ -31,7 +31,7 @@ public:
     void gravityApply(GameCharacter &g);
 
 
-    explicit Map(int x = 7, int y = 30, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
+    explicit Map(int x = 14, int y = 51, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
 
     int getGravity() const;
 
