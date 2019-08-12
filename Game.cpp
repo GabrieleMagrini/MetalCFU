@@ -29,7 +29,9 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
 
     backGround.setScale(scalex, scaley);
 
+    player.setOrigin(player.getLocalBounds().width / 2, 0);
 
+    map.setGravity(-10);
 }
 
 void Game::exitGameState() {
@@ -157,7 +159,7 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "StartGame") {      // Game loop
 
-            float startY;
+            float startY = 0;
 
             while (renderWin->pollEvent(event)) {
 
@@ -186,11 +188,14 @@ void Game::loop() {
                             break;
 
                         case sf::Keyboard::Space:
-                            if (player.getCollisionY()) {
+                            if (player.getCollisionDown()) {
                                 startY = player.getPosition().y;
                                 player.setJumping(true);
                                 spaceKeyPressed = true;
                             }
+                            break;
+
+                        default:
                             break;
                     }
 
@@ -206,6 +211,8 @@ void Game::loop() {
                         case sf::Keyboard::Space:
                             player.setJumping(false);
                             spaceKeyPressed = false;
+                        default:
+                            break;
                     }
                 }
             }
@@ -218,15 +225,18 @@ void Game::loop() {
             }
             if (spaceKeyPressed) {
                 player.jump(70, startY);
+                if (player.isJumping())
+                    player.walk(0);
             }
 
             //Adding gravity to the player
-            player.setCollisionY(false);
+            player.setCollisionDown(false);
+            player.setCollisionUp(false);
             for (auto sprite : blocks) {
-                sprite.checkCollision(&player);
+                sprite.checkCollision(player);
             }
             if (!player.isJumping())
-                map.gravityApply(-10, &player, nullptr);
+                map.gravityApply(player, nullptr);
 
 
             //RENDER
