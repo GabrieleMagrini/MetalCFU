@@ -9,7 +9,6 @@
 #include "GameState/StartGameState.h"
 #include "GameState/PauseGameState.h"
 #include "GameState/ExitGameState.h"
-#include "Collision.h"
 
 
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)

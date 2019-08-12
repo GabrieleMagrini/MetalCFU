@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "Terrain.h"
-#include "Collision.h"
 
 
 void Terrain::checkCollision(GameCharacter &g) {
@@ -47,10 +46,11 @@ void Terrain::checkCollision(GameCharacter &g) {
 
 
 }
-
+/*
 int Terrain::setBonus(GameCharacter &g) {
     while ((g.isCollisionDown()) && Collision::PixelPerfectTest(g, *this))
         g.setSpeedX(g.getSpeedX() + bonusSpeedMovement);
 
     return 0;
 }
+ */

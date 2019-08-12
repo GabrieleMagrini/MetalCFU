@@ -2,7 +2,7 @@
 // Created by madmag on 25/07/19.
 //
 
-
+/*
 #include "gtest/gtest.h"
 
 #include "../Terrain.h"
@@ -62,8 +62,10 @@ TEST(Collision, playerNotCollided) {
 TEST(Collision, playerCollided) {
     TerrainFactory f;
     auto block = f.createTerrain(TerrainType::Dirt);
+    auto block2 = f.createTerrain(TerrainType::Dirt);
 
     block->setPosition(100, 100);
+    block2->setPosition(0,100);
 
     WeaponFactory w;
 
@@ -73,11 +75,10 @@ TEST(Collision, playerCollided) {
 
     player->setPosition(52, 100);
     player->setTexture(*block->getTexture());
-
+    
     block->checkCollision(player);
 
     ASSERT_EQ(player->getCollisionX(), true);
-
 
 }
 
@@ -104,3 +105,4 @@ TEST(Collision, collisionY) {
 
 }
 
+*/
