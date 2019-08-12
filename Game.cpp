@@ -238,7 +238,7 @@ void Game::loop() {
                 sprite.checkCollision(player);
             }
             if (!player.isJumping())
-                map.gravityApply(player, nullptr);
+                map.gravityApply(player);
 
 
             //RENDER
