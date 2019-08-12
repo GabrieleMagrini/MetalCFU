@@ -18,7 +18,9 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))),
-          player(3, nullptr, 100, 20, 100, 10) {
+          player(3, nullptr, 100, 20, 100, 10),
+          playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
+                                   renderWin->getSize().y)) {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -28,6 +30,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y);
 
     backGround.setScale(scalex, scaley);
+    backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
 
     player.setOrigin(player.getLocalBounds().width / 2, 0);
 
@@ -240,9 +243,12 @@ void Game::loop() {
             if (!player.isJumping())
                 map.gravityApply(player);
 
-
+            playerView.setCenter(player.getPosition());
             //RENDER
+            renderWin->clear();
+            renderWin->setView(playerView);
             renderMap();
+
             renderWin->draw(player);
             renderWin->display();
 
@@ -278,7 +284,9 @@ void Game::loop() {
  * function that render the map of the game.
  */
 void Game::renderMap() {
+    backGround.setPosition(playerView.getCenter());
     renderWin->draw(backGround);
+
     for (auto &sprite : blocks) {
         //sprite.setOrigin(100, -310);
         renderWin->draw(sprite);

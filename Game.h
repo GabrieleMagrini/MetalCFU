@@ -62,6 +62,7 @@ private:
     Map map;
     std::vector<Terrain> blocks;
 
+    sf::View playerView;
     //TODO
 };
 
