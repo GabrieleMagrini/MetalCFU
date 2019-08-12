@@ -25,10 +25,10 @@ void Terrain::checkCollision(GameCharacter &g) {
     sf::FloatRect flDownBlock = sf::Rect<float>(this->getPosition().x,
                                                 this->getPosition().y + this->getLocalBounds().height - 25,
                                                 this->getLocalBounds().width, 25); //rettangolo in basso al blocco
-    sf::FloatRect flLeftBlock = sf::Rect<float>(this->getPosition().x, this->getPosition().y, 10,
-                                                this->getLocalBounds().height); //rettangolo a sinistra del blocco
-    sf::FloatRect flRightBlock = sf::Rect<float>(this->getPosition().x + this->getLocalBounds().width - 10,
-                                                 this->getPosition().y, 5, this->getLocalBounds().height);
+    sf::FloatRect flLeftBlock = sf::Rect<float>(this->getPosition().x, this->getPosition().y + 25, 25,
+                                                this->getLocalBounds().height - 50); //rettangolo a sinistra del blocco
+    sf::FloatRect flRightBlock = sf::Rect<float>(this->getPosition().x + this->getLocalBounds().width - 25,
+                                                 this->getPosition().y + 25, 25, this->getLocalBounds().height - 50);
     //rettangolo a destra del blocco
 
     if (flUpBlock.intersects(flDownPlayer)) {

@@ -341,7 +341,6 @@ void GameCharacter::jump(float height, float startY) {
 
         if (isCollisionUp()) {
             jumping = false;
-            this->setPosition(this->getPosition().x, this->getPosition().y + 5);
             setSpeedY(10);
             setCollisionUp(false);
             return;
