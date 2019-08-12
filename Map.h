@@ -28,10 +28,14 @@ public:
     std::vector<Terrain> createMap(std::ifstream my_file);
 
 
-    void gravityApply(int gravity, Player *player, Enemy *enemy);
+    void gravityApply(Player &player, Enemy *enemy);
 
 
     explicit Map(int x = 7, int y = 30, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
+
+    int getGravity() const;
+
+    void setGravity(int gravity);
 
 private:
     int sizeX;

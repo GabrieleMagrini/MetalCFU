@@ -28,9 +28,9 @@ public:
 
     bool isSaveButtonPressed();
 
-    void volumeButtonUpdate(bool release);
+    void volumeButtonUpdate();
 
-    void resButtonUpdate(bool release);
+    void resButtonUpdate();
 
     void cancelButtonUpdate();
 

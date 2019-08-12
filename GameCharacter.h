@@ -19,7 +19,7 @@ class GameCharacter : public Sprite {
 public:
     GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int sx = 10, int sy = -10,
                   int sw = 0,
-                  int su = 4, Texture *txt = nullptr, bool c = false);
+                  int su = 4, bool c = false, const std::string &textDirectory = "");
 
     ~GameCharacter() override= default;
 
@@ -90,13 +90,27 @@ public:
 
     void useUsable(int invIdx);
 
-    void setCollisionX(bool v);
+    void setCollisionUp(bool v);
 
-    bool getCollisionX();
+    bool getCollisionUp();
 
-    void setCollisionY(bool v);
+    void setCollisionDown(bool v);
 
-    bool getCollisionY();
+    bool getCollisionDown();
+
+    void jump(float height, float startY);
+
+    bool isJumping() const;
+
+    void setJumping(bool j);
+
+    bool isCollisionLeft() const;
+
+    void setCollisionLeft(bool collisionLeft);
+
+    bool isCollisionRight() const;
+
+    void setCollisionRight(bool collisionRight);
 
 protected:
     int HP;
@@ -107,8 +121,14 @@ protected:
     int selectedUsable;
     int SpeedX;
     int SpeedY;
-    bool collisionX;
-    bool collisionY;
+    bool collisionUp;
+    bool collisionDown;
+    bool collisionLeft;
+    bool collisionRight;
+    bool jumping;
+
+    std::vector<sf::Texture> textureDx;
+    std::vector<sf::Texture> textureSx;
 
 };
 

@@ -9,6 +9,7 @@
 #include "GameState/StartGameState.h"
 #include "GameState/PauseGameState.h"
 #include "GameState/ExitGameState.h"
+#include "Collision.h"
 
 
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
@@ -16,7 +17,8 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))) {
+          blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))),
+          player(3, nullptr, 100, 20, 100, 10) {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -26,6 +28,10 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y);
 
     backGround.setScale(scalex, scaley);
+
+    player.setOrigin(player.getLocalBounds().width / 2, 0);
+
+    map.setGravity(-10);
 }
 
 void Game::exitGameState() {
@@ -84,100 +90,187 @@ void Game::setState(GState state) {
  * Game loop and state pattern work through this method
  */
 void Game::loop() {
-    bool action = true;  //one action to one single button pressed in GUI state
+
+    bool dKeyPressed = false;
+    bool aKeyPressed = false;
+    bool spaceKeyPressed = false;
     while (renderWin->isOpen()) {
-
-
         sf::Event event;
-        while (renderWin->pollEvent(event)) {
-
-            if (event.type == sf::Event::Closed)
-                renderWin->close();
-
-            if (event.type == sf::Event::MouseButtonReleased)
-                action = true;
-
-            if (event.type == sf::Event::KeyReleased) {
-                action = true;
-            }
-        }
-
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
-            if (action) {
-                if (mainMenu.isOptionButtonPressed()) {
-                    optionMenuState();
 
-                } else if (mainMenu.isExitButtonPressed()) {
-                    renderWin->close();
-                } else if (mainMenu.isStartButtonPressed()) {
-                    startGameState();
+            while (renderWin->pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    exitGameState();
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (mainMenu.isOptionButtonPressed()) {
+                        optionMenuState();
+
+                    } else if (mainMenu.isExitButtonPressed()) {
+                        exitGameState();
+                    } else if (mainMenu.isStartButtonPressed()) {
+                        startGameState();
+                    }
                 }
-                action = false;
+
+                mainMenu.update();
+
             }
-            mainMenu.update();
+
             mainMenu.render();
 
-
         } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
+            while (renderWin->pollEvent(event)) {
 
-            if (action) {
-                if (opMenu.isVolumeButtonPressed()) {
-                    opMenu.volumeButtonUpdate(action);
-                } else if (opMenu.isResButtonPressed()) {
-                    opMenu.resButtonUpdate(action);
-                } else if (opMenu.isCancelButtonPressed()) {
-                    opMenu.cancelButtonUpdate();
-                    mainMenuState();
-                } else if (opMenu.isSaveButtonPressed()) {
-                    std::string resolution;
-                    bool volume;
-                    opMenu.saveButtonUpdate(resolution, volume);
-                    if (resolution != renderWin->getSize().x + "x" + renderWin->getSize().y) {
-                        //renderWin= std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(opMenu.getRes().x, opMenu.getResolution().y),"Metal CFU"));
-                        renderWin->setSize(opMenu.getResolution());
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (opMenu.isVolumeButtonPressed()) {
+                        opMenu.volumeButtonUpdate();
+                    } else if (opMenu.isResButtonPressed()) {
+                        opMenu.resButtonUpdate();
+                    } else if (opMenu.isCancelButtonPressed()) {
+                        opMenu.cancelButtonUpdate();
+                        mainMenuState();
+                    } else if (opMenu.isSaveButtonPressed()) {
+                        std::string resolution;
+                        bool volume;
+                        opMenu.saveButtonUpdate(resolution, volume);
+                        stringstream ss;
+                        ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
+                        if (resolution != ss.str()) {
+                            //renderWin= std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(opMenu.getRes().x, opMenu.getResolution().y),"Metal CFU"));
+                            renderWin->setSize(opMenu.getResolution());
+                        }
+                        if (!volume) {
+                            //TODO
+                        }
+                        ss.str("");
+                        mainMenuState();
                     }
-                    if (!volume) {
-                        //TODO
-                    }
-                    mainMenuState();
                 }
-                action = false;
+
+                opMenu.update();
             }
-            opMenu.update();
+
             opMenu.render();
 
-        } else if (gameState->getStateName() == "StartGame") {      //start Game
+        } else if (gameState->getStateName() == "StartGame") {      // Game loop
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                if (gameState->getStateName() == "StartGame") {
-                    pauseGameState();
-                    action = false;
+            float startY = 0;
+
+            while (renderWin->pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+                if (event.type == sf::Event::MouseButtonReleased) {}
+
+                if (event.type == sf::Event::KeyPressed) {
+
+                    sf::Texture texture;
+                    switch (event.key.code) {
+                        case sf::Keyboard::Escape:
+                            texture.create(renderWin->getSize().x, renderWin->getSize().y);
+                            texture.update(*renderWin);
+                            pauseMenu.setTextureBackGround(texture);
+                            pauseGameState();
+                            break;
+
+                        case sf::Keyboard::D:
+                            dKeyPressed = true;
+                            break;
+
+                        case sf::Keyboard::A:
+                            aKeyPressed = true;
+                            break;
+
+                        case sf::Keyboard::Space:
+                            if (player.getCollisionDown()) {
+                                startY = player.getPosition().y;
+                                player.setJumping(true);
+                                spaceKeyPressed = true;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+
+
+                } else if (event.type == sf::Event::KeyReleased) {
+                    switch (event.key.code) {
+                        case sf::Keyboard::D:
+                            dKeyPressed = false;
+                            break;
+                        case sf::Keyboard::A:
+                            aKeyPressed = false;
+                            break;
+                        case sf::Keyboard::Space:
+                            player.setJumping(false);
+                            spaceKeyPressed = false;
+                        default:
+                            break;
+                    }
                 }
             }
 
-            renderMap();
-
-        } else if (gameState->getStateName() == "PauseGame") {      //pause menu
-            sf::Image image = renderWin->capture();
-
-            sf::Texture texture;
-            texture.loadFromImage(image);
-            pauseMenu.setTextureBackGround(texture);
-
-            if (action) {
-                if (pauseMenu.isBackGameButtonPressed())
-                    startGameState();
-                else if (pauseMenu.isMainMenuButtonPressed())
-                    mainMenuState();
-                action = false;
+            //UPDATE
+            if (dKeyPressed) {
+                player.walk(1);
+            } else if (aKeyPressed) {
+                player.walk(3);
+            }
+            if (spaceKeyPressed) {
+                player.jump(70, startY);
+                if (player.isJumping())
+                    player.walk(0);
             }
 
-            pauseMenu.update();
-            pauseMenu.render();
-        }
+            //Adding gravity to the player
+            player.setCollisionDown(false);
+            player.setCollisionUp(false);
+            for (auto sprite : blocks) {
+                sprite.checkCollision(player);
+            }
+            if (!player.isJumping())
+                map.gravityApply(player, nullptr);
 
+
+            //RENDER
+            renderMap();
+            renderWin->draw(player);
+            renderWin->display();
+
+
+        } else if (gameState->getStateName() == "PauseGame") {      //pause menu
+            while (renderWin->pollEvent(event)) {
+
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (pauseMenu.isBackGameButtonPressed()) {
+                        startGameState();
+                    } else if (pauseMenu.isMainMenuButtonPressed()) {
+                        mainMenuState();
+                    }
+                }
+                pauseMenu.update();
+            }
+            pauseMenu.render();
+
+        } else if (gameState->getStateName() == "ExitGame") {  // exit game
+            renderWin->close();
+
+        }
     }
+
 }
+
 
 /*****
  * function that render the map of the game.
@@ -185,8 +278,8 @@ void Game::loop() {
 void Game::renderMap() {
     renderWin->draw(backGround);
     for (auto &sprite : blocks) {
-        sprite.setOrigin(100, -310);
+        //sprite.setOrigin(100, -310);
         renderWin->draw(sprite);
     }
-    renderWin->display();
+
 }

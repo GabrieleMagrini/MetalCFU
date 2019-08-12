@@ -2,6 +2,7 @@
 // Created by emanuele on 23/05/19.
 //
 
+#include <sstream>
 #include "GameCharacter.h"
 #include "Usable.h"
 #include "Weapon.h"
@@ -48,6 +49,7 @@ int GameCharacter::getSpeedY() const {
 void GameCharacter::setSpeedY(int SpeedY) {
     GameCharacter::SpeedY = SpeedY;
 }
+
 /***
  * teleport the player in the map in the coordinated
  * @param x axis
@@ -174,16 +176,43 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
 }
 
 GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int sx, int sy, int sw,
-                             int su,
-                             Texture *txt, bool c)
+                             int su, bool c, const std::string &textDirectory)
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
-          collisionX(c), collisionY(c) {
-    weaponInventory.setElement(0, *w);
+          collisionUp(c), collisionDown(c), jumping(false), collisionLeft(false), collisionRight(false) {
+    if (w != nullptr)
+        weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);
-    if (txt != nullptr)
-        setTexture(*txt);
+
+    sf::Texture text;
+
+    int count = 1;
+
+    std::stringstream stream;
+    stream << textDirectory << "/dx/" << count << ".png";
+    sf::Texture texture;
+    while (count <= 8 && texture.loadFromFile(stream.str())) {
+        textureDx.push_back(texture);
+        count++;
+        stream.str("");
+        stream.flush();
+        stream << textDirectory << "/dx/" << count << ".png";
+    }
+    stream.str("");
+    stream.flush();
+    count = 1;
+    stream << textDirectory << "/sx/" << count << ".png";
+    while (count <= 8 && texture.loadFromFile(stream.str())) {
+        textureSx.push_back(texture);
+        count++;
+        stream.str("");
+        stream.flush();
+        stream << textDirectory << "/sx/" << count << ".png";
+    }
+    if (!textureDx.empty())
+        this->setTexture(textureDx[0]);
+
 }
 
 int GameCharacter::getDimUsable() const {
@@ -265,35 +294,82 @@ void GameCharacter::useUsable(int invIdx) {
  * @param direction direzione sui 4 assi su cui spostarsi
  */
 void GameCharacter::walk(int direction) {
-
-    int oldPosX = getPosX();
-    int oldPosY = getPosY();
-    if (direction == 0)
+    if (direction == 0 && !collisionDown)
         setPosition(getPosX(), getPosY() + SpeedY);
-    if (direction == 1)
+
+
+    if (direction == 1 && !collisionRight)
         setPosition(getPosX() + SpeedX, getPosY());
-    if (direction == 3)
+    if (direction == 3 && !collisionLeft)
         setPosition(getPosX() - SpeedX, getPosY());
-    if (collisionX)
-        setPosition(oldPosX, getPosY());
-    if (collisionY)
-        setPosition(getPosX(), oldPosY);
+
 
 }
 
 
-void GameCharacter::setCollisionX(bool v) {
-    collisionX = v;
+void GameCharacter::setCollisionUp(bool v) {
+    collisionUp = v;
 }
 
-bool GameCharacter::getCollisionX() {
-    return collisionX;
+bool GameCharacter::getCollisionUp() {
+    return collisionUp;
 }
 
-void GameCharacter::setCollisionY(bool v) {
-    collisionY = v;
+void GameCharacter::setCollisionDown(bool v) {
+    collisionDown = v;
 }
 
-bool GameCharacter::getCollisionY() {
-    return collisionY;
+bool GameCharacter::getCollisionDown() {
+    return collisionDown;
+}
+
+void GameCharacter::jump(float height, float startY) {
+    if (jumping) {
+
+
+        if ((startY - this->getPosition().y) <= height) {
+            setSpeedY(-10);
+
+            if (getCollisionDown())
+                setCollisionDown(false);
+
+        } else {
+
+            jumping = false;
+            setSpeedY(10);
+        }
+
+        if (getCollisionUp()) {
+            jumping = false;
+            this->setPosition(this->getPosition().x, this->getPosition().y + 5);
+            setSpeedY(10);
+            setCollisionUp(false);
+            return;
+        }
+    }
+
+}
+
+bool GameCharacter::isJumping() const {
+    return jumping;
+}
+
+void GameCharacter::setJumping(bool j) {
+    jumping = j;
+}
+
+bool GameCharacter::isCollisionLeft() const {
+    return collisionLeft;
+}
+
+void GameCharacter::setCollisionLeft(bool collisionLeft) {
+    GameCharacter::collisionLeft = collisionLeft;
+}
+
+bool GameCharacter::isCollisionRight() const {
+    return collisionRight;
+}
+
+void GameCharacter::setCollisionRight(bool collisionRight) {
+    GameCharacter::collisionRight = collisionRight;
 }

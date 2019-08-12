@@ -15,7 +15,7 @@
 #include "GUI/MainMenu.h"
 #include "GUI/OptionMenu.h"
 #include "GUI/PauseMenu.h"
-
+#include "Player.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
@@ -43,10 +43,12 @@ public:
 
     void loop();
 
+
 private:
 
     void renderMap();
 
+    Player player;
     std::unique_ptr<GameState> gameState;
     OptionMenu opMenu;
     MainMenu mainMenu;
@@ -59,6 +61,7 @@ private:
 
     Map map;
     std::vector<Terrain> blocks;
+
     //TODO
 };
 
