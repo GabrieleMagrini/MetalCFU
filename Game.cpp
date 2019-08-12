@@ -188,7 +188,7 @@ void Game::loop() {
                             break;
 
                         case sf::Keyboard::Space:
-                            if (player.getCollisionDown()) {
+                            if (player.isCollisionDown()) {
                                 startY = player.getPosition().y;
                                 player.setJumping(true);
                                 spaceKeyPressed = true;
@@ -218,9 +218,9 @@ void Game::loop() {
             }
 
             //UPDATE
-            if (dKeyPressed) {
+            if (dKeyPressed && !player.isCollisionRight()) {
                 player.walk(1);
-            } else if (aKeyPressed) {
+            } else if (aKeyPressed && !player.isCollisionLeft()) {
                 player.walk(3);
             }
             if (spaceKeyPressed) {
@@ -232,11 +232,13 @@ void Game::loop() {
             //Adding gravity to the player
             player.setCollisionDown(false);
             player.setCollisionUp(false);
+            player.setCollisionRight(false);
+            player.setCollisionLeft(false);
             for (auto sprite : blocks) {
                 sprite.checkCollision(player);
             }
             if (!player.isJumping())
-                map.gravityApply(player, nullptr);
+                map.gravityApply(player);
 
 
             //RENDER

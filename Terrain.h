@@ -17,12 +17,12 @@ public:
 
     explicit Terrain(int s = 0):bonusSpeedMovement(s){}
 
-    ~Terrain() final;
+    ~Terrain() final = default;
 
     void checkCollision(
             GameCharacter &g);       //the block will have as only function to check the collision with the other elements
 
-    int setBonus(GameCharacter *g, int bonusSpeedMovement);
+    int setBonus(GameCharacter &g);
 
 
 private:

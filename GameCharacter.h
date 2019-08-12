@@ -92,11 +92,11 @@ public:
 
     void setCollisionUp(bool v);
 
-    bool getCollisionUp();
+    bool isCollisionUp();
 
     void setCollisionDown(bool v);
 
-    bool getCollisionDown();
+    bool isCollisionDown();
 
     void jump(float height, float startY);
 
@@ -111,6 +111,7 @@ public:
     bool isCollisionRight() const;
 
     void setCollisionRight(bool collisionRight);
+
 
 protected:
     int HP;
