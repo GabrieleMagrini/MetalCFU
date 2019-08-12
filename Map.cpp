@@ -3,6 +3,7 @@
 //
 
 #include "Map.h"
+
 #include "Factory/TerrainFactory.h"
 
 
@@ -58,9 +59,16 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 }
 
 
-void Map::gravityApply(int gravity, Player *player, Enemy *enemy) {
-
-    if (!player->getCollisionY())
-        player->setPosition(player->getPosX(), player->getPosY() - gravity);
+void Map::gravityApply(Player &player, Enemy *enemy) {
+    if (!player.getCollisionDown())
+        player.setPosition(player.getPosX(), player.getPosY() - gravity);
     //TODO
+}
+
+int Map::getGravity() const {
+    return gravity;
+}
+
+void Map::setGravity(int gravity) {
+    Map::gravity = gravity;
 }
