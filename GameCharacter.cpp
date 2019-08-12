@@ -179,7 +179,7 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
                              int su, bool c, const std::string &textDirectory)
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
-          collisionX(c), collisionY(c), jumping(false) {
+          collisionUp(c), collisionDown(c), jumping(false), collisionLeft(false), collisionRight(false) {
     if (w != nullptr)
         weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
@@ -294,56 +294,60 @@ void GameCharacter::useUsable(int invIdx) {
  * @param direction direzione sui 4 assi su cui spostarsi
  */
 void GameCharacter::walk(int direction) {
-
-    int oldPosX = getPosX();
-    int oldPosY = getPosY();
-    if (direction == 0)
+    if (direction == 0 && !collisionDown)
         setPosition(getPosX(), getPosY() + SpeedY);
-    if (direction == 1)
+
+
+    if (direction == 1 && !collisionRight)
         setPosition(getPosX() + SpeedX, getPosY());
-    if (direction == 3)
+    if (direction == 3 && !collisionLeft)
         setPosition(getPosX() - SpeedX, getPosY());
-    if (collisionX)
-        setPosition(oldPosX, getPosY());
-    if (collisionY)
-        setPosition(getPosX(), oldPosY);
+
 
 }
 
 
-void GameCharacter::setCollisionX(bool v) {
-    collisionX = v;
+void GameCharacter::setCollisionUp(bool v) {
+    collisionUp = v;
 }
 
-bool GameCharacter::getCollisionX() {
-    return collisionX;
+bool GameCharacter::getCollisionUp() {
+    return collisionUp;
 }
 
-void GameCharacter::setCollisionY(bool v) {
-    collisionY = v;
+void GameCharacter::setCollisionDown(bool v) {
+    collisionDown = v;
 }
 
-bool GameCharacter::getCollisionY() {
-    return collisionY;
+bool GameCharacter::getCollisionDown() {
+    return collisionDown;
 }
 
 void GameCharacter::jump(float height, float startY) {
     if (jumping) {
+
+
         if ((startY - this->getPosition().y) <= height) {
-            this->setPosition(this->getPosition().x, this->getPosition().y - 10);
+            setSpeedY(-10);
 
-            if (getCollisionY())
-                setCollisionY(false);
-        } else
+            if (getCollisionDown())
+                setCollisionDown(false);
+
+        } else {
+
             jumping = false;
+            setSpeedY(10);
+        }
 
-
-        if (getCollisionY()) {
+        if (getCollisionUp()) {
             jumping = false;
             this->setPosition(this->getPosition().x, this->getPosition().y + 5);
-            setCollisionY(false);
+            setSpeedY(10);
+            setCollisionUp(false);
+            return;
         }
     }
+
 }
 
 bool GameCharacter::isJumping() const {
@@ -352,4 +356,20 @@ bool GameCharacter::isJumping() const {
 
 void GameCharacter::setJumping(bool j) {
     jumping = j;
+}
+
+bool GameCharacter::isCollisionLeft() const {
+    return collisionLeft;
+}
+
+void GameCharacter::setCollisionLeft(bool collisionLeft) {
+    GameCharacter::collisionLeft = collisionLeft;
+}
+
+bool GameCharacter::isCollisionRight() const {
+    return collisionRight;
+}
+
+void GameCharacter::setCollisionRight(bool collisionRight) {
+    GameCharacter::collisionRight = collisionRight;
 }
