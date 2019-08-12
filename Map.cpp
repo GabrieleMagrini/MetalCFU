@@ -49,6 +49,12 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
+                case 'x': {
+                    sprites.resize(sprites.size() + 1);
+                    sprites.push_back(*c.createTerrain(TerrainType::Invisible));
+                    sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
+                    break;
+                }
                 default:
                     break;
             }
