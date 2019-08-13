@@ -9,7 +9,6 @@
 #include "GameState/StartGameState.h"
 #include "GameState/PauseGameState.h"
 #include "GameState/ExitGameState.h"
-#include "Collision.h"
 
 
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
@@ -246,10 +245,9 @@ void Game::loop() {
             playerView.setCenter(player.getPosition());
             //RENDER
             renderWin->clear();
-            renderWin->setView(playerView);
             renderMap();
-
             renderWin->draw(player);
+            renderWin->setView(playerView);
             renderWin->display();
 
 
@@ -286,7 +284,6 @@ void Game::loop() {
 void Game::renderMap() {
     backGround.setPosition(playerView.getCenter());
     renderWin->draw(backGround);
-
     for (auto &sprite : blocks) {
         //sprite.setOrigin(100, -310);
         renderWin->draw(sprite);

@@ -20,6 +20,10 @@ std::unique_ptr<Terrain> TerrainFactory::createTerrain(TerrainType t) {
     bot->loadFromFile(
             "Sources/Pngs/bottom.png");
 
+    auto invisible = new sf::Texture();
+    invisible->loadFromFile(
+            "Sources/Pngs/Invisible.png");
+
     switch (t) {
         case TerrainType::Dirt:
             terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
@@ -38,6 +42,11 @@ std::unique_ptr<Terrain> TerrainFactory::createTerrain(TerrainType t) {
             break;
         case TerrainType::Flag:
             terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
+            break;
+        case TerrainType::Invisible:
+            terrainResult = std::unique_ptr<Terrain>(new Terrain{0});
+            terrainResult->setTexture(*invisible);
+            break;
     }
     return terrainResult;
 }
