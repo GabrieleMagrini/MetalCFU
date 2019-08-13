@@ -7,10 +7,12 @@
 
 std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 
+    readValues(&my_file);
+
     char map_array[sizeX][sizeY];
 
     try {
-        for (int i = 0; i < sizeX; ++i) {
+        for (int i = 1; i < sizeX; ++i) {
             for (int j = 0; j < sizeY; ++j) {
                 my_file >> map_array[i][j];
             }
@@ -68,7 +70,7 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 
 void Map::gravityApply(GameCharacter &g) {
     if (!g.isCollisionDown())
-        g.setPosition(g.getPosX(), g.getPosY() - gravity);
+        g.setPosition(g.getPosX(), g.getPosY() + gravity);
     //TODO
 }
 
@@ -78,4 +80,31 @@ int Map::getGravity() const {
 
 void Map::setGravity(int gravity) {
     Map::gravity = gravity;
+}
+
+int Map::getSizeX() const {
+    return sizeX;
+}
+
+void Map::setSizeX(int sizeX) {
+    Map::sizeX = sizeX;
+}
+
+int Map::getSizeY() const {
+    return sizeY;
+}
+
+void Map::setSizeY(int sizeY) {
+    Map::sizeY = sizeY;
+}
+
+void Map::readValues(std::ifstream *my_file) {
+
+    int values[3];
+    for (int i = 0; i < 3; i++)
+        *my_file >> values[i];
+    sizeX = values[0];
+    sizeY = values[1];
+    gravity = values[2];
+
 }

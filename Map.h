@@ -24,25 +24,32 @@
 
 class Map {
 public:
+    explicit Map(int x = 16, int y = 51, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
+
     ~Map() = default;
+
+    void readValues(std::ifstream *my_file);
 
     std::vector<Terrain> createMap(std::ifstream my_file);
 
-
     void gravityApply(GameCharacter &g);
-
-
-    explicit Map(int x = 14, int y = 51, int g = 10) : sizeX(x), sizeY(y), gravity(g) {}
 
     int getGravity() const;
 
     void setGravity(int gravity);
 
+    int getSizeX() const;
+
+    void setSizeX(int sizeX);
+
+    int getSizeY() const;
+
+    void setSizeY(int sizeY);
+
 private:
     int sizeX;
     int sizeY;
     int gravity;
-
 
 };
 
