@@ -4,18 +4,19 @@
 
 #include "Map.h"
 
-#include "Factory/TerrainFactory.h"
-
 
 std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 
     char map_array[sizeX][sizeY];
 
-
-    for (int i = 0; i < sizeX; ++i) {
-        for (int j = 0; j < sizeY; ++j) {
-            my_file >> map_array[i][j];
+    try {
+        for (int i = 0; i < sizeX; ++i) {
+            for (int j = 0; j < sizeY; ++j) {
+                my_file >> map_array[i][j];
+            }
         }
+    } catch (std::exception &ex) {
+        std::cerr << ex.what() << std::endl;
     }
 
     TerrainFactory c;

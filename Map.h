@@ -5,20 +5,21 @@
 #ifndef METALCFU_MAP_H
 #define METALCFU_MAP_H
 
-#include "Player.h"
-#include "Enemy.h"
-#include "Interactable.h"
-#include "Weapon.h"
-#include "Ammo.h"
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <vector>
 #include <fstream>
+#include <exception>
 
-
+#include "Player.h"
+#include "Enemy.h"
+#include "Interactable.h"
+#include "Weapon.h"
+#include "Ammo.h"
 #include "Terrain.h"
+#include "Factory/TerrainFactory.h"
 
 
 class Map {
