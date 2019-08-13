@@ -90,6 +90,7 @@ void Game::loop() {
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
+    bool shoot = false;
     float startY = 0; //used for jump
     sf::Clock clock;
     int countTexture = 0;
@@ -177,8 +178,27 @@ void Game::loop() {
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
 
-                if (event.type == sf::Event::MouseButtonReleased) {}
-
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    switch (event.mouseButton.button) {
+                        case sf::Mouse::Left :
+                            shoot = false;
+                            break;
+                    }
+                }
+                if (event.type == sf::Event::MouseButtonPressed) {
+                    switch (event.mouseButton.button) {
+                        case sf::Mouse::Left :
+                            if (!shoot) {
+                                shoot = true;
+                                int xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2) +
+                                             (sf::Mouse::getPosition(*renderWin).x);
+                                int yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2) +
+                                             sf::Mouse::getPosition(*renderWin).y;
+                                Vector2f Fin(xMouse, yMouse);
+                            }
+                            break;
+                    }
+                }
                 if (event.type == sf::Event::KeyPressed) {
 
                     sf::Texture texture;
