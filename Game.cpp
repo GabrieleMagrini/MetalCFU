@@ -16,8 +16,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          blocks(map.createMap(std::ifstream("Sources/Maps/mappa.txt"))),
-          player(3, nullptr, 100, 20, 100, 10),
+          player(3, nullptr, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)) {
     renderWin->setFramerateLimit(30);
@@ -25,11 +24,11 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
     backGround.setTexture(textBackGround);
     backGround.setPosition(0, 0);
-    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x);
-    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y);
+    float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
+    float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
 
-    backGround.setScale(scalex, scaley);
-    backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
+    backGround.setScale(scaleX, scaleY);
+    //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
 
     player.setOrigin(player.getLocalBounds().width / 2, 0);
 
@@ -112,6 +111,16 @@ void Game::loop() {
                     } else if (mainMenu.isExitButtonPressed()) {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
+                        blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
+
+                        float scaleX = static_cast<float>(blocks.back().getPosition().x) /
+                                       static_cast<float>(textBackGround.getSize().x);
+                        float scaleY = static_cast<float>(blocks.back().getPosition().y) /
+                                       static_cast<float>(textBackGround.getSize().y);
+                        backGround.setPosition(-500, -100);
+                        backGround.setScale(scaleX + 1, scaleY + 1);
+
+                        player.setPosition(blocks[1].getPosition().x + 100, 400);
                         startGameState();
                     }
                 }
@@ -267,6 +276,7 @@ void Game::loop() {
                 }
                 pauseMenu.update();
             }
+
             pauseMenu.render();
 
         } else if (gameState->getStateName() == "ExitGame") {  // exit game
@@ -282,10 +292,9 @@ void Game::loop() {
  * function that render the map of the game.
  */
 void Game::renderMap() {
-    backGround.setPosition(playerView.getCenter());
+    //backGround.setPosition(playerView.getCenter());
     renderWin->draw(backGround);
     for (auto &sprite : blocks) {
-        //sprite.setOrigin(100, -310);
         renderWin->draw(sprite);
     }
 
