@@ -95,6 +95,8 @@ void Game::loop() {
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
+    float startY = 0; //used for jump
+
     while (renderWin->isOpen()) {
         sf::Event event;
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
@@ -170,7 +172,7 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "StartGame") {      // Game loop
 
-            float startY = 0;
+
 
             while (renderWin->pollEvent(event)) {
 
@@ -235,7 +237,7 @@ void Game::loop() {
                 player.walk(3);
             }
             if (spaceKeyPressed) {
-                player.jump(70, startY);
+                player.jump(100, startY);
                 if (player.isJumping())
                     player.walk(0);
             }
@@ -251,6 +253,7 @@ void Game::loop() {
             if (!player.isJumping())
                 map.gravityApply(player);
 
+
             playerView.setCenter(player.getPosition());
             //RENDER
             renderWin->clear();
@@ -261,6 +264,7 @@ void Game::loop() {
 
 
         } else if (gameState->getStateName() == "PauseGame") {      //pause menu
+            playerView.setCenter(renderWin->getSize().x / 2.0f, renderWin->getSize().y / 2.0f);
             while (renderWin->pollEvent(event)) {
 
                 if (event.type == sf::Event::Closed)
@@ -276,7 +280,7 @@ void Game::loop() {
                 }
                 pauseMenu.update();
             }
-
+            renderWin->setView(playerView);
             pauseMenu.render();
 
         } else if (gameState->getStateName() == "ExitGame") {  // exit game
