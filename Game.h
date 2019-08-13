@@ -11,11 +11,18 @@
 #include "SFML/Audio.hpp"
 
 #include "GameState/GameState.h"
+#include "GameState/MainMenuState.h"
+#include "GameState/GameOverState.h"
+#include "GameState/OptionMenuState.h"
+#include "GameState/StartGameState.h"
+#include "GameState/PauseGameState.h"
+#include "GameState/ExitGameState.h"
 #include "Map.h"
 #include "GUI/MainMenu.h"
 #include "GUI/OptionMenu.h"
 #include "GUI/PauseMenu.h"
 #include "Player.h"
+#include "utility/CharacterAnimation.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
@@ -63,6 +70,8 @@ private:
     std::vector<Terrain> blocks;
 
     sf::View playerView;
+    CharacterAnimation playerAnimation;
+
     //TODO
 };
 

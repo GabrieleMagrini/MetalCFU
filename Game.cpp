@@ -3,12 +3,6 @@
 //
 
 #include "Game.h"
-#include "GameState/MainMenuState.h"
-#include "GameState/GameOverState.h"
-#include "GameState/OptionMenuState.h"
-#include "GameState/StartGameState.h"
-#include "GameState/PauseGameState.h"
-#include "GameState/ExitGameState.h"
 
 
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
@@ -18,7 +12,8 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           player(3, nullptr, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
-                                   renderWin->getSize().y)) {
+                                   renderWin->getSize().y)),
+          playerAnimation("Sources/Pngs/player textures/playerTexture.bmp") {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -31,7 +26,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
 
     player.setOrigin(player.getLocalBounds().width / 2, 0);
-
+    playerAnimation.getTexture(player, 0);
     map.setGravity(-10);
 }
 
@@ -96,6 +91,8 @@ void Game::loop() {
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
     float startY = 0; //used for jump
+    sf::Clock clock;
+    int countTexture = 0;
 
     while (renderWin->isOpen()) {
         sf::Event event;
@@ -123,6 +120,8 @@ void Game::loop() {
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
                         player.setPosition(blocks[1].getPosition().x + 100, 400);
+
+                        clock.restart();
                         startGameState();
                     }
                 }
@@ -154,7 +153,6 @@ void Game::loop() {
                         stringstream ss;
                         ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
                         if (resolution != ss.str()) {
-                            //renderWin= std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(opMenu.getRes().x, opMenu.getResolution().y),"Metal CFU"));
                             renderWin->setSize(opMenu.getResolution());
                         }
                         if (!volume) {
@@ -202,6 +200,7 @@ void Game::loop() {
 
                         case sf::Keyboard::Space:
                             if (player.isCollisionDown()) {
+                                countTexture = 2;
                                 startY = player.getPosition().y;
                                 player.setJumping(true);
                                 spaceKeyPressed = true;
@@ -233,6 +232,7 @@ void Game::loop() {
             //UPDATE
             if (dKeyPressed && !player.isCollisionRight()) {
                 player.walk(1);
+
             } else if (aKeyPressed && !player.isCollisionLeft()) {
                 player.walk(3);
             }
@@ -240,6 +240,23 @@ void Game::loop() {
                 player.jump(100, startY);
                 if (player.isJumping())
                     player.walk(0);
+
+            }
+
+            if (clock.getElapsedTime().asSeconds() > 0.15f) {
+                if (!player.isJumping())
+                    countTexture++;
+
+                if (countTexture == 8)
+                    countTexture = 0;
+                if (dKeyPressed && !player.isCollisionRight()) {
+                    playerAnimation.getTexture(player, countTexture, "right");
+                } else if (aKeyPressed && !player.isCollisionLeft()) {
+                    playerAnimation.getTexture(player, countTexture, "left");
+                }
+
+
+                clock.restart();
             }
 
             //Adding gravity to the player
