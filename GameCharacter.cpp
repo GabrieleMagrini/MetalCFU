@@ -184,35 +184,6 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
         weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);
-
-    sf::Texture text;
-
-    int count = 1;
-
-    std::stringstream stream;
-    stream << textDirectory << "/dx/" << count << ".png";
-    sf::Texture texture;
-    while (count <= 8 && texture.loadFromFile(stream.str())) {
-        textureDx.push_back(texture);
-        count++;
-        stream.str("");
-        stream.flush();
-        stream << textDirectory << "/dx/" << count << ".png";
-    }
-    stream.str("");
-    stream.flush();
-    count = 1;
-    stream << textDirectory << "/sx/" << count << ".png";
-    while (count <= 8 && texture.loadFromFile(stream.str())) {
-        textureSx.push_back(texture);
-        count++;
-        stream.str("");
-        stream.flush();
-        stream << textDirectory << "/sx/" << count << ".png";
-    }
-    if (!textureDx.empty())
-        this->setTexture(textureDx[0]);
-
 }
 
 int GameCharacter::getDimUsable() const {

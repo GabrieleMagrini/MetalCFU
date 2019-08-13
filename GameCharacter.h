@@ -128,9 +128,6 @@ protected:
     bool collisionRight;
     bool jumping;
 
-    std::vector<sf::Texture> textureDx;
-    std::vector<sf::Texture> textureSx;
-
 };
 
 
