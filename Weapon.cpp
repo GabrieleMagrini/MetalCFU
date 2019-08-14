@@ -19,12 +19,17 @@ Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int b
     setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
 }
 
-Weapon::Weapon(int cur, int d, int r, int m, Texture *txt, int sy, int bs) : currentAmmo(cur), damage(d), range(r),
-                                                                             maxAmmo(m),
-                                                                             activeLaser(false), collision(false),
-                                                                             speedY(sy), bulletSpeed(bs) {
-    if (txt != nullptr)
-        setTexture(*txt);
+Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, int sy, int bs)
+        : currentAmmo(cur), damage(d),
+          range(r),
+          maxAmmo(m),
+          activeLaser(false),
+          collision(false),
+          speedY(sy), bulletSpeed(bs),
+          filename(std::move(filename)) {
+    texture.loadFromFile(this->filename);
+    setTexture(this->texture);
+    setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
 }
 
 const Ammo &Weapon::getCurrentAmmo() const {
