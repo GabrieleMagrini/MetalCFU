@@ -96,6 +96,7 @@ void Game::loop() {
     int countTexture = 0;
     std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
     EnemyFactory e;                                        //Creating the enemy factory
+    int enemyVectorSize = 10;
 
     while (renderWin->isOpen()) {
         sf::Event event;
@@ -116,9 +117,9 @@ void Game::loop() {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
 
                         for (int j = 0; j <
-                                        10; j++) {                                                       //Placing the enemies in the map
+                                        enemyVectorSize; j++) {                                                       //Placing the enemies in the map
                             enemies.push_back(*e.createEnemy(EnemyType::Soldier));
-                            enemies[j].setPosition(blocks[j + 10].getPosition().x + 100, 400);
+                            enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 200);
                         }
 
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
@@ -300,22 +301,24 @@ void Game::loop() {
             }
             for (auto sprite : blocks) {                                   //checking the player collision with Terrain blocks
                 sprite.checkCollision(player);
-                for (auto enemy : enemies) {                               //checking the enemy collision with Terrain blocks
-                    sprite.checkCollision(enemy);
-                }
+                for (int y = 0; y < enemyVectorSize; y++)
+                    sprite.checkCollision(enemies[y]);
             }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
-            for (auto enemy : enemies) {                               //managing the gravity upon the enemy
-                map.gravityApply(enemy);
-            }
+
+            for (int y = 0; y < enemyVectorSize; y++)
+                map.gravityApply(enemies[y]);
 
             playerView.setCenter(player.getPosition());
             //RENDER
             renderWin->clear();
             renderMap();
             renderWin->draw(player);
+            for (auto enemy : enemies) {                               //managing the gravity upon the enemy
+                renderWin->draw(enemy);
+            }
             renderWin->setView(playerView);
             renderWin->display();
 

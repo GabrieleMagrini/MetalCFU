@@ -9,10 +9,15 @@
 std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
     unique_ptr<Enemy> result;
      WeaponFactory wf;
+    auto soldier = new sf::Texture();
+    soldier->loadFromFile(
+            "Sources/Pngs/player textures/dx/1.png");
+
      switch(et){
          case EnemyType::Soldier:
              result = unique_ptr<Enemy>(
                      new Enemy(100, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::M4)).get(), nullptr));
+             result->setTexture(*soldier);
              break;
          case EnemyType::Tank:
              result = unique_ptr<Enemy>(
