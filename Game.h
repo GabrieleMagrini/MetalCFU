@@ -23,6 +23,7 @@
 #include "GUI/PauseMenu.h"
 #include "Player.h"
 #include "utility/CharacterAnimation.h"
+#include "Factory/EnemyFactory.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

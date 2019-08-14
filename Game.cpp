@@ -94,6 +94,8 @@ void Game::loop() {
     float startY = 0; //used for jump
     sf::Clock clock;
     int countTexture = 0;
+    std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
+    EnemyFactory e;                                        //Creating the enemy factory
 
     while (renderWin->isOpen()) {
         sf::Event event;
@@ -112,6 +114,12 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
+
+                        for (int j = 0; j <
+                                        10; j++) {                                                       //Placing the enemies in the map
+                            enemies.push_back(*e.createEnemy(EnemyType::Soldier));
+                            enemies[j].setPosition(blocks[j + 10].getPosition().x + 100, 400);
+                        }
 
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
@@ -186,7 +194,7 @@ void Game::loop() {
                     }
                 }
                 if (event.type == sf::Event::MouseButtonPressed) {
-                    switch (event.mouseButton.button) {
+                    switch (event.mouseButton.button) {                                               //Managing the shoot case through the left mouse button
                         case sf::Mouse::Left :
                             if (!shoot) {
                                 shoot = true;
@@ -284,12 +292,24 @@ void Game::loop() {
             player.setCollisionUp(false);
             player.setCollisionRight(false);
             player.setCollisionLeft(false);
-            for (auto sprite : blocks) {
-                sprite.checkCollision(player);
+            for (auto enemy : enemies) {                               //initializing enemies collision with the terrain
+                enemy.setCollisionDown(false);
+                enemy.setCollisionUp(false);
+                enemy.setCollisionRight(false);
+                enemy.setCollisionLeft(false);
             }
-            if (!player.isJumping())
-                map.gravityApply(player);
+            for (auto sprite : blocks) {                                   //checking the player collision with Terrain blocks
+                sprite.checkCollision(player);
+                for (auto enemy : enemies) {                               //checking the enemy collision with Terrain blocks
+                    sprite.checkCollision(enemy);
+                }
+            }
 
+            if (!player.isJumping())                                   //Adding the player gravity map effect
+                map.gravityApply(player);
+            for (auto enemy : enemies) {                               //managing the gravity upon the enemy
+                map.gravityApply(enemy);
+            }
 
             playerView.setCenter(player.getPosition());
             //RENDER
