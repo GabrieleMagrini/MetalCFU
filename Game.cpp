@@ -22,6 +22,9 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
     float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
 
+    auto w = weaponFactory.createWeapon(WeaponType::pistol);
+    player.setWeapon(w.get());
+    player.getWeapon()->setTextures("right", false);
     backGround.setScale(scaleX, scaleY);
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
 
@@ -95,7 +98,6 @@ void Game::loop() {
     sf::Clock clock;
     int countTexture = 0;
     std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
-    EnemyFactory e;                                        //Creating the enemy factory
     int enemyVectorSize = 10;
 
     while (renderWin->isOpen()) {
@@ -118,7 +120,7 @@ void Game::loop() {
 
                         for (int j = 0; j <
                                         enemyVectorSize; j++) {                                                       //Placing the enemies in the map
-                            enemies.push_back(*e.createEnemy(EnemyType::Soldier));
+                            enemies.push_back(*enemyFactory.createEnemy(EnemyType::Soldier));
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 200);
                         }
 
@@ -199,10 +201,10 @@ void Game::loop() {
                         case sf::Mouse::Left :
                             if (!shoot) {
                                 shoot = true;
-                                int xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2) +
-                                             (sf::Mouse::getPosition(*renderWin).x);
-                                int yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2) +
-                                             sf::Mouse::getPosition(*renderWin).y;
+                                float xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2) +
+                                               (sf::Mouse::getPosition(*renderWin).x);
+                                float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2) +
+                                               sf::Mouse::getPosition(*renderWin).y;
                                 Vector2f Fin(xMouse, yMouse);
                             }
                             break;
@@ -259,6 +261,7 @@ void Game::loop() {
             }
 
             //UPDATE
+
             if (dKeyPressed && !player.isCollisionRight()) {
                 player.walk(1);
 
@@ -316,6 +319,12 @@ void Game::loop() {
             renderWin->clear();
             renderMap();
             renderWin->draw(player);
+
+            player.getWeapon()->setPosition(player.getPosition().x, player.getPosition().y);
+
+            player.getWeapon()->setTextures("right", false);
+
+            renderWin->draw(*player.getWeapon());
             for (auto enemy : enemies) {                               //managing the gravity upon the enemy
                 renderWin->draw(enemy);
             }
