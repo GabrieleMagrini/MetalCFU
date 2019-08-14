@@ -3,19 +3,20 @@
 //
 
 #include "Weapon.h"
-#include "Ammo.h"
-#include <math.h>
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt, bool k, int sy, int bs) : currentAmmo(c),
-                                                                                                   damage(d),
-                                                                                                   range(r),
-                                                                                                   maxAmmo(m),
-                                                                                                   activeLaser(false),
-                                                                                                   collision(k),
-                                                                                                   speedY(sy),
-                                                                                                   bulletSpeed(bs) {
-    if (txt != nullptr)
-        setTexture(*txt);
+
+Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int bs, const std::string &filename)
+        : currentAmmo(c),
+          damage(d),
+          range(r),
+          maxAmmo(m),
+          activeLaser(false),
+          collision(k),
+          speedY(sy),
+          bulletSpeed(bs), filename(std::move(filename)) {
+    texture.loadFromFile(this->filename);
+    setTexture(this->texture);
+    setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
 }
 
 Weapon::Weapon(int cur, int d, int r, int m, Texture *txt, int sy, int bs) : currentAmmo(cur), damage(d), range(r),
@@ -132,4 +133,22 @@ int Weapon::getBulletSpeed() const {
 
 void Weapon::setBulletSpeed(int bulletspeed) {
     Weapon::bulletSpeed = bulletspeed;
+}
+
+void Weapon::setTextures(const std::string &direction, bool isShooting) {
+
+    IntRect ir;
+    if (direction == "right") {
+        if (isShooting)
+            ir = IntRect(25, 0, 50, 25);
+        else
+            ir = IntRect(0, 0, 24, 24);
+    } else {
+        if (isShooting)
+
+            ir = IntRect(25, 25, 50, 50);
+        else
+            ir = IntRect(0, 25, 25, 50);
+    }
+    setTextureRect(ir);
 }

@@ -6,6 +6,7 @@
 #define METALCFU_WEAPON_H
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 #include "Ammo.h"
 
@@ -15,8 +16,8 @@ class Weapon : public sf::Sprite {
 public:
     Weapon();
 
-    Weapon(const Ammo &c, int d, int r, const Ammo &m, Texture *txt = nullptr, bool k = false, int sy = 10,
-           int bs = 10);
+    Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k = false, int sy = 10,
+           int bs = 10, const std::string &filename = "Sources/Pngs/weapon textures/sheetPistol.png");
 
     Weapon(int cur, int d, int r, int m, Texture *txt = nullptr, int sy = 10, int bs = 10);
 
@@ -68,6 +69,7 @@ public:
 
     void setBulletSpeed(int bulletSpeed);
 
+    void setTextures(const std::string &direction, bool isShooting);
 private:
     Ammo currentAmmo;
     int damage;
@@ -77,6 +79,8 @@ private:
     bool collision;
     int speedY;
     int bulletSpeed;
+    std::string filename;
+    sf::Texture texture;
 };
 
 
