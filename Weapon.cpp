@@ -70,9 +70,9 @@ bool Weapon::shoot(Vector2f posRif, Vector2f posFin) {
         while (!currentAmmo.getCollision() || (abs(currentAmmo.getPosition().x - posRif.x) > range ||
                                                abs(currentAmmo.getPosition().y - posRif.y) > range))
             currentAmmo.move(bulletSpeed * cos(degrees), bulletSpeed * sin(degrees));
-        return true;
-    } else
         return false;
+    } else
+        return true;
 }
 
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
