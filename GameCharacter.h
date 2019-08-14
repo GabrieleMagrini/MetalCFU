@@ -47,7 +47,7 @@ public:
 
     void walk(int direction);
 
-    Weapon getWeapon() const;
+    std::unique_ptr<Weapon> getWeapon();
 
     Weapon *setWeapon(Weapon *weapon);
 

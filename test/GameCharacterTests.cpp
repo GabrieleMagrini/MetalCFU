@@ -20,7 +20,7 @@ TEST(GameCharacter, Constructor) {
     ASSERT_EQ(c->getPosX(), 0);
     ASSERT_EQ(c->getPosY(), 0);
     ASSERT_EQ(c->getStrenght(), 10);
-    ASSERT_EQ((*w1) == c->getWeapon(), true);
+    ASSERT_EQ((*w1) == *c->getWeapon(), true);
     ASSERT_EQ(c->getUsable(0), nullptr);
     ASSERT_EQ(c->getDimWeapon(), 4);
     ASSERT_EQ(c->getDimUsable(), 4);

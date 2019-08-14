@@ -6,7 +6,7 @@
 
 
 int attackBehaviour::action(Player *p, Enemy *e) {
-    e->getWeapon().shoot(p->getPosition(), e->getPosition());
+    e->getWeapon()->shoot(p->getPosition(), e->getPosition());
     e->move(p->getPosX(), p->getPosY());
     return 0;
 }
