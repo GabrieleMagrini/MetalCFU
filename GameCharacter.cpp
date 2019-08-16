@@ -80,7 +80,7 @@ Weapon *GameCharacter::setWeapon(Weapon *weapon) {
  * @param idx index of the slot of the inventory
  * @return a pointer to an Usable
  */
-Usable *GameCharacter::getUsable(int idx) const {
+Usable *GameCharacter::getUsable(int idx) {
     Usable *us = nullptr;
     if (idx >= 0 && idx < usableInventory.getDim())
         us = *usableInventory.getElement(idx);
