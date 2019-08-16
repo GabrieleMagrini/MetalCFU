@@ -29,7 +29,7 @@ public:
 
     bool removeElement(int i, T &a);
 
-    T *getElement(int i) const;
+    T *getElement(int i);
 
     int getDim() const;
 
@@ -159,7 +159,7 @@ int Inventory<T>::getFirstFree() const {
 }
 
 template<typename T>
-T *Inventory<T>::getElement(int i) const {
+T *Inventory<T>::getElement(int i) {
     if (i >= 0 && i < dim) {
         if (usedSlot[i])
             return new T{buffer[i]};
