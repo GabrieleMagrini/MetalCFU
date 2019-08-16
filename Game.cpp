@@ -201,9 +201,9 @@ void Game::loop() {
                         case sf::Mouse::Left :
                             if (!shoot) {
                                 shoot = true;
-                                float xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2) +
+                                float xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
                                                (sf::Mouse::getPosition(*renderWin).x);
-                                float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2) +
+                                float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
                                                sf::Mouse::getPosition(*renderWin).y;
                                 Vector2f Fin(xMouse, yMouse);
                             }
@@ -287,7 +287,7 @@ void Game::loop() {
                     playerAnimation.getTexture(player, countTexture, "left");
                 }
 
-
+                player.setOrigin(player.getLocalBounds().width / 2, 0);
                 clock.restart();
             }
 
