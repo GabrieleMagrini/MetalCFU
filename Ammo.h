@@ -10,7 +10,12 @@
 class Ammo : public sf::Sprite {
 public:
 
-    explicit Ammo(int q = 1, bool c = false) : quantity(q), collision(c) {};
+    explicit Ammo(int q = 100, bool c = false) : quantity(q), collision(c) {
+        auto ammo = new sf::Texture();
+        ammo->loadFromFile(
+                "Sources/Pngs/player textures/dx/1.png");
+        this->setTexture(*ammo);
+    };
 
     Ammo(const Ammo &a) = default;
 
@@ -25,6 +30,7 @@ public:
     void setCollision(bool v);
 
     bool getCollision() const;
+
 
 private:
     int quantity;
