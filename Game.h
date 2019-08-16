@@ -6,6 +6,7 @@
 #define METALCFU_GAME_H
 
 #include <memory>
+#include <cmath>
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Audio.hpp"

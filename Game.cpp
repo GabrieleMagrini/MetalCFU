@@ -25,7 +25,6 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     auto w = weaponFactory.createWeapon(WeaponType::pistol);
     w->setPosition(100, 400);
     player.setWeapon(w.get());
-    player.getWeapon()->setTextures("right", false);
     backGround.setScale(scaleX, scaleY);
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
 
@@ -90,7 +89,7 @@ void Game::setState(GState state) {
  * Game loop and state pattern work through this method
  */
 void Game::loop() {
-
+    auto weapon = player.getWeapon();
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
@@ -183,7 +182,10 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "StartGame") {      // Game loop
 
-            auto weapon = player.getWeapon();
+            float xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
+                           (sf::Mouse::getPosition(*renderWin).x);
+            float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
+                           sf::Mouse::getPosition(*renderWin).y;
 
             while (renderWin->pollEvent(event)) {
 
@@ -206,7 +208,10 @@ void Game::loop() {
                                                (sf::Mouse::getPosition(*renderWin).x);
                                 float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
                                                sf::Mouse::getPosition(*renderWin).y;
-                                Vector2f Fin(xMouse, yMouse);
+                                //Vector2f Fin(xMouse, yMouse);
+                                float angCoeff =
+                                        (weapon->getPosition().y - yMouse) / (weapon->getPosition().x - xMouse);
+                                weapon->setShootDirection(atan(angCoeff));
                             }
                             break;
                     }
@@ -248,6 +253,7 @@ void Game::loop() {
                     switch (event.key.code) {
                         case sf::Keyboard::D:
                             dKeyPressed = false;
+
                             break;
                         case sf::Keyboard::A:
                             aKeyPressed = false;
@@ -282,12 +288,14 @@ void Game::loop() {
 
                 if (countTexture == 8)
                     countTexture = 0;
-                if (dKeyPressed && !player.isCollisionRight()) {
-                    playerAnimation.getTexture(player, countTexture, "right");
-                    player.getWeapon()->setTextures("right", false);
-                } else if (aKeyPressed && !player.isCollisionLeft()) {
-                    playerAnimation.getTexture(player, countTexture, "left");
-                    player.getWeapon()->setTextures("left", false);
+                if (dKeyPressed) {
+                    if (!player.isCollisionRight())
+                        playerAnimation.getTexture(player, countTexture, "right");
+                    // weapon->setTextures("right", false);
+                } else if (aKeyPressed) {
+                    if (!player.isCollisionLeft())
+                        playerAnimation.getTexture(player, countTexture, "left");
+
                 }
 
                 player.setOrigin(player.getLocalBounds().width / 2, 0);
@@ -318,15 +326,25 @@ void Game::loop() {
                 map.gravityApply(enemies[y]);
 
             playerView.setCenter(player.getPosition());
+
+            // update weapon texture and position
+
+            if (xMouse > player.getPosition().x) {
+                weapon->setPosition(player.getPosition().x + weapon->getLocalBounds().width / 4.f - 4,
+                                    player.getPosition().y + player.getLocalBounds().height / 2.0f - 7);
+                weapon->setTextures("right", false);
+            } else {
+                weapon->setPosition(player.getPosition().x - weapon->getLocalBounds().width,
+                                    player.getPosition().y + player.getLocalBounds().height / 2.0f - 7);
+                weapon->setTextures("left", false);
+            }
+
+
+
             //RENDER
             renderWin->clear();
             renderMap();
             renderWin->draw(player);
-
-            weapon->setPosition(player.getPosition().x + 5,
-                                player.getPosition().y + player.getLocalBounds().height / 2.0f - 7);
-            weapon->setTextures("right", false);
-
             renderWin->draw(*weapon);
             for (auto enemy : enemies) {                               //managing the gravity upon the enemy
                 renderWin->draw(enemy);
