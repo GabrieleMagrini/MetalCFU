@@ -52,11 +52,7 @@ public:
 
     float getPosX() const;
 
-    void setPosX(int posX);
-
     float getPosY() const;
-
-    void setPosY(int posY);
 
     void setCollision(bool v);
 
@@ -71,6 +67,11 @@ public:
     void setBulletSpeed(int bulletSpeed);
 
     void setTextures(const std::string &direction, bool isShooting);
+
+    float getShootDirection() const;
+
+    void setShootDirection(float shootDirection);
+
 private:
     Ammo currentAmmo;
     int damage;
@@ -80,6 +81,9 @@ private:
     bool collision;
     int speedY;
     int bulletSpeed;
+    float shootDirection;
+
+
     std::string filename;
     sf::Texture texture;
 };

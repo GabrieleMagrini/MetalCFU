@@ -13,10 +13,12 @@ Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int b
           activeLaser(false),
           collision(k),
           speedY(sy),
-          bulletSpeed(bs), filename(std::move(filename)) {
+          bulletSpeed(bs), filename(filename), shootDirection(0) {
     texture.loadFromFile(this->filename);
+
     setTexture(this->texture);
     setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
+    setOrigin(this->getTexture()->getSize().x / 2.0f, this->getTexture()->getSize().y / 2.0f);
 }
 
 Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, int sy, int bs)
@@ -26,7 +28,7 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, int sy
           activeLaser(false),
           collision(false),
           speedY(sy), bulletSpeed(bs),
-          filename(std::move(filename)) {
+          filename(filename), shootDirection(0) {
     texture.loadFromFile(this->filename);
     setTexture(this->texture);
     setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
@@ -82,7 +84,7 @@ bool Weapon::shoot(Vector2f posRif, Vector2f posFin) {
 }
 
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
-                   bulletSpeed(10) {}
+                   bulletSpeed(10), shootDirection(0) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;
@@ -156,4 +158,12 @@ void Weapon::setTextures(const std::string &direction, bool isShooting) {
             ir = IntRect(0, 25, 25, 50);
     }
     setTextureRect(ir);
+}
+
+float Weapon::getShootDirection() const {
+    return shootDirection;
+}
+
+void Weapon::setShootDirection(float shootDirection) {
+    Weapon::shootDirection = shootDirection;
 }
