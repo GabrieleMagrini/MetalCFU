@@ -23,6 +23,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
 
     auto w = weaponFactory.createWeapon(WeaponType::pistol);
+    w->setPosition(100, 400);
     player.setWeapon(w.get());
     player.getWeapon()->setTextures("right", false);
     backGround.setScale(scaleX, scaleY);
@@ -132,7 +133,7 @@ void Game::loop() {
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
                         player.setPosition(blocks[1].getPosition().x + 100, 400);
-
+                        player.setSelectedWeapon(0);
                         clock.restart();
                         startGameState();
                     }
@@ -182,7 +183,7 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "StartGame") {      // Game loop
 
-
+            auto weapon = player.getWeapon();
 
             while (renderWin->pollEvent(event)) {
 
@@ -283,8 +284,10 @@ void Game::loop() {
                     countTexture = 0;
                 if (dKeyPressed && !player.isCollisionRight()) {
                     playerAnimation.getTexture(player, countTexture, "right");
+                    player.getWeapon()->setTextures("right", false);
                 } else if (aKeyPressed && !player.isCollisionLeft()) {
                     playerAnimation.getTexture(player, countTexture, "left");
+                    player.getWeapon()->setTextures("left", false);
                 }
 
                 player.setOrigin(player.getLocalBounds().width / 2, 0);
@@ -320,11 +323,11 @@ void Game::loop() {
             renderMap();
             renderWin->draw(player);
 
-            player.getWeapon()->setPosition(player.getPosition().x, player.getPosition().y);
+            weapon->setPosition(player.getPosition().x + 5,
+                                player.getPosition().y + player.getLocalBounds().height / 2.0f - 7);
+            weapon->setTextures("right", false);
 
-            player.getWeapon()->setTextures("right", false);
-
-            renderWin->draw(*player.getWeapon());
+            renderWin->draw(*weapon);
             for (auto enemy : enemies) {                               //managing the gravity upon the enemy
                 renderWin->draw(enemy);
             }
