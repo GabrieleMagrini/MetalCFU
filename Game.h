@@ -26,6 +26,7 @@
 #include "utility/CharacterAnimation.h"
 #include "Factory/WeaponFactory.h"
 #include "Factory/EnemyFactory.h"
+#include "HUD/Hud.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
@@ -76,6 +77,8 @@ private:
     CharacterAnimation playerAnimation;
     WeaponFactory weaponFactory;
     EnemyFactory enemyFactory;
+
+    Hud playerHud;
     //TODO
 };
 

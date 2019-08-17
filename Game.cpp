@@ -13,7 +13,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           player(3, nullptr, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
-          playerAnimation("Sources/Pngs/player textures/playerTexture.bmp") {
+          playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font) {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -204,14 +204,15 @@ void Game::loop() {
                         case sf::Mouse::Left :
                             if (!shoot) {
                                 shoot = true;
-                                float xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
-                                               (sf::Mouse::getPosition(*renderWin).x);
-                                float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
-                                               sf::Mouse::getPosition(*renderWin).y;
+                                xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
+                                         (sf::Mouse::getPosition(*renderWin).x);
+                                yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
+                                         sf::Mouse::getPosition(*renderWin).y;
                                 //Vector2f Fin(xMouse, yMouse);
                                 float angCoeff =
                                         (weapon->getPosition().y - yMouse) / (weapon->getPosition().x - xMouse);
                                 weapon->setShootDirection(atan(angCoeff));
+
                             }
                             break;
                     }
@@ -339,7 +340,9 @@ void Game::loop() {
                 weapon->setTextures("left", false);
             }
 
+            playerHud.update(player, playerView); //HUD updating
 
+            renderWin->setView(playerView); // update the vuew
 
             //RENDER
             renderWin->clear();
@@ -349,7 +352,8 @@ void Game::loop() {
             for (auto enemy : enemies) {                               //managing the gravity upon the enemy
                 renderWin->draw(enemy);
             }
-            renderWin->setView(playerView);
+            playerHud.render();
+
             renderWin->display();
 
 
