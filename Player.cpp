@@ -8,3 +8,11 @@ void Player::lootPickUp(Player *p) {
 
 
 }
+
+int Player::getLives() const {
+    return lives;
+}
+
+void Player::setLives(int lives) {
+    Player::lives = lives;
+}

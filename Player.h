@@ -20,6 +20,11 @@ public:
     ~Player()override = default;
 
     void lootPickUp(Player *p);
+
+    int getLives() const;
+
+    void setLives(int lives);
+
 private:
 
     int lives;
