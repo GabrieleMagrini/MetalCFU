@@ -70,8 +70,8 @@ void Weapon::setMaxAmmo(const int quantity) {
 bool Weapon::shoot(Vector2f posRif, Vector2f posFin) {
     if (currentAmmo.getQuantity() > 0) {
         currentAmmo.setQuantity(currentAmmo.getQuantity() - 1);
-        float angolarCoefficient = static_cast<float> (posFin.y - posRif.y) / static_cast<float>(posFin.x - posRif.x);
-        double degrees = atan(angolarCoefficient);
+        float angolarCoefficient = (posFin.y - posRif.y) / (posFin.x - posRif.x);
+        auto degrees = static_cast<double>(atan(angolarCoefficient));
         if (posFin.x - posRif.x < 0)
             bulletSpeed = abs(bulletSpeed);
         else
