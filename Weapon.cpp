@@ -5,7 +5,8 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int bs, const std::string &filename)
+Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int bs, const std::string &filename,
+               const std::string &wname)
         : currentAmmo(c),
           damage(d),
           range(r),
@@ -13,7 +14,7 @@ Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int b
           activeLaser(false),
           collision(k),
           speedY(sy),
-          bulletSpeed(bs), filename(filename), shootDirection(0) {
+          bulletSpeed(bs), filename(filename), shootDirection(0), name(wname) {
     texture.loadFromFile(this->filename);
 
     setTexture(this->texture);
@@ -21,14 +22,14 @@ Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int b
     setOrigin(this->getTexture()->getSize().x / 2.0f, this->getTexture()->getSize().y / 2.0f);
 }
 
-Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, int sy, int bs)
+Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const std::string &wname, int sy, int bs)
         : currentAmmo(cur), damage(d),
           range(r),
           maxAmmo(m),
           activeLaser(false),
           collision(false),
           speedY(sy), bulletSpeed(bs),
-          filename(filename), shootDirection(0) {
+          filename(filename), shootDirection(0), name(wname) {
     texture.loadFromFile(this->filename);
     setTexture(this->texture);
     setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
@@ -143,7 +144,7 @@ void Weapon::setBulletSpeed(int bulletspeed) {
 }
 
 void Weapon::setTextures(const std::string &direction, bool isShooting) {
-
+    //funzionante per ora solo con pistola
     IntRect ir;
     if (direction == "right") {
         if (isShooting)
@@ -166,4 +167,8 @@ float Weapon::getShootDirection() const {
 
 void Weapon::setShootDirection(float shootDirection) {
     Weapon::shootDirection = shootDirection;
+}
+
+const std::string &Weapon::getName() const {
+    return name;
 }

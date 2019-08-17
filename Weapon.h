@@ -17,9 +17,11 @@ public:
     Weapon();
 
     Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k = false, int sy = 10,
-           int bs = 10, const std::string &filename = "Sources/Pngs/weapon textures/sheetPistol.png");
+           int bs = 10, const std::string &filename = "Sources/Pngs/weapon textures/sheetPistol.png",
+           const std::string &wname = "");
 
     Weapon(int cur, int d, int r, int m, const std::string &filename = "Sources/Pngs/weapon textures/sheetPistol.png",
+           const std::string &wname = "",
            int sy = 10, int bs = 10);
 
     Weapon(const Weapon &w) = default;
@@ -72,7 +74,10 @@ public:
 
     void setShootDirection(float shootDirection);
 
+    const std::string &getName() const;
+
 private:
+    std::string name;
     Ammo currentAmmo;
     int damage;
     int range;
