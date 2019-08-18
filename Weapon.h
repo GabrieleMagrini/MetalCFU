@@ -68,7 +68,7 @@ public:
 
     void setBulletSpeed(int bulletSpeed);
 
-    void setTextures(const std::string &direction, bool isShooting);
+    void setTextures(float xMouse, float xCharacter, bool isShooting);
 
     float getShootDirection() const;
 

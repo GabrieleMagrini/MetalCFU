@@ -139,21 +139,33 @@ void Weapon::setBulletSpeed(int bulletspeed) {
     Weapon::bulletSpeed = bulletspeed;
 }
 
-void Weapon::setTextures(const std::string &direction, bool isShooting) {
+/**
+ * function that update the texture, in base of the position of the player and the mouse, and in base of weapon is shooting
+ * @param xMouse   coord x of the mouse
+ * @param xCharacter coord x of the Character
+ * @param isShooting bool if weapon is shooting
+ */
+void Weapon::setTextures(float xMouse, float xCharacter, bool isShooting) {
     //funzionante per ora solo con pistola
     IntRect ir;
-    if (direction == "right") {
+
+    if (xMouse > xCharacter) {
         if (isShooting)
             ir = IntRect(25, 0, 50, 25);
+
         else
             ir = IntRect(0, 0, 24, 24);
+
+        setPosition(xCharacter + getLocalBounds().width / 4.f - 4, this->getPosition().y);
     } else {
         if (isShooting)
 
             ir = IntRect(25, 25, 50, 50);
         else
             ir = IntRect(0, 25, 25, 50);
+        setPosition(xCharacter - getLocalBounds().width, this->getPosition().y);
     }
+
     setTextureRect(ir);
 }
 
