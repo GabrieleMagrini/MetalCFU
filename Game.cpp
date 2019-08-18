@@ -93,11 +93,12 @@ void Game::loop() {
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
+    bool shoot = false;
     float startY = 0; //used for jump
     sf::Clock clock;
     int countTexture = 0;
-    std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
     int enemyVectorSize = 10;
+    std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
     int xStart = 0;
     int yStart = 0;
     float xPressed = 0;
@@ -123,11 +124,11 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
-
+                        enemies.clear();
                         for (int j = 0; j <
                                         enemyVectorSize; j++) {                                                       //Placing the enemies in the map
-                            enemies.push_back(*enemyFactory.createEnemy(EnemyType::Soldier));
-                            enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 200);
+                            enemies.push_back((*enemyFactory.createEnemy(EnemyType::Soldier)));
+                            enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
                         }
 
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
@@ -279,6 +280,7 @@ void Game::loop() {
                 player.jump(100, startY);
                 if (player.isJumping())
                     player.walk(0);
+
             }
 
             if (clock.getElapsedTime().asSeconds() > 0.15f) {
@@ -348,7 +350,6 @@ void Game::loop() {
             renderWin->setView(playerView); // update the vuew
 
             //RENDER
-
             renderWin->clear();
             renderMap();
             renderWin->draw(player);
