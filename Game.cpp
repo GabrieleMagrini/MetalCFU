@@ -202,10 +202,8 @@ void Game::loop() {
                         case sf::Mouse::Left :
                             xStart = renderWin->getSize().x / 2. + weapon->getGlobalBounds().width / 2;
                             yStart = renderWin->getSize().y / 2. + (weapon->getGlobalBounds().height / 2) + 10;
-                            xPressed = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
-                                       (sf::Mouse::getPosition(*renderWin).x);
-                            yPressed = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
-                                       sf::Mouse::getPosition(*renderWin).y;
+                            xPressed = (sf::Mouse::getPosition(*renderWin).x);
+                            yPressed = sf::Mouse::getPosition(*renderWin).y;
                             Vector2f Start(xStart, yStart);
                             aimI.push_back(Start);
                             Vector2f Fin(xPressed, yPressed);
