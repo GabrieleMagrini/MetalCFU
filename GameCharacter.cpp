@@ -117,10 +117,8 @@ void GameCharacter::setDimWeapon(int dw) {
  *
  * @return  a weapon in the selected slot
  */
-std::unique_ptr<Weapon> GameCharacter::getWeapon() {
-    return std::unique_ptr<Weapon>(weaponInventory.getElement(selectedWeapon));
-
-
+Weapon *GameCharacter::getWeapon() {
+    return weaponInventory.getElement(selectedWeapon);
 }
 
 /**

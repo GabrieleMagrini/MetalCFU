@@ -21,7 +21,7 @@ public:
                   int sw = 0,
                   int su = 4, bool c = false, const std::string &textDirectory = "");
 
-    ~GameCharacter() override= default;
+    ~GameCharacter() override = default;
 
     int getHp() const;
 
@@ -47,7 +47,7 @@ public:
 
     void walk(int direction);
 
-    std::unique_ptr<Weapon> getWeapon();
+    Weapon *getWeapon();
 
     Weapon *setWeapon(Weapon *weapon);
 
