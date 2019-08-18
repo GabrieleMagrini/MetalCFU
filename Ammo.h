@@ -10,10 +10,10 @@
 class Ammo : public sf::Sprite {
 public:
 
-    explicit Ammo(int q = 100, bool c = false) : quantity(q), collision(c) {
+    explicit Ammo(int q = 100, bool c = false, bool s = false) : quantity(q), collision(c), isShot(s) {
         auto ammo = new sf::Texture();
         ammo->loadFromFile(
-                "Sources/Pngs/player textures/dx/1.png");
+                "Sources/Pngs/weapon textures/ammo.png");
         this->setTexture(*ammo);
     };
 
@@ -31,10 +31,16 @@ public:
 
     bool getCollision() const;
 
+    void shoot(sf::Vector2f posRif, sf::Vector2f posFin);
+
+    bool isIsShot() const;
+
+    void setIsShot(bool isShot);
 
 private:
     int quantity;
     bool collision;
+    bool isShot;
 };
 
 

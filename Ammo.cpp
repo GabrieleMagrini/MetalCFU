@@ -26,3 +26,18 @@ void Ammo::setCollision(bool v) {
 bool Ammo::getCollision() const {
     return collision;
 }
+
+void Ammo::shoot(sf::Vector2f posRif, sf::Vector2f posFin) {
+    if (posFin.x - posRif.x >= 0)
+        this->setPosition(this->getPosition().x + 1 * 40, this->getPosition().y);
+    if (posFin.x - posRif.x < 0)
+        this->setPosition(this->getPosition().x - 1 * 40, this->getPosition().y);
+}
+
+bool Ammo::isIsShot() const {
+    return isShot;
+}
+
+void Ammo::setIsShot(bool isShot) {
+    Ammo::isShot = isShot;
+}
