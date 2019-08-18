@@ -93,12 +93,18 @@ void Game::loop() {
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
-    bool shoot = false;
     float startY = 0; //used for jump
     sf::Clock clock;
     int countTexture = 0;
     std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
     int enemyVectorSize = 10;
+    int xStart = 0;
+    int yStart = 0;
+    float xPressed = 0;
+    float yPressed = 0;
+    vector<Ammo> bullets;
+    vector<Vector2f> aimI;
+    vector<Vector2f> aimF;
 
     while (renderWin->isOpen()) {
         sf::Event event;
@@ -191,29 +197,24 @@ void Game::loop() {
 
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
-
-                if (event.type == sf::Event::MouseButtonReleased) {
-                    switch (event.mouseButton.button) {
-                        case sf::Mouse::Left :
-                            shoot = false;
-                            break;
-                    }
-                }
                 if (event.type == sf::Event::MouseButtonPressed) {
                     switch (event.mouseButton.button) {                                               //Managing the shoot case through the left mouse button
                         case sf::Mouse::Left :
-                            if (!shoot) {
-                                shoot = true;
-                                xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
-                                         (sf::Mouse::getPosition(*renderWin).x);
-                                yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
-                                         sf::Mouse::getPosition(*renderWin).y;
-                                //Vector2f Fin(xMouse, yMouse);
-                                float angCoeff =
-                                        (weapon->getPosition().y - yMouse) / (weapon->getPosition().x - xMouse);
-                                weapon->setShootDirection(atan(angCoeff));
-
-                            }
+                            xStart = renderWin->getSize().x / 2. + weapon->getGlobalBounds().width / 2;
+                            yStart = renderWin->getSize().y / 2. + (weapon->getGlobalBounds().height / 2) + 10;
+                            xPressed = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
+                                       (sf::Mouse::getPosition(*renderWin).x);
+                            yPressed = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
+                                       sf::Mouse::getPosition(*renderWin).y;
+                            Vector2f Start(xStart, yStart);
+                            aimI.push_back(Start);
+                            Vector2f Fin(xPressed, yPressed);
+                            aimF.push_back(Fin);
+                            auto bullet = new Ammo;
+                            if (weapon->getCurrentAmmo().getQuantity())
+                                bullet->setPosition(weapon->getPosition());
+                            bullet->setIsShot(weapon->shoot());
+                            bullets.push_back(*bullet);
                             break;
                     }
                 }
@@ -280,7 +281,6 @@ void Game::loop() {
                 player.jump(100, startY);
                 if (player.isJumping())
                     player.walk(0);
-
             }
 
             if (clock.getElapsedTime().asSeconds() > 0.15f) {
@@ -320,6 +320,11 @@ void Game::loop() {
                     sprite.checkCollision(enemies[y]);
             }
 
+            for (int z = 0; z < bullets.size(); z++) {
+                if (bullets[z].isIsShot())
+                    bullets[z].shoot(aimI[z], aimF[z]);
+            }
+
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
 
@@ -345,10 +350,14 @@ void Game::loop() {
             renderWin->setView(playerView); // update the vuew
 
             //RENDER
+
             renderWin->clear();
             renderMap();
             renderWin->draw(player);
             renderWin->draw(*weapon);
+            for (auto projectile : bullets) {                               //managing the gravity upon the enemy
+                renderWin->draw(projectile);
+            }
             for (auto enemy : enemies) {                               //managing the gravity upon the enemy
                 renderWin->draw(enemy);
             }
