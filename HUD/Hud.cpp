@@ -37,7 +37,6 @@ void Hud::update(Player &p, sf::View &view) {
 
     float top = view.getCenter().y - view.getSize().y / 2.0f;
     float left = view.getCenter().x - view.getSize().x / 2.0f;
-
     life.setSize(sf::Vector2f(p.getHp() * life.getSize().x / 100, life.getLocalBounds().height));
     stringstream ss;
     if (p.getWeapon()->getMaxAmmo().getQuantity() == -1) {
@@ -56,6 +55,5 @@ void Hud::update(Player &p, sf::View &view) {
     life.setPosition(left + 11, top + 21);
     weaponAmmo.setPosition(view.getCenter().x - weaponAmmo.getLocalBounds().width / 2.0f, top + 10);
     lives.setPosition(left + 20, top);
-
 
 }
