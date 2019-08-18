@@ -35,7 +35,7 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const 
     setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
 }
 
-const Ammo &Weapon::getCurrentAmmo() const {
+Ammo &Weapon::getCurrentAmmo() {
     return currentAmmo;
 }
 
@@ -67,21 +67,17 @@ void Weapon::setMaxAmmo(const int quantity) {
     Weapon::maxAmmo.setQuantity(quantity);
 }
 
-bool Weapon::shoot(Vector2f posRif, Vector2f posFin) {
-    if (currentAmmo.getQuantity() > 0) {
+bool Weapon::shoot() {
+    if (currentAmmo.getQuantity() != 0) {
         currentAmmo.setQuantity(currentAmmo.getQuantity() - 1);
-        float angolarCoefficient = (posFin.y - posRif.y) / (posFin.x - posRif.x);
-        auto degrees = static_cast<double>(atan(angolarCoefficient));
-        if (posFin.x - posRif.x < 0)
-            bulletSpeed = abs(bulletSpeed);
-        else
-            bulletSpeed = -abs(bulletSpeed);
-        while (!currentAmmo.getCollision() || (abs(currentAmmo.getPosition().x - posRif.x) > range ||
-                                               abs(currentAmmo.getPosition().y - posRif.y) > range))
-            currentAmmo.move(bulletSpeed * cos(degrees), bulletSpeed * sin(degrees));
-        return false;
-    } else
+        // float angolarCoefficient = (posFin.y - posRif.y) / (posFin.x - posRif.x);
+        //auto degrees = static_cast<double>(atan(angolarCoefficient));
+        //while (!currentAmmo.getCollision() || (abs(currentAmmo.getPosition().x - posRif.x) > range ||abs(currentAmmo.getPosition().y - posRif.y) > range))
+        //if(currentAmmo.getCollision()|| (abs(currentAmmo.getPosition().x - posRif.x) > range ||abs(currentAmmo.getPosition().y - posRif.y) > range))
+        //   currentAmmo.setPosition(this->getPosition());
         return true;
+    } else
+        return false;
 }
 
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
