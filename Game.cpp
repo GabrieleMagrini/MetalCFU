@@ -277,6 +277,9 @@ void Game::loop() {
 
             } else if (aKeyPressed && !player.isCollisionLeft()) {
                 player.walk(3);
+            } else {
+                playerAnimation.getTexture(player, 0, "right");
+                countTexture = 0;
             }
             if (spaceKeyPressed) {
                 player.jump(100, startY);
@@ -336,6 +339,8 @@ void Game::loop() {
             playerView.setCenter(player.getPosition());         //update view Position
 
             player.getWeapon()->setTextures(xMouse, player.getPosition().x, shoot);// update weapon texture and position
+            player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
+                                            player.getPosition().y + player.getLocalBounds().width / 2 + 7);
 
             playerHud.update(player, playerView); //HUD updating
 
