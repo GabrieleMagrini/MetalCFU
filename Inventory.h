@@ -162,7 +162,7 @@ template<typename T>
 T *Inventory<T>::getElement(int i) {
     if (i >= 0 && i < dim) {
         if (usedSlot[i])
-            return new T{buffer[i]};
+            return &buffer[i];
     }
     return nullptr;
 }
