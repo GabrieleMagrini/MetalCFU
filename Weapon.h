@@ -26,7 +26,7 @@ public:
 
     Weapon(const Weapon &w) = default;
 
-    const Ammo &getCurrentAmmo() const;
+    Ammo &getCurrentAmmo();
 
     void setCurrentAmmo(const Ammo &currentAmmo);
 
@@ -42,7 +42,7 @@ public:
 
     void setMaxAmmo(int quantity);
 
-    bool shoot(sf::Vector2f posFin, sf::Vector2f posRif);
+    bool shoot();
 
     ~Weapon() override = default;
 
