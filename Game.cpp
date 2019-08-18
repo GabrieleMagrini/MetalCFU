@@ -22,9 +22,9 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
     float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
 
-    auto w = weaponFactory.createWeapon(WeaponType::pistol);
-    w->setPosition(100, 400);
-    player.setWeapon(w.get());
+
+    player.setWeapon(weaponFactory.createWeapon(WeaponType::pistol).get());
+    player.getWeapon()->setPosition(100, 400);
     backGround.setScale(scaleX, scaleY);
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
 
@@ -89,7 +89,7 @@ void Game::setState(GState state) {
  * Game loop and state pattern work through this method
  */
 void Game::loop() {
-    auto weapon = player.getWeapon();
+
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
@@ -99,8 +99,8 @@ void Game::loop() {
     int countTexture = 0;
     int enemyVectorSize = 10;
     std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
-    int xStart = 0;
-    int yStart = 0;
+    float xStart = 0;
+    float yStart = 0;
     float xPressed = 0;
     float yPressed = 0;
     vector<Ammo> bullets;
@@ -124,7 +124,6 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
-                        enemies.clear();
                         for (int j = 0; j <
                                         enemyVectorSize; j++) {                                                       //Placing the enemies in the map
                             enemies.push_back((*enemyFactory.createEnemy(EnemyType::Soldier)));
@@ -139,7 +138,9 @@ void Game::loop() {
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
                         player.setPosition(blocks[1].getPosition().x + 100, 400);
+                        player.setWeapon(weaponFactory.createWeapon(WeaponType::pistol).get());
                         player.setSelectedWeapon(0);
+
                         clock.restart();
                         startGameState();
                     }
@@ -201,8 +202,9 @@ void Game::loop() {
                 if (event.type == sf::Event::MouseButtonPressed) {
                     switch (event.mouseButton.button) {                                               //Managing the shoot case through the left mouse button
                         case sf::Mouse::Left :
-                            xStart = renderWin->getSize().x / 2. + weapon->getGlobalBounds().width / 2;
-                            yStart = renderWin->getSize().y / 2. + (weapon->getGlobalBounds().height / 2) + 10;
+                            xStart = renderWin->getSize().x / 2. + player.getWeapon()->getGlobalBounds().width / 2;
+                            yStart = renderWin->getSize().y / 2. + (player.getWeapon()->getGlobalBounds().height / 2) +
+                                     10;
                             xPressed = (sf::Mouse::getPosition(*renderWin).x);
                             yPressed = sf::Mouse::getPosition(*renderWin).y;
                             Vector2f Start(xStart, yStart);
@@ -210,9 +212,9 @@ void Game::loop() {
                             Vector2f Fin(xPressed, yPressed);
                             aimF.push_back(Fin);
                             auto bullet = new Ammo;
-                            if (weapon->getCurrentAmmo().getQuantity())
-                                bullet->setPosition(weapon->getPosition());
-                            bullet->setIsShot(weapon->shoot());
+                            if (player.getWeapon()->getCurrentAmmo().getQuantity())
+                                bullet->setPosition(player.getWeapon()->getPosition());
+                            bullet->setIsShot(player.getWeapon()->shoot());
                             bullets.push_back(*bullet);
                             break;
                     }
@@ -328,22 +330,12 @@ void Game::loop() {
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
 
-            for (int y = 0; y < enemyVectorSize; y++)
+            for (int y = 0; y < enemyVectorSize; y++)               //adding gravity for all the enemies
                 map.gravityApply(enemies[y]);
 
-            playerView.setCenter(player.getPosition());
+            playerView.setCenter(player.getPosition());         //update view Position
 
-            // update weapon texture and position
-
-            if (xMouse > player.getPosition().x) {
-                weapon->setPosition(player.getPosition().x + weapon->getLocalBounds().width / 4.f - 4,
-                                    player.getPosition().y + player.getLocalBounds().height / 2.0f - 7);
-                weapon->setTextures("right", false);
-            } else {
-                weapon->setPosition(player.getPosition().x - weapon->getLocalBounds().width,
-                                    player.getPosition().y + player.getLocalBounds().height / 2.0f - 7);
-                weapon->setTextures("left", false);
-            }
+            player.getWeapon()->setTextures(xMouse, player.getPosition().x, shoot);// update weapon texture and position
 
             playerHud.update(player, playerView); //HUD updating
 
@@ -353,7 +345,7 @@ void Game::loop() {
             renderWin->clear();
             renderMap();
             renderWin->draw(player);
-            renderWin->draw(*weapon);
+            renderWin->draw(*player.getWeapon());
             for (auto projectile : bullets) {                               //managing the gravity upon the enemy
                 renderWin->draw(projectile);
             }
@@ -361,9 +353,7 @@ void Game::loop() {
                 renderWin->draw(enemy);
             }
             playerHud.render();
-
             renderWin->display();
-
 
         } else if (gameState->getStateName() == "PauseGame") {      //pause menu
             playerView.setCenter(renderWin->getSize().x / 2.0f, renderWin->getSize().y / 2.0f);
@@ -377,6 +367,10 @@ void Game::loop() {
                     if (pauseMenu.isBackGameButtonPressed()) {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
+                        enemies.clear();
+                        for (int i = 0; i < player.getDimWeapon(); i++) {
+                            player.removeWeapon(i);
+                        }
                         mainMenuState();
                     }
                 }
