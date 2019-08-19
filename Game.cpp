@@ -98,7 +98,7 @@ void Game::loop() {
     sf::Clock clock;
     int countTexture = 0;
     int enemyVectorSize = 10;
-    std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
+    std::vector<GameCharacter> enemies;                            //creating the enemy vector in order to check collision easier
     float xStart = 0;
     float yStart = 0;
     float xPressed = 0;
@@ -319,15 +319,29 @@ void Game::loop() {
                 enemy.setCollisionRight(false);
                 enemy.setCollisionLeft(false);
             }
-            for (auto sprite : blocks) {                                   //checking the player collision with Terrain blocks
+
+/**checking the player collision with Terrain blocks
+*/
+
+            for (auto sprite : blocks) {
                 sprite.checkCollision(player);
                 for (int y = 0; y < enemyVectorSize; y++)
                     sprite.checkCollision(enemies[y]);
             }
-
+/**
+ * Checking the bullet collision,if detected eliminates the bullet from the vecor and shifts the vector's elements.
+ * Also,eliinate and shifts the aim's vector elements too.
+ */
             for (int z = 0; z < bullets.size(); z++) {
-                if (bullets[z].isIsShot())
+                if (bullets[z].isIsShot()) {
                     bullets[z].shoot(aimI[z], aimF[z]);
+                    bullets[z].checkCollision(enemies, blocks);
+                    if (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision()) {
+                        bullets.erase(bullets.begin() + z);
+                        aimI.erase(aimI.begin() + z);
+                        aimF.erase(aimF.begin() + z);
+                    }
+                }
             }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect

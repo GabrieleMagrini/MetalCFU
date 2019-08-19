@@ -7,10 +7,16 @@
 
 #include <SFML/Graphics.hpp>
 
+class GameCharacter;
+
+class Terrain;
+
+
 class Ammo : public sf::Sprite {
 public:
 
-    explicit Ammo(int q = 100, bool c = false, bool s = false) : quantity(q), collision(c), isShot(s) {
+    explicit Ammo(int q = 100, bool c = false, bool s = false) : quantity(q), terrainCollision(c), isShot(s),
+                                                                 gamecharacterCollision(c) {
         auto ammo = new sf::Texture();
         ammo->loadFromFile(
                 "Sources/Pngs/weapon textures/ammo.png");
@@ -27,9 +33,9 @@ public:
 
     void setQuantity(int quantity);
 
-    void setCollision(bool v);
+    void setTerrainCollision(bool v);
 
-    bool getCollision() const;
+    bool getTerrainCollision() const;
 
     void shoot(sf::Vector2f posRif, sf::Vector2f posFin);
 
@@ -37,10 +43,17 @@ public:
 
     void setIsShot(bool isShot);
 
+    bool checkCollision(std::vector<GameCharacter> e, std::vector<Terrain> t);
+
+    bool isGamecharacterCollision() const;
+
+    void setGamecharacterCollision(bool gamecharacterCollision);
+
 private:
     int quantity;
-    bool collision;
+    bool terrainCollision;
     bool isShot;
+    bool gamecharacterCollision;
 };
 
 
