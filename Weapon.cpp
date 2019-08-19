@@ -32,7 +32,6 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const 
           filename(filename), shootDirection(0), name(wname) {
     texture.loadFromFile(this->filename);
     setTexture(this->texture);
-    setTextureRect(IntRect(0, 0, 24, 24));//solo per pistole
 }
 
 Ammo &Weapon::getCurrentAmmo() {
@@ -148,25 +147,26 @@ void Weapon::setBulletSpeed(int bulletspeed) {
 void Weapon::setTextures(float xMouse, float xCharacter, bool isShooting) {
     //funzionante per ora solo con pistola
     IntRect ir;
-
+    setTexture(texture);
     if (xMouse > xCharacter) {
         if (isShooting)
-            ir = IntRect(25, 0, 50, 25);
+            ir = IntRect(texture.getSize().x / 2, 0, texture.getSize().x / 2, texture.getSize().y / 2);
 
         else
-            ir = IntRect(0, 0, 24, 24);
+            ir = IntRect(0, 0, texture.getSize().x / 2, texture.getSize().y / 2);
 
-        setPosition(xCharacter + getLocalBounds().width / 4.f - 4, this->getPosition().y);
+        setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width / 2, this->getPosition().y);
     } else {
         if (isShooting)
 
-            ir = IntRect(25, 25, 50, 50);
+            ir = IntRect(texture.getSize().x / 2, texture.getSize().y / 2, texture.getSize().x / 2,
+                         texture.getSize().y / 2);
         else
-            ir = IntRect(0, 25, 25, 50);
+            ir = IntRect(0, texture.getSize().y / 2, texture.getSize().x / 2, texture.getSize().y / 2);
         setPosition(xCharacter - getLocalBounds().width, this->getPosition().y);
     }
 
-    setTextureRect(ir);
+    this->setTextureRect(ir);
 }
 
 float Weapon::getShootDirection() const {
