@@ -10,7 +10,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          player(3, nullptr, 100, 20),
+          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
           playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font) {
@@ -21,10 +21,6 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     backGround.setPosition(0, 0);
     float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
     float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
-
-
-    player.setWeapon(weaponFactory.createWeapon(WeaponType::pistol).get());
-    player.getWeapon()->setPosition(100, 400);
     backGround.setScale(scaleX, scaleY);
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
     player.setOrigin(player.getLocalBounds().width / 2, 0);
@@ -123,7 +119,7 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
-                        enemies = std::vector<Enemy>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
+                        enemies = std::vector<GameCharacter>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
                         for (int j = 0; j <
                                         enemies.size(); j++) {                                                       //Placing the enemies in the map
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
@@ -137,9 +133,6 @@ void Game::loop() {
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
                         player.setPosition(blocks[1].getPosition().x + 100, 400);
-                        player.setWeapon(weaponFactory.createWeapon(WeaponType::pistol).get());
-                        player.setSelectedWeapon(0);
-
                         clock.restart();
                         startGameState();
                     }
