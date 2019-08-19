@@ -73,12 +73,16 @@ private:
     Map map;
     std::vector<Terrain> blocks;
 
+    std::vector<Enemy> enemies;
+
     sf::View playerView;
     CharacterAnimation playerAnimation;
     WeaponFactory weaponFactory;
     EnemyFactory enemyFactory;
 
     Hud playerHud;
+
+    sf::Event event;
     //TODO
 };
 

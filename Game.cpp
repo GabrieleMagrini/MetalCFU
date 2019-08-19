@@ -27,7 +27,6 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     player.getWeapon()->setPosition(100, 400);
     backGround.setScale(scaleX, scaleY);
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
-
     player.setOrigin(player.getLocalBounds().width / 2, 0);
     playerAnimation.getTexture(player, 0);
     map.setGravity(-10);
@@ -98,7 +97,7 @@ void Game::loop() {
     sf::Clock clock;
     int countTexture = 0;
     int enemyVectorSize = 10;
-    std::vector<Enemy> enemies;                            //creating the enemy vector in order to check collision easier
+
     float xStart = 0;
     float yStart = 0;
     float xPressed = 0;
@@ -124,9 +123,9 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
+                        enemies = std::vector<Enemy>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
                         for (int j = 0; j <
-                                        enemyVectorSize; j++) {                                                       //Placing the enemies in the map
-                            enemies.push_back((*enemyFactory.createEnemy(EnemyType::Soldier)));
+                                        enemies.size(); j++) {                                                       //Placing the enemies in the map
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
                         }
 
@@ -313,11 +312,12 @@ void Game::loop() {
             player.setCollisionUp(false);
             player.setCollisionRight(false);
             player.setCollisionLeft(false);
-            for (auto enemy : enemies) {                               //initializing enemies collision with the terrain
-                enemy.setCollisionDown(false);
-                enemy.setCollisionUp(false);
-                enemy.setCollisionRight(false);
-                enemy.setCollisionLeft(false);
+            for (int j = 0; j <
+                            enemies.size(); j++) {                               //initializing enemies collision with the terrain
+                enemies[j].setCollisionDown(false);
+                enemies[j].setCollisionUp(false);
+                enemies[j].setCollisionRight(false);
+                enemies[j].setCollisionLeft(false);
             }
             for (auto sprite : blocks) {                                   //checking the player collision with Terrain blocks
                 sprite.checkCollision(player);
@@ -354,8 +354,10 @@ void Game::loop() {
             for (auto projectile : bullets) {                               //managing the gravity upon the enemy
                 renderWin->draw(projectile);
             }
-            for (auto enemy : enemies) {                               //managing the gravity upon the enemy
-                renderWin->draw(enemy);
+            for (int j = 0;
+                 j < enemies.size(); j++) {                               //managing the gravity upon the enemy
+
+                renderWin->draw(enemies[j]);
             }
             playerHud.render();
             renderWin->display();
