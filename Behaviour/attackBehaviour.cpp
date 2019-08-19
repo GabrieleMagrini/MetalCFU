@@ -6,8 +6,14 @@
 
 
 int attackBehaviour::action(Player *p, Enemy *e) {
-    // e->getWeapon()->shoot(p->getPosition(), e->getPosition());
-    e->move(p->getPosX(), p->getPosY());
+    auto bullet = new Ammo;
+    if (e->getWeapon()->getCurrentAmmo().getQuantity())
+        bullet->setPosition(e->getWeapon()->getPosition());
+    bullet->setIsShot(e->getWeapon()->shoot());
+    if (e->getPosition().x - p->getPosition().x > 0)
+        e->setPosition(e->getPosition().x - 1, e->getPosition().y);
+    if (e->getPosition().y - p->getPosition().y < 0)
+        e->setPosition(e->getPosition().x + 1, e->getPosition().y);
     if (e->isCollisionLeft() || e->isCollisionRight())
         e->jump(100, e->getPosition().y);
     return 0;
