@@ -313,7 +313,7 @@ void Game::loop() {
                 enemies[j].setCollisionLeft(false);
             }
 
-/**checking the player collision with Terrain blocks
+/*checking the player collision with Terrain blocks
 */
 
             for (auto sprite : blocks) {
@@ -321,7 +321,7 @@ void Game::loop() {
                 for (int y = 0; y < enemyVectorSize; y++)
                     sprite.checkCollision(enemies[y]);
             }
-/**
+/*
  * Checking the bullet collision,if detected eliminates the bullet from the vecor and shifts the vector's elements.
  * Also,eliinate and shifts the aim's vector elements too.
  */
@@ -358,14 +358,10 @@ void Game::loop() {
             renderMap();
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
-            for (auto projectile : bullets) {                               //managing the gravity upon the enemy
+            for (auto projectile : bullets) {
                 renderWin->draw(projectile);
             }
-            for (int j = 0;
-                 j < enemies.size(); j++) {                               //managing the gravity upon the enemy
 
-                renderWin->draw(enemies[j]);
-            }
             playerHud.render();
             renderWin->display();
 
@@ -403,13 +399,18 @@ void Game::loop() {
 
 
 /*****
- * function that render the map of the game.
+ * function that render the map of the game and enemies
  */
 void Game::renderMap() {
     //backGround.setPosition(playerView.getCenter());
     renderWin->draw(backGround);
     for (auto &sprite : blocks) {
         renderWin->draw(sprite);
+    }
+    for (int j = 0;
+         j < enemies.size(); j++) {                               //managing the gravity upon the enemy
+
+        renderWin->draw(enemies[j]);
     }
 
 }
