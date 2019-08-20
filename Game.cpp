@@ -13,7 +13,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
-          playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font) {
+          playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font), event() {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -22,10 +22,8 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
     float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
     backGround.setScale(scaleX, scaleY);
-    //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
     player.setOrigin(player.getLocalBounds().width / 2, 0);
     playerAnimation.getTexture(player, 0, 0, "right");
-    map.setGravity(-10);
 }
 
 void Game::exitGameState() {
@@ -103,7 +101,6 @@ void Game::loop() {
     vector<Vector2f> aimF;
 
     while (renderWin->isOpen()) {
-        sf::Event event;
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
 
             while (renderWin->pollEvent(event)) {
