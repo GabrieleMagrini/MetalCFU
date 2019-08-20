@@ -19,7 +19,8 @@ std::unique_ptr<Weapon> WeaponFactory::createWeapon(WeaponType w) {
                     new Weapon{30, 50, 10, 250, "Sources/Pngs/weapon textures/sheetAK.png", "AK-47"});
             break;
         case WeaponType::AWP:
-            result = std::unique_ptr<Weapon>(new Weapon{5, 95, 30, 5});
+            result = std::unique_ptr<Weapon>(
+                    new Weapon{5, 95, 30, 5, "Sources/Pngs/weapon textures/sheetAWP.png", "AWP"});
             break;
     }
     return result;
