@@ -16,7 +16,7 @@ CharacterAnimation::CharacterAnimation(const std::string &filename) : filename(f
 
 }
 
-void CharacterAnimation::getTexture(GameCharacter &g, int pos, int xMouse, const std::string &direction) {
+void CharacterAnimation::getTexture(GameCharacter &g, int pos, float xMouse, const std::string &direction) {
     sf::IntRect rectTexture;
 
     if (direction == "right") {
@@ -25,7 +25,7 @@ void CharacterAnimation::getTexture(GameCharacter &g, int pos, int xMouse, const
         else
             rectTexture = sf::IntRect(1 * (7 - pos) + 36 * (7 - pos) + 1, 65, 36, 60);
     } else {
-        if (xMouse < g.getPosX())
+        if (xMouse < g.getPosition().x)
             rectTexture = sf::IntRect(1 * (7 - pos) + 36 * (7 - pos) + 1, 65, 36, 60);
         else
             rectTexture = sf::IntRect(1 * pos + 36 * pos + 1, 1, 36, 60);

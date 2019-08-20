@@ -24,7 +24,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     backGround.setScale(scaleX, scaleY);
     //backGround.setOrigin(backGround.getLocalBounds().width / 2, backGround.getLocalBounds().height / 2);
     player.setOrigin(player.getLocalBounds().width / 2, 0);
-    playerAnimation.getTexture(player, 0);
+    playerAnimation.getTexture(player, 0, 0, "right");
     map.setGravity(-10);
 }
 
@@ -270,7 +270,7 @@ void Game::loop() {
             } else if (aKeyPressed && !player.isCollisionLeft()) {
                 player.walk(3);
             } else {
-                playerAnimation.getTexture(player, 0, "right");
+                playerAnimation.getTexture(player, 0, xMouse, "right");
                 countTexture = 0;
             }
             if (spaceKeyPressed) {
@@ -288,11 +288,11 @@ void Game::loop() {
                     countTexture = 0;
                 if (dKeyPressed) {
                     if (!player.isCollisionRight())
-                        playerAnimation.getTexture(player, countTexture, "right");
+                        playerAnimation.getTexture(player, countTexture, xMouse, "right");
                     // weapon->setTextures("right", false);
                 } else if (aKeyPressed) {
                     if (!player.isCollisionLeft())
-                        playerAnimation.getTexture(player, countTexture, "left");
+                        playerAnimation.getTexture(player, countTexture, xMouse, "left");
 
                 }
 
@@ -315,7 +315,6 @@ void Game::loop() {
 
 /*checking the player collision with Terrain blocks
 */
-
             for (auto sprite : blocks) {
                 sprite.checkCollision(player);
                 for (int y = 0; y < enemyVectorSize; y++)

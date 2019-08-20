@@ -20,7 +20,7 @@ public:
 
     ~CharacterAnimation() = default;
 
-    void getTexture(GameCharacter &g, int pos, int xMouse, const std::string &direction);
+    void getTexture(GameCharacter &g, int pos, float xMouse, const std::string &direction);
 
 private:
     std::string filename;
