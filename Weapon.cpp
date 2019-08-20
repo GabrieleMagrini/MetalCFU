@@ -163,7 +163,7 @@ void Weapon::setTextures(float xMouse, float xCharacter, bool isShooting) {
                          texture.getSize().y / 2);
         else
             ir = IntRect(0, texture.getSize().y / 2, texture.getSize().x / 2, texture.getSize().y / 2);
-        setPosition(xCharacter - getLocalBounds().width, this->getPosition().y);
+        setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width, this->getPosition().y);
     }
 
     this->setTextureRect(ir);
