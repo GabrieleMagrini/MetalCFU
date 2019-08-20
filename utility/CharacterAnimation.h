@@ -20,7 +20,7 @@ public:
 
     ~CharacterAnimation() = default;
 
-    void getTexture(GameCharacter &g, int pos, const std::string &direction = "right");
+    void getTexture(GameCharacter &g, int pos, int xMouse, const std::string &direction);
 
 private:
     std::string filename;
