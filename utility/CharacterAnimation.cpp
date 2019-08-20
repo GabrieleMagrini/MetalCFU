@@ -16,6 +16,13 @@ CharacterAnimation::CharacterAnimation(const std::string &filename) : filename(f
 
 }
 
+/***
+ * function that create animation of the character movement
+ * @param g character to apply the animation
+ * @param pos position of the texture
+ * @param xMouse coord x of the mouse
+ * @param direction direction of the character g
+ */
 void CharacterAnimation::getTexture(GameCharacter &g, int pos, float xMouse, const std::string &direction) {
     sf::IntRect rectTexture;
 
