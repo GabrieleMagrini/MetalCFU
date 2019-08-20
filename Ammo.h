@@ -15,19 +15,13 @@ class Terrain;
 class Ammo : public sf::Sprite {
 public:
 
-    explicit Ammo(int q = 100, bool c = false, bool s = false) : quantity(q), terrainCollision(c), isShot(s),
-                                                                 gamecharacterCollision(c) {
-        auto ammo = new sf::Texture();
-        ammo->loadFromFile(
-                "Sources/Pngs/weapon textures/ammo.png");
-        this->setTexture(*ammo);
-    };
+    explicit Ammo(int q = 100, bool c = false, bool s = false);
 
     Ammo(const Ammo &a) = default;
 
     bool operator==(const Ammo &a2) const;
 
-    virtual ~Ammo() = default;
+    ~Ammo() final = default;
 
     int getQuantity() const;
 
@@ -43,7 +37,7 @@ public:
 
     void setIsShot(bool isShot);
 
-    bool checkCollision(std::vector<GameCharacter> e, std::vector<Terrain> t);
+    bool checkCollision(std::vector<GameCharacter> &e, const std::vector<Terrain> &t);
 
     bool isGamecharacterCollision() const;
 
