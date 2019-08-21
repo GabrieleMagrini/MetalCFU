@@ -10,7 +10,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20),
+          player(3, weaponFactory.createWeapon(WeaponType::AWP).get(), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
           playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font), event() {
@@ -200,11 +200,12 @@ void Game::loop() {
                             aimI.push_back(Start);
                             Vector2f Fin(xPressed, yPressed);
                             aimF.push_back(Fin);
-                            auto bullet = new Ammo;
-                            if (player.getWeapon()->getCurrentAmmo().getQuantity())
-                                bullet->setPosition(player.getWeapon()->getPosition());
-                            bullet->setIsShot(player.getWeapon()->shoot());
-                            bullets.push_back(*bullet);
+
+                            if (player.getWeapon()->getCurrentAmmo().size() ||
+                                player.getWeapon()->getName() == "pistol")
+                                bullets.push_back(player.getWeapon()->shoot());
+
+
                             break;
                     }
                 }
