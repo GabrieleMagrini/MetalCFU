@@ -10,21 +10,11 @@
 TEST(Weapon, WeaponConstructorTest) {
 
     auto w = new Weapon{};
-    ASSERT_EQ(w->getCurrentAmmo().getQuantity(), 0);
+    ASSERT_EQ(w->getCurrentAmmo().size(), 0);
     ASSERT_EQ(w->getDamage(), 0);
     ASSERT_EQ(w->getRange(), 0);
-    ASSERT_EQ(w->getMaxAmmo().getQuantity(), 0);
+    ASSERT_EQ(w->getMaxAmmo(), 0);
     ASSERT_EQ(w->getBulletSpeed(), 10);
-
-
-    Ammo curr{10};
-    Ammo max{150};
-    w = new Weapon{curr, 20, 15, max};
-
-    ASSERT_EQ(w->getCurrentAmmo().getQuantity(), 10);
-    ASSERT_EQ(w->getDamage(), 20);
-    ASSERT_EQ(w->getRange(), 15);
-    ASSERT_EQ(w->getMaxAmmo().getQuantity(), 150);
 
 }
 
@@ -34,7 +24,7 @@ TEST(Weapon, ShootTest) {
     auto pos2 = Vector2f(15, 15);
 
 //    ASSERT_EQ(w->shoot(pos, pos2), true);
-    ASSERT_EQ(w->getCurrentAmmo().getQuantity(), 9);
+    //  ASSERT_EQ(w->getCurrentAmmo().size(), 9);
 }
 
 TEST(Weapon, equalTest){
