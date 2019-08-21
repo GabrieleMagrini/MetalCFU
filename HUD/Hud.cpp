@@ -39,11 +39,11 @@ void Hud::update(Player &p, sf::View &view) {
     float left = view.getCenter().x - view.getSize().x / 2.0f;
     life.setSize(sf::Vector2f(p.getHp() * life.getSize().x / 100, life.getLocalBounds().height));
     stringstream ss;
-    if (p.getWeapon()->getMaxAmmo().getQuantity() == -1) {
+    if (p.getWeapon()->getMaxAmmo() == -1) {
         ss << p.getWeapon()->getName() << "   " << "--/--";
     } else {
-        ss << p.getWeapon()->getName() << "   " << p.getWeapon()->getCurrentAmmo().getQuantity() << "/"
-           << p.getWeapon()->getMaxAmmo().getQuantity();
+        ss << p.getWeapon()->getName() << "   " << p.getWeapon()->getCurrentAmmo().size() << "/"
+           << p.getWeapon()->getMaxAmmo();
     }
     weaponAmmo.setString(ss.str());
     ss.str("");
