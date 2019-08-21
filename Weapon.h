@@ -72,6 +72,10 @@ public:
 
     const std::string &getName() const;
 
+    bool isShoot() const;
+
+    void setShoot(bool shoot);
+
 private:
     std::string name;
     std::vector<Ammo> currentAmmo;
@@ -80,10 +84,10 @@ private:
     int maxAmmo;
     bool activeLaser;
     bool collision;
+    bool shooting;
     int speedY;
     int bulletSpeed;
     float shootDirection;
-    int counter;
 
     std::string filename;
     sf::Texture texture;

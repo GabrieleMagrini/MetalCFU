@@ -11,7 +11,7 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const 
           activeLaser(false),
           collision(false),
           speedY(sy), bulletSpeed(bs),
-          filename(filename), shootDirection(0), name(wname), counter(0) {
+          filename(filename), shootDirection(0), name(wname), shooting(false) {
 
     texture.loadFromFile(this->filename);
     setTexture(this->texture);
@@ -73,7 +73,7 @@ Ammo Weapon::shoot() {
 }
 
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
-                   bulletSpeed(10), shootDirection(0) {}
+                   bulletSpeed(10), shootDirection(0), shooting(false) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;
@@ -89,7 +89,7 @@ bool Weapon::operator==(const Weapon &w1) const {
         us = false;
     else if (damage != w1.damage)
         us = false;
-    else if (!(maxAmmo == w1.maxAmmo))
+    else if (maxAmmo != w1.maxAmmo)
         us = false;
     else if (!(currentAmmo == w1.currentAmmo))
         us = false;
@@ -172,4 +172,12 @@ void Weapon::setShootDirection(float shootDirection) {
 
 const std::string &Weapon::getName() const {
     return name;
+}
+
+bool Weapon::isShoot() const {
+    return shooting;
+}
+
+void Weapon::setShoot(bool shoot) {
+    Weapon::shooting = shoot;
 }
