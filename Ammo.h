@@ -15,7 +15,7 @@ class Terrain;
 class Ammo : public sf::Sprite {
 public:
 
-    explicit Ammo(int q = 100, bool c = false, bool s = false);
+    explicit Ammo(int damage = 1, int range = 1, bool c = false, bool s = false);
 
     Ammo(const Ammo &a) = default;
 
@@ -23,9 +23,9 @@ public:
 
     ~Ammo() final = default;
 
-    int getQuantity() const;
+    int getDamage() const;
 
-    void setQuantity(int quantity);
+    void setDamage(int damage);
 
     void setTerrainCollision(bool v);
 
@@ -43,8 +43,13 @@ public:
 
     void setGamecharacterCollision(bool gamecharacterCollision);
 
+    int getRange() const;
+
+    void setRange(int range);
+
 private:
-    int quantity;
+    int damage;
+    int range;
     bool terrainCollision;
     bool isShot;
     bool gamecharacterCollision;
