@@ -7,9 +7,9 @@
 
 int attackBehaviour::action(Player *p, Enemy *e) {
     auto bullet = new Ammo;
-    if (e->getWeapon()->getCurrentAmmo().getQuantity())
+    if (e->getWeapon()->getCurrentAmmo().size() > 0)
         bullet->setPosition(e->getWeapon()->getPosition());
-    bullet->setIsShot(e->getWeapon()->shoot());
+    e->getWeapon()->shoot();
     if (e->getPosition().x - p->getPosition().x > 0)
         e->setPosition(e->getPosition().x - 1, e->getPosition().y);
     if (e->getPosition().y - p->getPosition().y < 0)
