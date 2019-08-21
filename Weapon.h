@@ -64,7 +64,7 @@ public:
 
     void setBulletSpeed(int bulletSpeed);
 
-    void setTextures(float xMouse, float xCharacter, bool isShooting);
+    void setTextures(float xMouse, float xCharacter);
 
     float getShootDirection() const;
 

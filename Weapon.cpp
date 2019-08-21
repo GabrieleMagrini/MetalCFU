@@ -137,12 +137,12 @@ void Weapon::setBulletSpeed(int bulletspeed) {
  * @param xCharacter coord x of the Character
  * @param isShooting bool if weapon is shooting
  */
-void Weapon::setTextures(float xMouse, float xCharacter, bool isShooting) {
+void Weapon::setTextures(float xMouse, float xCharacter) {
     //funzionante per ora solo con pistola
     IntRect ir;
     setTexture(texture);
     if (xMouse > xCharacter) {
-        if (isShooting)
+        if (shooting)
             ir = IntRect(texture.getSize().x / 2, 0, texture.getSize().x / 2, texture.getSize().y / 2);
 
         else
@@ -150,7 +150,7 @@ void Weapon::setTextures(float xMouse, float xCharacter, bool isShooting) {
 
         setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width / 2, this->getPosition().y);
     } else {
-        if (isShooting)
+        if (shooting)
 
             ir = IntRect(texture.getSize().x / 2, texture.getSize().y / 2, texture.getSize().x / 2,
                          texture.getSize().y / 2);
