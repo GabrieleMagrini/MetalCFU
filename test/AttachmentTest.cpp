@@ -41,7 +41,7 @@ TEST(Attachment, ImprovementTest) {
     ExtendedMagazine mg;
 
     mg.improve(w1);
-    ASSERT_EQ(w1.getMaxAmmo().getQuantity(), 390);
+    ASSERT_EQ(w1.getMaxAmmo(), 390);
 
     PowerBarrel pb;
     pb.improve(w1);
