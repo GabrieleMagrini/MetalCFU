@@ -13,7 +13,7 @@ TEST(Weapon, WeaponConstructorTest) {
     ASSERT_EQ(w->getCurrentAmmo().size(), 0);
     ASSERT_EQ(w->getDamage(), 0);
     ASSERT_EQ(w->getRange(), 0);
-    ASSERT_EQ(w->getMaxAmmo(), 0);
+    ASSERT_EQ(w->getMaxAmmo().getQuantity(), 0);
     ASSERT_EQ(w->getBulletSpeed(), 10);
 
 }
