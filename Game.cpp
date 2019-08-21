@@ -204,7 +204,7 @@ void Game::loop() {
                             Vector2f Fin(xPressed, yPressed);
                             aimF.push_back(Fin);
                             auto bullet = new Ammo;
-                            if (player.getWeapon()->getCurrentAmmo().getQuantity())
+                            if (player.getWeapon()->getCurrentAmmo())
                                 bullet->setPosition(player.getWeapon()->getPosition());
                             bullet->setIsShot(player.getWeapon()->shoot());
                             bullets.push_back(*bullet);

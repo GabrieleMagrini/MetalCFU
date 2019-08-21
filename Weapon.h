@@ -16,7 +16,7 @@ class Weapon : public sf::Sprite {
 public:
     Weapon();
 
-    Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k = false, int sy = 10,
+    Weapon(int c, int d, int r, const int m, bool k = false, int sy = 10,
            int bs = 10, const std::string &filename = "Sources/Pngs/weapon textures/sheetPistol.png",
            const std::string &wname = "");
 
@@ -26,9 +26,9 @@ public:
 
     Weapon(const Weapon &w) = default;
 
-    Ammo &getCurrentAmmo();
+    int getCurrentAmmo();
 
-    void setCurrentAmmo(const Ammo &currentAmmo);
+    void setCurrentAmmo(int currentAmmo);
 
     int getDamage() const;
 
@@ -38,7 +38,7 @@ public:
 
     void setRange(int range);
 
-    const Ammo &getMaxAmmo() const;
+    const int getMaxAmmo() const;
 
     void setMaxAmmo(int quantity);
 
@@ -78,10 +78,10 @@ public:
 
 private:
     std::string name;
-    Ammo currentAmmo;
+    int currentAmmo;
     int damage;
     int range;
-    Ammo maxAmmo;
+    int maxAmmo;
     bool activeLaser;
     bool collision;
     int speedY;

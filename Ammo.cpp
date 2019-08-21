@@ -6,21 +6,6 @@
 #include "GameCharacter.h"
 #include "Terrain.h"
 
-int Ammo::getQuantity() const {
-    return quantity;
-}
-
-void Ammo::setQuantity(int quantity) {
-    Ammo::quantity = quantity;
-}
-
-bool Ammo::operator==(const Ammo &a2) const{
-    bool us = false;
-    if (quantity == a2.quantity)
-        us = true;
-    return us;
-}
-
 void Ammo::setTerrainCollision(bool v) {
     terrainCollision = v;
 }

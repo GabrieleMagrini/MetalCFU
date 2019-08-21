@@ -15,8 +15,8 @@ class Terrain;
 class Ammo : public sf::Sprite {
 public:
 
-    explicit Ammo(int q = 100, bool c = false, bool s = false) : quantity(q), terrainCollision(c), isShot(s),
-                                                                 gamecharacterCollision(c) {
+    explicit Ammo(bool c = false, bool s = false) : terrainCollision(c), isShot(s),
+                                                    gamecharacterCollision(c) {
         auto ammo = new sf::Texture();
         ammo->loadFromFile(
                 "Sources/Pngs/weapon textures/ammo.png");
@@ -25,13 +25,8 @@ public:
 
     Ammo(const Ammo &a) = default;
 
-    bool operator==(const Ammo &a2) const;
 
     virtual ~Ammo() = default;
-
-    int getQuantity() const;
-
-    void setQuantity(int quantity);
 
     void setTerrainCollision(bool v);
 
@@ -50,7 +45,7 @@ public:
     void setGamecharacterCollision(bool gamecharacterCollision);
 
 private:
-    int quantity;
+
     bool terrainCollision;
     bool isShot;
     bool gamecharacterCollision;

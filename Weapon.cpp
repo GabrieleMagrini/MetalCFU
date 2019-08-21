@@ -5,7 +5,7 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon(const Ammo &c, int d, int r, const Ammo &m, bool k, int sy, int bs, const std::string &filename,
+Weapon::Weapon(int c, int d, int r, const int m, bool k, int sy, int bs, const std::string &filename,
                const std::string &wname)
         : currentAmmo(c),
           damage(d),
@@ -34,12 +34,14 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const 
     setTexture(this->texture);
 }
 
-Ammo &Weapon::getCurrentAmmo() {
+int Weapon::getCurrentAmmo() {
     return currentAmmo;
 }
 
-void Weapon::setCurrentAmmo(const Ammo &currentAmmo) {
+void Weapon::setCurrentAmmo(int currentAmmo) {
     Weapon::currentAmmo = currentAmmo;
+    if (Weapon::currentAmmo > maxAmmo)
+        Weapon::currentAmmo = maxAmmo;
 }
 
 int Weapon::getDamage() const {
@@ -58,17 +60,17 @@ void Weapon::setRange(int range) {
     Weapon::range = range;
 }
 
-const Ammo &Weapon::getMaxAmmo() const {
+const int Weapon::getMaxAmmo() const {
     return maxAmmo;
 }
 
 void Weapon::setMaxAmmo(const int quantity) {
-    Weapon::maxAmmo.setQuantity(quantity);
+    Weapon::maxAmmo = (quantity);
 }
 
 bool Weapon::shoot() {
-    if (currentAmmo.getQuantity() != 0) {
-        currentAmmo.setQuantity(currentAmmo.getQuantity() - 1);
+    if (currentAmmo != 0) {
+        currentAmmo = currentAmmo - 1;
         // float angolarCoefficient = (posFin.y - posRif.y) / (posFin.x - posRif.x);
         //auto degrees = static_cast<double>(atan(angolarCoefficient));
         //while (!currentAmmo.getCollision() || (abs(currentAmmo.getPosition().x - posRif.x) > range ||abs(currentAmmo.getPosition().y - posRif.y) > range))
@@ -79,7 +81,8 @@ bool Weapon::shoot() {
         return false;
 }
 
-Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
+Weapon::Weapon() : currentAmmo(100), damage(0), range(0), maxAmmo(300), activeLaser(false), collision(false),
+                   speedY(10),
                    bulletSpeed(10), shootDirection(0) {}
 
 bool Weapon::isActiveLaser() const {
