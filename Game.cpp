@@ -202,9 +202,10 @@ void Game::loop() {
                             aimF.push_back(Fin);
 
                             if (player.getWeapon()->getCurrentAmmo().size() ||
-                                player.getWeapon()->getName() == "pistol")
+                                player.getWeapon()->getName() == "pistol") {
                                 bullets.push_back(player.getWeapon()->shoot());
-
+                                player.getWeapon()->setShoot(true);
+                            }
 
                             break;
                     }
@@ -294,6 +295,10 @@ void Game::loop() {
 
                 }
 
+                if (player.getWeapon()->isShoot()) {
+                    player.getWeapon()->setShoot(false);
+                }
+
                 player.setOrigin(player.getLocalBounds().width / 2, 0);
                 clock.restart();
             }
@@ -342,7 +347,7 @@ void Game::loop() {
 
             playerView.setCenter(player.getPosition());         //update view Position
 
-            player.getWeapon()->setTextures(xMouse, player.getPosition().x, shoot);// update weapon texture and position
+            player.getWeapon()->setTextures(xMouse, player.getPosition().x);// update weapon texture and position
             player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
                                             player.getPosition().y + player.getLocalBounds().width / 2 + 7);
 
