@@ -284,12 +284,12 @@ void Game::loop() {
 
             for (int x = 0; x < enemyVectorSize; x++) {  //adding behaviour to the enemy
                 (enemies[x]).checkBehaviour(&player);
+                auto enemyAmmo = new Ammo;
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
-                    auto enemyAmmo = new Ammo;
                     enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
                     enemyBullets.push_back(*enemyAmmo);
                 }
+                enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
 
             if (clock.getElapsedTime().asSeconds() > 0.15f) {
@@ -364,19 +364,6 @@ void Game::loop() {
                         bullets.erase(bullets.begin() + z);
                         aimI.erase(aimI.begin() + z);
                         aimF.erase(aimF.begin() + z);
-                    }
-                }
-            }
-            for (int w = 0; w < enemies.size(); w++) {
-                for (int z = 0; z < enemyBullets.size(); z++) {
-                    if (enemyBullets[z].isIsShot()) {
-                        enemyBullets[z].shoot(enemies[w].getPosition(), player.getPosition());
-                        // enemyBullets[z].checkCollision(enemies, blocks);
-                        if ((abs(enemyBullets[z].getPosition().x - enemies[w].getWeapon()->getPosition().x) >
-                             (enemies[w].getWeapon()->getRange() * 50)) ||
-                            (enemyBullets[z].isGamecharacterCollision() || enemyBullets[z].getTerrainCollision())) {
-                            enemyBullets.erase(enemyBullets.begin() + z);
-                        }
                     }
                 }
             }
