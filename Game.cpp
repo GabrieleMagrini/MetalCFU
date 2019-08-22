@@ -325,6 +325,7 @@ void Game::loop() {
 
             for (int j = 0; j < enemies.size(); j++) {  //delete enemies when they are dead
                 if (enemies[j].getHp() == 0)
+                    //enemies[j].in
                     enemies.erase(enemies.begin() + j);
             }
 
@@ -350,7 +351,8 @@ void Game::loop() {
                 if (bullets[z].isIsShot()) {
                     bullets[z].shoot(aimI[z], aimF[z]);
                     bullets[z].checkCollision(enemies, blocks);
-                    if (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision()) {
+                    if (((aimF[z].x - aimI[z].x) > player.getWeapon()->getRange() * 50) ||
+                        (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision())) {
                         bullets.erase(bullets.begin() + z);
                         aimI.erase(aimI.begin() + z);
                         aimF.erase(aimF.begin() + z);
