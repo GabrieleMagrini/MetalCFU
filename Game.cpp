@@ -309,6 +309,7 @@ void Game::loop() {
                 player.setOrigin(player.getLocalBounds().width / 2, 0);
                 clock.restart();
             }
+            //if(fmod(clock.getElapsedTime().asSeconds(),0.5f))
 
             //Adding gravity to the player
             player.setCollisionDown(false);
@@ -351,7 +352,8 @@ void Game::loop() {
                 if (bullets[z].isIsShot()) {
                     bullets[z].shoot(aimI[z], aimF[z]);
                     bullets[z].checkCollision(enemies, blocks);
-                    if (((aimF[z].x - aimI[z].x) > player.getWeapon()->getRange() * 50) ||
+                    if ((abs(bullets[z].getPosition().x - player.getWeapon()->getPosition().x) >
+                         (player.getWeapon()->getRange() * 50)) ||
                         (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision())) {
                         bullets.erase(bullets.begin() + z);
                         aimI.erase(aimI.begin() + z);
