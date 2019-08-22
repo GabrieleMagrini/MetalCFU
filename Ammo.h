@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class GameCharacter;
+class Enemy;
 
 class Terrain;
 
@@ -37,7 +37,7 @@ public:
 
     void setIsShot(bool isShot);
 
-    bool checkCollision(std::vector<GameCharacter> &e, const std::vector<Terrain> &t);
+    bool checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t);
 
     bool isGamecharacterCollision() const;
 

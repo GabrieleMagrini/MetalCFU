@@ -116,11 +116,11 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
-                        enemies = std::vector<GameCharacter>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
-
+                        enemies = std::vector<Enemy>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
                         for (int j = 0; j <
-                                        enemies.size(); j++) {//Placing the enemies in the map
-                            enemies[j] = *enemyFactory.createEnemy(EnemyType::Soldier);
+                                        enemies.size(); j++) {
+                            enemies[j] = *enemyFactory.createEnemy(
+                                    EnemyType::Soldier);   //Placing the enemies in the map
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
                         }
 
@@ -279,6 +279,11 @@ void Game::loop() {
                 if (player.isJumping())
                     player.walk(0);
 
+            }
+
+            for (int x = 0; x < enemyVectorSize; x++) {
+                (enemies[x]).checkBehaviour(&player);
+                enemies[x].Action(&player, &enemies[x]);
             }
 
             if (clock.getElapsedTime().asSeconds() > 0.15f) {

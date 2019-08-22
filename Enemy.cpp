@@ -37,13 +37,13 @@ void Enemy::checkBehaviour(Player *p) {
     auto attack = new attackBehaviour();
     auto patrol = new patrolBehaviour();
     auto suicidal = new suicidalBehaviour();
-    auto Y = p->getPosY();
-    auto X = p->getPosX();
-    if ((abs(getPosY() - Y)) < 3 && (abs(getPosX() - X)) < 7)
-        setBehaviour(attack);
-    else if (this->getHp() < 10)
-        setBehaviour(suicidal);
-    else
+    /* auto Y = p->getPosY();
+     auto X = p->getPosX();
+     if ((abs(getPosY() - Y)) < 3 && (abs(getPosX() - X)) < 7)
+         setBehaviour(attack);
+     else if (this->getHp() < 10)
+         setBehaviour(suicidal);
+     else*/
         setBehaviour(patrol);
 
 }
