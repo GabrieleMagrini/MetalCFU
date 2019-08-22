@@ -376,6 +376,7 @@ void Game::loop() {
                 EaimI.push_back(enemies[g].getPosition());
                 EaimF.push_back(player.getPosition());
                 for (int q = 0; q < Bulletz[g].size(); q++) {
+                    Bulletz[g][q].setIsShot(true);
                     if (Bulletz[g][q].isIsShot()) {
                         Bulletz[g][q].shoot(EaimI[g], EaimF[g]);
                         /* if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
