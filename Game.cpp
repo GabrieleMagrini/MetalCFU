@@ -100,6 +100,9 @@ void Game::loop() {
     vector<Ammo> enemyBullets;
     vector<Vector2f> aimI;
     vector<Vector2f> aimF;
+    vector<Vector2f> EaimI;
+    vector<Vector2f> EaimF;
+    vector<vector<Ammo>> Bulletz;
 
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
@@ -279,15 +282,16 @@ void Game::loop() {
                 player.jump(100, startY);
                 if (player.isJumping())
                     player.walk(0);
-
             }
 
             for (int x = 0; x < enemyVectorSize; x++) {  //adding behaviour to the enemy
-                (enemies[x]).checkBehaviour(&player);
                 auto enemyAmmo = new Ammo;
+                (enemies[x]).checkBehaviour(&player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                    enemyBullets.push_back(*enemyAmmo);
+                    std::vector<Ammo> enemy;
+                    enemy.push_back(*enemyAmmo);
+                    Bulletz.push_back(enemy);
                 }
                 enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
@@ -368,6 +372,22 @@ void Game::loop() {
                 }
             }
 
+            for (int g = 0; g < Bulletz.size(); g++) {
+                EaimI.push_back(enemies[g].getPosition());
+                EaimF.push_back(player.getPosition());
+                for (int q = 0; q < Bulletz[g].size(); q++) {
+                    if (Bulletz[g][q].isIsShot()) {
+                        Bulletz[g][q].shoot(EaimI[g], EaimF[g]);
+                        /* if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
+                            (enemies[g].getWeapon()->getRange() * 50)) ||
+                           (Bulletz[g][q].isGamecharacterCollision() ||Bulletz[g][q].getTerrainCollision())) {
+                           Bulletz[g][q].erase(Bulletz.begin() + g);
+                           aimI.erase(aimI.begin() + g);
+                           aimF.erase(aimF.begin() + g);
+                       }*/
+                    }
+                }
+            }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
@@ -393,10 +413,11 @@ void Game::loop() {
             for (auto projectile : bullets) {
                 renderWin->draw(projectile);
             }
-            for (auto enemyProjectiles : enemyBullets) {
-                renderWin->draw(enemyProjectiles);
+            for (int t = 0; t < Bulletz.size(); t++) {
+                for (int k = 0; k < Bulletz[t].size(); k++) {
+                    renderWin->draw(Bulletz[t][k]);
+                }
             }
-
             playerHud.render();
             renderWin->display();
 
