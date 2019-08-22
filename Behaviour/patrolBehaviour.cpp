@@ -5,6 +5,12 @@
 #include "patrolBehaviour.h"
 
 int patrolBehaviour::action(Player *p, Enemy *e) {
-    e->move(-1, 0);
+    if (p->getPosX() - e->getPosX() >= 0)
+        e->walk(1);
+    if (p->getPosX() - e->getPosX() < 0)
+        e->walk(3);
+    if (e->isCollisionLeft() || e->isCollisionRight()) {
+        e->jump(100, e->getPosition().y);
+    }
     return 0;
 }
