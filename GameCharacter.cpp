@@ -229,7 +229,7 @@ void GameCharacter::setUsableInventory(const Inventory<Usable *> &usableInventor
 void GameCharacter::getDamage(unsigned int damage) {
     HP = HP - damage;
 
-    if (HP <= 0) {
+    if (HP < 0) {
         HP = 0;
     }
 }
