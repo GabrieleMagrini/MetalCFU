@@ -286,7 +286,7 @@ void Game::loop() {
                 (enemies[x]).checkBehaviour(&player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     auto enemyAmmo = new Ammo;
-                    enemyAmmo->setPosition(enemies[x].getPosition());
+                    enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
                     enemies[x].Action(&player, &enemies[x], *enemyAmmo);
                     enemyBullets.push_back(*enemyAmmo);
                 }
@@ -367,6 +367,20 @@ void Game::loop() {
                     }
                 }
             }
+            for (int w = 0; w < enemies.size(); w++) {
+                for (int z = 0; z < enemyBullets.size(); z++) {
+                    if (enemyBullets[z].isIsShot()) {
+                        enemyBullets[z].shoot(enemies[w].getPosition(), player.getPosition());
+                        // enemyBullets[z].checkCollision(enemies, blocks);
+                        if ((abs(enemyBullets[z].getPosition().x - enemies[w].getWeapon()->getPosition().x) >
+                             (enemies[w].getWeapon()->getRange() * 50)) ||
+                            (enemyBullets[z].isGamecharacterCollision() || enemyBullets[z].getTerrainCollision())) {
+                            enemyBullets.erase(enemyBullets.begin() + z);
+                        }
+                    }
+                }
+            }
+
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);

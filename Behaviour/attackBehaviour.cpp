@@ -6,7 +6,7 @@
 
 
 int attackBehaviour::action(Player *p, Enemy *e, Ammo &a) {
-    a.shoot(e->getPosition(), p->getPosition());
+    a = e->getWeapon()->shoot();
     if (e->getPosition().x - p->getPosition().x > 0)
         e->setPosition(e->getPosition().x - 1, e->getPosition().y);
     if (e->getPosition().y - p->getPosition().y < 0)
