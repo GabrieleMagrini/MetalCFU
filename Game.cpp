@@ -97,6 +97,7 @@ void Game::loop() {
     float xPressed = 0;
     float yPressed = 0;
     vector<Ammo> bullets;
+    vector<Ammo> enemyBullets;
     vector<Vector2f> aimI;
     vector<Vector2f> aimF;
 
@@ -283,10 +284,12 @@ void Game::loop() {
 
             for (int x = 0; x < enemyVectorSize; x++) {  //adding behaviour to the enemy
                 (enemies[x]).checkBehaviour(&player);
-                auto enemyAmmo = new Ammo;
-                enemyAmmo->setPosition(enemies[x].getPosition());
-                enemies[x].Action(&player, &enemies[x], *enemyAmmo);
-                bullets.push_back(*enemyAmmo);
+                if (enemies[x].getBehaviour()->getName() == "Attack") {
+                    auto enemyAmmo = new Ammo;
+                    enemyAmmo->setPosition(enemies[x].getPosition());
+                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+                    enemyBullets.push_back(*enemyAmmo);
+                }
             }
 
             if (clock.getElapsedTime().asSeconds() > 0.15f) {
@@ -388,6 +391,9 @@ void Game::loop() {
             renderWin->draw(*player.getWeapon());
             for (auto projectile : bullets) {
                 renderWin->draw(projectile);
+            }
+            for (auto enemyProjectiles : enemyBullets) {
+                renderWin->draw(enemyProjectiles);
             }
 
             playerHud.render();

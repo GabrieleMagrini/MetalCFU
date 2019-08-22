@@ -16,8 +16,9 @@ public:
 
     virtual int action(Player *p, Enemy *e, Ammo &a) = 0;
 
-};
+    virtual std::string getName() = 0;
 
+};
 
 
 #endif //METALCFU_BEHAVIOUR_H

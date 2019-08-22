@@ -27,6 +27,7 @@
 #include "Factory/WeaponFactory.h"
 #include "Factory/EnemyFactory.h"
 #include "HUD/Hud.h"
+#include "Behaviour/Behaviour.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
