@@ -328,6 +328,12 @@ void Game::loop() {
                     enemies.erase(enemies.begin() + j);
             }
 
+            for (int j = 0; j < enemies.size(); j++) { //Enemy Weapon position update
+                enemies[j].getWeapon()->setTextures(player.getPosition().x, enemies[j].getPosition().x);
+                enemies[j].getWeapon()->setPosition(enemies[j].getWeapon()->getPosition().x,
+                                                    enemies[j].getPosition().y + enemies[j].getLocalBounds().width / 2 +
+                                                    7);
+            }
 
 /*checking the player collision with Terrain blocks
 */
@@ -426,6 +432,7 @@ void Game::renderMap() {
          j < enemies.size(); j++) {                               //managing the gravity upon the enemy
 
         renderWin->draw(enemies[j]);
+        renderWin->draw(*enemies[j].getWeapon());
     }
 
 }
