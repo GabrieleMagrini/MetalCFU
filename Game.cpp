@@ -117,8 +117,10 @@ void Game::loop() {
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
                         enemies = std::vector<GameCharacter>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
+
                         for (int j = 0; j <
-                                        enemies.size(); j++) {                                                       //Placing the enemies in the map
+                                        enemies.size(); j++) {//Placing the enemies in the map
+                            enemies[j] = *enemyFactory.createEnemy(EnemyType::Soldier);
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
                         }
 
@@ -315,6 +317,12 @@ void Game::loop() {
                 enemies[j].setCollisionRight(false);
                 enemies[j].setCollisionLeft(false);
             }
+
+            for (int j = 0; j < enemies.size(); j++) {
+                if (enemies[j].getHp() == 0)
+                    enemies.erase(enemies.begin() + j);
+            }
+
 
 /*checking the player collision with Terrain blocks
 */
