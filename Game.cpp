@@ -283,7 +283,10 @@ void Game::loop() {
 
             for (int x = 0; x < enemyVectorSize; x++) {  //adding behaviour to the enemy
                 (enemies[x]).checkBehaviour(&player);
-                enemies[x].Action(&player, &enemies[x]);
+                auto enemyAmmo = new Ammo;
+                enemyAmmo->setPosition(enemies[x].getPosition());
+                enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+                bullets.push_back(*enemyAmmo);
             }
 
             if (clock.getElapsedTime().asSeconds() > 0.15f) {

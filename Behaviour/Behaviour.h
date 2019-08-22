@@ -14,7 +14,7 @@ class Behaviour {
 public:
     virtual ~Behaviour() {}
 
-    virtual int action(Player *p, Enemy *e) = 0;
+    virtual int action(Player *p, Enemy *e, Ammo &a) = 0;
 
 };
 

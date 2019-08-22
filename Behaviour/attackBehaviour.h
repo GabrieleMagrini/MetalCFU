@@ -16,7 +16,7 @@ public:
 
     virtual ~attackBehaviour() {}
 
-    int action(Player *p, Enemy *e) override;
+    int action(Player *p, Enemy *e, Ammo &a) override;
 
     std::string getName();
 

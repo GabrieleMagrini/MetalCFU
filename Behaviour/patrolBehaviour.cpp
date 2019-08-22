@@ -4,7 +4,7 @@
 
 #include "patrolBehaviour.h"
 
-int patrolBehaviour::action(Player *p, Enemy *e) {
+int patrolBehaviour::action(Player *p, Enemy *e, Ammo &a) {
     if (p->getPosX() - e->getPosX() >= 0)
         e->walk(1);
     if (p->getPosX() - e->getPosX() < 0)

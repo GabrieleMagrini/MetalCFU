@@ -20,8 +20,8 @@ Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, in
 /****
  * function that make do a patrol to the enemy
  */
-void Enemy::Action(Player *p, Enemy *e) {
-    Enemy::behaviour->action(p, this);
+void Enemy::Action(Player *p, Enemy *e, Ammo &a) {
+    Enemy::behaviour->action(p, this, a);
 
 }
 
@@ -37,13 +37,13 @@ void Enemy::checkBehaviour(Player *p) {
     auto attack = new attackBehaviour();
     auto patrol = new patrolBehaviour();
     auto suicidal = new suicidalBehaviour();
-    /* auto Y = p->getPosY();
+    auto Y = p->getPosY();
      auto X = p->getPosX();
      if ((abs(getPosY() - Y)) < 3 && (abs(getPosX() - X)) < 7)
          setBehaviour(attack);
      else if (this->getHp() < 10)
          setBehaviour(suicidal);
-     else*/
+     else
         setBehaviour(patrol);
 
 }

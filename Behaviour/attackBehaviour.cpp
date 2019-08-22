@@ -5,11 +5,8 @@
 #include "attackBehaviour.h"
 
 
-int attackBehaviour::action(Player *p, Enemy *e) {
-    auto bullet = new Ammo;
-    if (e->getWeapon()->getCurrentAmmo().size() > 0)
-        bullet->setPosition(e->getWeapon()->getPosition());
-    e->getWeapon()->shoot();
+int attackBehaviour::action(Player *p, Enemy *e, Ammo &a) {
+    a.shoot(e->getPosition(), p->getPosition());
     if (e->getPosition().x - p->getPosition().x > 0)
         e->setPosition(e->getPosition().x - 1, e->getPosition().y);
     if (e->getPosition().y - p->getPosition().y < 0)

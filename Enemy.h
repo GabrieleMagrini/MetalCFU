@@ -21,7 +21,7 @@ public:
 
     ~Enemy() final = default;
 
-    void Action(Player *p, Enemy *e);
+    void Action(Player *p, Enemy *e, Ammo &a);
 
     Behaviour *getBehaviour() const;
 
