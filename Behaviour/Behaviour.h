@@ -15,6 +15,7 @@ public:
     virtual ~Behaviour() {}
 
     virtual int action(Player *p, Enemy *e) = 0;
+
 };
 
 

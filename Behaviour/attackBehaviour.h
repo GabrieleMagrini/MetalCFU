@@ -12,11 +12,16 @@
 
 class attackBehaviour : public Behaviour {
 public:
-    attackBehaviour() {}
+    attackBehaviour() : name("Attack") {}
 
     virtual ~attackBehaviour() {}
 
     int action(Player *p, Enemy *e) override;
+
+    std::string getName();
+
+private:
+    std::string name;
 };
 
 

@@ -11,11 +11,14 @@
 
 class patrolBehaviour : public Behaviour {
 public:
-    patrolBehaviour() {}
+    patrolBehaviour() : name("Patrol") {}
 
     virtual ~patrolBehaviour() {}
 
     int action(Player *p, Enemy *e) override;
+
+private:
+    std::string name;
 };
 
 
