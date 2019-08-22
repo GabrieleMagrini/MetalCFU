@@ -17,6 +17,8 @@ public:
 
     int action(Player *p, Enemy *e) override;
 
+    std::string getName();
+
 private:
     std::string name;
 };

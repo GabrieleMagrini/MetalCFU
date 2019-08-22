@@ -14,3 +14,7 @@ int patrolBehaviour::action(Player *p, Enemy *e) {
     }
     return 0;
 }
+
+std::string patrolBehaviour::getName() {
+    return name;
+}

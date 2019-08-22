@@ -18,3 +18,7 @@ int attackBehaviour::action(Player *p, Enemy *e) {
         e->jump(100, e->getPosition().y);
     return 0;
 }
+
+std::string attackBehaviour::getName() {
+    return name;
+}
