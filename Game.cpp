@@ -281,7 +281,7 @@ void Game::loop() {
 
             }
 
-            for (int x = 0; x < enemyVectorSize; x++) {
+            for (int x = 0; x < enemyVectorSize; x++) {  //adding behaviour to the enemy
                 (enemies[x]).checkBehaviour(&player);
                 enemies[x].Action(&player, &enemies[x]);
             }
@@ -323,7 +323,7 @@ void Game::loop() {
                 enemies[j].setCollisionLeft(false);
             }
 
-            for (int j = 0; j < enemies.size(); j++) {
+            for (int j = 0; j < enemies.size(); j++) {  //delete enemies when they are dead
                 if (enemies[j].getHp() == 0)
                     enemies.erase(enemies.begin() + j);
             }
