@@ -50,9 +50,10 @@ void Ammo::setIsShot(bool isShot) {
 }
 
 bool Ammo::checkCollision(std::vector<GameCharacter> &e, const std::vector<Terrain> &t) {
-    for (auto character:e)
-        if (this->getGlobalBounds().intersects(character.getGlobalBounds())) {
+    for (int i = 0; i < e.size(); i++)
+        if (this->getGlobalBounds().intersects(e[i].getGlobalBounds())) {
             this->setGamecharacterCollision(true);
+            e[i].getDamage(damage);
         }
     for (auto terrain:t)
         if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
