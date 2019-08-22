@@ -57,6 +57,8 @@ int Box<T>::getHp() const {
 template<typename T>
 void Box<T>::setHp(int hp) {
     Box::hp = hp;
+    if (hp < 0)
+        this->hp = 0;
 }
 
 
