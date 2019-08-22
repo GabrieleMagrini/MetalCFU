@@ -73,7 +73,7 @@ private:
     Map map;
     std::vector<Terrain> blocks;
 
-    std::vector<GameCharacter> enemies;
+    std::vector<Enemy> enemies;
 
     sf::View playerView;
     CharacterAnimation playerAnimation;
