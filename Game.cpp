@@ -86,9 +86,11 @@ void Game::loop() {
     bool dKeyPressed = false;
     bool aKeyPressed = false;
     bool spaceKeyPressed = false;
-    bool shoot = false;
+    bool canShoot = false;
+
     float startY = 0; //used for jump
-    sf::Clock clock;
+    sf::Clock animationClock;
+    sf::Clock weaponClock;
     int countTexture = 0;
     int enemyVectorSize = 10;
 
@@ -136,7 +138,8 @@ void Game::loop() {
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
                         player.setPosition(blocks[1].getPosition().x + 100, 400);
-                        clock.restart();
+                        animationClock.restart();
+                        weaponClock.restart();
                         startGameState();
                     }
                 }
@@ -197,20 +200,24 @@ void Game::loop() {
                 if (event.type == sf::Event::MouseButtonPressed) {
                     switch (event.mouseButton.button) {                                               //Managing the shoot case through the left mouse button
                         case sf::Mouse::Left :
-                            xStart = renderWin->getSize().x / 2. + player.getWeapon()->getGlobalBounds().width / 2;
-                            yStart = renderWin->getSize().y / 2. + (player.getWeapon()->getGlobalBounds().height / 2) +
-                                     10;
-                            xPressed = (sf::Mouse::getPosition(*renderWin).x);
-                            yPressed = sf::Mouse::getPosition(*renderWin).y;
-                            Vector2f Start(xStart, yStart);
-                            aimI.push_back(Start);
-                            Vector2f Fin(xPressed, yPressed);
-                            aimF.push_back(Fin);
+                            if (canShoot) {
+                                xStart = renderWin->getSize().x / 2. + player.getWeapon()->getGlobalBounds().width / 2;
+                                yStart = renderWin->getSize().y / 2. +
+                                         (player.getWeapon()->getGlobalBounds().height / 2) +
+                                         10;
+                                xPressed = (sf::Mouse::getPosition(*renderWin).x);
+                                yPressed = sf::Mouse::getPosition(*renderWin).y;
+                                Vector2f Start(xStart, yStart);
+                                aimI.push_back(Start);
+                                Vector2f Fin(xPressed, yPressed);
+                                aimF.push_back(Fin);
 
-                            if (player.getWeapon()->getCurrentAmmo().size() ||
-                                player.getWeapon()->getName() == "pistol") {
-                                bullets.push_back(player.getWeapon()->shoot());
-                                player.getWeapon()->setShoot(true);
+                                if (player.getWeapon()->getCurrentAmmo().size() ||
+                                    player.getWeapon()->getName() == "pistol") {
+                                    bullets.push_back(player.getWeapon()->shoot());
+                                    player.getWeapon()->setShoot(true);
+                                }
+                                canShoot = false;
                             }
 
                             break;
@@ -296,7 +303,7 @@ void Game::loop() {
                 enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
 
-            if (clock.getElapsedTime().asSeconds() > 0.15f) {
+            if (animationClock.getElapsedTime().asSeconds() > 0.15f) {
                 if (!player.isJumping())
                     countTexture++;
 
@@ -317,9 +324,15 @@ void Game::loop() {
                 }
 
                 player.setOrigin(player.getLocalBounds().width / 2, 0);
-                clock.restart();
+                animationClock.restart();
             }
-            //if(fmod(clock.getElapsedTime().asSeconds(),0.5f))
+
+
+            if (weaponClock.getElapsedTime().asSeconds() >
+                player.getWeapon()->getCoolDown()) {//adding couldown for weapon
+                canShoot = true;
+                weaponClock.restart();
+            }
 
             //Adding gravity to the player
             player.setCollisionDown(false);
