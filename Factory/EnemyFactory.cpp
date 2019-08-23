@@ -16,7 +16,7 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
      switch(et){
          case EnemyType::Soldier:
              result = unique_ptr<Enemy>(
-                     new Enemy(100, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::M4)).get(), nullptr, 1, 0, 2));
+                     new Enemy(100, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::AK_47)).get(), nullptr, 1, 0, 2));
              result->setTexture(*soldier);
              break;
          case EnemyType::Tank:
