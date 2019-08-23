@@ -17,7 +17,7 @@ public:
     Weapon();
 
     Weapon(int cur, int d, int r, int m, const std::string &filename = "Sources/Pngs/weapon textures/sheetPistol.png",
-           const std::string &wname = "",
+           const std::string &wname = "", float coolDown = 0.25f,
            int sy = 10, int bs = 10);
 
     Weapon(const Weapon &w) = default;
@@ -76,6 +76,10 @@ public:
 
     void setShoot(bool shoot);
 
+    float getCoolDown() const;
+
+    void setCoolDown(float coolDown);
+
 private:
     std::string name;
     std::vector<Ammo> currentAmmo;
@@ -88,6 +92,7 @@ private:
     int speedY;
     int bulletSpeed;
     float shootDirection;
+    float coolDown;
 
     std::string filename;
     sf::Texture texture;

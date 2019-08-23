@@ -4,14 +4,15 @@
 
 #include "Weapon.h"
 
-Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const std::string &wname, int sy, int bs)
+Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const std::string &wname, float cooldown,
+               int sy, int bs)
         : currentAmmo(cur, Ammo(d, r * 100)), damage(d),
           range(r),
           maxAmmo(m),
           activeLaser(false),
           collision(false),
           speedY(sy), bulletSpeed(bs),
-          filename(filename), shootDirection(0), name(wname), shooting(false) {
+          filename(filename), shootDirection(0), name(wname), shooting(false), coolDown(cooldown) {
 
     texture.loadFromFile(this->filename);
     setTexture(this->texture);
@@ -73,7 +74,7 @@ Ammo Weapon::shoot() {
 }
 
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
-                   bulletSpeed(10), shootDirection(0), shooting(false) {}
+                   bulletSpeed(10), shootDirection(0), shooting(false), coolDown(0.25) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;
@@ -180,4 +181,12 @@ bool Weapon::isShoot() const {
 
 void Weapon::setShoot(bool shoot) {
     Weapon::shooting = shoot;
+}
+
+float Weapon::getCoolDown() const {
+    return coolDown;
+}
+
+void Weapon::setCoolDown(float coolDown) {
+    Weapon::coolDown = coolDown;
 }
