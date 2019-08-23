@@ -27,27 +27,27 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
 }
 
 void Game::exitGameState() {
-    gameState->exitGameState(this);
+    gameState->exitGameState(*this);
 }
 
 void Game::mainMenuState() {
-    gameState->mainMenuState(this);
+    gameState->mainMenuState(*this);
 }
 
 void Game::optionMenuState() {
-    gameState->optionMenuState(this);
+    gameState->optionMenuState(*this);
 }
 
 void Game::startGameState() {
-    gameState->startGameState(this);
+    gameState->startGameState(*this);
 }
 
 void Game::pauseGameState() {
-    gameState->pauseGameState(this);
+    gameState->pauseGameState(*this);
 }
 
 void Game::gameOverState() {
-    gameState->gameOverState(this);
+    gameState->gameOverState(*this);
 }
 
 void Game::setState(GState state) {
