@@ -12,7 +12,7 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const 
           activeLaser(false),
           collision(false),
           speedY(sy), bulletSpeed(bs),
-          filename(filename), shootDirection(0), name(wname), shooting(false), coolDown(cooldown) {
+          filename(filename), name(wname), shooting(false), coolDown(cooldown) {
 
     texture.loadFromFile(this->filename);
     setTexture(this->texture);
@@ -74,7 +74,7 @@ Ammo Weapon::shoot() {
 }
 
 Weapon::Weapon() : currentAmmo(0), damage(0), range(0), maxAmmo(0), activeLaser(false), collision(false), speedY(10),
-                   bulletSpeed(10), shootDirection(0), shooting(false), coolDown(0.25) {}
+                   bulletSpeed(10), shooting(false), coolDown(0.25) {}
 
 bool Weapon::isActiveLaser() const {
     return activeLaser;
@@ -96,6 +96,19 @@ bool Weapon::operator==(const Weapon &w1) const {
         us = false;
     else if (activeLaser != w1.activeLaser)
         us = false;
+    else if (collision != w1.collision)
+        us = false;
+    else if (shooting != w1.shooting)
+        us = false;
+    else if (speedY != w1.speedY)
+        us = false;
+    else if (bulletSpeed != w1.bulletSpeed)
+        us = false;
+    else if (coolDown != w1.coolDown)
+        us = false;
+    else if (filename != w1.filename)
+        us = false;
+
     return us;
 }
 
@@ -163,14 +176,6 @@ void Weapon::setTextures(float xMouse, float xCharacter) {
     this->setTextureRect(ir);
 }
 
-float Weapon::getShootDirection() const {
-    return shootDirection;
-}
-
-void Weapon::setShootDirection(float shootDirection) {
-    Weapon::shootDirection = shootDirection;
-}
-
 const std::string &Weapon::getName() const {
     return name;
 }
@@ -189,4 +194,8 @@ float Weapon::getCoolDown() const {
 
 void Weapon::setCoolDown(float coolDown) {
     Weapon::coolDown = coolDown;
+}
+
+void Weapon::realoadTexture() {
+    texture.loadFromFile(filename);
 }

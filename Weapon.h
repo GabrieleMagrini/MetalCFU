@@ -66,10 +66,6 @@ public:
 
     void setTextures(float xMouse, float xCharacter);
 
-    float getShootDirection() const;
-
-    void setShootDirection(float shootDirection);
-
     const std::string &getName() const;
 
     bool isShoot() const;
@@ -79,6 +75,8 @@ public:
     float getCoolDown() const;
 
     void setCoolDown(float coolDown);
+
+    void realoadTexture();
 
 private:
     std::string name;
@@ -91,7 +89,6 @@ private:
     bool shooting;
     int speedY;
     int bulletSpeed;
-    float shootDirection;
     float coolDown;
 
     std::string filename;
