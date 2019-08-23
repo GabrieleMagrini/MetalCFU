@@ -16,17 +16,17 @@ public:
 
     virtual ~GameState() = default;
 
-    virtual void gameOverState(Game *g);
+    virtual void gameOverState(Game &g);
 
-    virtual void exitGameState(Game *g);
+    virtual void exitGameState(Game &g);
 
-    virtual void mainMenuState(Game *g);
+    virtual void mainMenuState(Game &g);
 
-    virtual void optionMenuState(Game *g);
+    virtual void optionMenuState(Game &g);
 
-    virtual void startGameState(Game *g);
+    virtual void startGameState(Game &g);
 
-    virtual void pauseGameState(Game *g);
+    virtual void pauseGameState(Game &g);
 
     const std::string &getStateName() const;
 

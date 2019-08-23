@@ -9,6 +9,6 @@ OptionMenuState::OptionMenuState() : GameState("OptionMenu") {
 
 }
 
-void OptionMenuState::mainMenuState(Game *g) {
-    g->setState(GState::MainMenu);
+void OptionMenuState::mainMenuState(Game &g) {
+    g.setState(GState::MainMenu);
 }

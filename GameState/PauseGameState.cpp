@@ -9,10 +9,10 @@ PauseGameState::PauseGameState() : GameState("PauseGame") {
 
 }
 
-void PauseGameState::mainMenuState(Game *g) {
-    g->setState(GState::MainMenu);
+void PauseGameState::mainMenuState(Game &g) {
+    g.setState(GState::MainMenu);
 }
 
-void PauseGameState::startGameState(Game *g) {
-    g->setState(GState::StartGame);
+void PauseGameState::startGameState(Game &g) {
+    g.setState(GState::StartGame);
 }

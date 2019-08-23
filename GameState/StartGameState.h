@@ -13,7 +13,9 @@ class StartGameState : public GameState {
 public:
     StartGameState();
 
-    void pauseGameState(Game *g) override;
+    void pauseGameState(Game &g) override;
+
+    void gameOverState(Game &g) override;
 };
 
 

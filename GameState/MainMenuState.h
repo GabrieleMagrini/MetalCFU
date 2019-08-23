@@ -13,11 +13,11 @@ class MainMenuState : public GameState {
 public:
     MainMenuState();
 
-    void exitGameState(Game *g) override;
+    void exitGameState(Game &g) override;
 
-    void optionMenuState(Game *g) override;
+    void optionMenuState(Game &g) override;
 
-    void startGameState(Game *g) override;
+    void startGameState(Game &g) override;
 
 
 };

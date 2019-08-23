@@ -13,7 +13,7 @@ class GameOverState : public GameState {
 public:
     GameOverState();
 
-    void exitGameState(Game *g) override;
+    void exitGameState(Game &g) override;
 };
 
 

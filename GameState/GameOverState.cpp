@@ -9,6 +9,6 @@ GameOverState::GameOverState() : GameState("GameOver") {
 
 }
 
-void GameOverState::exitGameState(Game *g) {
-    g->setState(GState::ExitGame);
+void GameOverState::exitGameState(Game &g) {
+    g.setState(GState::ExitGame);
 }

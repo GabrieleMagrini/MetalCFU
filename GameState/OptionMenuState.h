@@ -13,7 +13,7 @@ class OptionMenuState : public GameState {
 public:
     OptionMenuState();
 
-    void mainMenuState(Game *g) override;
+    void mainMenuState(Game &g) override;
 };
 
 
