@@ -284,7 +284,7 @@ void Game::loop() {
                     player.walk(0);
             }
 
-            for (int x = 0; x < enemyVectorSize; x++) {  //adding behaviour to the enemy
+            for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
                 auto enemyAmmo = new Ammo;
                 (enemies[x]).checkBehaviour(&player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
