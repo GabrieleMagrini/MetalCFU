@@ -91,6 +91,8 @@ void Game::loop() {
     float startY = 0; //used for jump
     sf::Clock animationClock;
     sf::Clock weaponClock;
+
+    std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
     int enemyVectorSize = 10;
 
@@ -122,7 +124,7 @@ void Game::loop() {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
                         blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
-                        enemies = std::vector<Enemy>(10, *enemyFactory.createEnemy(EnemyType::Soldier));
+                        enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
                         for (int j = 0; j <
                                         enemies.size(); j++) {
                             enemies[j] = *enemyFactory.createEnemy(
@@ -138,8 +140,14 @@ void Game::loop() {
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
                         player.setPosition(blocks[1].getPosition().x + 100, 400);
+
+                        enemyShootClock = vector<sf::Clock>(enemyVectorSize);
+
                         animationClock.restart();
                         weaponClock.restart();
+                        for (auto a  : enemyShootClock) {
+                            a.restart();
+                        }
                         startGameState();
                     }
                 }
@@ -295,10 +303,13 @@ void Game::loop() {
                 auto enemyAmmo = new Ammo;
                 (enemies[x]).checkBehaviour(&player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
-                    enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                    std::vector<Ammo> enemy;
-                    enemy.push_back(*enemyAmmo);
-                    Bulletz.push_back(enemy);
+                    if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
+                        enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
+                        std::vector<Ammo> enemy;
+                        enemy.push_back(*enemyAmmo);
+                        Bulletz.push_back(enemy);
+                        enemyShootClock[x].restart();
+                    }
                 }
                 enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
