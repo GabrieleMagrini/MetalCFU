@@ -27,6 +27,7 @@
 #include "Factory/WeaponFactory.h"
 #include "Factory/EnemyFactory.h"
 #include "HUD/Hud.h"
+#include "Usable.h"
 #include "Behaviour/Behaviour.h"
 
 enum class GState {
@@ -73,8 +74,10 @@ private:
 
     Map map;
     std::vector<Terrain> blocks;
-
     std::vector<Enemy> enemies;
+    std::vector<Weapon> globalWeapon;
+    std::vector<Usable> globalUsable;
+
 
     sf::View playerView;
     CharacterAnimation playerAnimation;

@@ -314,7 +314,7 @@ void Game::loop() {
                 enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
 
-            if (animationClock.getElapsedTime().asSeconds() > 0.15f) {
+            if (animationClock.getElapsedTime().asSeconds() > 0.15f) { //animation for player
                 if (!player.isJumping())
                     countTexture++;
 
@@ -323,7 +323,7 @@ void Game::loop() {
                 if (dKeyPressed) {
                     if (!player.isCollisionRight())
                         playerAnimation.getTexture(player, countTexture, xMouse, "right");
-                    // weapon->setTextures("right", false);
+
                 } else if (aKeyPressed) {
                     if (!player.isCollisionLeft())
                         playerAnimation.getTexture(player, countTexture, xMouse, "left");
@@ -357,11 +357,21 @@ void Game::loop() {
                 enemies[j].setCollisionRight(false);
                 enemies[j].setCollisionLeft(false);
             }
+            for (int i = 0; i < enemies.size(); i++) {  //delete enemies when they are dead
+                Inventory<Weapon> w;
+                Inventory<Usable *> u;
+                Weapon a;
+                if (enemies[i].getHp() == 0) {
 
-            for (int j = 0; j < enemies.size(); j++) {  //delete enemies when they are dead
-                if (enemies[j].getHp() == 0)
-                    //enemies[j].in
-                    enemies.erase(enemies.begin() + j);
+                    enemies[i].releaseInventory(w, u);
+                    w.removeElement(enemies[i].getSelectedWeapon(), a);
+                    a.realoadTexture();
+                    a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
+                                                 a.getTexture()->getSize().y / 2 - 1));
+                    globalWeapon.push_back(a);
+                    enemies.erase(enemies.begin() + i);
+
+                }
             }
 
             for (int j = 0; j < enemies.size(); j++) { //Enemy Weapon position update
@@ -435,9 +445,14 @@ void Game::loop() {
             renderMap();
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
-            for (auto projectile : bullets) {
+            for (auto &projectile : bullets) {
                 renderWin->draw(projectile);
             }
+
+            for (auto &w : globalWeapon) {
+                renderWin->draw(w);
+            }
+
             for (int t = 0; t < Bulletz.size(); t++) {
                 for (int k = 0; k < Bulletz[t].size(); k++) {
                     renderWin->draw(Bulletz[t][k]);
@@ -488,11 +503,10 @@ void Game::renderMap() {
     for (auto &sprite : blocks) {
         renderWin->draw(sprite);
     }
-    for (int j = 0;
-         j < enemies.size(); j++) {                               //managing the gravity upon the enemy
+    for (auto &enemy : enemies) {                               //managing the gravity upon the enemy
 
-        renderWin->draw(enemies[j]);
-        renderWin->draw(*enemies[j].getWeapon());
+        renderWin->draw(enemy);
+        renderWin->draw(*enemy.getWeapon());
     }
 
 }
