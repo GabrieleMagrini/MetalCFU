@@ -71,6 +71,7 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
  * function that draw all the button and background
  */
 void MainMenu::render() {
+    backGround.setTextureRect(sf::IntRect(0, 0, renderWin->getSize().x, renderWin->getSize().y));
     renderWin->draw(backGround);
 
     startButton.render(*renderWin);
@@ -84,10 +85,24 @@ void MainMenu::render() {
 }
 
 void MainMenu::update() {
+
+    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
+    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
+
+    backGround.setScale(scalex, scaley);
+
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
+    startButton.setPosition(renderWin->getSize().x / 2.0f - 200,
+                            renderWin->getView().getCenter().y - renderWin->getSize().y / 2.0f + 200);
     startButton.update(worldPos);
+
+    optionButton.setPosition(renderWin->getSize().x / 2.0f - 200,
+                             renderWin->getView().getCenter().y - renderWin->getSize().y / 2.0f + 305);
     optionButton.update(worldPos);
+
+    exitButton.setPosition(renderWin->getSize().x / 2.0f - 200,
+                           renderWin->getView().getCenter().y - renderWin->getSize().y / 2.0f + 410);
     exitButton.update(worldPos);
 
 
