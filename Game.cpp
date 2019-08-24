@@ -108,6 +108,8 @@ void Game::loop() {
     vector<Vector2f> EaimF;
     vector<vector<Ammo>> Bulletz;
 
+    sf::Texture screenShoot;
+
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
 
@@ -139,7 +141,8 @@ void Game::loop() {
                         backGround.setPosition(-500, -100);
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
-                        player.setPosition(blocks[1].getPosition().x + 100, 400);
+                        player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20,
+                                        static_cast<int>(blocks[1].getPosition().x) + 100, 400);
 
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
@@ -180,6 +183,7 @@ void Game::loop() {
                         ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
                         if (resolution != ss.str()) {
                             renderWin->setSize(opMenu.getResolution());
+
                         }
                         if (!volume) {
                             //TODO
@@ -232,13 +236,11 @@ void Game::loop() {
                     }
                 }
                 if (event.type == sf::Event::KeyPressed) {
-
-                    sf::Texture texture;
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
-                            texture.create(renderWin->getSize().x, renderWin->getSize().y);
-                            texture.update(*renderWin);
-                            pauseMenu.setTextureBackGround(texture);
+                            screenShoot.create(renderWin->getSize().x, renderWin->getSize().y);
+                            screenShoot.update(*renderWin);
+                            pauseMenu.setTextureBackGround(screenShoot);
                             pauseGameState();
                             break;
 
@@ -464,16 +466,15 @@ void Game::loop() {
         } else if (gameState->getStateName() == "PauseGame") {      //pause menu
             playerView.setCenter(renderWin->getSize().x / 2.0f, renderWin->getSize().y / 2.0f);
             while (renderWin->pollEvent(event)) {
-
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
-
 
                 if (event.type == sf::Event::MouseButtonReleased) {
                     if (pauseMenu.isBackGameButtonPressed()) {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
                         enemies.clear();
+                        globalWeapon.clear();
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
@@ -492,7 +493,6 @@ void Game::loop() {
     }
 
 }
-
 
 /*****
  * function that render the map of the game and enemies
