@@ -198,3 +198,11 @@ void Button::setString(const std::string &string) {
 std::string Button::getString() const {
     return text.getString();
 }
+
+void Button::setPosition(float x, float y) {
+    shape.setPosition(x, y);
+    this->text.setPosition(sf::Vector2f(
+            shape.getPosition().x + shape.getGlobalBounds().width - this->text.getLocalBounds().width / 2.0f,
+            shape.getPosition().y + shape.getGlobalBounds().height -
+            this->text.getLocalBounds().height));
+}

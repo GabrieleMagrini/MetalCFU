@@ -49,6 +49,8 @@ public:
 
     std::string getString() const;
 
+    void setPosition(float x, float y);
+
 private:
 
     void inizialization(float x, float y, float width, float height, const std::string &text);
