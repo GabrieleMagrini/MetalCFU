@@ -132,6 +132,8 @@ void Game::loop() {
                             enemies[j] = *enemyFactory.createEnemy(
                                     EnemyType::Soldier);   //Placing the enemies in the map
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
+                            std::vector<Ammo> enemy;
+                            Bulletz.push_back(enemy);
                         }
 
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
@@ -307,9 +309,7 @@ void Game::loop() {
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
                         enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                        std::vector<Ammo> enemy;
-                        enemy.push_back(*enemyAmmo);
-                        Bulletz.push_back(enemy);
+                        Bulletz[x].push_back(*enemyAmmo);
                         enemyShootClock[x].restart();
                     }
                 }
@@ -409,11 +409,11 @@ void Game::loop() {
             }
 
             for (int g = 0; g < Bulletz.size(); g++) {
-                EaimI.push_back(enemies[g].getPosition());
-                EaimF.push_back(player.getPosition());
                 for (int q = 0; q < Bulletz[g].size(); q++) {
                     Bulletz[g][q].setIsShot(true);
                     if (Bulletz[g][q].isIsShot()) {
+                        EaimI.push_back(enemies[g].getPosition());
+                        EaimF.push_back(player.getPosition());
                         Bulletz[g][q].shoot(EaimI[g], EaimF[g]);
                         /* if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
                             (enemies[g].getWeapon()->getRange() * 50)) ||
