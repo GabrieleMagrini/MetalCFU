@@ -414,11 +414,14 @@ void Game::loop() {
                 for (int q = 0; q < Bulletz[g].size(); q++) {
                     if (Bulletz[g][q].isIsShot()) {
                         Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
-                        /* if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
+                        Bulletz[g][q].checkPlayerCollision(player, blocks);
+                        if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
                             (enemies[g].getWeapon()->getRange() * 50)) ||
                            (Bulletz[g][q].isGamecharacterCollision() ||Bulletz[g][q].getTerrainCollision())) {
                            Bulletz[g].erase(Bulletz[g].begin() + q);
-                       }*/
+                            enemies[g].getAimInitial().erase(enemies[g].getAimInitial().begin() + q);
+                            enemies[g].getAimFinal().erase(enemies[g].getAimFinal().begin() + q);
+                        }
                     }
                 }
             }
