@@ -94,7 +94,7 @@ void Game::loop() {
 
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
-    int enemyVectorSize = 3;
+    int enemyVectorSize = 1;
 
     float xStart = 0;
     float yStart = 0;
@@ -306,6 +306,7 @@ void Game::loop() {
                     if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
                         enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
                         enemyAmmo->setIsShot(true);
+                        enemies[x].Action(&player, &enemies[x], *enemyAmmo);
                         Bulletz[x].push_back(*enemyAmmo);
                         enemyShootClock[x].restart();
                         sf::Vector2f EnI = enemies[x].getPosition();
@@ -313,7 +314,7 @@ void Game::loop() {
                         enemies[x].getAimInitial().push_back(EnI);
                         enemies[x].getAimFinal().push_back(EnF);
                     }
-                }
+                } else
                 enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
 
