@@ -11,6 +11,8 @@ class Enemy;
 
 class Terrain;
 
+class Player;
+
 
 class Ammo : public sf::Sprite {
 public:
@@ -38,6 +40,8 @@ public:
     void setIsShot(bool isShot);
 
     bool checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t);
+
+    bool checkPlayerCollision(Player &p, const std::vector<Terrain> &t);
 
     bool isGamecharacterCollision() const;
 

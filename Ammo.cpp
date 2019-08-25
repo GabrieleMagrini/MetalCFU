@@ -5,6 +5,7 @@
 #include "Ammo.h"
 #include "Enemy.h"
 #include "Terrain.h"
+#include "Player.h"
 
 Ammo::Ammo(int damage, int range, bool c, bool s) : damage(damage), range(range), terrainCollision(c), isShot(s),
                                                     gamecharacterCollision(c) {
@@ -55,6 +56,17 @@ bool Ammo::checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t) 
             this->setGamecharacterCollision(true);
             e[i].getDamage(damage);
         }
+    for (auto terrain:t)
+        if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
+            this->setTerrainCollision(true);
+    return false;
+}
+
+bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t) {
+    if (this->getGlobalBounds().intersects(p.getGlobalBounds())) {
+        this->setGamecharacterCollision(true);
+        p.getDamage(damage);
+    }
     for (auto terrain:t)
         if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
             this->setTerrainCollision(true);
