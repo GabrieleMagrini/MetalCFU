@@ -112,6 +112,13 @@ public:
 
     void setCollisionRight(bool collisionRight);
 
+    vector<Vector2f> &getAimInitial();
+
+    void setAimInitial(vector<Vector2f> &aimInitial);
+
+    vector<Vector2f> &getAimFinal();
+
+    void setAimFinal(vector<Vector2f> &aimFinal);
 
 protected:
     int HP;
@@ -127,6 +134,8 @@ protected:
     bool collisionLeft;
     bool collisionRight;
     bool jumping;
+    vector<Vector2f> aimInitial;
+    vector<Vector2f> aimFinal;
 
 };
 

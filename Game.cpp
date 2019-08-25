@@ -94,7 +94,7 @@ void Game::loop() {
 
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
-    int enemyVectorSize = 10;
+    int enemyVectorSize = 3;
 
     float xStart = 0;
     float yStart = 0;
@@ -102,10 +102,6 @@ void Game::loop() {
     float yPressed = 0;
     vector<Ammo> bullets;
     vector<Ammo> enemyBullets;
-    vector<Vector2f> aimI;
-    vector<Vector2f> aimF;
-    vector<Vector2f> EaimI;
-    vector<Vector2f> EaimF;
     vector<vector<Ammo>> Bulletz;
 
     sf::Texture screenShoot;
@@ -222,9 +218,9 @@ void Game::loop() {
                                 xPressed = (sf::Mouse::getPosition(*renderWin).x);
                                 yPressed = sf::Mouse::getPosition(*renderWin).y;
                                 Vector2f Start(xStart, yStart);
-                                aimI.push_back(Start);
+                                player.getAimInitial().push_back(Start);
                                 Vector2f Fin(xPressed, yPressed);
-                                aimF.push_back(Fin);
+                                player.getAimFinal().push_back(Fin);
 
                                 if (player.getWeapon()->getCurrentAmmo().size() ||
                                     player.getWeapon()->getName() == "pistol") {
@@ -309,8 +305,13 @@ void Game::loop() {
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
                         enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
+                        enemyAmmo->setIsShot(true);
                         Bulletz[x].push_back(*enemyAmmo);
                         enemyShootClock[x].restart();
+                        sf::Vector2f EnI = enemies[x].getPosition();
+                        sf::Vector2f EnF = player.getPosition();
+                        enemies[x].getAimInitial().push_back(EnI);
+                        enemies[x].getAimFinal().push_back(EnF);
                     }
                 }
                 enemies[x].Action(&player, &enemies[x], *enemyAmmo);
@@ -394,33 +395,29 @@ void Game::loop() {
  * Checking the bullet collision,if detected eliminates the bullet from the vecor and shifts the vector's elements.
  * Also,eliinate and shifts the aim's vector elements too.
  */
+
             for (int z = 0; z < bullets.size(); z++) {
                 if (bullets[z].isIsShot()) {
-                    bullets[z].shoot(aimI[z], aimF[z]);
+                    bullets[z].shoot(player.getAimInitial()[z], player.getAimFinal()[z]);
                     bullets[z].checkCollision(enemies, blocks);
                     if ((abs(bullets[z].getPosition().x - player.getWeapon()->getPosition().x) >
                          (player.getWeapon()->getRange() * 50)) ||
                         (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision())) {
                         bullets.erase(bullets.begin() + z);
-                        aimI.erase(aimI.begin() + z);
-                        aimF.erase(aimF.begin() + z);
+                        player.getAimInitial().erase(player.getAimInitial().begin() + z);
+                        player.getAimFinal().erase(player.getAimFinal().begin() + z);
                     }
                 }
             }
 
             for (int g = 0; g < Bulletz.size(); g++) {
                 for (int q = 0; q < Bulletz[g].size(); q++) {
-                    Bulletz[g][q].setIsShot(true);
                     if (Bulletz[g][q].isIsShot()) {
-                        EaimI.push_back(enemies[g].getPosition());
-                        EaimF.push_back(player.getPosition());
-                        Bulletz[g][q].shoot(EaimI[g], EaimF[g]);
+                        Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
                         /* if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
                             (enemies[g].getWeapon()->getRange() * 50)) ||
                            (Bulletz[g][q].isGamecharacterCollision() ||Bulletz[g][q].getTerrainCollision())) {
-                           Bulletz[g][q].erase(Bulletz.begin() + g);
-                           aimI.erase(aimI.begin() + g);
-                           aimF.erase(aimF.begin() + g);
+                           Bulletz[g].erase(Bulletz[g].begin() + q);
                        }*/
                     }
                 }

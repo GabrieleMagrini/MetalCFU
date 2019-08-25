@@ -340,3 +340,19 @@ bool GameCharacter::isCollisionRight() const {
 void GameCharacter::setCollisionRight(bool collisionRight) {
     GameCharacter::collisionRight = collisionRight;
 }
+
+vector<Vector2f> &GameCharacter::getAimInitial() {
+    return aimInitial;
+}
+
+void GameCharacter::setAimInitial(vector<Vector2f> &aimInitial) {
+    GameCharacter::aimInitial = aimInitial;
+}
+
+vector<Vector2f> &GameCharacter::getAimFinal() {
+    return aimFinal;
+}
+
+void GameCharacter::setAimFinal(vector<Vector2f> &aimFinal) {
+    GameCharacter::aimFinal = aimFinal;
+}
