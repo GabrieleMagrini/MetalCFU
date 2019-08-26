@@ -71,7 +71,6 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
  * function that draw all the button and background
  */
 void MainMenu::render() {
-
     renderWin->draw(backGround);
 
     startButton.render(*renderWin);
@@ -86,23 +85,19 @@ void MainMenu::render() {
 
 void MainMenu::update() {
     backGround.setTextureRect(sf::IntRect(0, 0, renderWin->getSize().x, renderWin->getSize().y));
-    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
-    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
+    float scaleX = static_cast<float>(renderWin->getView().getSize().x) / static_cast<float>(backText.getSize().x);
+    float scaleY = static_cast<float>(renderWin->getView().getSize().y) / static_cast<float>(backText.getSize().y);
 
-    backGround.setScale(scalex, scaley);
-
+    backGround.setScale(scaleX, scaleY);
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
-    startButton.setPosition(renderWin->getSize().x / 2.0f - 200,
-                            renderWin->getView().getCenter().y - renderWin->getSize().y / 2.0f + 200);
+    startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 100);
     startButton.update(worldPos);
 
-    optionButton.setPosition(renderWin->getSize().x / 2.0f - 200,
-                             renderWin->getView().getCenter().y - renderWin->getSize().y / 2.0f + 305);
+    optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 205);
     optionButton.update(worldPos);
 
-    exitButton.setPosition(renderWin->getSize().x / 2.0f - 200,
-                           renderWin->getView().getCenter().y - renderWin->getSize().y / 2.0f + 410);
+    exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 310);
     exitButton.update(worldPos);
 }
 
