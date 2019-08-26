@@ -65,3 +65,11 @@ void GameOverMenu::update() {
     exitGame.setPosition(renderWin->getView().getCenter().x + exitGame.getShape().getLocalBounds().width + 5, 300);
     exitGame.update(worldPos);
 }
+
+void GameOverMenu::render() {
+    renderWin->draw(backGround);
+    renderWin->draw(text);
+
+    mainMenu.render(*renderWin);
+    exitGame.render(*renderWin);
+}

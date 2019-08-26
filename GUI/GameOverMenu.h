@@ -29,6 +29,7 @@ public:
 
     void update();
 
+    void render();
 private:
     std::shared_ptr<sf::RenderWindow> renderWin;
     sf::Sprite backGround;
