@@ -10,6 +10,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
@@ -488,6 +489,23 @@ void Game::loop() {
         } else if (gameState->getStateName() == "ExitGame") {  // exit game
             renderWin->close();
 
+        } else if (gameState->getStateName() == "GameOver") { //Game over state
+            playerView.setCenter(renderWin->getView().getSize().x / 2.0f, renderWin->getView().getSize().y / 2.0f);
+            while (renderWin->pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (gameOver.isExitButtonPressed()) {
+                        exitGameState();
+                    } else if (gameOver.isMainMenuPressed()) {
+                        mainMenuState();
+                    }
+                }
+                gameOver.update();
+            }
+            renderWin->setView(playerView);
+            gameOver.render();
         }
     }
 

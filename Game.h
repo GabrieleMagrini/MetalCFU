@@ -29,6 +29,7 @@
 #include "HUD/Hud.h"
 #include "Usable.h"
 #include "Behaviour/Behaviour.h"
+#include "GUI/GameOverMenu.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
@@ -66,6 +67,7 @@ private:
     OptionMenu opMenu;
     MainMenu mainMenu;
     PauseMenu pauseMenu;
+    GameOverMenu gameOver;
     std::shared_ptr<sf::RenderWindow> renderWin;
     const std::string wallpaper1 = "Sources/Pngs/wallpaper_1.jpeg";
     sf::Texture textBackGround;
