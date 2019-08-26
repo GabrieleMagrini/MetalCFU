@@ -128,10 +128,10 @@ void Game::loop() {
                             enemies[j] = *enemyFactory.createEnemy(
                                     EnemyType::Soldier);   //Placing the enemies in the map
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
-                            std::vector<Ammo> enemy;
-                            Bulletz.push_back(enemy);
-                        }
 
+
+                        }
+                        Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
                         float scaleY = static_cast<float>(blocks.back().getPosition().y) /
@@ -141,7 +141,6 @@ void Game::loop() {
 
                         player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20,
                                         static_cast<int>(blocks[1].getPosition().x) + 100, 400);
-
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
                         animationClock.restart();
@@ -156,7 +155,6 @@ void Game::loop() {
                 mainMenu.update();
 
             }
-
             mainMenu.render();
 
         } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
@@ -236,7 +234,8 @@ void Game::loop() {
                 if (event.type == sf::Event::KeyPressed) {
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
-                            screenShoot.create(renderWin->getSize().x, renderWin->getSize().y);
+                            screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
+                                               static_cast<int>(renderWin->getView().getSize().y));
                             screenShoot.update(*renderWin);
                             pauseMenu.setTextureBackGround(screenShoot);
                             pauseGameState();
@@ -464,7 +463,7 @@ void Game::loop() {
             renderWin->display();
 
         } else if (gameState->getStateName() == "PauseGame") {      //pause menu
-            playerView.setCenter(renderWin->getSize().x / 2.0f, renderWin->getSize().y / 2.0f);
+            playerView.setCenter(renderWin->getView().getSize().x / 2.0f, renderWin->getView().getSize().y / 2.0f);
             while (renderWin->pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
