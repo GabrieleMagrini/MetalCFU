@@ -14,6 +14,8 @@ public:
     GameOverState();
 
     void exitGameState(Game &g) override;
+
+    void mainMenuState(Game &g) override;
 };
 
 
