@@ -8,10 +8,10 @@ GameOverMenu::GameOverMenu(std::shared_ptr<sf::RenderWindow> rw, const std::stri
         : renderWin(std::move(rw)),
           exitGame(renderWin->getView().getCenter().x - mainMenu.getShape().getLocalBounds().width - 5, 300, 400, 100,
                    font, "Exit Game",
-                   " GUI/texture/idleGreenButton.png", " GUI/texture/hoverGreenButton.png",
+                   "GUI/texture/idleGreenButton.png", "GUI/texture/hoverGreenButton.png",
                    "GUI/texture/pressedGreenButton.png"),
           mainMenu(renderWin->getSize().x / 2.0f + 200, 300, 400, 100, font, "Main Menu",
-                   " GUI/texture/idleGreenButton.png", " GUI/texture/hoverGreenButton.png",
+                   "GUI/texture/idleGreenButton.png", "GUI/texture/hoverGreenButton.png",
                    "GUI/texture/pressedGreenButton.png"), win(false) {
     if (!bgTexure.loadFromFile(filename))
         std::cerr << "error while open file : " << filename << std::endl;
@@ -49,6 +49,7 @@ bool GameOverMenu::isWin() const {
 
 void GameOverMenu::setWin(bool win) {
     GameOverMenu::win = win;
+    update();
 }
 
 void GameOverMenu::update() {
@@ -62,7 +63,7 @@ void GameOverMenu::update() {
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
     mainMenu.setPosition(renderWin->getView().getCenter().x - mainMenu.getShape().getLocalBounds().width - 5, 300);
     mainMenu.update(worldPos);
-    exitGame.setPosition(renderWin->getView().getCenter().x + exitGame.getShape().getLocalBounds().width + 5, 300);
+    exitGame.setPosition(renderWin->getView().getCenter().x + 5, 300);
     exitGame.update(worldPos);
 }
 
@@ -72,4 +73,13 @@ void GameOverMenu::render() {
 
     mainMenu.render(*renderWin);
     exitGame.render(*renderWin);
+    renderWin->display();
+}
+
+bool GameOverMenu::isExitButtonPressed() {
+    return exitGame.isPressed();
+}
+
+bool GameOverMenu::isMainMenuPressed() {
+    return mainMenu.isPressed();
 }

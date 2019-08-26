@@ -30,6 +30,10 @@ public:
     void update();
 
     void render();
+
+    bool isExitButtonPressed();
+
+    bool isMainMenuPressed();
 private:
     std::shared_ptr<sf::RenderWindow> renderWin;
     sf::Sprite backGround;
