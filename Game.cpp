@@ -410,7 +410,7 @@ void Game::loop() {
                 }
             }
 
-            for (int g = 0; g < Bulletz.size(); g++) {
+            for (int g = 0; g < enemies.size(); g++) {
                 for (int q = 0; q < Bulletz[g].size(); q++) {
                     if (Bulletz[g][q].isIsShot()) {
                         Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
@@ -424,6 +424,15 @@ void Game::loop() {
                         }
                     }
                 }
+            }
+
+            if (player.getHp() == 0) {
+                gameOver.setWin(false);
+                gameOverState();
+
+            } else if (enemies.empty()) {
+                gameOver.setWin(true);
+                gameOverState();
             }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
