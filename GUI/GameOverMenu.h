@@ -27,6 +27,8 @@ public:
 
     void setWin(bool win);
 
+    void update();
+
 private:
     std::shared_ptr<sf::RenderWindow> renderWin;
     sf::Sprite backGround;
