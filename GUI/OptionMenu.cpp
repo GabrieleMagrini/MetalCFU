@@ -79,6 +79,8 @@ void OptionMenu::render() {
 }
 
 void OptionMenu::update() {
+    backGround.setTextureRect(sf::IntRect(0, 0, static_cast<int>(renderWin->getView().getSize().x),
+                                          static_cast<int>(renderWin->getView().getSize().y)));
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
 
