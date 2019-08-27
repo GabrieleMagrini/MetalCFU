@@ -259,6 +259,24 @@ void Game::loop() {
                             }
                             break;
 
+                        case sf::Keyboard::F:
+                            for (int i = 0; i < globalWeapon.size(); i++) {
+                                if (globalWeapon[i].getGlobalBounds().intersects(player.getGlobalBounds())) {
+                                    auto w1 = player.setWeapon(&globalWeapon[i]);
+                                    if (w1 != nullptr) {
+                                        globalWeapon[i] = *w1;
+                                    } else {
+                                        globalWeapon.erase(globalWeapon.begin() + i);
+                                    }
+                                }
+                            }
+                            break;
+                        case sf::Keyboard::Num2:
+                            player.setSelectedWeapon(2);
+                            if (player.getWeapon() == nullptr)
+                                player.setSelectedWeapon(1);
+
+                            break;
                         default:
                             break;
                     }
@@ -538,7 +556,7 @@ void Game::renderMap() {
     for (auto &sprite : blocks) {
         renderWin->draw(sprite);
     }
-    for (auto &enemy : enemies) {                               //managing the gravity upon the enemy
+    for (auto &enemy : enemies) {                               //rendering Enemy
 
         renderWin->draw(enemy);
         renderWin->draw(*enemy.getWeapon());
