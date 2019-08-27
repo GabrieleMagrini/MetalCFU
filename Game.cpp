@@ -221,7 +221,7 @@ void Game::loop() {
                                 Vector2f Fin(xPressed, yPressed);
                                 player.getAimFinal().push_back(Fin);
 
-                                if (player.getWeapon()->getCurrentAmmo().size() ||
+                                if (!player.getWeapon()->getCurrentAmmo().empty() ||
                                     player.getWeapon()->getName() == "pistol") {
                                     bullets.push_back(player.getWeapon()->shoot());
                                     player.getWeapon()->setShoot(true);
@@ -368,13 +368,16 @@ void Game::loop() {
 
                     enemies[i].releaseInventory(w, u);
                     w.removeElement(enemies[i].getSelectedWeapon(), a);
-                    a.realoadTexture();
                     a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
                                                  a.getTexture()->getSize().y / 2 - 1));
                     globalWeapon.push_back(a);
                     enemies.erase(enemies.begin() + i);
 
                 }
+            }
+
+            for (auto &w: globalWeapon) { //reload texture for weapon
+                w.realoadTexture();
             }
 
             for (int j = 0; j < enemies.size(); j++) { //Enemy Weapon position update

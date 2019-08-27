@@ -79,6 +79,9 @@ public:
     void realoadTexture();
 
 private:
+
+    void copy(const Weapon &w);
+
     std::string name;
     std::vector<Ammo> currentAmmo;
     int damage;
