@@ -18,7 +18,7 @@ void Trampoline::liftUp(Player *player) {
     if (this->getCollision()) {
         if (abs(player->getPosY() - this->getPosition().y) < height) {
             player->setJumping(true);
-            player->setPosition(player->getPosition().x, player->getPosition().y - 10);
+            player->setPosition(player->getPosition().x, player->getPosition().y - 15);
         } else {
             player->setJumping(false);
             this->setCollision(false);

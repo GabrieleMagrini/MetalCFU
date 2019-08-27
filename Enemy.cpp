@@ -37,7 +37,7 @@ void Enemy::checkBehaviour(Player *p) {
     auto attack = new attackBehaviour();
     auto patrol = new patrolBehaviour();
     auto suicidal = new suicidalBehaviour();
-    if ((abs(getPosX() - p->getPosX())) < 300) {
+    if ((abs(getPosX() - p->getPosX())) < 250) {
         setBehaviour(attack);
     } else {
         if (this->getHp() < 10)
