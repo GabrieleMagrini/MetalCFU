@@ -17,10 +17,6 @@ public:
 
     bool getCollision();
 
-    int getSpeedY() const;
-
-    void setSpeedY(int speedY);
-
 private:
 
     bool collision;
