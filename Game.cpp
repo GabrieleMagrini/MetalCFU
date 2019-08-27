@@ -262,7 +262,7 @@ void Game::loop() {
                             }
                             break;
 
-                        case sf::Keyboard::F: {
+                        case sf::Keyboard::F: { //Weapon pickup
                             bool addAmmo = false;
                             for (int i = 0; i < globalWeapon.size(); i++) {
                                 if (globalWeapon[i].getGlobalBounds().intersects(player.getGlobalBounds())) {
@@ -270,7 +270,8 @@ void Game::loop() {
 
                                         if (player.getWeapon(j) != nullptr)
                                             if ((globalWeapon[i].getName() == player.getWeapon(j)->getName())) {
-                                                player.getWeapon(j)->addAmmo(30);
+                                                player.getWeapon(j)->addAmmo(5);
+                                                player.getWeapon(j)->addAmmo(globalWeapon[i].getCurrentAmmo().size());
                                                 addAmmo = true;
                                             }
                                     }
