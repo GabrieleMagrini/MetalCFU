@@ -53,7 +53,7 @@ void Weapon::setMaxAmmo(const int quantity) {
 Ammo Weapon::shoot() {
     Ammo a;
     if (name != "pistol") {
-        if (currentAmmo.size() > 0) {
+        if (!currentAmmo.empty()) {
             currentAmmo[0].setIsShot(true);
             currentAmmo[0].setPosition(getPosition());
             a = currentAmmo[0];
@@ -160,7 +160,7 @@ void Weapon::setTextures(float xMouse, float xCharacter) {
             ir = IntRect(texture.getSize().x / 2, 0, texture.getSize().x / 2, texture.getSize().y / 2);
 
         else
-            ir = IntRect(0, 0, texture.getSize().x / 2, texture.getSize().y / 2);
+            ir = IntRect(0, 0, texture.getSize().x / 2 - 1, texture.getSize().y / 2 - 1);
 
         setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width / 2, this->getPosition().y);
     } else {
@@ -169,7 +169,7 @@ void Weapon::setTextures(float xMouse, float xCharacter) {
             ir = IntRect(texture.getSize().x / 2, texture.getSize().y / 2, texture.getSize().x / 2,
                          texture.getSize().y / 2);
         else
-            ir = IntRect(0, texture.getSize().y / 2, texture.getSize().x / 2, texture.getSize().y / 2);
+            ir = IntRect(0, texture.getSize().y / 2, texture.getSize().x / 2 - 1, texture.getSize().y / 2 - 1);
         setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width, this->getPosition().y);
     }
 
@@ -197,5 +197,5 @@ void Weapon::setCoolDown(float coolDown) {
 }
 
 void Weapon::realoadTexture() {
-    texture.loadFromFile(filename);
+    setTexture(texture);
 }

@@ -10,6 +10,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
@@ -128,10 +129,10 @@ void Game::loop() {
                             enemies[j] = *enemyFactory.createEnemy(
                                     EnemyType::Soldier);   //Placing the enemies in the map
                             enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
-                            std::vector<Ammo> enemy;
-                            Bulletz.push_back(enemy);
-                        }
 
+
+                        }
+                        Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
                         float scaleY = static_cast<float>(blocks.back().getPosition().y) /
@@ -141,7 +142,6 @@ void Game::loop() {
 
                         player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20,
                                         static_cast<int>(blocks[1].getPosition().x) + 100, 400);
-
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
                         animationClock.restart();
@@ -156,7 +156,6 @@ void Game::loop() {
                 mainMenu.update();
 
             }
-
             mainMenu.render();
 
         } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
@@ -222,7 +221,7 @@ void Game::loop() {
                                 Vector2f Fin(xPressed, yPressed);
                                 player.getAimFinal().push_back(Fin);
 
-                                if (player.getWeapon()->getCurrentAmmo().size() ||
+                                if (!player.getWeapon()->getCurrentAmmo().empty() ||
                                     player.getWeapon()->getName() == "pistol") {
                                     bullets.push_back(player.getWeapon()->shoot());
                                     player.getWeapon()->setShoot(true);
@@ -236,7 +235,8 @@ void Game::loop() {
                 if (event.type == sf::Event::KeyPressed) {
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
-                            screenShoot.create(renderWin->getSize().x, renderWin->getSize().y);
+                            screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
+                                               static_cast<int>(renderWin->getView().getSize().y));
                             screenShoot.update(*renderWin);
                             pauseMenu.setTextureBackGround(screenShoot);
                             pauseGameState();
@@ -259,6 +259,24 @@ void Game::loop() {
                             }
                             break;
 
+                        case sf::Keyboard::F:
+                            for (int i = 0; i < globalWeapon.size(); i++) {
+                                if (globalWeapon[i].getGlobalBounds().intersects(player.getGlobalBounds())) {
+                                    auto w1 = player.setWeapon(&globalWeapon[i]);
+                                    if (w1 != nullptr) {
+                                        globalWeapon[i] = *w1;
+                                    } else {
+                                        globalWeapon.erase(globalWeapon.begin() + i);
+                                    }
+                                }
+                            }
+                            break;
+                        case sf::Keyboard::Num2:
+                            player.setSelectedWeapon(2);
+                            if (player.getWeapon() == nullptr)
+                                player.setSelectedWeapon(1);
+
+                            break;
                         default:
                             break;
                     }
@@ -369,13 +387,16 @@ void Game::loop() {
 
                     enemies[i].releaseInventory(w, u);
                     w.removeElement(enemies[i].getSelectedWeapon(), a);
-                    a.realoadTexture();
                     a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
                                                  a.getTexture()->getSize().y / 2 - 1));
                     globalWeapon.push_back(a);
                     enemies.erase(enemies.begin() + i);
 
                 }
+            }
+
+            for (auto &w: globalWeapon) { //reload texture for weapon
+                w.realoadTexture();
             }
 
             for (int j = 0; j < enemies.size(); j++) { //Enemy Weapon position update
@@ -411,7 +432,7 @@ void Game::loop() {
                 }
             }
 
-            for (int g = 0; g < Bulletz.size(); g++) {
+            for (int g = 0; g < enemies.size(); g++) {
                 for (int q = 0; q < Bulletz[g].size(); q++) {
                     if (Bulletz[g][q].isIsShot()) {
                         Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
@@ -425,6 +446,15 @@ void Game::loop() {
                         }
                     }
                 }
+            }
+
+            if (player.getHp() == 0) {
+                gameOver.setWin(false);
+                gameOverState();
+
+            } else if (enemies.empty()) {
+                gameOver.setWin(true);
+                gameOverState();
             }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
@@ -465,7 +495,7 @@ void Game::loop() {
             renderWin->display();
 
         } else if (gameState->getStateName() == "PauseGame") {      //pause menu
-            playerView.setCenter(renderWin->getSize().x / 2.0f, renderWin->getSize().y / 2.0f);
+            playerView.setCenter(renderWin->getView().getSize().x / 2.0f, renderWin->getView().getSize().y / 2.0f);
             while (renderWin->pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
@@ -490,6 +520,29 @@ void Game::loop() {
         } else if (gameState->getStateName() == "ExitGame") {  // exit game
             renderWin->close();
 
+        } else if (gameState->getStateName() == "GameOver") { //Game over state
+            playerView.setCenter(renderWin->getView().getSize().x / 2.0f, renderWin->getView().getSize().y / 2.0f);
+            renderWin->setView(playerView);
+            while (renderWin->pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    renderWin->close();
+
+                if (event.type == sf::Event::MouseButtonReleased) {
+                    if (gameOver.isExitButtonPressed()) {
+                        exitGameState();
+                    } else if (gameOver.isMainMenuPressed()) {
+                        enemies.clear();
+                        globalWeapon.clear();
+                        for (int i = 0; i < player.getDimWeapon(); i++) {
+                            player.removeWeapon(i);
+                        }
+                        mainMenuState();
+                    }
+                }
+
+            }
+            gameOver.update();
+            gameOver.render();
         }
     }
 
@@ -504,7 +557,7 @@ void Game::renderMap() {
     for (auto &sprite : blocks) {
         renderWin->draw(sprite);
     }
-    for (auto &enemy : enemies) {                               //managing the gravity upon the enemy
+    for (auto &enemy : enemies) {                               //rendering Enemy
 
         renderWin->draw(enemy);
         renderWin->draw(*enemy.getWeapon());

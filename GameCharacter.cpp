@@ -121,6 +121,11 @@ Weapon *GameCharacter::getWeapon() {
     return weaponInventory.getElement(selectedWeapon);
 }
 
+Weapon *GameCharacter::getWeapon(int idx) {
+    return weaponInventory.getElement(idx);
+}
+
+
 /**
  * remove a weapon from the inventory
  * @param idx index of the slot

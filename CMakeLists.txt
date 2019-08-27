@@ -12,5 +12,5 @@ include_directories(${SFML_INCLUDE_DIR})
 add_subdirectory(test)
 add_executable(MetalCFU main.cpp ${SOURCE_FILES})
 
-add_library(core ${SOURCE_FILES} Behaviour/patrolBehaviour.cpp Behaviour/patrolBehaviour.h Behaviour/attackBehaviour.cpp Behaviour/attackBehaviour.h Behaviour/suicidalBehaviour.cpp Behaviour/suicidalBehaviour.h HUD/Hud.cpp HUD/Hud.h)
+add_library(core ${SOURCE_FILES} Behaviour/patrolBehaviour.cpp Behaviour/patrolBehaviour.h Behaviour/attackBehaviour.cpp Behaviour/attackBehaviour.h Behaviour/suicidalBehaviour.cpp Behaviour/suicidalBehaviour.h HUD/Hud.cpp HUD/Hud.h GUI/GameOverMenu.cpp GUI/GameOverMenu.h)
 target_link_libraries(MetalCFU core sfml-graphics sfml-window sfml-system sfml-audio)
