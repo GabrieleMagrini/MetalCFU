@@ -49,6 +49,8 @@ public:
 
     Weapon *getWeapon();
 
+    Weapon *getWeapon(int idx);
+
     Weapon *setWeapon(Weapon *weapon);
 
     Usable *getUsable(int idx);
