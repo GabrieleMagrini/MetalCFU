@@ -95,7 +95,7 @@ void Game::loop() {
 
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
-    int enemyVectorSize = 1;
+    int enemyVectorSize = 2;
 
     float xStart = 0;
     float yStart = 0;
@@ -128,7 +128,7 @@ void Game::loop() {
                                         enemies.size(); j++) {
                             enemies[j] = *enemyFactory.createEnemy(
                                     EnemyType::Soldier);   //Placing the enemies in the map
-                            enemies[j].setPosition(blocks[j + 5].getPosition().x + 200 * j, 250);
+                            enemies[j].setPosition(blocks[15 + j].getPosition().x + 500 * j, 250);
 
 
                         }
@@ -449,6 +449,12 @@ void Game::loop() {
             }
 
             if (player.getHp() == 0) {
+                player.setLives(player.getLives() - 1);
+                player.setHp(100);
+                player.setPosition(blocks[1].getPosition().x + 100, 400);
+            }
+
+            if (player.getLives() == 0) {
                 gameOver.setWin(false);
                 gameOverState();
 
