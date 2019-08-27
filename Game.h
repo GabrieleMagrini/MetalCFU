@@ -79,6 +79,7 @@ private:
     std::vector<Enemy> enemies;
     std::vector<Weapon> globalWeapon;
     std::vector<Usable> globalUsable;
+    std::vector<Interactable> globalInteractable;
 
 
     sf::View playerView;
