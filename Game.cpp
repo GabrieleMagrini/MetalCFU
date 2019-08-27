@@ -5,7 +5,6 @@
 #include "Game.h"
 
 
-
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState()), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
@@ -96,7 +95,7 @@ void Game::loop() {
 
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
-    int enemyVectorSize = 2;
+    int enemyVectorSize = 5;
 
     float xStart = 0;
     float yStart = 0;
@@ -134,7 +133,7 @@ void Game::loop() {
 
 
                         }
-                        t.setPosition(100, 500);
+                        t.setPosition(300, 500);
                         t.setScale(2, 2);
                         Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
@@ -263,18 +262,36 @@ void Game::loop() {
                             }
                             break;
 
-                        case sf::Keyboard::F:
+                        case sf::Keyboard::F: {
+                            bool addAmmo = false;
                             for (int i = 0; i < globalWeapon.size(); i++) {
                                 if (globalWeapon[i].getGlobalBounds().intersects(player.getGlobalBounds())) {
-                                    auto w1 = player.setWeapon(&globalWeapon[i]);
-                                    if (w1 != nullptr) {
-                                        globalWeapon[i] = *w1;
+                                    for (int j = 0; j < player.getDimWeapon(); j++) {
+
+                                        if (player.getWeapon(j) != nullptr)
+                                            if ((globalWeapon[i].getName() == player.getWeapon(j)->getName())) {
+                                                player.getWeapon(j)->addAmmo(30);
+                                                addAmmo = true;
+                                            }
+                                    }
+                                    if (!addAmmo) {
+                                        globalWeapon[i].addAmmo(15);
+                                        auto w1 = player.setWeapon(&globalWeapon[i]);
+                                        if (w1 != nullptr) {
+
+                                            globalWeapon[i] = *w1;
+                                        } else {
+                                            globalWeapon.erase(globalWeapon.begin() + i);
+                                        }
+
                                     } else {
                                         globalWeapon.erase(globalWeapon.begin() + i);
                                     }
+
                                 }
                             }
                             break;
+                        }
                         case sf::Keyboard::Num2:
                             player.setSelectedWeapon(1);
                             if (player.getWeapon() == nullptr)
@@ -342,7 +359,7 @@ void Game::loop() {
                         enemies[x].getAimFinal().push_back(EnF);
                     }
                 } else
-                enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
 
             if (animationClock.getElapsedTime().asSeconds() > 0.15f) { //animation for player
@@ -447,9 +464,9 @@ void Game::loop() {
                         Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
                         Bulletz[g][q].checkPlayerCollision(player, blocks);
                         if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
-                            (enemies[g].getWeapon()->getRange() * 50)) ||
-                           (Bulletz[g][q].isGamecharacterCollision() ||Bulletz[g][q].getTerrainCollision())) {
-                           Bulletz[g].erase(Bulletz[g].begin() + q);
+                             (enemies[g].getWeapon()->getRange() * 50)) ||
+                            (Bulletz[g][q].isGamecharacterCollision() || Bulletz[g][q].getTerrainCollision())) {
+                            Bulletz[g].erase(Bulletz[g].begin() + q);
                             enemies[g].getAimInitial().erase(enemies[g].getAimInitial().begin() + q);
                             enemies[g].getAimFinal().erase(enemies[g].getAimFinal().begin() + q);
                         }
@@ -467,10 +484,10 @@ void Game::loop() {
                 gameOver.setWin(false);
                 gameOverState();
 
-            } else if (enemies.empty()) {
+            } /*else if (enemies.empty()) {
                 gameOver.setWin(true);
                 gameOverState();
-            }
+            }*/
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
@@ -492,7 +509,7 @@ void Game::loop() {
 
             playerHud.update(player, playerView); //HUD updating
 
-            renderWin->setView(playerView); // update the vuew
+            renderWin->setView(playerView); // update the view
 
             //RENDER
             renderWin->clear();
