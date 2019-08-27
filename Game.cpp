@@ -274,10 +274,15 @@ void Game::loop() {
                         case sf::Keyboard::Num2:
                             player.setSelectedWeapon(2);
                             if (player.getWeapon() == nullptr)
-                                player.setSelectedWeapon(1);
+                                player.setSelectedWeapon(0);
 
                             break;
+
+                        case sf::Keyboard::Num1:
+                            player.setSelectedWeapon(0);
+                            break;
                         default:
+
                             break;
                     }
 
