@@ -11,14 +11,13 @@
 
 class Trampoline: public Interactable {
 public:
-    explicit Trampoline(int h,int r, int x, int y ,bool l):height(h), Interactable(x,y) , lift(l){};
+    explicit Trampoline(int h = 300);
 
-    void liftUp(int height, Player *player);
+    void liftUp(Player *player);
 
 
 private:
     int height;
-    bool lift;
 };
 
 
