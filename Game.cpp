@@ -500,6 +500,7 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "GameOver") { //Game over state
             playerView.setCenter(renderWin->getView().getSize().x / 2.0f, renderWin->getView().getSize().y / 2.0f);
+            renderWin->setView(playerView);
             while (renderWin->pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
@@ -508,12 +509,17 @@ void Game::loop() {
                     if (gameOver.isExitButtonPressed()) {
                         exitGameState();
                     } else if (gameOver.isMainMenuPressed()) {
+                        enemies.clear();
+                        globalWeapon.clear();
+                        for (int i = 0; i < player.getDimWeapon(); i++) {
+                            player.removeWeapon(i);
+                        }
                         mainMenuState();
                     }
                 }
-                gameOver.update();
+
             }
-            renderWin->setView(playerView);
+            gameOver.update();
             gameOver.render();
         }
     }

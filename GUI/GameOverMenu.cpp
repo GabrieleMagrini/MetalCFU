@@ -10,7 +10,7 @@ GameOverMenu::GameOverMenu(std::shared_ptr<sf::RenderWindow> rw, const std::stri
                    font, "Exit Game",
                    "GUI/texture/idleGreenButton.png", "GUI/texture/hoverGreenButton.png",
                    "GUI/texture/pressedGreenButton.png"),
-          mainMenu(renderWin->getSize().x / 2.0f + 200, 300, 400, 100, font, "Main Menu",
+          mainMenu(renderWin->getView().getCenter().x + 5, 300, 400, 100, font, "Main Menu",
                    "GUI/texture/idleGreenButton.png", "GUI/texture/hoverGreenButton.png",
                    "GUI/texture/pressedGreenButton.png"), win(false) {
     if (!bgTexure.loadFromFile(filename))
@@ -24,7 +24,7 @@ GameOverMenu::GameOverMenu(std::shared_ptr<sf::RenderWindow> rw, const std::stri
 
     text.setFont(font);
     text.setFillColor(sf::Color::Red);
-    text.setCharacterSize(40);
+    text.setCharacterSize(50);
 }
 
 const sf::Texture &GameOverMenu::getBgTexure() const {
@@ -49,7 +49,6 @@ bool GameOverMenu::isWin() const {
 
 void GameOverMenu::setWin(bool win) {
     GameOverMenu::win = win;
-    update();
 }
 
 void GameOverMenu::update() {
