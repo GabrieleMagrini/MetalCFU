@@ -30,6 +30,7 @@
 #include "Usable.h"
 #include "Behaviour/Behaviour.h"
 #include "GUI/GameOverMenu.h"
+#include "Trampoline.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

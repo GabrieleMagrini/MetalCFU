@@ -5,6 +5,7 @@
 #include "Game.h"
 
 
+
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState()), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
@@ -104,6 +105,7 @@ void Game::loop() {
     vector<Ammo> bullets;
     vector<Ammo> enemyBullets;
     vector<vector<Ammo>> Bulletz;
+    Trampoline t;
 
     sf::Texture screenShoot;
 
@@ -132,6 +134,8 @@ void Game::loop() {
 
 
                         }
+                        t.setPosition(100, 500);
+                        t.setScale(2, 2);
                         Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
@@ -470,6 +474,12 @@ void Game::loop() {
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
+            if (player.getGlobalBounds().intersects(t.getGlobalBounds())) {
+                t.setCollision(true);
+            }
+            if (t.getCollision()) {
+                t.liftUp(&player);
+            }
 
             for (int y = 0; y < enemyVectorSize; y++)               //adding gravity for all the enemies
                 map.gravityApply(enemies[y]);
@@ -487,6 +497,7 @@ void Game::loop() {
             //RENDER
             renderWin->clear();
             renderMap();
+            renderWin->draw(t);
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
             for (auto &projectile : bullets) {
