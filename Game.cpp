@@ -468,8 +468,10 @@ void Game::loop() {
                              (enemies[g].getWeapon()->getRange() * 50)) ||
                             (Bulletz[g][q].isGamecharacterCollision() || Bulletz[g][q].getTerrainCollision())) {
                             Bulletz[g].erase(Bulletz[g].begin() + q);
-                            enemies[g].getAimInitial().erase(enemies[g].getAimInitial().begin() + q);
-                            enemies[g].getAimFinal().erase(enemies[g].getAimFinal().begin() + q);
+                            if (!enemies[g].getAimInitial().empty())
+                                enemies[g].getAimInitial().erase(enemies[g].getAimInitial().begin() + q);
+                            if (!enemies[g].getAimFinal().empty())
+                                enemies[g].getAimFinal().erase(enemies[g].getAimFinal().begin() + q);
                         }
                     }
                 }
@@ -526,9 +528,9 @@ void Game::loop() {
                 renderWin->draw(w);
             }
 
-            for (int t = 0; t < Bulletz.size(); t++) {
-                for (int k = 0; k < Bulletz[t].size(); k++) {
-                    renderWin->draw(Bulletz[t][k]);
+            for (int idx = 0; idx < Bulletz.size(); idx++) {
+                for (int k = 0; k < Bulletz[idx].size(); k++) {
+                    renderWin->draw(Bulletz[idx][k]);
                 }
             }
             playerHud.render();
