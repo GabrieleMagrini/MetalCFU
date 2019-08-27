@@ -10,7 +10,7 @@
 
 class Barrier : public Interactable {
 public:
-     explicit Barrier(int x = 100,int y = 10,int r = 100) : resistancePoint(r),Interactable(x,y) {}
+    explicit Barrier(int r = 100) : resistancePoint(r) {}
      ~Barrier() override = default;
 private:
     int resistancePoint;
