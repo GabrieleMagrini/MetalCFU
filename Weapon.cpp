@@ -199,3 +199,10 @@ void Weapon::setCoolDown(float coolDown) {
 void Weapon::realoadTexture() {
     setTexture(texture);
 }
+
+void Weapon::addAmmo(int quantity) {
+    if (name != "pistol") {
+        for (int i = 0; i < quantity && currentAmmo.size() <= maxAmmo; i++)
+            currentAmmo.emplace_back(Ammo(damage, range));
+    }
+}

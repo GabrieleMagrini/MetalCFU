@@ -78,6 +78,8 @@ public:
 
     void realoadTexture();
 
+    void addAmmo(int quantity);
+
 private:
 
     void copy(const Weapon &w);
