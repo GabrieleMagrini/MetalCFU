@@ -6,13 +6,18 @@
 
 int Granade::use(GameCharacter &g) {
     //TODO trow granade
+    move(5, 0);
     return 0;
 }
 
-int Granade::getDamage() const {
-    return damage;
+Granade::Granade(int d, int expTime) : Usable(d), explosionTime(expTime) {
+
 }
 
-void Granade::setDamage(int damage) {
-    Granade::damage = damage;
+int Granade::getExplosionTime() const {
+    return explosionTime;
+}
+
+void Granade::setExplosionTime(int explosionTime) {
+    Granade::explosionTime = explosionTime;
 }

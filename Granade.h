@@ -10,17 +10,19 @@
 
 class Granade: public Usable {
 public:
-    explicit Granade(int d):damage(d){};
+    explicit Granade(int d, int expTime);
 
-    ~Granade() override = default;
-
-    int getDamage() const;
-
-    void setDamage(int damage);
+    ~Granade() final = default;
 
     int use(GameCharacter &g) override;
+
+    int getExplosionTime() const;
+
+    void setExplosionTime(int explosionTime);
+
 private:
-    int damage;
+    int explosionTime;
+
 };
 
 
