@@ -6,14 +6,16 @@
 #define METALCFU_USABLE_H
 
 #include <SFML/Graphics.hpp>
+#include "GameCharacter.h"
 
+Class GameCharacter;
 
 class Usable: public sf::Sprite {
 public:
-    virtual int use()=0;
+    virtual int use(GameCharacter &g) = 0;
     ~Usable() override = default;
 private:
-    //da definire
+    bool collision;
 };
 
 

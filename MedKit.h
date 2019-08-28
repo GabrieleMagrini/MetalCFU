@@ -15,7 +15,7 @@ public:
 
     void setHealerPoints(int healerPoints);
 
-    int use() override;
+    int use(GameCharacter &g) override;
 
 private:
     int healerPoints;

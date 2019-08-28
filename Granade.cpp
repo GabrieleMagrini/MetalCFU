@@ -4,7 +4,7 @@
 
 #include "Granade.h"
 
-int Granade::use() {
+int Granade::use(GameCharacter &g) {
     //TODO trow granade
     return 0;
 }

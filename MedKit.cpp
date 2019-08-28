@@ -5,8 +5,8 @@
 #include "MedKit.h"
 
 
-int MedKit::use() {
-    return healerPoints;
+int MedKit::use(GameCharacter &g) {
+    g.setHp(g.getHp() + healerPoints);
 }
 
 void MedKit::setHealerPoints(int healerPoints) {

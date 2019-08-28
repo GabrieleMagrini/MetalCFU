@@ -18,7 +18,7 @@ public:
 
     void setDamage(int damage);
 
-    int use() override;
+    int use(GameCharacter &g) override;
 private:
     int damage;
 };
