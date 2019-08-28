@@ -33,6 +33,11 @@ private:
 
 template<typename T>
 Box<T>::Box(T t, int hp): gift(t), hp(hp) {
+    this->setGift(t);
+    auto box = new sf::Texture();
+    box->loadFromFile(
+            "Sources/Pngs/Interactable textures/Box.png");
+    this->setTexture(*box);
 
 }
 
