@@ -10,7 +10,7 @@
 
 class MedKit: public Usable {
 public:
-    explicit MedKit(int hp) : Usable(hp) {};
+    explicit MedKit(int hp, std::string fileName) : Usable(hp, std::move(fileName)) {};
     ~MedKit() override = default;
 
     int use(GameCharacter &g) override;

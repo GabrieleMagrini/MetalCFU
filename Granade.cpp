@@ -21,7 +21,7 @@ int Granade::use(GameCharacter &g) {
  * @param d damage of the granade
  * @param expTime explosion timer
  */
-Granade::Granade(int d, int expTime) : Usable(d), explosionTime(expTime) {
+Granade::Granade(int d, int expTime, std::string fileName) : Usable(d, std::move(fileName)), explosionTime(expTime) {
 
 }
 

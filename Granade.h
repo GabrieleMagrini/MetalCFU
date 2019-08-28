@@ -13,7 +13,7 @@ class Enemy;
 
 class Granade: public Usable {
 public:
-    explicit Granade(int d, int expTime);
+    explicit Granade(int d, int expTime, std::string);
 
     ~Granade() final = default;
 

@@ -12,7 +12,9 @@ class GameCharacter;
 
 class Usable: public sf::Sprite {
 public:
-    explicit Usable(int d) : data(d), collision(false) {};
+    Usable(int d, std::string fName) : data(d), collision(false), fileName(std::move(fName)) {
+        texture.loadFromFile(filename);
+    };
     virtual int use(GameCharacter &g) = 0;
     ~Usable() override = default;
 
@@ -33,7 +35,8 @@ public:
     }
 
 protected:
-
+    std::string fileName;
+    sf::Texture texture;
     int data;
     bool collision;
 };
