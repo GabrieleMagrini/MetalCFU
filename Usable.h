@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameCharacter.h"
 
-Class GameCharacter;
+class GameCharacter;
 
 class Usable: public sf::Sprite {
 public:
@@ -33,6 +33,7 @@ public:
     }
 
 protected:
+
     int data;
     bool collision;
 };
