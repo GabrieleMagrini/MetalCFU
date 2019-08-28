@@ -12,9 +12,28 @@ Class GameCharacter;
 
 class Usable: public sf::Sprite {
 public:
+    explicit Usable(int d) : data(d), collision(false) {};
     virtual int use(GameCharacter &g) = 0;
     ~Usable() override = default;
-private:
+
+    int getData() const {
+        return data;
+    }
+
+    void setData(int data) {
+        Usable::data = data;
+    }
+
+    bool isCollision() const {
+        return collision;
+    }
+
+    void setCollision(bool collision) {
+        Usable::collision = collision;
+    }
+
+protected:
+    int data;
     bool collision;
 };
 
