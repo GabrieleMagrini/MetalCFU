@@ -10,15 +10,10 @@
 
 class MedKit: public Usable {
 public:
-    explicit MedKit(int hp):healerPoints(hp){};
+    explicit MedKit(int hp) : Usable(hp) {};
     ~MedKit() override = default;
 
-    void setHealerPoints(int healerPoints);
-
     int use(GameCharacter &g) override;
-
-private:
-    int healerPoints;
 };
 
 

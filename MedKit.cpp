@@ -6,9 +6,9 @@
 
 
 int MedKit::use(GameCharacter &g) {
-    g.setHp(g.getHp() + healerPoints);
-}
+    g.setHp(g.getHp() + data);
 
-void MedKit::setHealerPoints(int healerPoints) {
-    MedKit::healerPoints = healerPoints;
+    if (g.getHp() > 100) {
+        g.setHp(100);
+    }
 }
