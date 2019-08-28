@@ -7,6 +7,9 @@
 
 
 #include "Usable.h"
+#include "Enemy.h"
+
+class Enemy;
 
 class Granade: public Usable {
 public:
@@ -19,6 +22,8 @@ public:
     int getExplosionTime() const;
 
     void setExplosionTime(int explosionTime);
+
+    void checkHit(std::vector<Enemy> &e);
 
 private:
     int explosionTime;
