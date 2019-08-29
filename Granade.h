@@ -7,20 +7,27 @@
 
 
 #include "Usable.h"
+#include "Enemy.h"
+
+class Enemy;
 
 class Granade: public Usable {
 public:
-    explicit Granade(int d):damage(d){};
+    explicit Granade(int d, int expTime, std::string);
 
-    ~Granade() override = default;
+    ~Granade() final = default;
 
-    int getDamage() const;
+    int use(GameCharacter &g) override;
 
-    void setDamage(int damage);
+    int getExplosionTime() const;
 
-    int use() override;
+    void setExplosionTime(int explosionTime);
+
+    void checkHit(std::vector<Enemy> &e);
+
 private:
-    int damage;
+    int explosionTime;
+
 };
 
 

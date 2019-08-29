@@ -6,14 +6,39 @@
 #define METALCFU_USABLE_H
 
 #include <SFML/Graphics.hpp>
+#include "GameCharacter.h"
 
+class GameCharacter;
 
 class Usable: public sf::Sprite {
 public:
-    virtual int use()=0;
+    Usable(int d, std::string fName) : data(d), collision(false), fileName(std::move(fName)) {
+        texture.loadFromFile(filename);
+    };
+    virtual int use(GameCharacter &g) = 0;
     ~Usable() override = default;
-private:
-    //da definire
+
+    int getData() const {
+        return data;
+    }
+
+    void setData(int data) {
+        Usable::data = data;
+    }
+
+    bool isCollision() const {
+        return collision;
+    }
+
+    void setCollision(bool collision) {
+        Usable::collision = collision;
+    }
+
+protected:
+    std::string fileName;
+    sf::Texture texture;
+    int data;
+    bool collision;
 };
 
 

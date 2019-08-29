@@ -10,15 +10,10 @@
 
 class MedKit: public Usable {
 public:
-    explicit MedKit(int hp):healerPoints(hp){};
+    explicit MedKit(int hp, std::string fileName) : Usable(hp, std::move(fileName)) {};
     ~MedKit() override = default;
 
-    void setHealerPoints(int healerPoints);
-
-    int use() override;
-
-private:
-    int healerPoints;
+    int use(GameCharacter &g) override;
 };
 
 

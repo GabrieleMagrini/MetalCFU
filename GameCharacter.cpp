@@ -259,7 +259,7 @@ void GameCharacter::useUsable(int invIdx) {
     Usable *u = nullptr;
     usableInventory.removeElement(invIdx, u);
     if (u != nullptr)
-        u->use();
+        u->use(*this);
 }
 
 /**
