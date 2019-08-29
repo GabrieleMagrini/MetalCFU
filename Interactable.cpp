@@ -13,3 +13,13 @@ void Interactable::setCollision(bool v) {
 bool Interactable::getCollision() {
     return collision;
 }
+
+int Interactable::getHp() const {
+    return hp;
+}
+
+void Interactable::setHp(int hp) {
+    Interactable::hp = hp;
+    if (this->hp < 0)
+        this->hp = 0;
+}
