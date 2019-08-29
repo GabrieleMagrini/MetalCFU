@@ -50,35 +50,35 @@ void Ammo::setIsShot(bool isShot) {
     Ammo::isShot = isShot;
 }
 
-bool Ammo::checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t) {
+bool Ammo::checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t, std::vector<Interactable> &I) {
     for (int i = 0; i < e.size(); i++)
         if (this->getGlobalBounds().intersects(e[i].getGlobalBounds())) {
             this->setGamecharacterCollision(true);
             e[i].getDamage(damage);
         }
-    for (auto terrain:t)
-        if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
-            this->setTerrainCollision(true);
-    return false;
-}
-
-bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t) {
-    if (this->getGlobalBounds().intersects(p.getGlobalBounds())) {
-        this->setGamecharacterCollision(true);
-        p.getDamage(damage);
-    }
-    for (auto terrain:t)
-        if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
-            this->setTerrainCollision(true);
-    return false;
-}
-
-bool Ammo::checkInteractableCollision(std::vector<Interactable> &I) {
     for (auto interactable:I)
         if (this->getGlobalBounds().intersects(interactable.getGlobalBounds())) {
             interactable.setHp(interactable.getHp() - damage);
             this->setInteractableCollision(true);
         }
+    for (auto terrain:t)
+        if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
+            this->setTerrainCollision(true);
+    return false;
+}
+
+bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t, std::vector<Interactable> &I) {
+    if (this->getGlobalBounds().intersects(p.getGlobalBounds())) {
+        this->setGamecharacterCollision(true);
+        p.getDamage(damage);
+    }
+    for (auto interactable:I)
+        if (this->getGlobalBounds().intersects(interactable.getGlobalBounds())) {
+            this->setInteractableCollision(true);
+        }
+    for (auto terrain:t)
+        if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
+            this->setTerrainCollision(true);
     return false;
 }
 
