@@ -104,10 +104,12 @@ void Game::loop() {
     vector<Ammo> bullets;
     vector<Ammo> enemyBullets;
     vector<vector<Ammo>> Bulletz;
+    //A trampoline and a box to showcase the Interactable objects and their effects
     Trampoline t;
     Weapon x = *(weaponFactory.createWeapon(WeaponType::AK_47));
     Box<Weapon> b(x);
-    globalInteractable.push_back(b);
+    globalInteractable.push_back(&t);
+    globalInteractable.push_back(&b);
 
     sf::Texture screenShoot;
 
@@ -136,10 +138,10 @@ void Game::loop() {
 
 
                         }
-                        t.setPosition(300, 500);
-                        t.setScale(2, 2);
-                        globalInteractable[0].setPosition(500, 400);
-                        globalInteractable[0].setScale(1.5, 1.5);
+                        globalInteractable[0]->setPosition(300, 400);
+                        globalInteractable[0]->setScale(2, 2);
+                        globalInteractable[1]->setPosition(500, 400);
+                        globalInteractable[1]->setScale(1.5, 1.5);
                         Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
@@ -499,13 +501,29 @@ void Game::loop() {
                 gameOverState();
             }*/
 
+
+            //Add a fake gravity to the interactable objects,now easier to put in the map
+
+            for (int Z = 0; Z < globalInteractable.size(); Z++) {
+                globalInteractable[Z]->setPosition(globalInteractable[Z]->getPosition().x,
+                                                   globalInteractable[Z]->getPosition().y + 20);
+                for (auto &sprite :blocks) {
+                    if (globalInteractable[Z]->getGlobalBounds().intersects(sprite.getGlobalBounds()))
+                        globalInteractable[Z]->setPosition(globalInteractable[Z]->getPosition().x,
+                                                           globalInteractable[Z]->getPosition().y - 20);
+                }
+            }
+
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
-            if (player.getGlobalBounds().intersects(t.getGlobalBounds())) {
-                t.setCollision(true);
+
+            //check the Trampoline collision,at the moment just 1 element
+
+            if (player.getGlobalBounds().intersects(globalInteractable[0]->getGlobalBounds())) {
+                globalInteractable[0]->setCollision(true);
             }
-            if (t.getCollision()) {
-                t.liftUp(&player);
+            if (globalInteractable[0]->getCollision()) {
+                dynamic_cast<Trampoline *>(globalInteractable[0])->liftUp(&player);
             }
 
             for (int y = 0; y < enemyVectorSize; y++)               //adding gravity for all the enemies
@@ -531,7 +549,7 @@ void Game::loop() {
                 renderWin->draw(projectile);
             }
             for (int I = 0; I < globalInteractable.size(); I++) {
-                renderWin->draw(globalInteractable[I]);
+                renderWin->draw(*globalInteractable[I]);
             }
 
             for (auto &w : globalWeapon) {
