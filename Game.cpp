@@ -105,6 +105,9 @@ void Game::loop() {
     vector<Ammo> enemyBullets;
     vector<vector<Ammo>> Bulletz;
     Trampoline t;
+    Weapon x = *(weaponFactory.createWeapon(WeaponType::AK_47));
+    Box<Weapon> b(x);
+    globalInteractable.push_back(b);
 
     sf::Texture screenShoot;
 
@@ -135,6 +138,8 @@ void Game::loop() {
                         }
                         t.setPosition(300, 500);
                         t.setScale(2, 2);
+                        globalInteractable[0].setPosition(500, 400);
+                        globalInteractable[0].setScale(1.5, 1.5);
                         Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
@@ -448,10 +453,11 @@ void Game::loop() {
             for (int z = 0; z < bullets.size(); z++) {
                 if (bullets[z].isIsShot()) {
                     bullets[z].shoot(player.getAimInitial()[z], player.getAimFinal()[z]);
-                    bullets[z].checkCollision(enemies, blocks);
+                    bullets[z].checkCollision(enemies, blocks, globalInteractable);
                     if ((abs(bullets[z].getPosition().x - player.getWeapon()->getPosition().x) >
                          (player.getWeapon()->getRange() * 50)) ||
-                        (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision())) {
+                        (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision() ||
+                         bullets[z].isInteractableCollision())) {
                         bullets.erase(bullets.begin() + z);
                         player.getAimInitial().erase(player.getAimInitial().begin() + z);
                         player.getAimFinal().erase(player.getAimFinal().begin() + z);
@@ -463,10 +469,11 @@ void Game::loop() {
                 for (int q = 0; q < Bulletz[g].size(); q++) {
                     if (Bulletz[g][q].isIsShot()) {
                         Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
-                        Bulletz[g][q].checkPlayerCollision(player, blocks);
+                        Bulletz[g][q].checkPlayerCollision(player, blocks, globalInteractable);
                         if ((abs(Bulletz[g][q].getPosition().x - enemies[g].getWeapon()->getPosition().x) >
                              (enemies[g].getWeapon()->getRange() * 50)) ||
-                            (Bulletz[g][q].isGamecharacterCollision() || Bulletz[g][q].getTerrainCollision())) {
+                            (Bulletz[g][q].isGamecharacterCollision() || Bulletz[g][q].getTerrainCollision() ||
+                             Bulletz[g][q].isInteractableCollision())) {
                             Bulletz[g].erase(Bulletz[g].begin() + q);
                             if (!enemies[g].getAimInitial().empty())
                                 enemies[g].getAimInitial().erase(enemies[g].getAimInitial().begin() + q);
@@ -522,6 +529,9 @@ void Game::loop() {
             renderWin->draw(*player.getWeapon());
             for (auto &projectile : bullets) {
                 renderWin->draw(projectile);
+            }
+            for (int I = 0; I < globalInteractable.size(); I++) {
+                renderWin->draw(globalInteractable[I]);
             }
 
             for (auto &w : globalWeapon) {
