@@ -11,7 +11,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20),
+          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 10), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
           playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font), event() {
@@ -92,7 +92,7 @@ void Game::loop() {
     float startY = 0; //used for jump
     sf::Clock animationClock;
     sf::Clock weaponClock;
-
+    sf::Clock granadeClock;
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
     int enemyVectorSize = 5;
@@ -110,6 +110,7 @@ void Game::loop() {
     Box<Weapon> b(x);
     globalInteractable.push_back(&t);
     globalInteractable.push_back(&b);
+    Granade *granade1 = nullptr;
 
     sf::Texture screenShoot;
 
@@ -150,12 +151,14 @@ void Game::loop() {
                         backGround.setPosition(-500, -100);
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
-                        player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), 100, 20,
+                        player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 10),
+                                        100, 20,
                                         static_cast<int>(blocks[1].getPosition().x) + 100, 400);
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
                         animationClock.restart();
                         weaponClock.restart();
+                        granadeClock.restart();
                         for (auto a  : enemyShootClock) {
                             a.restart();
                         }
@@ -243,6 +246,7 @@ void Game::loop() {
                     }
                 }
                 if (event.type == sf::Event::KeyPressed) {
+                    int numKey = 0;
                     switch (event.key.code) {
                         case sf::Keyboard::Escape:
                             screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
@@ -301,14 +305,46 @@ void Game::loop() {
                             break;
                         }
                         case sf::Keyboard::Num2:
+                            numKey = player.getSelectedWeapon();
                             player.setSelectedWeapon(1);
                             if (player.getWeapon() == nullptr)
-                                player.setSelectedWeapon(0);
+                                player.setSelectedWeapon(numKey);
 
                             break;
 
                         case sf::Keyboard::Num1:
+                            numKey = player.getSelectedWeapon();
                             player.setSelectedWeapon(0);
+                            if (player.getWeapon() == nullptr)
+                                player.setSelectedWeapon(numKey);
+                            break;
+
+                        case sf::Keyboard::Num3:
+                            numKey = player.getSelectedWeapon();
+                            player.setSelectedWeapon(2);
+                            if (player.getWeapon() == nullptr)
+                                player.setSelectedWeapon(numKey);
+                            break;
+
+                        case sf::Keyboard::Num4:
+                            numKey = player.getSelectedWeapon();
+                            player.setSelectedWeapon(3);
+                            if (player.getWeapon() == nullptr)
+                                player.setSelectedWeapon(numKey);
+                            break;
+
+                        case sf::Keyboard::T: //launch granade
+                        {
+                            if (granade1 != nullptr) {
+                                if (granade1->isTrow())
+                                    for (int i = 0; i < player.getDimUsable(); i++) {
+                                        granade1 = dynamic_cast<Granade *>(player.getUsable(i));
+                                        if (granade1 != nullptr) {
+                                            granade1->setTrow(true);
+                                        }
+                                    }
+                            }
+                        }
                             break;
                         default:
 
@@ -535,6 +571,24 @@ void Game::loop() {
             player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
                                             player.getPosition().y + player.getLocalBounds().width / 2 + 7);
 
+
+
+            //UPDATE GRANADE
+            if (granade1 != nullptr) {
+                if (granade1->isTrow()) {
+                    granade1->use(player);
+                    if (granadeClock.getElapsedTime().asSeconds() >= 1) {
+                        granade1->setExplosionTime(granade1->getExplosionTime() - 1);
+                        granadeClock.restart();
+                    }
+                    granade1->checkHit(enemies);
+                } else
+                    granade1->setPosition(player.getPosX(), player.getPosY());
+            }
+
+
+
+
             playerHud.update(player, playerView); //HUD updating
 
             renderWin->setView(playerView); // update the view
@@ -545,6 +599,9 @@ void Game::loop() {
             renderWin->draw(t);
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
+            if (granade1 != nullptr && !granade1->isTrow())
+                renderWin->draw(*granade1);
+
             for (auto &projectile : bullets) {
                 renderWin->draw(projectile);
             }
