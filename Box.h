@@ -14,7 +14,7 @@ using namespace std;
 template<typename T>
 class Box : public Interactable {
 public:
-    explicit Box(T t, int hp = 100);
+    explicit Box(T t);
 
     ~Box() override = default;
 
@@ -22,18 +22,13 @@ public:
 
     void setGift(const unique_ptr<T> &gift);
 
-    int getHp() const;
-
-    void setHp(int hp);
-
 private:
-    unique_ptr<T> gift;
-    int hp;
+    T gift;
+
 };
 
 template<typename T>
-Box<T>::Box(T t, int hp): gift(t), hp(hp) {
-    this->setGift(t);
+Box<T>::Box(T t): gift(t) {
     auto box = new sf::Texture();
     box->loadFromFile(
             "Sources/Pngs/Interactable textures/Box.png");
@@ -54,17 +49,7 @@ void Box<T>::setGift(const unique_ptr<T> &gift) {
     Box::gift = gift;
 }
 
-template<typename T>
-int Box<T>::getHp() const {
-    return hp;
-}
 
-template<typename T>
-void Box<T>::setHp(int hp) {
-    Box::hp = hp;
-    if (this->hp < 0)
-        this->hp = 0;
-}
 
 
 #endif //METALCFU_BOX_H
