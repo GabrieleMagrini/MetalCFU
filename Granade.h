@@ -25,8 +25,13 @@ public:
 
     void checkHit(std::vector<Enemy> &e);
 
+    bool isTrow() const;
+
+    void setTrow(bool trow);
+
 private:
     int explosionTime;
+    bool trow;
 
 };
 

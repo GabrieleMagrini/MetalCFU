@@ -22,7 +22,7 @@ int Granade::use(GameCharacter &g) {
  * @param expTime explosion timer
  */
 Granade::Granade(int d, int expTime) : Usable(d, "Sources/Pngs/weapon textures/sheetGranade.png"),
-                                       explosionTime(expTime) {
+                                       explosionTime(expTime), trow(false) {
     texture.loadFromFile(fileName);
     setTexture(texture);
     setTextureRect(sf::IntRect(0, 0, 26, 26));
@@ -41,11 +41,20 @@ void Granade::setExplosionTime(int explosionTime) {
  * @param e vector of enemy
  */
 void Granade::checkHit(std::vector<Enemy> &e) {
-    for (auto &en : e) {
-        if (en.getGlobalBounds().intersects(getGlobalBounds())) {
-            en.getDamage(data);
-            if (en.getHp() < 0)
-                en.setHp(0);
+    if (explosionTime == 0)
+        for (auto &en : e) {
+            if (en.getGlobalBounds().intersects(getGlobalBounds())) {
+                en.getDamage(data);
+                if (en.getHp() < 0)
+                    en.setHp(0);
+            }
         }
-    }
+}
+
+bool Granade::isTrow() const {
+    return trow;
+}
+
+void Granade::setTrow(bool trow) {
+    Granade::trow = trow;
 }
