@@ -6,6 +6,7 @@
 #define METALCFU_AMMO_H
 
 #include <SFML/Graphics.hpp>
+#include "Interactable.h"
 
 class Enemy;
 
@@ -51,12 +52,19 @@ public:
 
     void setRange(int range);
 
+    bool checkInteractableCollision(std::vector<Interactable> &I);
+
+    bool isInteractableCollision() const;
+
+    void setInteractableCollision(bool interactableCollision);
+
 private:
     int damage;
     int range;
     bool terrainCollision;
     bool isShot;
     bool gamecharacterCollision;
+    bool interactableCollision;
 };
 
 

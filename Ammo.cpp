@@ -73,6 +73,15 @@ bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t) {
     return false;
 }
 
+bool Ammo::checkInteractableCollision(std::vector<Interactable> &I) {
+    for (auto interactable:I)
+        if (this->getGlobalBounds().intersects(interactable.getGlobalBounds())) {
+            interactable.setHp(interactable.getHp() - damage);
+            this->setInteractableCollision(true);
+        }
+    return false;
+}
+
 bool Ammo::isGamecharacterCollision() const {
     return gamecharacterCollision;
 }
@@ -96,4 +105,13 @@ int Ammo::getRange() const {
 void Ammo::setRange(int range) {
     Ammo::range = range;
 }
+
+bool Ammo::isInteractableCollision() const {
+    return interactableCollision;
+}
+
+void Ammo::setInteractableCollision(bool interactableCollision) {
+    Ammo::interactableCollision = interactableCollision;
+}
+
 
