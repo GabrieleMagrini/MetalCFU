@@ -21,8 +21,11 @@ int Granade::use(GameCharacter &g) {
  * @param d damage of the granade
  * @param expTime explosion timer
  */
-Granade::Granade(int d, int expTime, std::string fileName) : Usable(d, std::move(fileName)), explosionTime(expTime) {
-
+Granade::Granade(int d, int expTime) : Usable(d, "Sources/Pngs/weapon textures/sheetGranade.png"),
+                                       explosionTime(expTime) {
+    texture.loadFromFile(fileName);
+    setTexture(texture);
+    setTextureRect(sf::IntRect(0, 0, 26, 26));
 }
 
 int Granade::getExplosionTime() const {
