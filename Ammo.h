@@ -40,9 +40,9 @@ public:
 
     void setIsShot(bool isShot);
 
-    bool checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t, std::vector<Interactable> &I);
+    bool checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t, std::vector<Interactable *> &I);
 
-    bool checkPlayerCollision(Player &p, const std::vector<Terrain> &t, std::vector<Interactable> &I);
+    bool checkPlayerCollision(Player &p, const std::vector<Terrain> &t, std::vector<Interactable *> &I);
 
     bool isGamecharacterCollision() const;
 
