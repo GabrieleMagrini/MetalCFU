@@ -8,7 +8,7 @@
 #include "Player.h"
 
 Ammo::Ammo(int damage, int range, bool c, bool s) : damage(damage), range(range), terrainCollision(c), isShot(s),
-                                                    gamecharacterCollision(c) {
+                                                    gamecharacterCollision(c), interactableCollision(c) {
     auto ammo = new sf::Texture();
     ammo->loadFromFile(
             "Sources/Pngs/weapon textures/ammo.png");
