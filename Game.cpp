@@ -522,7 +522,7 @@ void Game::loop() {
                 }
             }
 
-            if (player.getHp() == 0) {
+            if (player.getHp() == 0 || player.getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
                 player.setLives(player.getLives() - 1);
                 player.setHp(100);
                 player.setPosition(blocks[1].getPosition().x + 100, 400);
