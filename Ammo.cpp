@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Terrain.h"
 #include "Player.h"
+#include "Barrier.h"
 
 Ammo::Ammo(int damage, int range, bool c, bool s) : damage(damage), range(range), terrainCollision(c), isShot(s),
                                                     gamecharacterCollision(c), interactableCollision(c) {
@@ -75,6 +76,8 @@ bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t, std::v
     for (auto interactable:I)
         if (this->getGlobalBounds().intersects(interactable->getGlobalBounds())) {
             this->setInteractableCollision(true);
+            if (dynamic_cast<Barrier *>(interactable) != nullptr)
+                interactable->setHp(interactable->getHp() - damage);
         }
     for (auto terrain:t)
         if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
