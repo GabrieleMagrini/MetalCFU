@@ -33,6 +33,7 @@
 #include "Trampoline.h"
 #include "Box.h"
 #include "Granade.h"
+#include "Barrier.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

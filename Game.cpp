@@ -108,8 +108,10 @@ void Game::loop() {
     Trampoline t;
     Weapon x = *(weaponFactory.createWeapon(WeaponType::AK_47));
     Box<Weapon> b(x);
+    Barrier B;
     globalInteractable.push_back(&t);
     globalInteractable.push_back(&b);
+    globalInteractable.push_back(&B);
     Granade *granade1 = nullptr;
 
     sf::Texture screenShoot;
@@ -139,10 +141,13 @@ void Game::loop() {
 
 
                         }
-                        globalInteractable[0]->setPosition(300, 400);
                         globalInteractable[0]->setScale(2, 2);
-                        globalInteractable[1]->setPosition(500, 400);
                         globalInteractable[1]->setScale(1.5, 1.5);
+                        globalInteractable[2]->setScale(1, 1.5);
+                        for (int j = 0; j <
+                                        globalInteractable.size(); j++) {
+                            globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 250);
+                        }
                         Bulletz = vector<vector<Ammo>>(enemies.size());
                         float scaleX = static_cast<float>(blocks.back().getPosition().x) /
                                        static_cast<float>(textBackGround.getSize().x);
@@ -530,6 +535,8 @@ void Game::loop() {
                         W.setTextureRect(sf::IntRect(0, 0, W.getTexture()->getSize().x / 2 - 1,
                                                      W.getTexture()->getSize().y / 2 - 1));
                         globalWeapon.push_back(W);
+                        globalInteractable.erase(globalInteractable.begin() + Z);
+                    } else if (dynamic_cast<Barrier *>(globalInteractable[Z]) != nullptr) {
                         globalInteractable.erase(globalInteractable.begin() + Z);
                     }
                 }
