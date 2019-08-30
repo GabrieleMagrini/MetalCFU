@@ -522,8 +522,8 @@ void Game::loop() {
             }
 
             for (int Z = 0; Z < globalInteractable.size(); Z++) {
-                if (dynamic_cast<Box<Weapon> *>(globalInteractable[Z]) != nullptr) {
-                    if (globalInteractable[Z]->getHp() <= 0) {
+                if (globalInteractable[Z]->getHp() <= 0) {
+                    if (dynamic_cast<Box<Weapon> *>(globalInteractable[Z]) != nullptr) {
                         Weapon W;
                         W = dynamic_cast<Box<Weapon> *>(globalInteractable[Z])->dropGift();
                         W.setPosition(globalInteractable[Z]->getPosition());
