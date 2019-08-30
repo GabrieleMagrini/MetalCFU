@@ -453,7 +453,7 @@ void Game::loop() {
                 Inventory<Weapon> w;
                 Inventory<Usable *> u;
                 Weapon a;
-                if (enemies[i].getHp() == 0) {
+                if (enemies[i].getHp() == 0 || enemies[i].getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
 
                     enemies[i].releaseInventory(w, u);
                     w.removeElement(enemies[i].getSelectedWeapon(), a);
@@ -461,7 +461,6 @@ void Game::loop() {
                                                  a.getTexture()->getSize().y / 2 - 1));
                     globalWeapon.push_back(a);
                     enemies.erase(enemies.begin() + i);
-
                 }
             }
 
@@ -521,6 +520,21 @@ void Game::loop() {
                     }
                 }
             }
+
+            for (int Z = 0; Z < globalInteractable.size(); Z++) {
+                if (dynamic_cast<Box<Weapon> *>(globalInteractable[Z]) != nullptr) {
+                    if (globalInteractable[Z]->getHp() <= 0) {
+                        Weapon W;
+                        W = dynamic_cast<Box<Weapon> *>(globalInteractable[Z])->dropGift();
+                        W.setPosition(globalInteractable[Z]->getPosition());
+                        W.setTextureRect(sf::IntRect(0, 0, W.getTexture()->getSize().x / 2 - 1,
+                                                     W.getTexture()->getSize().y / 2 - 1));
+                        globalWeapon.push_back(W);
+                        globalInteractable.erase(globalInteractable.begin() + Z);
+                    }
+                }
+            }
+
 
             if (player.getHp() == 0 || player.getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
                 player.setLives(player.getLives() - 1);
