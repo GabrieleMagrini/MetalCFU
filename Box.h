@@ -18,9 +18,9 @@ public:
 
     ~Box() override = default;
 
-    unique_ptr<T> dropGift();
+    T dropGift();
 
-    void setGift(const unique_ptr<T> &gift);
+    void setGift(const T &gift);
 
 private:
     T gift;
@@ -37,15 +37,13 @@ Box<T>::Box(T t): gift(t) {
 }
 
 template<typename T>
-unique_ptr<T> Box<T>::dropGift() {
+T Box<T>::dropGift() {
     if (hp <= 0)
         return gift;
-    else
-        return nullptr;
 }
 
 template<typename T>
-void Box<T>::setGift(const unique_ptr<T> &gift) {
+void Box<T>::setGift(const T &gift) {
     Box::gift = gift;
 }
 
