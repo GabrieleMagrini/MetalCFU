@@ -464,6 +464,8 @@ void Game::loop() {
                     w.removeElement(enemies[i].getSelectedWeapon(), a);
                     a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
                                                  a.getTexture()->getSize().y / 2 - 1));
+                    Bulletz.erase(Bulletz.begin() +
+                                  i);                                                 //Erase the bullet shoot from the dead enemy
                     globalWeapon.push_back(a);
                     enemies.erase(enemies.begin() + i);
                 }
