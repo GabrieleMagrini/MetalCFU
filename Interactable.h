@@ -9,7 +9,7 @@
 
 class Interactable : public sf::Sprite {
 public:
-    explicit Interactable(bool c = false, int HP = 100) : collision(c), hp(HP) {};
+    explicit Interactable(bool c = false, int HP = 1000) : collision(c), hp(HP) {};
 
     ~Interactable() override = default;
 
