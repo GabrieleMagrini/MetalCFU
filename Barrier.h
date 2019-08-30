@@ -10,10 +10,12 @@
 
 class Barrier : public Interactable {
 public:
-    explicit Barrier(int r = 100) : resistancePoint(r) {}
+    explicit Barrier() {
+        auto barrier = new sf::Texture();
+        barrier->loadFromFile("Sources/Pngs/Interactable textures/Barrier.png");
+        this->setTexture(*barrier);
+    }
      ~Barrier() override = default;
-private:
-    int resistancePoint;
 };
 
 
