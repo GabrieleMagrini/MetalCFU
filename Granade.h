@@ -29,6 +29,7 @@ public:
 
     void setTrow(bool trow);
 
+    void setTextureExpl(int idx);
 private:
     int explosionTime;
     bool trow;

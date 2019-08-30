@@ -58,3 +58,12 @@ bool Granade::isTrow() const {
 void Granade::setTrow(bool trow) {
     Granade::trow = trow;
 }
+
+/***
+ * texture rect update when explosion of the granade
+ * @param idx index of the texture in the file
+ */
+void Granade::setTextureExpl(int idx) {
+    sf::IntRect ir = sf::IntRect(121 * idx, 27, 120, 118);
+    setTextureRect(ir);
+}
