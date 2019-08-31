@@ -475,8 +475,7 @@ void Game::loop() {
             }
 
             player.getWeapon()->setTextures(xMouse, player.getPosition().x);// update weapon texture and position
-            player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
-                                            player.getPosition().y + player.getLocalBounds().width / 2 + 7);
+
 
             //UPDATE ENEMY
             for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
@@ -651,6 +650,11 @@ void Game::loop() {
                     granade1->setPosition(player.getPosX(), player.getPosY());
 
             }
+
+            //weapon position update, is here for better know the position of the player that can change by interactable
+            player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
+                                            player.getPosition().y + player.getLocalBounds().width / 2 + 7);
+
 
             playerHud.update(player, playerView); //HUD updating
 
