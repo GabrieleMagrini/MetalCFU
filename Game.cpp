@@ -11,7 +11,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 10), 100, 20),
+          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 5), 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)),
           playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font), event() {
@@ -95,6 +95,7 @@ void Game::loop() {
     sf::Clock granadeClock;
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
+    int countTextureGranade = 0;
     int enemyVectorSize = 5;
 
     float xStart = 0;
@@ -156,7 +157,7 @@ void Game::loop() {
                         backGround.setPosition(-500, -100);
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
-                        player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 10),
+                        player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 5),
                                         100, 20,
                                         static_cast<int>(blocks[1].getPosition().x) + 100, 400);
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
@@ -340,15 +341,21 @@ void Game::loop() {
 
                         case sf::Keyboard::T: //launch granade
                         {
-                            if (granade1 != nullptr) {
-                                if (granade1->isTrow())
-                                    for (int i = 0; i < player.getDimUsable(); i++) {
-                                        granade1 = dynamic_cast<Granade *>(player.getUsable(i));
-                                        if (granade1 != nullptr) {
-                                            granade1->setTrow(true);
-                                        }
+                            if (granade1 == nullptr)
+                                for (int i = 0; i < player.getDimUsable(); i++) {
+                                    granade1 = dynamic_cast<Granade *>(player.getUsable(i));
+                                    if (granade1 != nullptr) {
+                                        granade1->setDirection((xMouse > player.getPosition().x));
+                                        break;
                                     }
+                                }
+
+                            if (granade1 != nullptr && !granade1->isTrow()) {
+                                granade1->setTrow(true);
+                                granade1->setPosition(player.getPosition());
                             }
+                            granadeClock.restart();
+
                         }
                             break;
                         default:
@@ -597,20 +604,41 @@ void Game::loop() {
 
 
             //UPDATE GRANADE
+
             if (granade1 != nullptr) {
                 if (granade1->isTrow()) {
+                    granade1->setCollision(false);
+                    for (auto &t: blocks) {
+                        if (granade1->getGlobalBounds().intersects(t.getGlobalBounds()))
+                            granade1->setCollision(true);
+                    }
+
                     granade1->use(player);
-                    if (granadeClock.getElapsedTime().asSeconds() >= 1) {
-                        granade1->setExplosionTime(granade1->getExplosionTime() - 1);
+                    if (granade1->getExplosionTime() > 0 && !granade1->isCollision()) {
+                        granade1->move(0, map.getGravity() / 1.5f);
+                    }
+                    if (granadeClock.getElapsedTime().asSeconds() > granade1->getExplosionTime() &&
+                        granade1->getExplosionTime() > 0) {
+                        granade1->setExplosionTime(0);
                         granadeClock.restart();
                     }
-                    granade1->checkHit(enemies);
+                    if (granade1->getExplosionTime() == 0) { //granade explosion
+                        granade1->checkHit(enemies);
+
+                        if (granadeClock.getElapsedTime().asSeconds() > 0.06f) {
+                            granade1->setTextureExpl(countTextureGranade);
+                            countTextureGranade++;
+                            if (countTextureGranade > 8) {
+                                granade1 = nullptr;
+                            }
+                            granadeClock.restart();
+                        }
+                    }
+
                 } else
                     granade1->setPosition(player.getPosX(), player.getPosY());
+
             }
-
-
-
 
             playerHud.update(player, playerView); //HUD updating
 
@@ -622,7 +650,7 @@ void Game::loop() {
             renderWin->draw(t);
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
-            if (granade1 != nullptr && !granade1->isTrow())
+            if (granade1 != nullptr && granade1->isTrow())
                 renderWin->draw(*granade1);
 
             for (auto &projectile : bullets) {
