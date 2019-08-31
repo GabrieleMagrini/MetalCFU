@@ -30,9 +30,15 @@ public:
     void setTrow(bool trow);
 
     void setTextureExpl(int idx);
+
+    void setDirection(int d);
+
+    int getDirection() const;
+
 private:
     int explosionTime;
     bool trow;
+    int direction;
 
 };
 

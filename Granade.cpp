@@ -10,9 +10,12 @@
  * @return
  */
 int Granade::use(GameCharacter &g) {
-    //TODO trow granade
+
     if (!collision && explosionTime > 0)
-        move(5, 0);
+        if (direction == 1)
+            move(7, 0);
+    if (direction == 0)
+        move(-7, 0);
     return 0;
 }
 
@@ -22,7 +25,7 @@ int Granade::use(GameCharacter &g) {
  * @param expTime explosion timer
  */
 Granade::Granade(int d, int expTime) : Usable(d, "Sources/Pngs/weapon textures/sheetGranade.png"),
-                                       explosionTime(expTime), trow(false) {
+                                       explosionTime(expTime), trow(false), direction(1) {
     texture.loadFromFile(fileName);
     setTexture(texture);
     setTextureRect(sf::IntRect(0, 0, 26, 26));
@@ -64,6 +67,29 @@ void Granade::setTrow(bool trow) {
  * @param idx index of the texture in the file
  */
 void Granade::setTextureExpl(int idx) {
+
     sf::IntRect ir = sf::IntRect(121 * idx, 27, 120, 118);
     setTextureRect(ir);
+    if (idx == 0)
+        setPosition(getPosition().x - getTextureRect().width / 2.0f + 26,
+                    getPosition().y - getTextureRect().height / 2.0f);
+
+}
+
+/**
+ * setting the direction of the throw of the granade 1 right, 0 left
+ * @param d the direction of the throw
+ */
+void Granade::setDirection(int d) {
+    if (d != 0 && d != 1)
+        d = 1;
+    this->direction = d;
+}
+
+/***
+ *
+ * @return the direction of the throw of the granade
+ */
+int Granade::getDirection() const {
+    return direction;
 }
