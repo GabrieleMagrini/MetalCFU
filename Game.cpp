@@ -662,8 +662,11 @@ void Game::loop() {
 
             //RENDER
             renderWin->clear();
+
             renderMap();
+
             renderWin->draw(t);
+
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
             if (granade1 != nullptr && granade1->isTrow())
@@ -672,6 +675,7 @@ void Game::loop() {
             for (auto &projectile : bullets) {
                 renderWin->draw(projectile);
             }
+
             for (int I = 0; I < globalInteractable.size(); I++) {
                 renderWin->draw(*globalInteractable[I]);
             }
