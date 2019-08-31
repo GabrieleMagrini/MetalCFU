@@ -384,6 +384,7 @@ void Game::loop() {
 
             //UPDATE
 
+            //PLAYER UPDATE
             if (dKeyPressed && !player.isCollisionRight()) {
                 player.walk(1);
 
@@ -397,25 +398,6 @@ void Game::loop() {
                 player.jump(100, startY);
                 if (player.isJumping())
                     player.walk(0);
-            }
-
-            for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
-                auto enemyAmmo = new Ammo;
-                (enemies[x]).checkBehaviour(&player);
-                if (enemies[x].getBehaviour()->getName() == "Attack") {
-                    if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
-                        enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                        enemyAmmo->setIsShot(true);
-                        enemies[x].Action(&player, &enemies[x], *enemyAmmo);
-                        Bulletz[x].push_back(*enemyAmmo);
-                        enemyShootClock[x].restart();
-                        sf::Vector2f EnI = enemies[x].getPosition();
-                        sf::Vector2f EnF = player.getPosition();
-                        enemies[x].getAimInitial().push_back(EnI);
-                        enemies[x].getAimFinal().push_back(EnF);
-                    }
-                } else
-                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
             }
 
             if (animationClock.getElapsedTime().asSeconds() > 0.15f) { //animation for player
@@ -442,6 +424,30 @@ void Game::loop() {
                 animationClock.restart();
             }
 
+            if (player.getHp() == 0 || player.getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
+                player.setLives(player.getLives() - 1);
+                player.setHp(100);
+                player.setPosition(blocks[1].getPosition().x + 100, 400);
+            }
+
+            if (player.getLives() == 0) {
+                gameOver.setWin(false);
+                gameOverState();
+
+            } /*else if (enemies.empty()) {
+                gameOver.setWin(true);
+                gameOverState();
+            }*/
+
+            if (!player.isJumping())                                   //Adding the player gravity map effect
+                map.gravityApply(player);
+
+
+            //WEAPON PLAYER UPDATE
+
+            for (auto &w: globalWeapon) { //reload texture for weapon
+                w.realoadTexture();
+            }
 
             if (weaponClock.getElapsedTime().asSeconds() >
                 player.getWeapon()->getCoolDown()) {//adding couldown for weapon
@@ -449,18 +455,52 @@ void Game::loop() {
                 weaponClock.restart();
             }
 
-            //Adding gravity to the player
-            player.setCollisionDown(false);
-            player.setCollisionUp(false);
-            player.setCollisionRight(false);
-            player.setCollisionLeft(false);
-            for (int j = 0; j <
-                            enemies.size(); j++) {                               //initializing enemies collision with the terrain
-                enemies[j].setCollisionDown(false);
-                enemies[j].setCollisionUp(false);
-                enemies[j].setCollisionRight(false);
-                enemies[j].setCollisionLeft(false);
+            /*
+           * Checking the bullet collision,if detected eliminates the bullet from the vecor and shifts the vector's elements.
+           * Also,eliinate and shifts the aim's vector elements too.
+           */
+            for (int z = 0; z < bullets.size(); z++) {
+                if (bullets[z].isIsShot()) {
+                    bullets[z].shoot(player.getAimInitial()[z], player.getAimFinal()[z]);
+                    bullets[z].checkCollision(enemies, blocks, globalInteractable);
+                    if ((abs(bullets[z].getPosition().x - player.getWeapon()->getPosition().x) >
+                         (player.getWeapon()->getRange() * 50)) ||
+                        (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision() ||
+                         bullets[z].isInteractableCollision())) {
+                        bullets.erase(bullets.begin() + z);
+                        player.getAimInitial().erase(player.getAimInitial().begin() + z);
+                        player.getAimFinal().erase(player.getAimFinal().begin() + z);
+                    }
+                }
             }
+
+            player.getWeapon()->setTextures(xMouse, player.getPosition().x);// update weapon texture and position
+            player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
+                                            player.getPosition().y + player.getLocalBounds().width / 2 + 7);
+
+            //UPDATE ENEMY
+            for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
+                auto enemyAmmo = new Ammo;
+                (enemies[x]).checkBehaviour(&player);
+                if (enemies[x].getBehaviour()->getName() == "Attack") {
+                    if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
+                        enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
+                        enemyAmmo->setIsShot(true);
+                        enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+                        Bulletz[x].push_back(*enemyAmmo);
+                        enemyShootClock[x].restart();
+                        sf::Vector2f EnI = enemies[x].getPosition();
+                        sf::Vector2f EnF = player.getPosition();
+                        enemies[x].getAimInitial().push_back(EnI);
+                        enemies[x].getAimFinal().push_back(EnF);
+                    }
+                } else
+                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+            }
+
+
+
+
             for (int i = 0; i < enemies.size(); i++) {  //delete enemies when they are dead
                 Inventory<Weapon> w;
                 Inventory<Usable *> u;
@@ -478,10 +518,6 @@ void Game::loop() {
                 }
             }
 
-            for (auto &w: globalWeapon) { //reload texture for weapon
-                w.realoadTexture();
-            }
-
             for (int j = 0; j < enemies.size(); j++) { //Enemy Weapon position update
                 enemies[j].getWeapon()->setTextures(player.getPosition().x, enemies[j].getPosition().x);
                 enemies[j].getWeapon()->setPosition(enemies[j].getWeapon()->getPosition().x,
@@ -489,34 +525,8 @@ void Game::loop() {
                                                     7);
             }
 
-/*checking the player collision with Terrain blocks
-*/
-            for (auto sprite : blocks) {
-                sprite.checkCollision(player);
-                for (int y = 0; y < enemyVectorSize; y++)
-                    sprite.checkCollision(enemies[y]);
-            }
-/*
- * Checking the bullet collision,if detected eliminates the bullet from the vecor and shifts the vector's elements.
- * Also,eliinate and shifts the aim's vector elements too.
- */
 
-            for (int z = 0; z < bullets.size(); z++) {
-                if (bullets[z].isIsShot()) {
-                    bullets[z].shoot(player.getAimInitial()[z], player.getAimFinal()[z]);
-                    bullets[z].checkCollision(enemies, blocks, globalInteractable);
-                    if ((abs(bullets[z].getPosition().x - player.getWeapon()->getPosition().x) >
-                         (player.getWeapon()->getRange() * 50)) ||
-                        (bullets[z].isGamecharacterCollision() || bullets[z].getTerrainCollision() ||
-                         bullets[z].isInteractableCollision())) {
-                        bullets.erase(bullets.begin() + z);
-                        player.getAimInitial().erase(player.getAimInitial().begin() + z);
-                        player.getAimFinal().erase(player.getAimFinal().begin() + z);
-                    }
-                }
-            }
-
-            for (int g = 0; g < enemies.size(); g++) {
+            for (int g = 0; g < enemies.size(); g++) { //check bullets of the enemy collision
                 for (int q = 0; q < Bulletz[g].size(); q++) {
                     if (Bulletz[g][q].isIsShot()) {
                         Bulletz[g][q].shoot(enemies[g].getAimInitial()[q], enemies[g].getAimFinal()[q]);
@@ -535,6 +545,32 @@ void Game::loop() {
                 }
             }
 
+            for (int y = 0; y < enemyVectorSize; y++)               //adding gravity for all the enemies
+                map.gravityApply(enemies[y]);
+
+            //UPDATE TERRAIN
+
+            player.setCollisionDown(false);
+            player.setCollisionUp(false);
+            player.setCollisionRight(false);
+            player.setCollisionLeft(false);
+
+            for (int j = 0; j <
+                            enemies.size(); j++) {                               //initializing enemies collision with the terrain
+                enemies[j].setCollisionDown(false);
+                enemies[j].setCollisionUp(false);
+                enemies[j].setCollisionRight(false);
+                enemies[j].setCollisionLeft(false);
+            }
+            for (auto sprite : blocks) { //check for player and enemies collision with blocks
+                sprite.checkCollision(player);
+                for (int y = 0; y < enemyVectorSize; y++)
+                    sprite.checkCollision(enemies[y]);
+            }
+
+
+            //UPDATE INTERACTABLE
+
             for (int Z = 0; Z < globalInteractable.size(); Z++) {
                 if (globalInteractable[Z]->getHp() <= 0) {
                     if (dynamic_cast<Box<Weapon> *>(globalInteractable[Z]) != nullptr) {
@@ -552,21 +588,6 @@ void Game::loop() {
             }
 
 
-            if (player.getHp() == 0 || player.getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
-                player.setLives(player.getLives() - 1);
-                player.setHp(100);
-                player.setPosition(blocks[1].getPosition().x + 100, 400);
-            }
-
-            if (player.getLives() == 0) {
-                gameOver.setWin(false);
-                gameOverState();
-
-            } /*else if (enemies.empty()) {
-                gameOver.setWin(true);
-                gameOverState();
-            }*/
-
 
             //Add a fake gravity to the interactable objects,now easier to put in the map
 
@@ -580,8 +601,7 @@ void Game::loop() {
                 }
             }
 
-            if (!player.isJumping())                                   //Adding the player gravity map effect
-                map.gravityApply(player);
+
 
             //check the Trampoline collision,at the moment just 1 element
 
@@ -592,16 +612,8 @@ void Game::loop() {
                 dynamic_cast<Trampoline *>(globalInteractable[0])->liftUp(&player);
             }
 
-            for (int y = 0; y < enemyVectorSize; y++)               //adding gravity for all the enemies
-                map.gravityApply(enemies[y]);
 
             playerView.setCenter(player.getPosition());         //update view Position
-
-            player.getWeapon()->setTextures(xMouse, player.getPosition().x);// update weapon texture and position
-            player.getWeapon()->setPosition(player.getWeapon()->getPosition().x,
-                                            player.getPosition().y + player.getLocalBounds().width / 2 + 7);
-
-
 
             //UPDATE GRANADE
 
