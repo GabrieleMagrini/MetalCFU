@@ -512,10 +512,10 @@ void Game::loop() {
                 }
             }
 
-            for (int j = 0; j < enemies.size(); j++) { //Enemy Weapon position update
-                enemies[j].getWeapon()->setTextures(player.getPosition().x, enemies[j].getPosition().x);
-                enemies[j].getWeapon()->setPosition(enemies[j].getWeapon()->getPosition().x,
-                                                    enemies[j].getPosition().y + enemies[j].getLocalBounds().width / 2 +
+            for (auto &enemy : enemies) { //Enemy Weapon position update
+                enemy.getWeapon()->setTextures(player.getPosition().x, enemy.getPosition().x);
+                enemy.getWeapon()->setPosition(enemy.getWeapon()->getPosition().x,
+                                               enemy.getPosition().y + enemy.getLocalBounds().width / 2 +
                                                     7);
             }
 
@@ -549,12 +549,11 @@ void Game::loop() {
             player.setCollisionRight(false);
             player.setCollisionLeft(false);
 
-            for (int j = 0; j <
-                            enemies.size(); j++) {                               //initializing enemies collision with the terrain
-                enemies[j].setCollisionDown(false);
-                enemies[j].setCollisionUp(false);
-                enemies[j].setCollisionRight(false);
-                enemies[j].setCollisionLeft(false);
+            for (auto &enemy : enemies) {                               //initializing enemies collision with the terrain
+                enemy.setCollisionDown(false);
+                enemy.setCollisionUp(false);
+                enemy.setCollisionRight(false);
+                enemy.setCollisionLeft(false);
             }
             for (auto sprite : blocks) { //check for player and enemies collision with blocks
                 sprite.checkCollision(player);
@@ -571,8 +570,10 @@ void Game::loop() {
                         Weapon W;
                         W = dynamic_cast<Box<Weapon> *>(globalInteractable[Z])->dropGift();
                         W.setPosition(globalInteractable[Z]->getPosition());
-                        W.setTextureRect(sf::IntRect(0, 0, W.getTexture()->getSize().x / 2 - 1,
-                                                     W.getTexture()->getSize().y / 2 - 1));
+                        W.realoadTexture();
+                        W.setTextureRect(
+                                sf::IntRect(W.getTexture()->getSize().x / 2, 0, W.getTexture()->getSize().x / 2,
+                                            W.getTexture()->getSize().y / 2));
                         globalWeapon.push_back(W);
                         globalInteractable.erase(globalInteractable.begin() + Z);
                     } else if (dynamic_cast<Barrier *>(globalInteractable[Z]) != nullptr) {
@@ -585,13 +586,13 @@ void Game::loop() {
 
             //Add a fake gravity to the interactable objects,now easier to put in the map
 
-            for (int Z = 0; Z < globalInteractable.size(); Z++) {
-                globalInteractable[Z]->setPosition(globalInteractable[Z]->getPosition().x,
-                                                   globalInteractable[Z]->getPosition().y + 20);
+            for (auto &inter : globalInteractable) {
+                inter->setPosition(inter->getPosition().x,
+                                   inter->getPosition().y + 20);
                 for (auto &sprite :blocks) {
-                    if (globalInteractable[Z]->getGlobalBounds().intersects(sprite.getGlobalBounds()))
-                        globalInteractable[Z]->setPosition(globalInteractable[Z]->getPosition().x,
-                                                           globalInteractable[Z]->getPosition().y - 20);
+                    if (inter->getGlobalBounds().intersects(sprite.getGlobalBounds()))
+                        inter->setPosition(inter->getPosition().x,
+                                           inter->getPosition().y - 20);
                 }
             }
 
@@ -673,8 +674,8 @@ void Game::loop() {
                 renderWin->draw(projectile);
             }
 
-            for (int I = 0; I < globalInteractable.size(); I++) {
-                renderWin->draw(*globalInteractable[I]);
+            for (auto &inter : globalInteractable) {
+                renderWin->draw(*inter);
             }
 
             for (auto &w : globalWeapon) {
