@@ -105,14 +105,7 @@ void Game::loop() {
     vector<Ammo> bullets;
     vector<Ammo> enemyBullets;
     vector<vector<Ammo>> Bulletz;
-    //A trampoline and a box to showcase the Interactable objects and their effects
-    Trampoline t;
-    Weapon x = *(weaponFactory.createWeapon(WeaponType::AK_47));
-    Box<Weapon> b(x);
-    Barrier B;
-    globalInteractable.push_back(&t);
-    globalInteractable.push_back(&b);
-    globalInteractable.push_back(&B);
+
     Granade *granade1 = nullptr;
 
     sf::Texture screenShoot;
@@ -142,6 +135,9 @@ void Game::loop() {
 
 
                         }
+                        globalInteractable.push_back(new Trampoline{});
+                        globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::AK_47)});
+                        globalInteractable.push_back(new Barrier{});
                         globalInteractable[0]->setScale(2, 2);
                         globalInteractable[1]->setScale(1.5, 1.5);
                         globalInteractable[2]->setScale(1, 1.5);
@@ -157,14 +153,15 @@ void Game::loop() {
                         backGround.setPosition(-500, -100);
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
-                        player = Player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 5),
+                        player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade(30, 5),
                                         100, 20,
-                                        static_cast<int>(blocks[1].getPosition().x) + 100, 400);
+                                        static_cast<int>(blocks[1].getPosition().x) + 100, 400};
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
                         animationClock.restart();
                         weaponClock.restart();
                         granadeClock.restart();
+                        countTextureGranade = 0;
                         for (auto a  : enemyShootClock) {
                             a.restart();
                         }
@@ -218,8 +215,6 @@ void Game::loop() {
 
             float xMouse = renderWin->getView().getCenter().x - (renderWin->getSize().x / 2.0f) +
                            (sf::Mouse::getPosition(*renderWin).x);
-            float yMouse = renderWin->getView().getCenter().y - (renderWin->getSize().y / 2.0f) +
-                           sf::Mouse::getPosition(*renderWin).y;
 
             while (renderWin->pollEvent(event)) {
 
@@ -660,12 +655,14 @@ void Game::loop() {
 
             renderWin->setView(playerView); // update the view
 
+            for (auto &w : globalWeapon) {
+                w.realoadTexture();
+            }
+
             //RENDER
             renderWin->clear();
 
             renderMap();
-
-            renderWin->draw(t);
 
             renderWin->draw(player);
             renderWin->draw(*player.getWeapon());
@@ -704,6 +701,8 @@ void Game::loop() {
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
                         enemies.clear();
                         globalWeapon.clear();
+                        globalInteractable.clear();
+                        globalUsable.clear();
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
