@@ -11,11 +11,12 @@
  */
 int Granade::use(GameCharacter &g) {
 
-    if (!collision && explosionTime > 0)
+    if (!collision && explosionTime > 0) {
         if (direction == 1)
             move(7, 0);
-    if (direction == 0)
-        move(-7, 0);
+        if (direction == 0)
+            move(-7, 0);
+    }
     return 0;
 }
 
