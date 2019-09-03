@@ -10,7 +10,10 @@
 
 class MedKit: public Usable {
 public:
-    explicit MedKit() : Usable(45, "Sources/Pngs/weapon textures/medikit.png") {};
+    MedKit() : Usable(45, "Sources/Pngs/weapon textures/medikit.png") {
+        texture.loadFromFile(fileName);
+        setTexture(texture);
+    };
     ~MedKit() override = default;
 
     int use(GameCharacter &g) override;
