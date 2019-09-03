@@ -138,9 +138,6 @@ void Game::loop() {
                         globalInteractable.push_back(new Trampoline{});
                         globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                         globalInteractable.push_back(new Barrier{});
-                        globalInteractable[0]->setScale(2, 2);
-                        globalInteractable[1]->setScale(1.5, 1.5);
-                        globalInteractable[2]->setScale(1, 1.5);
                         for (int j = 0; j <
                                         globalInteractable.size(); j++) {
                             globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 250);
@@ -731,6 +728,8 @@ void Game::loop() {
                     } else if (gameOver.isMainMenuPressed()) {
                         enemies.clear();
                         globalWeapon.clear();
+                        globalInteractable.clear();
+                        globalUsable.clear();
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
