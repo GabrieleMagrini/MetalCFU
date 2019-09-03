@@ -34,6 +34,7 @@
 #include "Box.h"
 #include "Granade.h"
 #include "Barrier.h"
+#include "MedKit.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

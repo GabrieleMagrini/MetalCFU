@@ -107,6 +107,7 @@ void Game::loop() {
     vector<vector<Ammo>> Bulletz;
 
     Granade *tempGranade = nullptr;
+    MedKit *tempMedKit = nullptr;
 
     sf::Texture screenShoot;
 
@@ -150,9 +151,10 @@ void Game::loop() {
                         backGround.setPosition(-500, -100);
                         backGround.setScale(scaleX + 1, scaleY + 1);
 
-                        player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade{30, 5},
+                        player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
                                         100, 20,
                                         static_cast<int>(blocks[1].getPosition().x) + 100, 400};
+                        player.setUsable(new Granade{30, 5});
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
                         animationClock.restart();
@@ -349,7 +351,19 @@ void Game::loop() {
                             granadeClock.restart();
 
                         }
-                            break;
+
+                        case sf::Keyboard::M: //Use MedKit
+                        {
+                            if (tempMedKit == nullptr && player.getHp() < 100) {
+                                for (int i = 0; i < player.getDimUsable(); i++) {
+                                    tempMedKit = dynamic_cast<MedKit *>(player.getUsable(i));
+                                    if (tempMedKit != nullptr) {
+                                        tempMedKit->use(player);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
                         default:
 
                             break;
