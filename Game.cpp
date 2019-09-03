@@ -139,6 +139,7 @@ void Game::loop() {
                         globalInteractable.push_back(new Trampoline{});
                         globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                         globalInteractable.push_back(new Barrier{});
+                        globalInteractable.push_back(new Box<MedKit>{*new MedKit});
                         for (int j = 0; j <
                                         globalInteractable.size(); j++) {
                             globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 250);
@@ -302,15 +303,15 @@ void Game::loop() {
 
                                 }
                             }
+                            for (int u = 0; u < globalUsable.size(); u++) {
+                                if (globalUsable[u].getGlobalBounds().intersects(player.getGlobalBounds())) {
+                                    player.setUsable(&globalUsable[u]);
+                                    globalUsable.erase(globalUsable.begin() + u);
+                                }
+                            }
                             break;
                         }
-                        case sf::Keyboard::Num2:
-                            numKey = player.getSelectedWeapon();
-                            player.setSelectedWeapon(1);
-                            if (player.getWeapon() == nullptr)
-                                player.setSelectedWeapon(numKey);
 
-                            break;
 
                         case sf::Keyboard::Num1:
                             numKey = player.getSelectedWeapon();
@@ -589,6 +590,15 @@ void Game::loop() {
                         globalInteractable.erase(globalInteractable.begin() + Z);
                     } else if (dynamic_cast<Barrier *>(globalInteractable[Z]) != nullptr) {
                         globalInteractable.erase(globalInteractable.begin() + Z);
+                    } else if (dynamic_cast<Box<MedKit> *>(globalInteractable[Z]) != nullptr) {
+                        MedKit M;
+                        M = dynamic_cast<Box<MedKit> *>(globalInteractable[Z])->dropGift();
+                        M.setPosition(globalInteractable[Z]->getPosition());
+                        M.setTextureRect(
+                                sf::IntRect(0, 0, M.getTexture()->getSize().x,
+                                            M.getTexture()->getSize().y));
+                        globalUsable.push_back(M);
+                        globalInteractable.erase(globalInteractable.begin() + Z);
                     }
                 }
             }
@@ -687,6 +697,9 @@ void Game::loop() {
 
             for (auto &inter : globalInteractable) {
                 renderWin->draw(*inter);
+            }
+            for (auto &usable : globalUsable) {
+                renderWin->draw(usable);
             }
 
             for (auto &w : globalWeapon) {

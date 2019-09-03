@@ -83,7 +83,7 @@ private:
     std::vector<Terrain> blocks;
     std::vector<Enemy> enemies;
     std::vector<Weapon> globalWeapon;
-    std::vector<Usable> globalUsable;
+    std::vector<MedKit> globalUsable;
     std::vector<Interactable *> globalInteractable;
 
 
