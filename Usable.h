@@ -33,6 +33,10 @@ public:
         Usable::collision = collision;
     }
 
+    void reloadTexture() {
+        setTexture(texture);
+    }
+
 protected:
     std::string fileName;
     sf::Texture texture;
