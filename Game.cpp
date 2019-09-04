@@ -765,6 +765,7 @@ void Game::loop() {
                     if (pauseMenu.isBackGameButtonPressed()) {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
+                        mapCount = 0;
                         enemies.clear();
                         globalWeapon.clear();
                         globalInteractable.clear();
