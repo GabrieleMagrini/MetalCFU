@@ -106,6 +106,16 @@ void Game::loop() {
     vector<Ammo> enemyBullets;
     vector<vector<Ammo>> Bulletz;
 
+    sf::SoundBuffer playerShoot;
+    playerShoot.loadFromFile("/home/madmag/Downloads/shot.wav");
+    sf::Sound shotSound;
+    shotSound.setBuffer(playerShoot);
+
+    sf::SoundBuffer enemyShoot;
+    enemyShoot.loadFromFile("/home/madmag/Downloads/enemyShoot.wav");
+    sf::Sound enemyShotSound;
+    enemyShotSound.setBuffer(enemyShoot);
+
     Granade *tempGranade = nullptr;
     MedKit *tempMedKit = nullptr;
 
@@ -239,6 +249,7 @@ void Game::loop() {
                                     player.getWeapon()->getName() == "pistol") {
                                     bullets.push_back(player.getWeapon()->shoot());
                                     player.getWeapon()->setShoot(true);
+                                    shotSound.play();
                                 }
                                 canShoot = false;
                             }
@@ -463,10 +474,10 @@ void Game::loop() {
                 gameOver.setWin(false);
                 gameOverState();
 
-            } /*else if (enemies.empty()) {
+            } else if (enemies.empty()) {
                 gameOver.setWin(true);
                 gameOverState();
-            }*/
+            }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
                 map.gravityApply(player);
@@ -521,6 +532,9 @@ void Game::loop() {
                         sf::Vector2f EnF = player.getPosition();
                         enemies[x].getAimInitial().push_back(EnI);
                         enemies[x].getAimFinal().push_back(EnF);
+                        auto sound = new sf::Sound;
+                        sound->setBuffer(enemyShoot);
+                        sound->play();
                     }
                 } else
                     enemies[x].Action(&player, &enemies[x], *enemyAmmo);
