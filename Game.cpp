@@ -154,7 +154,7 @@ void Game::loop() {
 
                         player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
                                         100, 20,
-                                        static_cast<int>(blocks[1].getPosition().x) + 100, 400};
+                                        100, 300};
                         player.setUsable(new Granade{30, 5});
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
