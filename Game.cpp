@@ -305,8 +305,17 @@ void Game::loop() {
                             }
                             for (int u = 0; u < globalUsable.size(); u++) {
                                 if (globalUsable[u].getGlobalBounds().intersects(player.getGlobalBounds())) {
-                                    player.setUsable(&globalUsable[u]);
-                                    globalUsable.erase(globalUsable.begin() + u);
+
+                                    if (dynamic_cast<MedKit *>(&globalUsable[u]) != nullptr) {
+                                        auto us = new MedKit;
+                                        player.setUsable(us);
+                                        globalUsable.erase(globalUsable.begin() + u);
+                                    } else if (dynamic_cast<Granade *>(&globalUsable[u]) != nullptr) {
+                                        auto us = new Granade(*dynamic_cast<Granade *>(&globalUsable[u]));
+                                        player.setUsable(us);
+                                        globalUsable.erase(globalUsable.begin() + u);
+                                    }
+
                                 }
                             }
                             break;
@@ -344,8 +353,11 @@ void Game::loop() {
                         {
                             if (tempGranade == nullptr)
                                 for (int i = 0; i < player.getDimUsable(); i++) {
+
                                     tempGranade = dynamic_cast<Granade *>(player.getUsable(i));
                                     if (tempGranade != nullptr) {
+                                        tempGranade = dynamic_cast<Granade *>(player.removeUsable(i));
+
                                         tempGranade->setDirection((xMouse > player.getPosition().x));
                                         break;
                                     }
@@ -358,6 +370,7 @@ void Game::loop() {
                             granadeClock.restart();
 
                         }
+                            break;
 
                         case sf::Keyboard::M: //Use MedKit
                         {
@@ -371,6 +384,7 @@ void Game::loop() {
                                 }
                             }
                         }
+                            break;
                         default:
 
                             break;
