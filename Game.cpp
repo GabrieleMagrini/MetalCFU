@@ -97,7 +97,7 @@ void Game::loop() {
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
     int countTextureGranade = 0;
-    int enemyVectorSize = 5;
+    int enemyVectorSize = 5 + mapCount * 3;
 
     float xStart = 0;
     float yStart = 0;
@@ -139,7 +139,7 @@ void Game::loop() {
                     } else if (mainMenu.isStartButtonPressed()) {
                         std::stringstream stream;
                         String s;
-                        stream << "Sources/Maps/mappa" << mapCount << ".txt";
+                        stream << "Sources/Maps/mappa" << mapCount + 1 << ".txt";
                         s = stream.str();
                         blocks = map.createMap(std::ifstream(s));
                         enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
@@ -795,6 +795,10 @@ void Game::loop() {
                         exitGameState();
                     } else if (gameOver.isMainMenuPressed()) {
                         enemies.clear();
+                        bullets.clear();
+                        Bulletz.clear();
+                        enemyBullets.clear();
+                        mapCount = 0;
                         globalWeapon.clear();
                         blocks.clear();
                         globalInteractable.clear();
