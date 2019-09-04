@@ -89,6 +89,7 @@ void Game::loop() {
     bool spaceKeyPressed = false;
     bool canShoot = false;
 
+    int mapCount = 0;
     float startY = 0; //used for jump
     sf::Clock animationClock;
     sf::Clock weaponClock;
@@ -119,11 +120,11 @@ void Game::loop() {
     Granade *tempGranade = nullptr;
     MedKit *tempMedKit = nullptr;
 
+
     sf::Texture screenShoot;
 
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
-
             while (renderWin->pollEvent(event)) {
 
                 if (event.type == sf::Event::Closed)
@@ -136,7 +137,11 @@ void Game::loop() {
                     } else if (mainMenu.isExitButtonPressed()) {
                         exitGameState();
                     } else if (mainMenu.isStartButtonPressed()) {
-                        blocks = map.createMap(std::ifstream("Sources/Maps/mappa.txt"));
+                        std::stringstream stream;
+                        String s;
+                        stream << "Sources/Maps/mappa" << mapCount << ".txt";
+                        s = stream.str();
+                        blocks = map.createMap(std::ifstream(s));
                         enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
                         for (int j = 0; j <
                                         enemies.size(); j++) {
@@ -477,6 +482,7 @@ void Game::loop() {
             } else if (enemies.empty()) {
                 gameOver.setWin(true);
                 gameOverState();
+                mapCount += 1;
             }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
@@ -741,7 +747,6 @@ void Game::loop() {
             for (auto &w : globalWeapon) {
                 renderWin->draw(w);
             }
-
             for (int idx = 0; idx < Bulletz.size(); idx++) {
                 for (int k = 0; k < Bulletz[idx].size(); k++) {
                     renderWin->draw(Bulletz[idx][k]);
@@ -791,8 +796,9 @@ void Game::loop() {
                     } else if (gameOver.isMainMenuPressed()) {
                         enemies.clear();
                         globalWeapon.clear();
+                        blocks.clear();
                         globalInteractable.clear();
-                        globalUsable.clear();
+                        globalUsable.clear();;
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
