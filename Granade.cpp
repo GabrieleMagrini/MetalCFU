@@ -94,3 +94,9 @@ void Granade::setDirection(int d) {
 int Granade::getDirection() const {
     return direction;
 }
+
+Granade::Granade(Granade &g) : Usable(g.data, g.fileName) {
+    explosionTime = g.explosionTime;
+    trow = g.trow;
+    direction = g.direction;
+}

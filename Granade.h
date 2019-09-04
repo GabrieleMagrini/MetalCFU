@@ -15,6 +15,8 @@ class Granade: public Usable {
 public:
     explicit Granade(int d, int expTime);
 
+    Granade(Granade &g);
+
     ~Granade() final = default;
 
     int use(GameCharacter &g) override;
