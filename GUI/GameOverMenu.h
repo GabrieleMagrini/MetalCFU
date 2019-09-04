@@ -34,6 +34,10 @@ public:
     bool isExitButtonPressed();
 
     bool isMainMenuPressed();
+
+    bool isNextLevelPressed();
+
+
 private:
     std::shared_ptr<sf::RenderWindow> renderWin;
     sf::Sprite backGround;
@@ -41,6 +45,7 @@ private:
     sf::Text text;
     Button mainMenu;
     Button exitGame;
+    Button nextLevel;
 
     bool win;
 };
