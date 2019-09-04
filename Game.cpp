@@ -107,12 +107,12 @@ void Game::loop() {
     vector<vector<Ammo>> Bulletz;
 
     sf::SoundBuffer playerShoot;
-    playerShoot.loadFromFile("/home/madmag/Downloads/shot.wav");
+    playerShoot.loadFromFile("Sources/Sounds/shot.wav");
     sf::Sound shotSound;
     shotSound.setBuffer(playerShoot);
 
     sf::SoundBuffer enemyShoot;
-    enemyShoot.loadFromFile("/home/madmag/Downloads/enemyShoot.wav");
+    enemyShoot.loadFromFile("Sources/Sounds/enemyShoot.wav");
     sf::Sound enemyShotSound;
     enemyShotSound.setBuffer(enemyShoot);
 
