@@ -155,7 +155,7 @@ void Game::loop() {
                         player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
                                         100, 20,
                                         100, 300};
-                        player.setUsable(new Granade{30, 5});
+                        player.setUsable(new Granade{30, 3});
                         enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
                         animationClock.restart();
@@ -456,7 +456,7 @@ void Game::loop() {
             if (player.getHp() == 0 || player.getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
                 player.setLives(player.getLives() - 1);
                 player.setHp(100);
-                player.setPosition(blocks[1].getPosition().x + 100, 400);
+                player.setPosition(100, 300);
             }
 
             if (player.getLives() == 0) {
