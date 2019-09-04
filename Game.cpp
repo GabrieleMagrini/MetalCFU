@@ -379,6 +379,8 @@ void Game::loop() {
                                     tempMedKit = dynamic_cast<MedKit *>(player.getUsable(i));
                                     if (tempMedKit != nullptr) {
                                         tempMedKit->use(player);
+                                        tempMedKit = nullptr;
+                                        player.removeUsable(i);
                                     }
                                     break;
                                 }
