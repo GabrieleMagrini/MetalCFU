@@ -24,6 +24,10 @@ public:
 
     bool isStartButtonPressed();
 
+    void setNextLevel(bool nextLevel);
+
+    bool isNextLevel();
+
 private:
     sf::Texture backText;
     sf::Sprite backGround;
@@ -31,6 +35,7 @@ private:
     Button startButton;
     Button optionButton;
     Button exitButton;
+    bool nextLevel;
 
 };
 

@@ -71,15 +71,16 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
  * function that draw all the button and background
  */
 void MainMenu::render() {
-    renderWin->draw(backGround);
 
+    renderWin->draw(backGround);
+    if (!nextLevel) {
     startButton.render(*renderWin);
 
     optionButton.render(*renderWin);
 
     exitButton.render(*renderWin);
 
-
+    }
     renderWin->display();
 }
 
@@ -87,18 +88,20 @@ void MainMenu::update() {
     backGround.setTextureRect(sf::IntRect(0, 0, renderWin->getSize().x, renderWin->getSize().y));
     float scaleX = static_cast<float>(renderWin->getView().getSize().x) / static_cast<float>(backText.getSize().x);
     float scaleY = static_cast<float>(renderWin->getView().getSize().y) / static_cast<float>(backText.getSize().y);
-
     backGround.setScale(scaleX, scaleY);
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
-    startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 100);
-    startButton.update(worldPos);
+    if (!nextLevel) {
+        startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 100);
+        startButton.update(worldPos);
 
-    optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 205);
-    optionButton.update(worldPos);
+        optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 205);
+        optionButton.update(worldPos);
 
-    exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 310);
-    exitButton.update(worldPos);
+        exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 310);
+        exitButton.update(worldPos);
+    }
+
 }
 
 bool MainMenu::isExitButtonPressed() {
@@ -111,4 +114,12 @@ bool MainMenu::isOptionButtonPressed() {
 
 bool MainMenu::isStartButtonPressed() {
     return startButton.isPressed();
+}
+
+bool MainMenu::isNextLevel() {
+    return nextLevel;
+}
+
+void MainMenu::setNextLevel(bool nextLevel) {
+    MainMenu::nextLevel = nextLevel;
 }
