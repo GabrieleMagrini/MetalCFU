@@ -6,9 +6,8 @@
 
 
 int MedKit::use(GameCharacter &g) {
-    g.setHp(g.getHp() + data);
-
-    if (g.getHp() > 100) {
-        g.setHp(100);
-    }
+    int temp = g.getHp() + data;
+    if (temp > 100)
+        temp = 100;
+    g.setHp(temp);
 }
