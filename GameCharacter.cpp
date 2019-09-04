@@ -152,7 +152,7 @@ Weapon *GameCharacter::removeWeapon(int idx) {
  */
 Usable *GameCharacter::removeUsable(int idx) {
     Usable *u = nullptr;
-    if (idx > 0 && idx < usableInventory.getDim())
+    if (idx >= 0 && idx < usableInventory.getDim())
         usableInventory.removeElement(idx, u);
 
     return u;
