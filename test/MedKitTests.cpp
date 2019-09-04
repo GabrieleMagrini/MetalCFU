@@ -9,14 +9,14 @@
 
 
 TEST(MedKit,constructorTest){
-   MedKit mk = MedKit{15};
+    MedKit mk;
 
-   ASSERT_EQ(mk.use(),15);
+    ASSERT_EQ(mk.getData(), 45);
 }
 
 TEST(MedKit,setHealerPoints){
-    auto mk = new MedKit{4};
-    mk->setHealerPoints(15);
-    ASSERT_EQ(mk->use(),15);
+    auto mk = new MedKit{};
+    mk->setData(15);
+    ASSERT_EQ(mk->getData(), 15);
     delete mk;
 }

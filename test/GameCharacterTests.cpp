@@ -106,8 +106,8 @@ TEST(GameCharacter, releaseInventory) {
     auto w1 = w.createWeapon(WeaponType::pistol);
     auto w2 = w.createWeapon(WeaponType::AWP);
 
-    Usable *u1 = new MedKit{10};
-    Usable *u2 = new Granade{15};
+    Usable *u1 = new MedKit{};
+    Usable *u2 = new Granade{15, 5};
     auto gc = new GameCharacter{20, 0, 0, 10, w1.get(), u1};
     auto u3 = gc->setUsable(u2);
     ASSERT_EQ(u3, nullptr);

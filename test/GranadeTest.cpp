@@ -9,16 +9,14 @@
 
 
 TEST(Granade,contructorTest){
-    auto g= new Granade{45};
-    ASSERT_EQ(g->getDamage(),45);
-    g->setDamage(25);
-    ASSERT_EQ(g->getDamage(),25);
+    auto g = new Granade{45, 5};
+    ASSERT_EQ(g->getExplosionTime(), 5);
     delete g;
 }
 
-TEST(Granade,updateDamage){
-    auto g= new Granade{45};
-    g->setDamage(25);
-    ASSERT_EQ(g->getDamage(),25);
+TEST(Granade, updateTemp) {
+    auto g = new Granade{45, 5};
+    g->setExplosionTime(25);
+    ASSERT_EQ(g->getExplosionTime(), 25);
     delete g;
 }
