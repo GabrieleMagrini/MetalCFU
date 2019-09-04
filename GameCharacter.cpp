@@ -81,10 +81,14 @@ Weapon *GameCharacter::setWeapon(Weapon *weapon) {
  * @return a pointer to an Usable
  */
 Usable *GameCharacter::getUsable(int idx) {
-    Usable *us = nullptr;
-    if (idx >= 0 && idx < usableInventory.getDim())
-        us = *usableInventory.getElement(idx);
-    return us;
+
+    if (idx >= 0 && idx < usableInventory.getDim()) {
+        if (usableInventory.getElement(idx) == nullptr)
+            return nullptr;
+        else
+            return *usableInventory.getElement(idx);
+    }
+    return nullptr;
 }
 
 /***
