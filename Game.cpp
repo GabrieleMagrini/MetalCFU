@@ -130,13 +130,10 @@ void Game::loop() {
                 if (event.type == sf::Event::Closed)
                     exitGameState();
 
-                if (event.type == sf::Event::MouseButtonReleased) {
-                    if (mainMenu.isOptionButtonPressed()) {
-                        optionMenuState();
-
-                    } else if (mainMenu.isExitButtonPressed()) {
-                        exitGameState();
-                    } else if (mainMenu.isStartButtonPressed()) {
+                if (event.type == sf::Event::MouseButtonReleased || mainMenu.isNextLevel()) {
+                }
+                if (mainMenu.isStartButtonPressed() || mainMenu.isNextLevel()) {
+                    mainMenu.setNextLevel(false);
                         std::stringstream stream;
                         String s;
                         stream << "Sources/Maps/mappa" << mapCount + 1 << ".txt";
@@ -181,7 +178,11 @@ void Game::loop() {
                             a.restart();
                         }
                         startGameState();
-                    }
+                } else if (mainMenu.isOptionButtonPressed()) {
+                    optionMenuState();
+
+                } else if (mainMenu.isExitButtonPressed()) {
+                    exitGameState();
                 }
 
                 mainMenu.update();
@@ -482,7 +483,6 @@ void Game::loop() {
             } else if (enemies.empty()) {
                 gameOver.setWin(true);
                 gameOverState();
-                mapCount += 1;
             }
 
             if (!player.isJumping())                                   //Adding the player gravity map effect
@@ -806,10 +806,24 @@ void Game::loop() {
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
-                        mainMenuState();
-                    }
-                }
 
+                        mainMenuState();
+                    } else if (gameOver.isNextLevelPressed()) {
+                        mapCount += 1;
+                        enemies.clear();
+                        bullets.clear();
+                        Bulletz.clear();
+                        enemyBullets.clear();
+                        globalWeapon.clear();
+                        blocks.clear();
+                        globalInteractable.clear();
+                        globalUsable.clear();
+                        mainMenu.setNextLevel(true);
+                        mainMenuState();
+
+                    }
+
+                }
             }
             gameOver.update();
             gameOver.render();
