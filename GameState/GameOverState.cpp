@@ -16,3 +16,7 @@ void GameOverState::exitGameState(Game &g) {
 void GameOverState::mainMenuState(Game &g) {
     g.setState(GState::MainMenu);
 }
+
+void GameOverState::startGameState(Game &g) {
+    g.setState(GState::StartGame);
+}
