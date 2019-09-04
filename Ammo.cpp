@@ -55,7 +55,7 @@ bool Ammo::checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t, 
     for (int i = 0; i < e.size(); i++)
         if (this->getGlobalBounds().intersects(e[i].getGlobalBounds())) {
             this->setGamecharacterCollision(true);
-            e[i].getDamage(damage);
+            e[i].getDamage(damage / 2);
         }
     for (auto interactable:I)
         if (this->getGlobalBounds().intersects(interactable->getGlobalBounds())) {
@@ -71,7 +71,7 @@ bool Ammo::checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t, 
 bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t, std::vector<Interactable *> &I) {
     if (this->getGlobalBounds().intersects(p.getGlobalBounds())) {
         this->setGamecharacterCollision(true);
-        p.getDamage(damage);
+        p.getDamage(damage / 3);
     }
     for (auto interactable:I)
         if (this->getGlobalBounds().intersects(interactable->getGlobalBounds())) {
