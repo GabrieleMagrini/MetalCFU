@@ -319,6 +319,12 @@ void Game::loop() {
                             if (player.getWeapon() == nullptr)
                                 player.setSelectedWeapon(numKey);
                             break;
+                        case sf::Keyboard::Num2:
+                            numKey = player.getSelectedWeapon();
+                            player.setSelectedWeapon(1);
+                            if (player.getWeapon() == nullptr)
+                                player.setSelectedWeapon(numKey);
+                            break;
 
                         case sf::Keyboard::Num3:
                             numKey = player.getSelectedWeapon();
