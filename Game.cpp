@@ -97,7 +97,7 @@ void Game::loop() {
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
     int countTextureGranade = 0;
-    int enemyVectorSize = 5 + mapCount * 3;
+    int enemyVectorSize = 5;
 
     float xStart = 0;
     float yStart = 0;
@@ -766,6 +766,7 @@ void Game::loop() {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
                         mapCount = 0;
+                        mainMenu.setNextLevel(false);
                         enemies.clear();
                         globalWeapon.clear();
                         globalInteractable.clear();
@@ -820,6 +821,7 @@ void Game::loop() {
                         globalInteractable.clear();
                         globalUsable.clear();
                         mainMenu.setNextLevel(true);
+                        enemyVectorSize = enemyVectorSize + mapCount;
                         mainMenuState();
 
                     }
