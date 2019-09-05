@@ -80,6 +80,24 @@ void MainMenu::render() {
 
     exitButton.render(*renderWin);
 
+        if (!backText.loadFromFile("Sources/Pngs/wallpaper_1.jpeg")) {
+
+        }
+        float scaleX = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
+        float scaleY = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
+        backGround.setTexture(backText);
+        backGround.setScale(scaleX, scaleY);
+        backGround.setPosition(0, 0);
+
+    } else {
+        if (!backText.loadFromFile("Sources/Pngs/loadin_screen.png")) {
+
+        }
+        float scaleX = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
+        float scaleY = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
+        backGround.setTexture(backText);
+        backGround.setScale(scaleX, scaleY);
+        backGround.setPosition(0, 0);
     }
     renderWin->display();
 }
@@ -92,13 +110,13 @@ void MainMenu::update() {
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
     if (!nextLevel) {
-        startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 100);
+        startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 310);
         startButton.update(worldPos);
 
-        optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 205);
+        optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 415);
         optionButton.update(worldPos);
 
-        exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 310);
+        exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 520);
         exitButton.update(worldPos);
     }
 
