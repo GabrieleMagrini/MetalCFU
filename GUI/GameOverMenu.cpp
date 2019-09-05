@@ -77,12 +77,14 @@ void GameOverMenu::update() {
 }
 
 void GameOverMenu::render() {
+    renderWin->clear();
     renderWin->draw(backGround);
     renderWin->draw(text);
 
     mainMenu.render(*renderWin);
     exitGame.render(*renderWin);
-    nextLevel.render(*renderWin);
+    if (win)
+        nextLevel.render(*renderWin);
     renderWin->display();
 }
 
