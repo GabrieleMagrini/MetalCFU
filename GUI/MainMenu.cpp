@@ -48,7 +48,9 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
                                                                                                                        "Exit",
                                                                                                                        "GUI/texture/idleGreenButton.png",
                                                                                                                        "GUI/texture/hoverGreenButton.png",
-                                                                                                                       "GUI/texture/pressedGreenButton.png") {
+                                                                                                                       "GUI/texture/pressedGreenButton.png"),
+                                                                                                              nextLevel(
+                                                                                                                      false) {
     //buttons
     startButton.setCharacterSize(40);
     optionButton.setCharacterSize(40);
@@ -103,10 +105,7 @@ void MainMenu::render() {
 }
 
 void MainMenu::update() {
-    backGround.setTextureRect(sf::IntRect(0, 0, renderWin->getSize().x, renderWin->getSize().y));
-    float scaleX = static_cast<float>(renderWin->getView().getSize().x) / static_cast<float>(backText.getSize().x);
-    float scaleY = static_cast<float>(renderWin->getView().getSize().y) / static_cast<float>(backText.getSize().y);
-    backGround.setScale(scaleX, scaleY);
+    backGround.setTextureRect(sf::IntRect(0, 0, renderWin->getView().getSize().x, renderWin->getView().getSize().y));
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
     if (!nextLevel) {
