@@ -219,7 +219,11 @@ void Game::loop() {
 
                         }
                         if (!volume) {
-                            //TODO
+                            shotSound.setVolume(0);
+                            enemyShotSound.setVolume(0);
+                        } else {
+                            shotSound.setVolume(100);
+                            enemyShotSound.setVolume(100);
                         }
                         ss.str("");
                         mainMenuState();
@@ -548,9 +552,7 @@ void Game::loop() {
                         sf::Vector2f EnF = player.getPosition();
                         enemies[x].getAimInitial().push_back(EnI);
                         enemies[x].getAimFinal().push_back(EnF);
-                        auto sound = new sf::Sound;
-                        sound->setBuffer(enemyShoot);
-                        sound->play();
+                        enemyShotSound.play();
                     }
                 } else
                     enemies[x].Action(&player, &enemies[x], *enemyAmmo);
@@ -617,6 +619,7 @@ void Game::loop() {
                 enemy.setCollisionRight(false);
                 enemy.setCollisionLeft(false);
 
+                enemy.updateTexture();                  //updating texture for Enemies
             }
             for (auto sprite : blocks) { //check for player and enemies collision with blocks
                 sprite.checkCollision(player);
