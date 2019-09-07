@@ -139,12 +139,12 @@ void Game::loop() {
                     s = stream.str();
                     blocks = map.createMap(std::ifstream(s));
                     enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
-                    for (int j = 0; j <
-                                    enemies.size(); j++) {
+                    for (int j = 0; j < enemies.size(); j++) {
                         enemies[j] = *enemyFactory.createEnemy(
                                 EnemyType::Soldier);   //Placing the enemies in the map
-                        enemies[j].setPosition(blocks[15 + j].getPosition().x + 500 * j, 250);
 
+                        enemies[j].setPosition(blocks[15 + j].getPosition().x + 500 * j, 250);
+                        enemies[j].reloadTexture();
 
                     }
                     globalInteractable.push_back(new Trampoline{});
@@ -616,6 +616,7 @@ void Game::loop() {
                 enemy.setCollisionUp(false);
                 enemy.setCollisionRight(false);
                 enemy.setCollisionLeft(false);
+
             }
             for (auto sprite : blocks) { //check for player and enemies collision with blocks
                 sprite.checkCollision(player);

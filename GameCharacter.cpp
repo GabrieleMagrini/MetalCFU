@@ -186,7 +186,7 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
           collisionUp(c), collisionDown(c), jumping(false), collisionLeft(false), collisionRight(false),
-          filename(std::move(filename)) {
+          filename(filename) {
     if (w != nullptr)
         weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
@@ -374,7 +374,7 @@ void GameCharacter::setAimFinal(vector<Vector2f> &aimFinal) {
 void GameCharacter::reloadTexture() {
     texture.loadFromFile(filename);
     setTexture(texture);
-    setTextureRect(sf::IntRect(0, 1, 36, 60));
+    setTextureRect(sf::IntRect(1, 1, 36, 60));
 }
 
 /**
