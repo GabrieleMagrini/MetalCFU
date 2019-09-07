@@ -15,7 +15,7 @@
 class Terrain :public Sprite{                                                                    //enum class,various types of block as various blocks effects
 public:
 
-    explicit Terrain(int s = 0):bonusSpeedMovement(s){}
+    explicit Terrain(int s = 0, bool sp = false) : bonusSpeedMovement(s), spawnPoint(sp) {}
 
     ~Terrain() final = default;
 
@@ -24,9 +24,11 @@ public:
 
     int setBonus(GameCharacter &g);
 
+    bool isSpawnPoint();
 
 private:
     int bonusSpeedMovement;
+    bool spawnPoint;
 
 };
 
