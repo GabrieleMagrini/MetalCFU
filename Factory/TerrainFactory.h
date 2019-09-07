@@ -19,7 +19,7 @@ public:
 
     virtual ~TerrainFactory() = default;
 
-    virtual std::unique_ptr<Terrain> createTerrain(TerrainType t);
+    std::unique_ptr<Terrain> createTerrain(TerrainType t, bool spawnPoint = false);
 
 };
 
