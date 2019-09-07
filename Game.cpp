@@ -13,8 +13,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade{30, 5}, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
-                                   renderWin->getSize().y)),
-          playerAnimation("Sources/Pngs/player textures/playerTexture.bmp"), playerHud(rw, font), event() {
+                                   renderWin->getSize().y)), playerHud(rw, font), event() {
     renderWin->setFramerateLimit(30);
     renderWin->setKeyRepeatEnabled(false);
     textBackGround.loadFromFile("Sources/Pngs/wallpaper_1.jpeg");
@@ -24,7 +23,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
     float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
     backGround.setScale(scaleX, scaleY);
     player.setOrigin(player.getLocalBounds().width / 2, 0);
-    playerAnimation.getTexture(player, 0, 0, "right");
+    player.setTextures(0, 0, "right");
 }
 
 void Game::exitGameState() {
@@ -442,7 +441,7 @@ void Game::loop() {
             } else if (aKeyPressed && !player.isCollisionLeft()) {
                 player.walk(3);
             } else {
-                playerAnimation.getTexture(player, 0, xMouse, "right");
+                player.setTextures(0, xMouse, "right");
                 countTexture = 0;
             }
             if (spaceKeyPressed) {
@@ -459,11 +458,11 @@ void Game::loop() {
                     countTexture = 0;
                 if (dKeyPressed) {
                     if (!player.isCollisionRight())
-                        playerAnimation.getTexture(player, countTexture, xMouse, "right");
+                        player.setTextures(countTexture, xMouse, "right");
 
                 } else if (aKeyPressed) {
                     if (!player.isCollisionLeft())
-                        playerAnimation.getTexture(player, countTexture, xMouse, "left");
+                        player.setTextures(countTexture, xMouse, "left");
 
                 }
 

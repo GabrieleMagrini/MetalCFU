@@ -23,7 +23,6 @@
 #include "GUI/OptionMenu.h"
 #include "GUI/PauseMenu.h"
 #include "Player.h"
-#include "utility/CharacterAnimation.h"
 #include "Factory/WeaponFactory.h"
 #include "Factory/EnemyFactory.h"
 #include "HUD/Hud.h"
@@ -88,7 +87,6 @@ private:
 
 
     sf::View playerView;
-    CharacterAnimation playerAnimation;
     WeaponFactory weaponFactory;
     EnemyFactory enemyFactory;
 
