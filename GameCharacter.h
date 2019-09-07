@@ -21,7 +21,7 @@ class GameCharacter : public Sprite {
 public:
     GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw = 4, int mu = 4, int sx = 10, int sy = -10,
                   int sw = 0,
-                  int su = 4, bool c = false, const std::string &textDirectory = "");
+                  int su = 4, bool c = false, const std::string &filename = "");
 
     ~GameCharacter() override = default;
 
@@ -124,6 +124,10 @@ public:
 
     void setAimFinal(vector<Vector2f> &aimFinal);
 
+    void reloadTexture();
+
+    void setTextures(int pos, float xMouse, const std::string &direction);
+
 protected:
     int HP;
     int strenght;
@@ -141,6 +145,8 @@ protected:
     vector<Vector2f> aimInitial;
     vector<Vector2f> aimFinal;
 
+    sf::Texture texture;
+    std::string filename;
 };
 
 

@@ -182,14 +182,16 @@ void GameCharacter::releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> 
 }
 
 GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, int mw, int mu, int sx, int sy, int sw,
-                             int su, bool c, const std::string &textDirectory)
+                             int su, bool c, const std::string &filename)
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
-          collisionUp(c), collisionDown(c), jumping(false), collisionLeft(false), collisionRight(false) {
+          collisionUp(c), collisionDown(c), jumping(false), collisionLeft(false), collisionRight(false),
+          filename(std::move(filename)) {
     if (w != nullptr)
         weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
     setPosition(x, y);
+    reloadTexture();
 }
 
 int GameCharacter::getDimUsable() const {
@@ -364,4 +366,38 @@ vector<Vector2f> &GameCharacter::getAimFinal() {
 
 void GameCharacter::setAimFinal(vector<Vector2f> &aimFinal) {
     GameCharacter::aimFinal = aimFinal;
+}
+
+/**
+ * function that reload the texture for the GameCharacter
+ */
+void GameCharacter::reloadTexture() {
+    texture.loadFromFile(filename);
+    setTexture(texture);
+    setTextureRect(sf::IntRect(0, 1, 36, 60));
+}
+
+/**
+ * function that create animation of the character movement
+ * @param pos position of the texture
+ * @param xMouse coord x of the mouse
+ * @param direction direction of the character g
+ */
+void GameCharacter::setTextures(int pos, float xMouse, const std::string &direction) {
+    sf::IntRect rectTexture;
+
+    if (direction == "right") {
+        if (xMouse >= getPosX())
+            rectTexture = sf::IntRect(1 * pos + 36 * pos + 1, 1, 36, 60);
+        else
+            rectTexture = sf::IntRect(1 * (7 - pos) + 36 * (7 - pos) + 1, 65, 36, 60);
+    } else {
+        if (xMouse < getPosition().x)
+            rectTexture = sf::IntRect(1 * (7 - pos) + 36 * (7 - pos) + 1, 65, 36, 60);
+        else
+            rectTexture = sf::IntRect(1 * pos + 36 * pos + 1, 1, 36, 60);
+    }
+
+    setTexture(texture);
+    setTextureRect(rectTexture);
 }
