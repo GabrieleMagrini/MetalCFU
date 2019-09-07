@@ -400,10 +400,7 @@ void Game::loop() {
                                 for (int i = 0; i < player.getDimUsable(); i++) {
                                     tempMedKit = dynamic_cast<MedKit *>(player.getUsable(i));
                                     if (tempMedKit != nullptr) {
-                                        //tempMedKit->use(player);
-                                        player.setHp(player.getHp() + 35);
-                                        if (player.getHp() > 100)
-                                            player.setHp(100);
+                                        tempMedKit->use(player);
                                         tempMedKit = nullptr;
                                         player.removeUsable(i);
                                     }
@@ -482,6 +479,12 @@ void Game::loop() {
                 player.setLives(player.getLives() - 1);
                 player.setHp(100);
                 player.setPosition(100, 300);
+                for (auto &block : blocks) {
+                    if (block.isSpawnPoint()) {
+                        player.setPosition(block.getPosition().x, block.getPosition().y - 100);
+                        break;
+                    }
+                }
             }
 
             if (player.getLives() == 0) {
