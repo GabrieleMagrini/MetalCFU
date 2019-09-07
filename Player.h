@@ -18,7 +18,7 @@ public:
                                                                                                                              4,
                                                                                                                              10, -10, 0, 4,
                                                                                                                              false,
-                                                                                                                             "Sources/Pngs/player textures") {}
+                                                                                                                             "Sources/Pngs/player textures/playerTexture.bmp") {}
     ~Player()override = default;
 
     void lootPickUp(Player *p);
