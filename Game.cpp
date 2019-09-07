@@ -134,60 +134,65 @@ void Game::loop() {
                 }
                 if (mainMenu.isStartButtonPressed() || mainMenu.isNextLevel()) {
                     mainMenu.setNextLevel(false);
-                        std::stringstream stream;
-                        String s;
-                        stream << "Sources/Maps/mappa" << mapCount + 1 << ".txt";
-                        s = stream.str();
-                        blocks = map.createMap(std::ifstream(s));
-                        enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
-                        for (int j = 0; j <
-                                        enemies.size(); j++) {
-                            enemies[j] = *enemyFactory.createEnemy(
-                                    EnemyType::Soldier);   //Placing the enemies in the map
-                            enemies[j].setPosition(blocks[15 + j].getPosition().x + 500 * j, 250);
+                    std::stringstream stream;
+                    String s;
+                    stream << "Sources/Maps/mappa" << mapCount + 1 << ".txt";
+                    s = stream.str();
+                    blocks = map.createMap(std::ifstream(s));
+                    enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
+                    for (int j = 0; j <
+                                    enemies.size(); j++) {
+                        enemies[j] = *enemyFactory.createEnemy(
+                                EnemyType::Soldier);   //Placing the enemies in the map
+                        enemies[j].setPosition(blocks[15 + j].getPosition().x + 500 * j, 250);
 
 
+                    }
+                    globalInteractable.push_back(new Trampoline{});
+                    globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
+                    globalInteractable.push_back(new Barrier{});
+                    globalInteractable.push_back(new Box<MedKit>{*new MedKit});
+                    for (int j = 0; j <
+                                    globalInteractable.size(); j++) {
+                        globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 250);
+                    }
+                    Bulletz = vector<vector<Ammo>>(enemies.size());
+                    float scaleX = static_cast<float>(blocks.back().getPosition().x) /
+                                   static_cast<float>(textBackGround.getSize().x);
+                    float scaleY = static_cast<float>(blocks.back().getPosition().y) /
+                                   static_cast<float>(textBackGround.getSize().y);
+                    backGround.setPosition(-500, -100);
+                    backGround.setScale(scaleX + 1, scaleY + 1);
+
+                    player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
+                                    100, 20, 100, 300};
+                    for (auto &block : blocks) {
+                        if (block.isSpawnPoint()) {
+                            player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
+                            break;
                         }
-                        globalInteractable.push_back(new Trampoline{});
-                        globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
-                        globalInteractable.push_back(new Barrier{});
-                        globalInteractable.push_back(new Box<MedKit>{*new MedKit});
-                        for (int j = 0; j <
-                                        globalInteractable.size(); j++) {
-                            globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 250);
-                        }
-                        Bulletz = vector<vector<Ammo>>(enemies.size());
-                        float scaleX = static_cast<float>(blocks.back().getPosition().x) /
-                                       static_cast<float>(textBackGround.getSize().x);
-                        float scaleY = static_cast<float>(blocks.back().getPosition().y) /
-                                       static_cast<float>(textBackGround.getSize().y);
-                        backGround.setPosition(-500, -100);
-                        backGround.setScale(scaleX + 1, scaleY + 1);
+                    }
 
-                        player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
-                                        100, 20,
-                                        100, 300};
-                        player.setUsable(new Granade{30, 3});
-                        enemyShootClock = vector<sf::Clock>(enemyVectorSize);
+                    player.setUsable(new Granade{30, 3});
+                    enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
-                        animationClock.restart();
-                        weaponClock.restart();
-                        granadeClock.restart();
-                        countTextureGranade = 0;
-                        for (auto a  : enemyShootClock) {
-                            a.restart();
-                        }
-                        startGameState();
+                    animationClock.restart();
+                    weaponClock.restart();
+                    granadeClock.restart();
+                    countTextureGranade = 0;
+                    for (auto a  : enemyShootClock) {
+                        a.restart();
+                    }
+                    startGameState();
                 } else if (mainMenu.isOptionButtonPressed()) {
                     optionMenuState();
 
                 } else if (mainMenu.isExitButtonPressed()) {
                     exitGameState();
                 }
-
                 mainMenu.update();
-
             }
+
             mainMenu.render();
 
         } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
@@ -395,7 +400,10 @@ void Game::loop() {
                                 for (int i = 0; i < player.getDimUsable(); i++) {
                                     tempMedKit = dynamic_cast<MedKit *>(player.getUsable(i));
                                     if (tempMedKit != nullptr) {
-                                        tempMedKit->use(player);
+                                        //tempMedKit->use(player);
+                                        player.setHp(player.getHp() + 35);
+                                        if (player.getHp() > 100)
+                                            player.setHp(100);
                                         tempMedKit = nullptr;
                                         player.removeUsable(i);
                                     }
@@ -547,8 +555,6 @@ void Game::loop() {
             }
 
 
-
-
             for (int i = 0; i < enemies.size(); i++) {  //delete enemies when they are dead
                 Inventory<Weapon> w;
                 Inventory<Usable *> u;
@@ -570,7 +576,7 @@ void Game::loop() {
                 enemy.getWeapon()->setTextures(player.getPosition().x, enemy.getPosition().x);
                 enemy.getWeapon()->setPosition(enemy.getWeapon()->getPosition().x,
                                                enemy.getPosition().y + enemy.getLocalBounds().width / 2 +
-                                                    7);
+                                               7);
             }
 
 
@@ -804,7 +810,7 @@ void Game::loop() {
                         globalWeapon.clear();
                         blocks.clear();
                         globalInteractable.clear();
-                        globalUsable.clear();;
+                        globalUsable.clear();
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
