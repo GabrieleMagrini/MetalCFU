@@ -128,6 +128,8 @@ public:
 
     void setTextures(int pos, float xMouse, const std::string &direction);
 
+    void updateTexture();
+
 protected:
     int HP;
     int strenght;

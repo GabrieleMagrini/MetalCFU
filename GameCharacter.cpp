@@ -401,3 +401,11 @@ void GameCharacter::setTextures(int pos, float xMouse, const std::string &direct
     setTexture(texture);
     setTextureRect(rectTexture);
 }
+
+/**
+ * function that update the texture for GameCharacter
+ */
+void GameCharacter::updateTexture() {
+    setTexture(texture);
+    setTextureRect(IntRect(1, 1, 36, 60));
+}
