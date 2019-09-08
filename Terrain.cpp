@@ -50,6 +50,10 @@ void Terrain::checkCollision(GameCharacter &g) {
 bool Terrain::isSpawnPoint() {
     return spawnPoint;
 }
+
+void Terrain::setSpawnPoint(bool spawnPoint) {
+    Terrain::spawnPoint = spawnPoint;
+}
 /*
 int Terrain::setBonus(GameCharacter &g) {
     while ((g.isCollisionDown()) && Collision::PixelPerfectTest(g, *this))

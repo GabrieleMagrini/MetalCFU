@@ -26,6 +26,8 @@ public:
 
     bool isSpawnPoint();
 
+    void setSpawnPoint(bool spawnPoint);
+
 private:
     int bonusSpeedMovement;
     bool spawnPoint;
