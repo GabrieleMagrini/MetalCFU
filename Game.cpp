@@ -96,7 +96,7 @@ void Game::loop() {
     std::vector<sf::Clock> enemyShootClock;
     int countTexture = 0;
     int countTextureGranade = 0;
-    int enemyVectorSize = 5;
+    int enemyVectorSize = 0;
 
     float xStart = 0;
     float yStart = 0;
@@ -138,13 +138,15 @@ void Game::loop() {
                     stream << "Sources/Maps/mappa" << mapCount + 1 << ".txt";
                     s = stream.str();
                     blocks = map.createMap(std::ifstream(s));
-                    enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
+                    for (auto &numEnemy : blocks) {
+                        if (numEnemy.isSpawnPoint()) {
+                            enemyVectorSize += 1;
+                        }
+                    }
+                    enemies = std::vector<Enemy>(enemyVectorSize - 1, *enemyFactory.createEnemy(EnemyType::Soldier));
                     for (int j = 0; j < enemies.size(); j++) {
                         enemies[j] = *enemyFactory.createEnemy(
                                 EnemyType::Soldier);   //Placing the enemies in the map
-
-                        enemies[j].setPosition(blocks[15 + j].getPosition().x + 500 * j, 250);
-                        enemies[j].reloadTexture();
 
                     }
                     globalInteractable.push_back(new Trampoline{});
@@ -168,7 +170,19 @@ void Game::loop() {
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
+                            block.setSpawnPoint(false);
                             break;
+                        }
+                    }
+                    for (int j = 0; j < enemies.size(); j++) {
+                        for (auto &enemyBlock : blocks) {
+                            if (enemyBlock.isSpawnPoint()) {
+                                enemies[j].setPosition(enemyBlock.getPosition().x + 30,
+                                                       enemyBlock.getPosition().y - 100);
+                                enemies[j].reloadTexture();
+                                enemyBlock.setSpawnPoint(false);
+                                j++;
+                            }
                         }
                     }
 
