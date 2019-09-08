@@ -143,7 +143,8 @@ void Game::loop() {
                             enemyVectorSize += 1;
                         }
                     }
-                    enemies = std::vector<Enemy>(enemyVectorSize - 1, *enemyFactory.createEnemy(EnemyType::Soldier));
+                    enemyVectorSize -= 1;
+                    enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
                     for (int j = 0; j < enemies.size(); j++) {
                         enemies[j] = *enemyFactory.createEnemy(
                                 EnemyType::Soldier);   //Placing the enemies in the map
