@@ -97,6 +97,7 @@ void Game::loop() {
     int countTexture = 0;
     int countTextureGranade = 0;
     int enemyVectorSize = 0;
+    sf::Vector2f spawnPlayer;
 
     float xStart = 0;
     float yStart = 0;
@@ -171,6 +172,7 @@ void Game::loop() {
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
+                            spawnPlayer = player.getPosition();
                             block.setSpawnPoint(false);
                             break;
                         }
@@ -496,13 +498,7 @@ void Game::loop() {
             if (player.getHp() == 0 || player.getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
                 player.setLives(player.getLives() - 1);
                 player.setHp(100);
-                player.setPosition(100, 300);
-                for (auto &block : blocks) {
-                    if (block.isSpawnPoint()) {
-                        player.setPosition(block.getPosition().x, block.getPosition().y - 100);
-                        break;
-                    }
-                }
+                player.setPosition(spawnPlayer);
             }
 
             if (player.getLives() == 0) {
@@ -848,7 +844,7 @@ void Game::loop() {
                         globalInteractable.clear();
                         globalUsable.clear();
                         mainMenu.setNextLevel(true);
-                        enemyVectorSize = enemyVectorSize + mapCount;
+                        enemyVectorSize = 0;
                         mainMenuState();
 
                     }
