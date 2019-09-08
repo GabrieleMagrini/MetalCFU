@@ -8,7 +8,7 @@
 
 #include "../Weapon.h"
 
-class Attachment {
+class Attachment : public Sprite {
 public:
     explicit Attachment(int imp=0):improvement(imp) {};
     virtual void improve(Weapon &w)=0;

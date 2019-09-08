@@ -9,7 +9,12 @@
 
 class LongBarrel: public Attachment{
 public:
-    explicit LongBarrel(int r = 15) : Attachment{r} {};
+    explicit LongBarrel(int r = 15) : Attachment{r} {
+        auto longBar = new sf::Texture();
+        longBar->loadFromFile(
+                "Sources/Pngs/Attachments/longBarrel.png");
+        this->setTexture(*longBar);
+    };
 
       ~LongBarrel() final = default;
 

@@ -9,7 +9,13 @@
 
 class ExtendedMagazine:public Attachment {
 public:
-    explicit ExtendedMagazine(int q=30):Attachment{q} {};
+    explicit ExtendedMagazine(int q = 30) : Attachment{q} {
+        auto magazine = new sf::Texture();
+        magazine->loadFromFile(
+                "Sources/Pngs/Attachments/extMag.png");
+        this->setTexture(*magazine);
+
+    };
     ~ExtendedMagazine() final = default;
 
     void improve(Weapon &w) override;

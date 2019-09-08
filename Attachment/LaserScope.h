@@ -9,7 +9,13 @@
 
 class LaserScope : Attachment {
 public:
-    LaserScope() = default;
+
+    LaserScope() {
+        auto laser = new sf::Texture();
+        laser->loadFromFile(
+                "Sources/Pngs/Attachments/laser.png");
+        this->setTexture(*laser);
+    };
 
     ~LaserScope() final = default;
 

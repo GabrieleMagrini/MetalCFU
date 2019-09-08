@@ -9,7 +9,12 @@
 
 class PowerBarrel : public Attachment {
 public:
-    explicit PowerBarrel(int id = 8) : Attachment{id} {};
+    explicit PowerBarrel(int id = 8) : Attachment{id} {
+        auto powerBar = new sf::Texture();
+        powerBar->loadFromFile(
+                "Sources/Pngs/Attachments/power_barrel.png");
+        this->setTexture(*powerBar);
+    };
 
     ~PowerBarrel() final = default;
 
