@@ -82,7 +82,7 @@ void MainMenu::render() {
 
     exitButton.render(*renderWin);
 
-        if (!backText.loadFromFile("Sources/Pngs/wallpaper_1.jpeg")) {
+        if (!backText.loadFromFile("Sources/Pngs/main.png")) {
 
         }
         float scaleX = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
@@ -110,13 +110,13 @@ void MainMenu::update() {
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
     if (!nextLevel) {
-        startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 310);
+        startButton.setPosition(renderWin->getView().getCenter().x - startButton.getShape().getSize().x / 2.0f, 375);
         startButton.update(worldPos);
 
-        optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 415);
+        optionButton.setPosition(renderWin->getView().getCenter().x - optionButton.getShape().getSize().x / 2.0f, 480);
         optionButton.update(worldPos);
 
-        exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 520);
+        exitButton.setPosition(renderWin->getView().getCenter().x - exitButton.getShape().getSize().x / 2.0f, 585);
         exitButton.update(worldPos);
     }
 
