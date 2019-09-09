@@ -7,7 +7,7 @@
 
 #include "Attachment.h"
 
-class LaserScope : Attachment {
+class LaserScope : public Attachment {
 public:
 
     LaserScope() {
@@ -19,7 +19,7 @@ public:
 
     ~LaserScope() final = default;
 
-    void improve(Weapon &w) override;
+    void improve(Weapon &w);
 };
 
 
