@@ -155,7 +155,7 @@ void Game::loop() {
                     globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                     globalInteractable.push_back(new Barrier{});
                     globalInteractable.push_back(new Box<MedKit>{*new MedKit});
-                    globalInteractable.push_back(new Box<LongBarrel>{*new LongBarrel});
+                    globalInteractable.push_back(new Box<ExtendedMagazine>{*new ExtendedMagazine});
                     for (int j = 0; j <
                                     globalInteractable.size(); j++) {
                         globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 350);
@@ -359,6 +359,22 @@ void Game::loop() {
                                         globalUsable.erase(globalUsable.begin() + u);
                                     }
 
+                                }
+                            }
+                            for (int u = 0; u < globalAttachments.size(); u++) {
+                                if (globalAttachments[u].getGlobalBounds().intersects(player.getGlobalBounds())) {
+                                    if (dynamic_cast<PowerBarrel *>(&globalAttachments[u]) != nullptr) {
+                                        dynamic_cast<PowerBarrel *>(&globalAttachments[u])->improve(
+                                                *player.getWeapon());
+                                    } else if (dynamic_cast<LongBarrel *>(&globalAttachments[u]) != nullptr) {
+                                        dynamic_cast<LongBarrel *>(&globalAttachments[u])->improve(*player.getWeapon());
+                                    } else if (dynamic_cast<LaserScope *>(&globalAttachments[u]) != nullptr) {
+                                        dynamic_cast<LaserScope *>(&globalAttachments[u])->improve(*player.getWeapon());
+                                    } else if (dynamic_cast<ExtendedMagazine *>(&globalAttachments[u]) != nullptr) {
+                                        dynamic_cast<ExtendedMagazine *>(&globalAttachments[u])->improve(
+                                                *player.getWeapon());
+                                    }
+                                    globalAttachments.erase(globalAttachments.begin() + u);
                                 }
                             }
                             break;
@@ -863,12 +879,14 @@ void Game::loop() {
                         enemies.clear();
                         bullets.clear();
                         Bulletz.clear();
+                        enemyVectorSize = 0;
                         enemyBullets.clear();
                         mapCount = 0;
                         globalWeapon.clear();
                         blocks.clear();
                         globalInteractable.clear();
                         globalUsable.clear();
+                        globalAttachments.clear();
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
@@ -884,6 +902,7 @@ void Game::loop() {
                         blocks.clear();
                         globalInteractable.clear();
                         globalUsable.clear();
+                        globalAttachments.clear();
                         mainMenu.setNextLevel(true);
                         enemyVectorSize = 0;
                         mainMenuState();

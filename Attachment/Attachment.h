@@ -14,7 +14,6 @@ public:
 
     virtual ~Attachment()= default;
 
-
     int getImprovement() const {
         return improvement;
     }
