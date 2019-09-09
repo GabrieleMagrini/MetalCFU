@@ -155,7 +155,7 @@ void Game::loop() {
                     globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                     globalInteractable.push_back(new Barrier{});
                     globalInteractable.push_back(new Box<MedKit>{*new MedKit});
-                    globalInteractable.push_back(new Box<ExtendedMagazine>{*new ExtendedMagazine});
+                    globalInteractable.push_back(new Box<Attachment *>{new ExtendedMagazine});
                     for (int j = 0; j <
                                     globalInteractable.size(); j++) {
                         globalInteractable[j]->setPosition(blocks[15 + j].getPosition().x + 300 * (j + 1), 350);
@@ -362,18 +362,8 @@ void Game::loop() {
                                 }
                             }
                             for (int u = 0; u < globalAttachments.size(); u++) {
-                                if (globalAttachments[u].getGlobalBounds().intersects(player.getGlobalBounds())) {
-                                    if (dynamic_cast<PowerBarrel *>(&globalAttachments[u]) != nullptr) {
-                                        dynamic_cast<PowerBarrel *>(&globalAttachments[u])->improve(
-                                                *player.getWeapon());
-                                    } else if (dynamic_cast<LongBarrel *>(&globalAttachments[u]) != nullptr) {
-                                        dynamic_cast<LongBarrel *>(&globalAttachments[u])->improve(*player.getWeapon());
-                                    } else if (dynamic_cast<LaserScope *>(&globalAttachments[u]) != nullptr) {
-                                        dynamic_cast<LaserScope *>(&globalAttachments[u])->improve(*player.getWeapon());
-                                    } else if (dynamic_cast<ExtendedMagazine *>(&globalAttachments[u]) != nullptr) {
-                                        dynamic_cast<ExtendedMagazine *>(&globalAttachments[u])->improve(
-                                                *player.getWeapon());
-                                    }
+                                if (globalAttachments[u]->getGlobalBounds().intersects(player.getGlobalBounds())) {
+                                    globalAttachments[u]->improve(*player.getWeapon());
                                     globalAttachments.erase(globalAttachments.begin() + u);
                                 }
                             }
@@ -682,41 +672,14 @@ void Game::loop() {
                                             M.getTexture()->getSize().y));
                         globalUsable.push_back(M);
                         globalInteractable.erase(globalInteractable.begin() + Z);
-                    } else if (dynamic_cast<Box<ExtendedMagazine> *>(globalInteractable[Z]) != nullptr) {
-                        ExtendedMagazine E;
-                        E = dynamic_cast<Box<ExtendedMagazine> *>(globalInteractable[Z])->dropGift();
-                        E.setPosition(globalInteractable[Z]->getPosition());
-                        E.setTextureRect(
-                                sf::IntRect(0, 0, E.getTexture()->getSize().x,
-                                            E.getTexture()->getSize().y));
+                    } else if (dynamic_cast<Box<Attachment *> *>(globalInteractable[Z]) != nullptr) {
+                        Attachment *E;
+                        E = dynamic_cast<Box<Attachment *> *>(globalInteractable[Z])->dropGift();
+                        E->setPosition(globalInteractable[Z]->getPosition());
+                        E->setTextureRect(
+                                sf::IntRect(0, 0, E->getTexture()->getSize().x,
+                                            E->getTexture()->getSize().y));
                         globalAttachments.push_back(E);
-                        globalInteractable.erase(globalInteractable.begin() + Z);
-                    } else if (dynamic_cast<Box<LongBarrel> *>(globalInteractable[Z]) != nullptr) {
-                        LongBarrel L;
-                        L = dynamic_cast<Box<LongBarrel> *>(globalInteractable[Z])->dropGift();
-                        L.setPosition(globalInteractable[Z]->getPosition());
-                        L.setTextureRect(
-                                sf::IntRect(0, 0, L.getTexture()->getSize().x,
-                                            L.getTexture()->getSize().y));
-                        globalAttachments.push_back(L);
-                        globalInteractable.erase(globalInteractable.begin() + Z);
-                    } else if (dynamic_cast<Box<LaserScope> *>(globalInteractable[Z]) != nullptr) {
-                        LaserScope S;
-                        S = dynamic_cast<Box<LaserScope> *>(globalInteractable[Z])->dropGift();
-                        S.setPosition(globalInteractable[Z]->getPosition());
-                        S.setTextureRect(
-                                sf::IntRect(0, 0, S.getTexture()->getSize().x,
-                                            S.getTexture()->getSize().y));
-                        globalAttachments.push_back(S);
-                        globalInteractable.erase(globalInteractable.begin() + Z);
-                    } else if (dynamic_cast<Box<PowerBarrel> *>(globalInteractable[Z]) != nullptr) {
-                        PowerBarrel P;
-                        P = dynamic_cast<Box<PowerBarrel> *>(globalInteractable[Z])->dropGift();
-                        P.setPosition(globalInteractable[Z]->getPosition());
-                        P.setTextureRect(
-                                sf::IntRect(0, 0, P.getTexture()->getSize().x,
-                                            P.getTexture()->getSize().y));
-                        globalAttachments.push_back(P);
                         globalInteractable.erase(globalInteractable.begin() + Z);
                     }
                 }
@@ -822,15 +785,15 @@ void Game::loop() {
             }
 
             for (auto &attachments : globalAttachments) {
-                renderWin->draw(attachments);
+                renderWin->draw(*attachments);
             }
 
             for (auto &w : globalWeapon) {
                 renderWin->draw(w);
             }
-            for (int idx = 0; idx < Bulletz.size(); idx++) {
-                for (int k = 0; k < Bulletz[idx].size(); k++) {
-                    renderWin->draw(Bulletz[idx][k]);
+            for (auto &bullet : Bulletz) {
+                for (int k = 0; k < bullet.size(); k++) {
+                    renderWin->draw(bullet[k]);
                 }
             }
             playerHud.render();

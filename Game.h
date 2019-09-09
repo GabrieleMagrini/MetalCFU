@@ -89,7 +89,7 @@ private:
     std::vector<Weapon> globalWeapon;
     std::vector<MedKit> globalUsable;
     std::vector<Interactable *> globalInteractable;
-    std::vector<Attachment> globalAttachments;
+    std::vector<Attachment *> globalAttachments;
 
     sf::View playerView;
     WeaponFactory weaponFactory;
