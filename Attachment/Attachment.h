@@ -12,7 +12,7 @@ class Attachment : public Sprite {
 public:
     explicit Attachment(int imp=0):improvement(imp) {};
 
-    virtual ~Attachment()= default;
+    ~Attachment() override;
 
     int getImprovement() const {
         return improvement;
@@ -21,6 +21,8 @@ public:
     void setImprovement(int improvement) {
         Attachment::improvement = improvement;
     }
+
+    virtual void improve(Weapon &w) = 0;
 
 protected:
     int improvement;

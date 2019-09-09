@@ -19,7 +19,7 @@ public:
 
     ~LaserScope() final = default;
 
-    void improve(Weapon &w);
+    void improve(Weapon &w) override;
 };
 
 
