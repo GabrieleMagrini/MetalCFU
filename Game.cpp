@@ -402,11 +402,9 @@ void Game::loop() {
                         {
                             if (tempGranade == nullptr)
                                 for (int i = 0; i < player.getDimUsable(); i++) {
-
-                                    tempGranade = std::unique_ptr<Granade>(
-                                            dynamic_cast<Granade *>(player.removeUsable(i)));
-                                    if (tempGranade != nullptr) {
-
+                                    if (dynamic_cast<Granade *>(player.getUsable(i)) != nullptr) {
+                                        tempGranade = std::unique_ptr<Granade>(
+                                                dynamic_cast<Granade *>(player.removeUsable(i)));
                                         tempGranade->setDirection((xMouse > player.getPosition().x));
                                         break;
                                     }
@@ -431,8 +429,9 @@ void Game::loop() {
                                         tempMedKit->use(player);
                                         tempMedKit = nullptr;
                                         player.removeUsable(i);
+                                        break;
                                     }
-                                    break;
+
                                 }
                             }
                         }
