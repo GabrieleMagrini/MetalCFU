@@ -8,11 +8,13 @@
 
 #include "../Weapon.h"
 
+class Weapon;
+
 class Attachment : public Sprite {
 public:
     explicit Attachment(int imp=0):improvement(imp) {};
 
-    ~Attachment() override;
+    virtual ~Attachment() override = default;
 
     int getImprovement() const {
         return improvement;
