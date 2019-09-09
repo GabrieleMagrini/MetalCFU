@@ -37,6 +37,7 @@ public:
 
     bool isNextLevelPressed();
 
+    void setFinalWin(bool finalWin);
 
 private:
     std::shared_ptr<sf::RenderWindow> renderWin;
@@ -48,6 +49,7 @@ private:
     Button nextLevel;
 
     bool win;
+    bool finalWin;
 };
 
 

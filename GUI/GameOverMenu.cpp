@@ -64,7 +64,8 @@ void GameOverMenu::update() {
         text.setString("Congrats! You Win!");
         nextLevel.setPosition(renderWin->getView().getCenter().x - text.getLocalBounds().width / 2.0f,
                               renderWin->getView().getCenter().y + mainMenu.getShape().getLocalBounds().height);
-        nextLevel.update(worldPos);
+        if (!finalWin)
+            nextLevel.update(worldPos);
     } else {
         text.setString("Game Over... You Lose");
     }
@@ -83,7 +84,7 @@ void GameOverMenu::render() {
 
     mainMenu.render(*renderWin);
     exitGame.render(*renderWin);
-    if (win)
+    if (win && !finalWin)
         nextLevel.render(*renderWin);
     renderWin->display();
 }
@@ -98,4 +99,8 @@ bool GameOverMenu::isMainMenuPressed() {
 
 bool GameOverMenu::isNextLevelPressed() {
     return nextLevel.isPressed();
+}
+
+void GameOverMenu::setFinalWin(bool finalWin) {
+    GameOverMenu::finalWin = finalWin;
 }
