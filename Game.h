@@ -34,6 +34,11 @@
 #include "Granade.h"
 #include "Barrier.h"
 #include "MedKit.h"
+#include "Attachment/Attachment.h"
+#include "Attachment/ExtendedMagazine.h"
+#include "Attachment/LaserScope.h"
+#include "Attachment/LongBarrel.h"
+#include "Attachment/PowerBarrel.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame
@@ -84,7 +89,7 @@ private:
     std::vector<Weapon> globalWeapon;
     std::vector<MedKit> globalUsable;
     std::vector<Interactable *> globalInteractable;
-
+    std::vector<Attachment> globalAttachments;
 
     sf::View playerView;
     WeaponFactory weaponFactory;
