@@ -14,7 +14,7 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
         case EnemyType::Soldier:
             result = unique_ptr<Enemy>(
                     new Enemy{100, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::AK_47)).get(), nullptr,
-                              "Sources/Pngs/player textures/playerTexture.bmp", 1, 0, 4});
+                              "Sources/Pngs/Enemies/soldier.png", 1, 0, 4});
             break;
         case EnemyType::Tank:
             result = unique_ptr<Enemy>(
