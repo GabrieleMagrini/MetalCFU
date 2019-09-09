@@ -117,8 +117,8 @@ void Game::loop() {
     sf::Sound enemyShotSound;
     enemyShotSound.setBuffer(enemyShoot);
 
-    Granade *tempGranade = nullptr;
-    MedKit *tempMedKit = nullptr;
+    std::unique_ptr<Granade> tempGranade = nullptr;
+    std::unique_ptr<MedKit> tempMedKit = nullptr;
 
 
     sf::Texture screenShoot;
@@ -413,9 +413,9 @@ void Game::loop() {
                             if (tempGranade == nullptr)
                                 for (int i = 0; i < player.getDimUsable(); i++) {
 
-                                    tempGranade = dynamic_cast<Granade *>(player.getUsable(i));
+                                    tempGranade = std::unique_ptr<Granade>(
+                                            dynamic_cast<Granade *>(player.removeUsable(i)));
                                     if (tempGranade != nullptr) {
-                                        tempGranade = dynamic_cast<Granade *>(player.removeUsable(i));
 
                                         tempGranade->setDirection((xMouse > player.getPosition().x));
                                         break;
@@ -435,8 +435,9 @@ void Game::loop() {
                         {
                             if (tempMedKit == nullptr && player.getHp() < 100) {
                                 for (int i = 0; i < player.getDimUsable(); i++) {
-                                    tempMedKit = dynamic_cast<MedKit *>(player.getUsable(i));
+                                    tempMedKit = std::unique_ptr<MedKit>(dynamic_cast<MedKit *>(player.getUsable(i)));
                                     if (tempMedKit != nullptr) {
+                                        cout << &player << endl;
                                         tempMedKit->use(player);
                                         tempMedKit = nullptr;
                                         player.removeUsable(i);
