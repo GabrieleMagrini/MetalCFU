@@ -88,7 +88,7 @@ void Game::loop() {
     bool spaceKeyPressed = false;
     bool canShoot = false;
 
-    int mapCount = 0;
+    int mapCount = 1;
     float startY = 0; //used for jump
     sf::Clock animationClock;
     sf::Clock weaponClock;
@@ -136,7 +136,7 @@ void Game::loop() {
                     mainMenu.setNextLevel(false);
                     std::stringstream stream;
                     String s;
-                    stream << "Sources/Maps/mappa" << mapCount + 1 << ".txt";
+                    stream << "Sources/Maps/mappa" << mapCount << ".txt";
                     s = stream.str();
                     blocks = map.createMap(std::ifstream(s));
                     for (auto &numEnemy : blocks) {
@@ -515,6 +515,9 @@ void Game::loop() {
 
             } else if (enemies.empty()) {
                 gameOver.setWin(true);
+                if (mapCount == 2) {
+                    gameOver.setFinalWin(true);
+                }
                 gameOverState();
             }
 
