@@ -20,7 +20,7 @@ public:
           int mu = 1,
           int sx = 0, int sy = 10, int sw = 0, int su = 0, int steps = 50, bool presence = false);
 
-    ~Enemy() final = default;
+    ~Enemy() final;
 
     void Action(Player *p, Enemy *e, Ammo &a);
 

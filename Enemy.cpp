@@ -45,3 +45,7 @@ void Enemy::checkBehaviour(Player *p) {
             setBehaviour(patrol);
     }
 }
+
+Enemy::~Enemy() {
+    delete behaviour;
+}
