@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <cmath>
+#include <unistd.h>
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Audio.hpp"

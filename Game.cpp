@@ -7,7 +7,7 @@
 
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState{}), renderWin(rw), font(font),
-          mainMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          mainMenu(rw, "Sources/Pngs/main.png", font),
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
@@ -198,7 +198,7 @@ void Game::loop() {
                     startGameState();
                 } else if (mainMenu.isOptionButtonPressed()) {
                     optionMenuState();
-
+                    usleep(100000);
                 } else if (mainMenu.isExitButtonPressed()) {
                     exitGameState();
                 }
@@ -209,18 +209,20 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "OptionMenu") {   //OptionMenu loop
             while (renderWin->pollEvent(event)) {
-
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
 
                 if (event.type == sf::Event::MouseButtonReleased) {
                     if (opMenu.isVolumeButtonPressed()) {
                         opMenu.volumeButtonUpdate();
+                        usleep(100000);
                     } else if (opMenu.isResButtonPressed()) {
                         opMenu.resButtonUpdate();
+                        usleep(100000);
                     } else if (opMenu.isCancelButtonPressed()) {
                         opMenu.cancelButtonUpdate();
                         mainMenuState();
+                        usleep(100000);
                     } else if (opMenu.isSaveButtonPressed()) {
                         std::string resolution;
                         bool volume;
@@ -240,12 +242,13 @@ void Game::loop() {
                         }
                         ss.str("");
                         mainMenuState();
+                        usleep(100000);
                     }
                 }
 
-                opMenu.update();
-            }
 
+            }
+            opMenu.update();
             opMenu.render();
 
         } else if (gameState->getStateName() == "StartGame") {      // Game loop
@@ -821,10 +824,12 @@ void Game::loop() {
                             player.removeWeapon(i);
                         }
                         mainMenuState();
+                        usleep(100000);
                     }
                 }
-                pauseMenu.update();
+
             }
+            pauseMenu.update();
             renderWin->setView(playerView);
             pauseMenu.render();
 
@@ -861,6 +866,7 @@ void Game::loop() {
                         }
 
                         mainMenuState();
+                        usleep(100000);
                     } else if (gameOver.isNextLevelPressed()) {
                         mapCount += 1;
                         enemies.clear();
