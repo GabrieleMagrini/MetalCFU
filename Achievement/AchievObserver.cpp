@@ -4,8 +4,9 @@
 
 #include "AchievObserver.h"
 
+
 AchievObserver::AchievObserver(Player *p, shared_ptr<sf::RenderWindow> rw,
-                               const std::string &text, const string &filename) : subject(make_shared<Player>(p)),
+                               const std::string &text, const string &filename) : subject(p),
                                                                                   renderWin(std::move(rw)) {
     texture->loadFromFile(filename);
     this->text.setString(text);
@@ -25,5 +26,5 @@ void AchievObserver::detach() {
 }
 
 void AchievObserver::update() {
-    render();
+
 }

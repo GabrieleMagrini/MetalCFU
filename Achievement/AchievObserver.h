@@ -10,6 +10,8 @@
 #include "Observer.h"
 #include "../Player.h"
 
+class player;
+
 class AchievObserver : public Observer, public sf::Sprite {
 public:
     explicit AchievObserver(Player *p, shared_ptr<sf::RenderWindow> rw, const std::string &text,
