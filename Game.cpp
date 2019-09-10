@@ -118,7 +118,6 @@ void Game::loop() {
     enemyShotSound.setBuffer(enemyShoot);
 
     std::unique_ptr<Granade> tempGranade = nullptr;
-    std::unique_ptr<MedKit> tempMedKit = nullptr;
 
 
     sf::Texture screenShoot;
@@ -186,6 +185,8 @@ void Game::loop() {
                             }
                         }
                     }
+                    tempGranade = nullptr;
+
                     enemyShootClock = vector<sf::Clock>(enemies.size());
                     animationClock.restart();
                     weaponClock.restart();
@@ -415,7 +416,7 @@ void Game::loop() {
 
                         case sf::Keyboard::M: //Use MedKit
                         {
-                            if (tempMedKit == nullptr && player.getHp() < 100) {
+                            if (player.getHp() < 100) {
                                 for (int i = 0; i < player.getDimUsable(); i++) {
                                     if (dynamic_cast<MedKit *>(player.getUsable(i)) != nullptr) {
                                         dynamic_cast<MedKit *>(player.removeUsable(i))->use(player);
