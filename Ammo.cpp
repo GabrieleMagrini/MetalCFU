@@ -9,11 +9,11 @@
 #include "Barrier.h"
 
 Ammo::Ammo(int damage, int range, bool c, bool s) : damage(damage), range(range), terrainCollision(c), isShot(s),
-                                                    gamecharacterCollision(c), interactableCollision(c) {
-    auto ammo = new sf::Texture();
-    ammo->loadFromFile(
-            "Sources/Pngs/weapon textures/ammo.png");
-    this->setTexture(*ammo);
+                                                    gamecharacterCollision(c), interactableCollision(c),
+                                                    texture(std::make_shared<sf::Texture>(sf::Texture{})) {
+
+    texture->loadFromFile("Sources/Pngs/weapon textures/ammo.png");
+    this->setTexture(*texture);
 }
 
 
@@ -52,17 +52,17 @@ void Ammo::setIsShot(bool isShot) {
 }
 
 bool Ammo::checkCollision(std::vector<Enemy> &e, const std::vector<Terrain> &t, std::vector<Interactable *> &I) {
-    for (int i = 0; i < e.size(); i++)
-        if (this->getGlobalBounds().intersects(e[i].getGlobalBounds())) {
+    for (auto &enemy : e)
+        if (this->getGlobalBounds().intersects(enemy.getGlobalBounds())) {
             this->setGamecharacterCollision(true);
-            e[i].getDamage(damage / 2);
+            enemy.getDamage(damage / 2);
         }
-    for (auto interactable:I)
+    for (auto &interactable:I)
         if (this->getGlobalBounds().intersects(interactable->getGlobalBounds())) {
             interactable->setHp(interactable->getHp() - damage);
             this->setInteractableCollision(true);
         }
-    for (auto terrain:t)
+    for (auto &terrain:t)
         if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
             this->setTerrainCollision(true);
     return false;
@@ -73,13 +73,13 @@ bool Ammo::checkPlayerCollision(Player &p, const std::vector<Terrain> &t, std::v
         this->setGamecharacterCollision(true);
         p.getDamage(damage / 3);
     }
-    for (auto interactable:I)
+    for (auto &interactable:I)
         if (this->getGlobalBounds().intersects(interactable->getGlobalBounds())) {
             this->setInteractableCollision(true);
             if (dynamic_cast<Barrier *>(interactable) != nullptr)
                 interactable->setHp(interactable->getHp() - damage);
         }
-    for (auto terrain:t)
+    for (auto &terrain:t)
         if (this->getGlobalBounds().intersects(terrain.getGlobalBounds()))
             this->setTerrainCollision(true);
     return false;
