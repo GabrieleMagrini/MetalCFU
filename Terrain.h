@@ -15,7 +15,7 @@
 class Terrain :public Sprite{                                                                    //enum class,various types of block as various blocks effects
 public:
 
-    explicit Terrain(int s = 0, bool sp = false) : bonusSpeedMovement(s), spawnPoint(sp) {}
+    explicit Terrain(int s = 0, bool sp = false, const std::string &filename = "");
 
     ~Terrain() final = default;
 
@@ -31,6 +31,7 @@ public:
 private:
     int bonusSpeedMovement;
     bool spawnPoint;
+    std::shared_ptr<sf::Texture> texture;
 
 };
 
