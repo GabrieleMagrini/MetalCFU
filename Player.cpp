@@ -25,3 +25,10 @@ void Player::notify() {
         obs->update();
     }
 }
+
+Player::Player(int l, Weapon *w, Usable *u, int hp, int s, int x, int y) : lives(l),
+                                                                           GameCharacter(hp, x, y, s, w, u, 4, 4, 10,
+                                                                                         -10, 0, 4, false,
+                                                                                         "Sources/Pngs/player textures/playerTexture.bmp") {
+
+}
