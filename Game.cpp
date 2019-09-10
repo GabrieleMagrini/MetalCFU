@@ -139,18 +139,13 @@ void Game::loop() {
                     stream << "Sources/Maps/mappa" << mapCount << ".txt";
                     s = stream.str();
                     blocks = map.createMap(std::ifstream(s));
-                    for (auto &numEnemy : blocks) {
+                    for (auto &numEnemy : blocks) { //calculate enemies from quantity of spawnPoint in the map
                         if (numEnemy.isSpawnPoint()) {
                             enemyVectorSize += 1;
                         }
                     }
-                    enemyVectorSize -= 1;
-                    enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
-                    for (int j = 0; j < enemies.size(); j++) {
-                        enemies[j] = *enemyFactory.createEnemy(
-                                EnemyType::Soldier);   //Placing the enemies in the map
 
-                    }
+                    enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
                     globalInteractable.push_back(new Trampoline{});
                     globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                     globalInteractable.push_back(new Barrier{});
@@ -175,6 +170,7 @@ void Game::loop() {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
                             spawnPlayer = player.getPosition();
+                            enemyVectorSize -= 1;
                             block.setSpawnPoint(false);
                             break;
                         }
@@ -192,8 +188,8 @@ void Game::loop() {
                     }
 
                     player.setUsable(new Granade{30, 3});
-                    enemyShootClock = vector<sf::Clock>(enemyVectorSize);
 
+                    enemyShootClock = vector<sf::Clock>(enemies.size());
                     animationClock.restart();
                     weaponClock.restart();
                     granadeClock.restart();
@@ -809,7 +805,7 @@ void Game::loop() {
                     if (pauseMenu.isBackGameButtonPressed()) {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
-                        mapCount = 0;
+                        mapCount = 1;
                         mainMenu.setNextLevel(false);
                         enemies.clear();
                         globalWeapon.clear();
