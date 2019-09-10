@@ -11,7 +11,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade{30, 5}, 100, 20),
+          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), nullptr, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)), playerHud(rw, font), event() {
     renderWin->setFramerateLimit(30);
@@ -168,8 +168,9 @@ void Game::loop() {
                     backGround.setPosition(-500, -100);
                     backGround.setScale(scaleX + 1, scaleY + 1);
 
-                    player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
+                    player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
                                     100, 20, 100, 300};
+                    player.setUsable(new Granade{30, 3});
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
@@ -423,12 +424,8 @@ void Game::loop() {
                         {
                             if (tempMedKit == nullptr && player.getHp() < 100) {
                                 for (int i = 0; i < player.getDimUsable(); i++) {
-                                    tempMedKit = std::unique_ptr<MedKit>(dynamic_cast<MedKit *>(player.getUsable(i)));
-                                    if (tempMedKit != nullptr) {
-                                        cout << &player << endl;
-                                        tempMedKit->use(player);
-                                        tempMedKit = nullptr;
-                                        player.removeUsable(i);
+                                    if (dynamic_cast<MedKit *>(player.getUsable(i)) != nullptr) {
+                                        dynamic_cast<MedKit *>(player.removeUsable(i))->use(player);
                                         break;
                                     }
 
@@ -560,14 +557,14 @@ void Game::loop() {
 
             //UPDATE ENEMY
             for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
-                auto enemyAmmo = new Ammo;
-                (enemies[x]).checkBehaviour(&player);
+                (enemies[x]).checkBehaviour(player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
-                        enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                        enemyAmmo->setIsShot(true);
-                        enemies[x].Action(&player, &enemies[x], *enemyAmmo);
-                        Bulletz[x].push_back(*enemyAmmo);
+                        Bulletz[x].push_back(Ammo{});
+                        Bulletz[x].back().setPosition(enemies[x].getWeapon()->getPosition());
+                        Bulletz[x].back().setIsShot(true);
+                        enemies[x].Action(player, Bulletz[x].back());
+
                         enemyShootClock[x].restart();
                         sf::Vector2f EnI = enemies[x].getPosition();
                         sf::Vector2f EnF = player.getPosition();
@@ -576,7 +573,7 @@ void Game::loop() {
                         enemyShotSound.play();
                     }
                 } else
-                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+                    enemies[x].Action(player, Bulletz[x].back());
             }
 
 
@@ -742,6 +739,7 @@ void Game::loop() {
                             countTextureGranade++;
                             if (countTextureGranade > 8) {
                                 tempGranade = nullptr;
+                                countTextureGranade = 0;
                             }
                             granadeClock.restart();
                         }
@@ -794,8 +792,8 @@ void Game::loop() {
                 renderWin->draw(w);
             }
             for (auto &bullet : Bulletz) {
-                for (int k = 0; k < bullet.size(); k++) {
-                    renderWin->draw(bullet[k]);
+                for (auto &bull :bullet) {
+                    renderWin->draw(bull);
                 }
             }
             playerHud.render();

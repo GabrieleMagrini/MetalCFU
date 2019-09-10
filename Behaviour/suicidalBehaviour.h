@@ -13,11 +13,11 @@ class suicidalBehaviour : public Behaviour {
 public:
     suicidalBehaviour() : name("Suicide") {}
 
-    virtual ~suicidalBehaviour() {}
+    ~suicidalBehaviour() final = default;
 
-    int action(Player *p, Enemy *e, Ammo &a) override;
+    int action(Player &p, Enemy &e, Ammo &a) override;
 
-    std::string getName();
+    std::string getName() final;
 
 private:
     std::string name;

@@ -11,7 +11,7 @@
 Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, const string &filename, int mw, int mu,
              int sx, int sy, int sw,
              int su, int steps, bool presence)
-        : GameCharacter(hp, x, y, s, w, p, mw, mu, sx, sy, sw, su, false, filename), startPosX(x), startposY(y),
+        : GameCharacter(hp, x, y, s, w, p, mw, mu, sx, sy, sw, su, false, filename), startPosX(x), startPosY(y),
           steps(steps), behaviour(b), playerPresence(presence) {
 
 }
@@ -19,8 +19,8 @@ Enemy::Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, co
 /****
  * function that make do a patrol to the enemy
  */
-void Enemy::Action(Player *p, Enemy *e, Ammo &a) {
-    Enemy::behaviour->action(p, this, a);
+void Enemy::Action(Player &p, Ammo &a) {
+    Enemy::behaviour->action(p, *this, a);
 
 }
 
@@ -32,17 +32,14 @@ void Enemy::setBehaviour(Behaviour *behaviour) {
     Enemy::behaviour = behaviour;
 }
 
-void Enemy::checkBehaviour(Player *p) {
-    auto attack = new attackBehaviour();
-    auto patrol = new patrolBehaviour();
-    auto suicidal = new suicidalBehaviour();
-    if ((abs(getPosX() - p->getPosX())) < 250) {
-        setBehaviour(attack);
+void Enemy::checkBehaviour(Player &p) {
+    if ((abs(getPosX() - p.getPosX())) < 250) {
+        Enemy::behaviour = new attackBehaviour{};
     } else {
         if (this->getHp() < 10)
-            setBehaviour(suicidal);
+            Enemy::behaviour = new suicidalBehaviour{};
         else
-            setBehaviour(patrol);
+            Enemy::behaviour = new patrolBehaviour{};
     }
 }
 

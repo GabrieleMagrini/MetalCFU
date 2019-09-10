@@ -11,8 +11,8 @@
 class MedKit: public Usable {
 public:
     MedKit() : Usable(45, "Sources/Pngs/weapon textures/medikit.png") {
-        texture.loadFromFile(fileName);
-        setTexture(texture);
+        texture->loadFromFile(fileName);
+        setTexture(*texture);
     };
     ~MedKit() override = default;
 

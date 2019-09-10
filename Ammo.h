@@ -6,6 +6,8 @@
 #define METALCFU_AMMO_H
 
 #include <SFML/Graphics.hpp>
+#include "memory"
+
 #include "Interactable.h"
 
 class Enemy;
@@ -63,6 +65,8 @@ private:
     bool isShot;
     bool gamecharacterCollision;
     bool interactableCollision;
+
+    std::shared_ptr<sf::Texture> texture;
 };
 
 

@@ -54,6 +54,15 @@ bool Terrain::isSpawnPoint() {
 void Terrain::setSpawnPoint(bool spawnPoint) {
     Terrain::spawnPoint = spawnPoint;
 }
+
+Terrain::Terrain(int s, bool sp, const string &filename) : bonusSpeedMovement(s), spawnPoint(sp),
+                                                           texture(std::make_shared<sf::Texture>(sf::Texture{})) {
+    if (filename != "") {
+        texture->loadFromFile(filename);
+        setTexture(*texture);
+    }
+
+}
 /*
 int Terrain::setBonus(GameCharacter &g) {
     while ((g.isCollisionDown()) && Collision::PixelPerfectTest(g, *this))

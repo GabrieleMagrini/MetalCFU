@@ -11,6 +11,12 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
 
     char map_array[sizeX][sizeY];
 
+    for (int i = 0; i < sizeX; i++) {
+        for (int j = 0; j < sizeY; j++) {
+            map_array[i][j] = char{'0'};
+        }
+    }
+
     try {
         for (int i = 1; i < sizeX; ++i) {
             for (int j = 0; j < sizeY; ++j) {
