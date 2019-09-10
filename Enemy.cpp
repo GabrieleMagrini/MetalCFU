@@ -34,12 +34,12 @@ void Enemy::setBehaviour(Behaviour *behaviour) {
 
 void Enemy::checkBehaviour(Player &p) {
     if ((abs(getPosX() - p.getPosX())) < 250) {
-        setBehaviour(new attackBehaviour{});
+        Enemy::behaviour = new attackBehaviour{};
     } else {
         if (this->getHp() < 10)
-            setBehaviour(new suicidalBehaviour{});
+            Enemy::behaviour = new suicidalBehaviour{};
         else
-            setBehaviour(new patrolBehaviour{});
+            Enemy::behaviour = new patrolBehaviour{};
     }
 }
 
