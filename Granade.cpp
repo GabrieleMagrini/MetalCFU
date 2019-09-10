@@ -27,8 +27,8 @@ int Granade::use(GameCharacter &g) {
  */
 Granade::Granade(int d, int expTime) : Usable(d, "Sources/Pngs/weapon textures/sheetGranade.png"),
                                        explosionTime(expTime), trow(false), direction(1) {
-    texture.loadFromFile(fileName);
-    setTexture(texture);
+    texture->loadFromFile(fileName);
+    setTexture(*texture);
     setTextureRect(sf::IntRect(0, 0, 26, 26));
 }
 
