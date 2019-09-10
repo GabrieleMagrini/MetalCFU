@@ -27,8 +27,7 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
         std::cerr << ex.what() << std::endl;
     }
 
-    TerrainFactory c;
-    std::unique_ptr<Terrain> bot = c.createTerrain(TerrainType::Mud);
+    std::unique_ptr<Terrain> bot = tf.createTerrain(TerrainType::Mud);
 
     auto gbounds = bot->getTexture()->getSize();
     std::vector<Terrain> sprites;
@@ -39,7 +38,7 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
             switch (map_array[t][z]) {
                 case '1': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Grass));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Grass));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
@@ -48,37 +47,37 @@ std::vector<Terrain> Map::createMap(std::ifstream my_file) {
                 }
                 case '2': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Dirt));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Dirt));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
                 case '3': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Mud));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Mud));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
                 case '4': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Grass, true));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Grass, true));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
                 case '5': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Dirt, true));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Dirt, true));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
                 case '6': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Mud, true));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Mud, true));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
                 case 'x': {
                     sprites.resize(sprites.size() + 1);
-                    sprites.push_back(*c.createTerrain(TerrainType::Invisible));
+                    sprites.push_back(*tf.createTerrain(TerrainType::Invisible));
                     sprites.back().setPosition({gbounds.x * float(z), gbounds.y * float(t)});
                     break;
                 }
@@ -124,11 +123,15 @@ void Map::setSizeY(int sizeY) {
 
 void Map::readValues(std::ifstream *my_file) {
 
-    int values[3];
-    for (int i = 0; i < 3; i++)
-        *my_file >> values[i];
-    sizeX = values[0];
-    sizeY = values[1];
-    gravity = values[2];
+    int values[3] = {0, 0, 0};
+    try {
+        for (int i = 0; i < 3; i++)
+            *my_file >> values[i];
 
+        sizeX = values[0];
+        sizeY = values[1];
+        gravity = values[2];
+    } catch (std::exception &ex) {
+        std::cerr << ex.what() << std::endl;
+    }
 }

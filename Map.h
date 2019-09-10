@@ -50,7 +50,7 @@ private:
     int sizeX;
     int sizeY;
     int gravity;
-
+    TerrainFactory tf;
 };
 
 
