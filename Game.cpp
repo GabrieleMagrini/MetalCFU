@@ -556,13 +556,13 @@ void Game::loop() {
 
             //UPDATE ENEMY
             for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
-                (enemies[x]).checkBehaviour(&player);
+                (enemies[x]).checkBehaviour(player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
                         Bulletz[x].push_back(Ammo{});
                         Bulletz[x].back().setPosition(enemies[x].getWeapon()->getPosition());
                         Bulletz[x].back().setIsShot(true);
-                        enemies[x].Action(&player, &enemies[x], Bulletz[x].back());
+                        enemies[x].Action(player, Bulletz[x].back());
 
                         enemyShootClock[x].restart();
                         sf::Vector2f EnI = enemies[x].getPosition();
@@ -572,7 +572,7 @@ void Game::loop() {
                         enemyShotSound.play();
                     }
                 } else
-                    enemies[x].Action(&player, &enemies[x], Bulletz[x].back());
+                    enemies[x].Action(player, Bulletz[x].back());
             }
 
 
@@ -790,8 +790,8 @@ void Game::loop() {
                 renderWin->draw(w);
             }
             for (auto &bullet : Bulletz) {
-                for (int k = 0; k < bullet.size(); k++) {
-                    renderWin->draw(bullet[k]);
+                for (auto &bull :bullet) {
+                    renderWin->draw(bull);
                 }
             }
             playerHud.render();
