@@ -97,7 +97,7 @@ private:
     float coolDown;
 
     std::string filename;
-    sf::Texture texture;
+    std::shared_ptr<sf::Texture> texture;
 };
 
 

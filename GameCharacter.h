@@ -147,7 +147,7 @@ protected:
     vector<Vector2f> aimInitial;
     vector<Vector2f> aimFinal;
 
-    sf::Texture texture;
+    std::shared_ptr<sf::Texture> texture;
     std::string filename;
 };
 

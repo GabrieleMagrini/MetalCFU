@@ -12,10 +12,11 @@ Weapon::Weapon(int cur, int d, int r, int m, const std::string &filename, const 
           activeLaser(false),
           collision(false),
           speedY(sy), bulletSpeed(bs),
-          filename(filename), name(wname), shooting(false), coolDown(cooldown) {
+          filename(filename), name(wname), shooting(false), coolDown(cooldown),
+          texture(std::make_shared<sf::Texture>(sf::Texture{})) {
 
-    texture.loadFromFile(this->filename);
-    setTexture(this->texture);
+    texture->loadFromFile(this->filename);
+    setTexture(*texture);
 }
 
 std::vector<Ammo> Weapon::getCurrentAmmo() {
@@ -154,22 +155,22 @@ void Weapon::setBulletSpeed(int bulletspeed) {
 void Weapon::setTextures(float xMouse, float xCharacter) {
     //funzionante per ora solo con pistola
     IntRect ir;
-    setTexture(texture);
+    setTexture(*texture);
     if (xMouse > xCharacter) {
         if (shooting)
-            ir = IntRect(texture.getSize().x / 2, 0, texture.getSize().x / 2, texture.getSize().y / 2);
+            ir = IntRect(texture->getSize().x / 2, 0, texture->getSize().x / 2, texture->getSize().y / 2);
 
         else
-            ir = IntRect(0, 0, texture.getSize().x / 2 - 1, texture.getSize().y / 2 - 1);
+            ir = IntRect(0, 0, texture->getSize().x / 2 - 1, texture->getSize().y / 2 - 1);
 
         setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width / 2, this->getPosition().y);
     } else {
         if (shooting)
 
-            ir = IntRect(texture.getSize().x / 2, texture.getSize().y / 2, texture.getSize().x / 2,
-                         texture.getSize().y / 2);
+            ir = IntRect(texture->getSize().x / 2, texture->getSize().y / 2, texture->getSize().x / 2,
+                         texture->getSize().y / 2);
         else
-            ir = IntRect(0, texture.getSize().y / 2, texture.getSize().x / 2 - 1, texture.getSize().y / 2 - 1);
+            ir = IntRect(0, texture->getSize().y / 2, texture->getSize().x / 2 - 1, texture->getSize().y / 2 - 1);
         setPosition(xCharacter + getLocalBounds().width / 4.f - getLocalBounds().width, this->getPosition().y);
     }
 
@@ -197,7 +198,7 @@ void Weapon::setCoolDown(float coolDown) {
 }
 
 void Weapon::realoadTexture() {
-    setTexture(texture);
+    setTexture(*texture);
 }
 
 void Weapon::addAmmo(int quantity) {

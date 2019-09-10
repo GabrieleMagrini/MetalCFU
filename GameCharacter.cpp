@@ -186,7 +186,7 @@ GameCharacter::GameCharacter(int hp, int x, int y, int s, Weapon *w, Usable *p, 
         : HP(hp), strenght(s),
           SpeedX(sx), SpeedY(sy), selectedWeapon(sw), weaponInventory(mw), usableInventory(mu), selectedUsable(su),
           collisionUp(c), collisionDown(c), jumping(false), collisionLeft(false), collisionRight(false),
-          filename(filename) {
+          filename(filename), texture(std::make_shared<sf::Texture>(sf::Texture{})) {
     if (w != nullptr)
         weaponInventory.setElement(0, *w);
     usableInventory.setElement(0, p);
@@ -372,8 +372,8 @@ void GameCharacter::setAimFinal(vector<Vector2f> &aimFinal) {
  * function that reload the texture for the GameCharacter
  */
 void GameCharacter::reloadTexture() {
-    texture.loadFromFile(filename);
-    setTexture(texture);
+    texture->loadFromFile(filename);
+    setTexture(*texture);
     setTextureRect(sf::IntRect(1, 1, 36, 60));
 }
 
@@ -398,7 +398,6 @@ void GameCharacter::setTextures(int pos, float xMouse, const std::string &direct
             rectTexture = sf::IntRect(1 * pos + 36 * pos + 1, 1, 36, 60);
     }
 
-    setTexture(texture);
     setTextureRect(rectTexture);
 }
 
@@ -406,6 +405,6 @@ void GameCharacter::setTextures(int pos, float xMouse, const std::string &direct
  * function that update the texture for GameCharacter
  */
 void GameCharacter::updateTexture() {
-    setTexture(texture);
+    setTexture(*texture);
     setTextureRect(IntRect(1, 1, 36, 60));
 }
