@@ -11,7 +11,7 @@ Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
           opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), new Granade{30, 5}, 100, 20),
+          player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), nullptr, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)), playerHud(rw, font), event() {
     renderWin->setFramerateLimit(30);
@@ -168,8 +168,9 @@ void Game::loop() {
                     backGround.setPosition(-500, -100);
                     backGround.setScale(scaleX + 1, scaleY + 1);
 
-                    player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit,
+                    player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
                                     100, 20, 100, 300};
+                    player.setUsable(new Granade{30, 3});
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
@@ -738,6 +739,7 @@ void Game::loop() {
                             countTextureGranade++;
                             if (countTextureGranade > 8) {
                                 tempGranade = nullptr;
+                                countTextureGranade = 0;
                             }
                             granadeClock.restart();
                         }
