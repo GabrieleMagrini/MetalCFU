@@ -81,7 +81,6 @@ public:
 
     void setUsableInventory(const Inventory<Usable *> &usableInventory);
 
-
     void setSelectedWeapon(int selectedWeapon);
 
     void releaseInventory(Inventory<Weapon> &wi, Inventory<Usable *> &ui);

@@ -804,11 +804,19 @@ void Game::loop() {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
                         mapCount = 1;
-                        mainMenu.setNextLevel(false);
                         enemies.clear();
+                        bullets.clear();
+                        Bulletz.clear();
+                        enemyVectorSize = 0;
+                        enemyBullets.clear();
                         globalWeapon.clear();
+                        blocks.clear();
                         globalInteractable.clear();
                         globalUsable.clear();
+                        globalAttachments.clear();
+                        aKeyPressed = false;
+                        dKeyPressed = false;
+                        spaceKeyPressed = false;
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
@@ -839,7 +847,7 @@ void Game::loop() {
                         Bulletz.clear();
                         enemyVectorSize = 0;
                         enemyBullets.clear();
-                        mapCount = 0;
+                        mapCount = 1;
                         globalWeapon.clear();
                         blocks.clear();
                         globalInteractable.clear();
