@@ -76,25 +76,18 @@ void MainMenu::render() {
 
     renderWin->draw(backGround);
     if (!nextLevel) {
-    startButton.render(*renderWin);
-
-    optionButton.render(*renderWin);
-
-    exitButton.render(*renderWin);
-
-        if (!backText.loadFromFile("Sources/Pngs/main.png")) {
-
-        }
-        float scaleX = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
-        float scaleY = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
+        backText.loadFromFile("Sources/Pngs/main.png");
+        startButton.render(*renderWin);
+        optionButton.render(*renderWin);
+        exitButton.render(*renderWin);
+        float scaleX = static_cast<float>(renderWin->getView().getSize().x) / static_cast<float>(backText.getSize().x);
+        float scaleY = static_cast<float>(renderWin->getView().getSize().y) / static_cast<float>(backText.getSize().y);
         backGround.setTexture(backText);
         backGround.setScale(scaleX, scaleY);
         backGround.setPosition(0, 0);
 
     } else {
-        if (!backText.loadFromFile("Sources/Pngs/loadin_screen.png")) {
-
-        }
+        backText.loadFromFile("Sources/Pngs/loadin_screen.png");
         float scaleX = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
         float scaleY = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
         backGround.setTexture(backText);
