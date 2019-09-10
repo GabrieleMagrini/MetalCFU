@@ -11,7 +11,3 @@ int suicidalBehaviour::action(Player &p, Enemy &e, Ammo &a) {
         p.setHp(p.getHp() - (e.getHp() * 2));
     return 0;
 }
-
-std::string suicidalBehaviour::getName() {
-    return name;
-}

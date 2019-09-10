@@ -11,16 +11,12 @@
 
 class patrolBehaviour : public Behaviour {
 public:
-    patrolBehaviour() : name("Patrol") {}
+    patrolBehaviour() : Behaviour("Patrol") {}
 
     ~patrolBehaviour() final = default;
 
     int action(Player &p, Enemy &e, Ammo &a) override;
 
-    std::string getName() final;
-
-private:
-    std::string name;
 };
 
 

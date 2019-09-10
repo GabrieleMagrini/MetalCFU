@@ -17,7 +17,3 @@ int attackBehaviour::action(Player &p, Enemy &e, Ammo &a) {
     }
     return 0;
 }
-
-std::string attackBehaviour::getName() {
-    return name;
-}

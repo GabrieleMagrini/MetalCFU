@@ -10,12 +10,8 @@ int patrolBehaviour::action(Player &p, Enemy &e, Ammo &a) {
             e.setPosition(e.getPosition().x, e.getPosition().y - 48);
         } else if (p.getPosX() - e.getPosX() >= 0)
             e.walk(1);
-        else if (p.getPosX() - e.getPosX() < 0)
+        else
             e.walk(3);
     }
     return 0;
-}
-
-std::string patrolBehaviour::getName() {
-    return name;
 }
