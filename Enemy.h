@@ -22,17 +22,17 @@ public:
 
     ~Enemy() final;
 
-    void Action(Player *p, Enemy *e, Ammo &a);
+    void Action(Player &p, Ammo &a);
 
     Behaviour *getBehaviour() const;
 
     void setBehaviour(Behaviour *behaviour);
 
-    void checkBehaviour(Player *p);
+    void checkBehaviour(Player &p);
 
 private:
     int startPosX;
-    int startposY;
+    int startPosY;
     int steps;
     Behaviour *behaviour;
     bool playerPresence;

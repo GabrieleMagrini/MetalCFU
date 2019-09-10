@@ -16,7 +16,7 @@ public:
 
     ~attackBehaviour() final = default;
 
-    int action(Player *p, Enemy *e, Ammo &a) override;
+    int action(Player &p, Enemy &e, Ammo &a) override;
 
     std::string getName() override;
 
