@@ -851,6 +851,9 @@ void Game::loop() {
                         globalInteractable.clear();
                         globalUsable.clear();
                         globalAttachments.clear();
+                        aKeyPressed = false;
+                        dKeyPressed = false;
+                        spaceKeyPressed = false;
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
@@ -870,6 +873,9 @@ void Game::loop() {
                         mainMenu.setNextLevel(true);
                         enemyVectorSize = 0;
                         mainMenuState();
+                        aKeyPressed = false;
+                        dKeyPressed = false;
+                        spaceKeyPressed = false;
 
                     }
 
