@@ -423,12 +423,8 @@ void Game::loop() {
                         {
                             if (tempMedKit == nullptr && player.getHp() < 100) {
                                 for (int i = 0; i < player.getDimUsable(); i++) {
-                                    tempMedKit = std::unique_ptr<MedKit>(dynamic_cast<MedKit *>(player.getUsable(i)));
-                                    if (tempMedKit != nullptr) {
-                                        cout << &player << endl;
-                                        tempMedKit->use(player);
-                                        tempMedKit = nullptr;
-                                        player.removeUsable(i);
+                                    if (dynamic_cast<MedKit *>(player.getUsable(i)) != nullptr) {
+                                        dynamic_cast<MedKit *>(player.removeUsable(i))->use(player);
                                         break;
                                     }
 
@@ -560,14 +556,14 @@ void Game::loop() {
 
             //UPDATE ENEMY
             for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
-                auto enemyAmmo = new Ammo;
                 (enemies[x]).checkBehaviour(&player);
                 if (enemies[x].getBehaviour()->getName() == "Attack") {
                     if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
-                        enemyAmmo->setPosition(enemies[x].getWeapon()->getPosition());
-                        enemyAmmo->setIsShot(true);
-                        enemies[x].Action(&player, &enemies[x], *enemyAmmo);
-                        Bulletz[x].push_back(*enemyAmmo);
+                        Bulletz[x].push_back(Ammo{});
+                        Bulletz[x].back().setPosition(enemies[x].getWeapon()->getPosition());
+                        Bulletz[x].back().setIsShot(true);
+                        enemies[x].Action(&player, &enemies[x], Bulletz[x].back());
+
                         enemyShootClock[x].restart();
                         sf::Vector2f EnI = enemies[x].getPosition();
                         sf::Vector2f EnF = player.getPosition();
@@ -576,7 +572,7 @@ void Game::loop() {
                         enemyShotSound.play();
                     }
                 } else
-                    enemies[x].Action(&player, &enemies[x], *enemyAmmo);
+                    enemies[x].Action(&player, &enemies[x], Bulletz[x].back());
             }
 
 
