@@ -22,8 +22,6 @@ public:
     void checkCollision(
             GameCharacter &g);       //the block will have as only function to check the collision with the other elements
 
-    int setBonus(GameCharacter &g);
-
     bool isSpawnPoint();
 
     void setSpawnPoint(bool spawnPoint);

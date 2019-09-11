@@ -63,11 +63,3 @@ Terrain::Terrain(int s, bool sp, const string &filename) : bonusSpeedMovement(s)
     }
 
 }
-/*
-int Terrain::setBonus(GameCharacter &g) {
-    while ((g.isCollisionDown()) && Collision::PixelPerfectTest(g, *this))
-        g.setSpeedX(g.getSpeedX() + bonusSpeedMovement);
-
-    return 0;
-}
- */
