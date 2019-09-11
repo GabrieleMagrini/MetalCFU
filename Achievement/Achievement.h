@@ -5,9 +5,8 @@
 #ifndef METALCFU_ACHIEVEMENT_H
 #define METALCFU_ACHIEVEMENT_H
 
+#include <memory>
 #include "SFML/Graphics.hpp"
-
-#include "../Player.h"
 
 class Achievement : public sf::Sprite {
 public:
@@ -22,12 +21,10 @@ public:
 
 
 private:
-    static bool isRendering;
-    std::shared_ptr<Player> subject;
     std::shared_ptr<sf::Texture> texture;
     sf::Text text;
     sf::Clock timer;
-    sf::Font font;
+    std::shared_ptr<sf::Font> font;
 
 };
 
