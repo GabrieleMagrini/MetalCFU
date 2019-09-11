@@ -25,9 +25,9 @@ public:
 
     void render();
 
-private:
+protected:
     std::shared_ptr<Player> subject;
-
+private:
     std::shared_ptr<sf::Texture> texture;
     std::shared_ptr<sf::RenderWindow> renderWin;
     sf::Text text;

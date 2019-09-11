@@ -28,3 +28,8 @@ void AchievObserver::detach() {
 void AchievObserver::update() {
 
 }
+
+void AchievObserver::render() {
+    renderWin->draw(*this);
+    renderWin->draw(text);
+}
