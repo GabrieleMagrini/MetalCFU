@@ -41,6 +41,7 @@
 #include "Attachment/LongBarrel.h"
 #include "Attachment/PowerBarrel.h"
 #include "Achievement/DistanceObserver.h"
+#include "Achievement/KillObserver.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

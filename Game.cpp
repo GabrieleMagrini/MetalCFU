@@ -5,7 +5,6 @@
 #include "Game.h"
 
 
-
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState{}), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/main.png", font),
@@ -121,7 +120,7 @@ void Game::loop() {
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
     DistanceObserver distanceObserver{&player};
-
+    KillObserver killObserver{&player};
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
             while (renderWin->pollEvent(event)) {
@@ -173,7 +172,11 @@ void Game::loop() {
                     player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
                                     100, 20, 100, 300};
                     player.setUsable(new Granade{30, 3});
-                    player.subscribe(&distanceObserver);
+
+                    if (mapCount <= 1) {
+                        player.subscribe(&distanceObserver);
+                        player.subscribe(&killObserver);
+                    }
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
@@ -601,6 +604,8 @@ void Game::loop() {
                                   i);                                                 //Erase the bullet shoot from the dead enemy
                     globalWeapon.push_back(a);
                     enemies.erase(enemies.begin() + i);
+                    player.addNKill();
+                    player.notify();
                     break;
                 }
             }
@@ -852,6 +857,7 @@ void Game::loop() {
 
         } else if (gameState->getStateName() == "ExitGame") {  // exit game
             renderWin->close();
+            return;
 
         } else if (gameState->getStateName() == "GameOver") { //Game over state
             playerView.setCenter(renderWin->getView().getSize().x / 2.0f, renderWin->getView().getSize().y / 2.0f);
