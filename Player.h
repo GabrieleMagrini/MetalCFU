@@ -17,12 +17,12 @@ enum class AchievementType {
     DISTANCE, KILL, WIN
 };
 
-class Player : virtual public GameCharacter, public Subject {
+class Player : public GameCharacter, public Subject {
 public:
 
     explicit Player(int l, Weapon *w, Usable *u = nullptr, int hp = 100, int s = 20, int x = 10, int y = 10);
-    ~Player()override = default;
 
+    ~Player()override = default;
 
     int getLives() const;
 
@@ -38,8 +38,12 @@ public:
 
     void renderAchiev(sf::RenderWindow &rw);
 
+    int getNKill() const;
+
+    void addNKill();
 private:
     int lives;
+    int nKill;
     std::list<Observer *> observers;
     Achievement achievement;
 };
