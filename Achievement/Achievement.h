@@ -21,6 +21,7 @@ public:
 
 
 private:
+    sf::RectangleShape rectangleShape;
     std::shared_ptr<sf::Texture> texture;
     sf::Text text;
     sf::Clock timer;
