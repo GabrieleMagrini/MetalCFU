@@ -19,6 +19,7 @@ public:
 
     std::string getText() const;
 
+    void restartTimer();
 
 private:
     sf::RectangleShape rectangleShape;

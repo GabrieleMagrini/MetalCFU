@@ -19,18 +19,23 @@ Achievement::Achievement(const std::string &text, const std::string &fontName, c
 }
 
 void Achievement::render(sf::RenderWindow &rw) {
-    text.setPosition(rw.getView().getCenter().x - text.getLocalBounds().width / 2.0f + getLocalBounds().width,
-                               rw.getView().getCenter().y + rw.getView().getSize().y / 2.0f - 80.0f);
-    setPosition(this->text.getPosition().x - 65, this->text.getPosition().y);
-    rectangleShape.setPosition(getPosition());
-    rw.draw(rectangleShape);
+    if (timer.getElapsedTime().asSeconds() <= 4.0f) {
+        text.setPosition(rw.getView().getCenter().x - text.getLocalBounds().width / 2.0f + getLocalBounds().width,
+                         rw.getView().getCenter().y + rw.getView().getSize().y / 2.0f - 80.0f);
+        setPosition(this->text.getPosition().x - 65, this->text.getPosition().y);
+        rectangleShape.setPosition(getPosition());
+        rw.draw(rectangleShape);
         rw.draw(*this);
         rw.draw(text);
-
+    } else {
+        text.setString("");
+    }
 }
 
 std::string Achievement::getText() const {
     return text.getString();
 }
 
-
+void Achievement::restartTimer() {
+    timer.restart();
+}
