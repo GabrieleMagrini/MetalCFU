@@ -120,10 +120,6 @@ void Game::loop() {
 
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
-
-    float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
-    float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
-
     DistanceObserver distanceObserver{&player};
 
     while (renderWin->isOpen()) {
@@ -605,6 +601,7 @@ void Game::loop() {
                                   i);                                                 //Erase the bullet shoot from the dead enemy
                     globalWeapon.push_back(a);
                     enemies.erase(enemies.begin() + i);
+                    break;
                 }
             }
 
