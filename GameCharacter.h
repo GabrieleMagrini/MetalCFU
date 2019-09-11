@@ -10,7 +10,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Weapon.h"
-#include "Usable.h"
 #include "Inventory.h"
 
 using namespace sf;
