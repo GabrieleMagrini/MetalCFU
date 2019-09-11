@@ -40,6 +40,7 @@
 #include "Attachment/LaserScope.h"
 #include "Attachment/LongBarrel.h"
 #include "Attachment/PowerBarrel.h"
+#include "Achievement/DistanceObserver.h"
 
 enum class GState {
     GameOver, ExitGame, MainMenu, OptionMenu, StartGame, PauseGame

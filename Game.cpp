@@ -5,6 +5,7 @@
 #include "Game.h"
 
 
+
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState{}), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/main.png", font),
@@ -118,9 +119,9 @@ void Game::loop() {
     enemyShotSound.setBuffer(enemyShoot);
 
     std::unique_ptr<Granade> tempGranade = nullptr;
-
-
     sf::Texture screenShoot;
+
+    DistanceObserver distanceObserver{&player};
 
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
@@ -165,6 +166,7 @@ void Game::loop() {
                     player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
                                     100, 20, 100, 300};
                     player.setUsable(new Granade{30, 3});
+                    player.subscribe(&distanceObserver);
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
                             player.setPosition(block.getPosition().x + 30, block.getPosition().y - 100);
@@ -174,6 +176,8 @@ void Game::loop() {
                             break;
                         }
                     }
+
+
                     for (int j = 0; j < enemies.size(); j++) {
                         for (auto &enemyBlock : blocks) {
                             if (enemyBlock.isSpawnPoint()) {
@@ -459,9 +463,11 @@ void Game::loop() {
             //PLAYER UPDATE
             if (dKeyPressed && !player.isCollisionRight()) {
                 player.walk(1);
+                player.notify();
 
             } else if (aKeyPressed && !player.isCollisionLeft()) {
                 player.walk(3);
+                player.notify();
             } else {
                 player.setTextures(0, xMouse, "right");
                 countTexture = 0;
@@ -793,6 +799,9 @@ void Game::loop() {
                     renderWin->draw(bull);
                 }
             }
+
+            player.renderAchiev(*renderWin);
+
             playerHud.render();
             renderWin->display();
 
