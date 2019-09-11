@@ -25,7 +25,7 @@ public:
     void update() override;
 
 private:
-    std::shared_ptr<Player> subject;
+    Player *subject;
     float startPosX;
     float distanceTraveled;
     float distanceMax;

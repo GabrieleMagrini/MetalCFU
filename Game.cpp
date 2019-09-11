@@ -119,8 +119,10 @@ void Game::loop() {
 
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
-    DistanceObserver distanceObserver{&player};
-    KillObserver killObserver{&player};
+    DistanceObserver distanceObserver(&player);
+    KillObserver killObserver(&player);
+
+
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
             while (renderWin->pollEvent(event)) {
