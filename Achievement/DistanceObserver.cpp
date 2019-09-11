@@ -5,7 +5,7 @@
 #include "DistanceObserver.h"
 
 
-DistanceObserver::DistanceObserver(Player *p) : subject(p), distanceTraveled(0), distanceMax(300),
+DistanceObserver::DistanceObserver(Player *p) : subject(p), distanceTraveled(0), distanceMax(5000),
                                                 startPosX(p->getPosition().x) {
     attach();
 }
