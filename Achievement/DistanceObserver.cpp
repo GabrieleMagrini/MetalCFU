@@ -26,3 +26,7 @@ void DistanceObserver::update() {
         detach();
     }
 }
+
+DistanceObserver::~DistanceObserver() {
+    detach();
+}
