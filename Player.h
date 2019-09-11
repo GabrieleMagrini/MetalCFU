@@ -11,6 +11,11 @@
 #include "Inventory.h"
 #include "Achievement/Subject.h"
 #include "Achievement/Observer.h"
+#include "Achievement/Achievement.h"
+
+enum class AchievementType {
+    DISTANCE, KILL, WIN
+};
 
 class Player : virtual public GameCharacter, public Subject {
 public:
@@ -29,10 +34,12 @@ public:
 
     void notify() override;
 
+    void unlock(AchievementType at);
+
 private:
     int lives;
-
     std::list<Observer *> observers;
+    Achievement achievement;
 };
 
 

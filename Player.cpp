@@ -22,13 +22,32 @@ void Player::unsubscribe(Observer *o) {
 
 void Player::notify() {
     for (auto &obs: observers) {
-        obs->update();
+        if (obs != nullptr)
+            obs->update();
     }
 }
 
-Player::Player(int l, Weapon *w, Usable *u, int hp, int s, int x, int y) : lives(l),
-                                                                           GameCharacter(hp, x, y, s, w, u, 4, 4, 10,
-                                                                                         -10, 0, 4, false,
-                                                                                         "Sources/Pngs/player textures/playerTexture.bmp") {
+Player::Player(int l, Weapon *w, Usable *u, int hp, int s, int x, int y) :
+        lives(l),
+        GameCharacter(hp, x, y, s, w, u, 4, 4, 10, 10, 0, 4, false,
+                      "Sources/Pngs/player textures/playerTexture.bmp"), achievement("") {
 
+
+}
+
+void Player::unlock(AchievementType ac) {
+    switch (ac) {
+        case AchievementType::DISTANCE: {
+            achievement = Achievement{"Do you like running?"};
+            break;
+        }
+        case AchievementType::KILL: {
+            achievement = Achievement{"Homicidal fury"};
+            break;
+        }
+        case AchievementType::WIN: {
+            achievement = Achievement{"Masterpiece"};
+            break;
+        }
+    }
 }
