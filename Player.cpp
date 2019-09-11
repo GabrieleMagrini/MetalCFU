@@ -21,10 +21,10 @@ void Player::unsubscribe(Observer *o) {
 }
 
 void Player::notify() {
-    for (auto &obs: observers) {
-        if (obs != nullptr)
-            obs->update();
-    }
+    if (!observers.empty())
+        for (auto obs = observers.begin(); obs != observers.end() && !observers.empty(); obs++) {
+            (*obs)->update();
+        }
 }
 
 Player::Player(int l, Weapon *w, Usable *u, int hp, int s, int x, int y) :
@@ -39,6 +39,7 @@ void Player::unlock(AchievementType ac) {
     switch (ac) {
         case AchievementType::DISTANCE: {
             achievement = Achievement{"Do you like running?"};
+            achievement.restartTimer();
             break;
         }
         case AchievementType::KILL: {
