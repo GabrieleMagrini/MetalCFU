@@ -9,7 +9,7 @@
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState{}), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/main.png", font),
-          opMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          opMenu(rw, "Sources/Pngs/main.png", font),
           pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
           player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), nullptr, 100, 20),
@@ -121,6 +121,9 @@ void Game::loop() {
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
 
+    float scaleX = static_cast<float>((renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x));
+    float scaleY = static_cast<float>((renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y));
+
     DistanceObserver distanceObserver{&player};
 
     while (renderWin->isOpen()) {
@@ -138,6 +141,14 @@ void Game::loop() {
                     String s;
                     stream << "Sources/Maps/mappa" << mapCount << ".txt";
                     s = stream.str();
+
+                    std::stringstream back;
+                    String b;
+                    back << "Sources/Pngs/wallpaper_" << mapCount << ".jpeg";
+                    b = back.str();
+                    textBackGround.loadFromFile(b);
+
+
                     blocks = map.createMap(std::ifstream(s));
                     for (auto &numEnemy : blocks) { //calculate enemies from quantity of spawnPoint in the map
                         if (numEnemy.isSpawnPoint()) {
