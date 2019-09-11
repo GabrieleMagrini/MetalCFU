@@ -17,19 +17,18 @@ public:
     explicit AchievObserver(Player *p, shared_ptr<sf::RenderWindow> rw, const std::string &text,
                             const std::string &filename = "Sources/Pngs/trophy.png");
 
-    void update() override;
 
     void attach() override;
 
     void detach() override;
 
-    void render();
+    void render(sf::RenderWindow *rw);
 
 protected:
     std::shared_ptr<Player> subject;
+    bool doneAchieve;
 private:
     std::shared_ptr<sf::Texture> texture;
-    std::shared_ptr<sf::RenderWindow> renderWin;
     sf::Text text;
 
 };
