@@ -12,25 +12,18 @@
 
 class player;
 
-class AchievObserver : public Observer, public sf::Sprite {
+class AchievObserver : public Observer {
 public:
-    explicit AchievObserver(Player *p, shared_ptr<sf::RenderWindow> rw, const std::string &text,
-                            const std::string &filename = "Sources/Pngs/trophy.png");
-
+    explicit AchievObserver(Player *p);
 
     void attach() override;
 
     void detach() override;
 
-    void render(sf::RenderWindow *rw);
+    void update() override;
 
-protected:
-    std::shared_ptr<Player> subject;
-    bool doneAchieve;
 private:
-    std::shared_ptr<sf::Texture> texture;
-    sf::Text text;
-
+    std::shared_ptr<Player> subject;
 };
 
 
