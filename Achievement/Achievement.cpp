@@ -12,14 +12,18 @@ Achievement::Achievement(const std::string &text, const std::string &fontName, c
     this->text.setFillColor(sf::Color(205, 164, 52));
 }
 
-void Achievement::render(sf::RenderWindow *rw) {
+void Achievement::render(sf::RenderWindow &rw) {
     if (!isRendering) {
-        this->text.setPosition(rw->getView().getCenter().x - text.getLocalBounds().width / 2.0f,
-                               rw->getView().getCenter().y + rw->getView().getSize().y / 2.0f - 80.0f);
+        this->text.setPosition(rw.getView().getCenter().x - text.getLocalBounds().width / 2.0f,
+                               rw.getView().getCenter().y + rw.getView().getSize().y / 2.0f - 80.0f);
         setPosition(this->text.getPosition().x - 40.0f, this->text.getPosition().y);
-        rw->draw(*this);
-        rw->draw(text);
+        rw.draw(*this);
+        rw.draw(text);
     }
+}
+
+std::string Achievement::getText() const {
+    return text.getString();
 }
 
 

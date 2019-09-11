@@ -2,8 +2,8 @@
 // Created by emanuele on 10/09/19.
 //
 
-#ifndef METALCFU_ACHIEVOBSERVER_H
-#define METALCFU_ACHIEVOBSERVER_H
+#ifndef METALCFU_DISTANCEOBSERVER_H
+#define METALCFU_DISTANCEOBSERVER_H
 
 #include "SFML/Graphics.hpp"
 
@@ -12,9 +12,9 @@
 
 class player;
 
-class AchievObserver : public Observer {
+class DistanceObserver : public Observer {
 public:
-    explicit AchievObserver(Player *p);
+    explicit DistanceObserver(Player *p);
 
     void attach() override;
 
@@ -24,7 +24,9 @@ public:
 
 private:
     std::shared_ptr<Player> subject;
+    float startPosX;
+    float distance;
 };
 
 
-#endif //METALCFU_ACHIEVOBSERVER_H
+#endif //METALCFU_DISTANCEOBSERVER_H

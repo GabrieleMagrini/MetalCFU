@@ -16,7 +16,9 @@ public:
 
     ~Achievement() override = default;
 
-    void render(sf::RenderWindow *rw);
+    void render(sf::RenderWindow &rw);
+
+    std::string getText() const;
 
 
 private:
