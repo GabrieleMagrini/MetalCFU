@@ -5,6 +5,7 @@
 #include "Game.h"
 
 
+
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState{}), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/main.png", font),
@@ -121,7 +122,7 @@ void Game::loop() {
     sf::Texture screenShoot;
     DistanceObserver distanceObserver(&player);
     KillObserver killObserver(&player);
-
+    BoomObserver boomObserver(&player);
 
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
@@ -178,6 +179,7 @@ void Game::loop() {
                     if (mapCount <= 1) {
                         player.subscribe(&distanceObserver);
                         player.subscribe(&killObserver);
+                        player.subscribe(&boomObserver);
                     }
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
@@ -415,6 +417,8 @@ void Game::loop() {
                         case sf::Keyboard::T: //launch granade
                         {
                             if (tempGranade == nullptr)
+                                player.addGranadeCounter();
+                            player.notify();
                                 for (int i = 0; i < player.getDimUsable(); i++) {
                                     if (dynamic_cast<Granade *>(player.getUsable(i)) != nullptr) {
                                         tempGranade = std::unique_ptr<Granade>(
