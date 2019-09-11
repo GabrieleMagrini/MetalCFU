@@ -36,6 +36,8 @@ public:
 
     void unlock(AchievementType at);
 
+    void renderAchiev(sf::RenderWindow &rw);
+
 private:
     int lives;
     std::list<Observer *> observers;

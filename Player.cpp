@@ -49,5 +49,14 @@ void Player::unlock(AchievementType ac) {
             achievement = Achievement{"Masterpiece"};
             break;
         }
+        default:
+            achievement = Achievement{""};
+            break;
+    }
+}
+
+void Player::renderAchiev(sf::RenderWindow &rw) {
+    if (achievement.getText() != "") {
+        achievement.render(rw);
     }
 }
