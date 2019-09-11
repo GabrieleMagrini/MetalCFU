@@ -5,7 +5,8 @@
 #include "DistanceObserver.h"
 
 
-DistanceObserver::DistanceObserver(Player *p) : subject(p), distance(500), startPosX(p->getPosition().x) {
+DistanceObserver::DistanceObserver(Player *p) : subject(p), distanceTraveled(0), distanceMax(5000),
+                                                startPosX(p->getPosition().x) {
     attach();
 }
 
@@ -18,7 +19,9 @@ void DistanceObserver::detach() {
 }
 
 void DistanceObserver::update() {
-    if (abs(subject->getPosition().x - startPosX) >= distance) {
+    distanceTraveled = distanceTraveled + abs(subject->getPosition().x - startPosX);
+    if (distanceTraveled >= distanceMax) {
         subject->unlock(AchievementType::DISTANCE);
+        detach();
     }
 }

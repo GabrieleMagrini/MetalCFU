@@ -25,7 +25,8 @@ public:
 private:
     std::shared_ptr<Player> subject;
     float startPosX;
-    float distance;
+    float distanceTraveled;
+    float distanceMax;
 };
 
 
