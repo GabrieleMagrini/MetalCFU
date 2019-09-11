@@ -11,8 +11,8 @@
 
 class Achievement : public sf::Sprite {
 public:
-    Achievement(const std::string &text, const sf::Font &f,
-                const std::string &filename = "Sources/Pngs/trophy.png");
+    explicit Achievement(const std::string &text, const std::string &fontname = "Sources/Raleway-Medium.ttf",
+                         const std::string &filename = "Sources/Pngs/trophy.png");
 
     ~Achievement() override = default;
 
@@ -25,7 +25,7 @@ private:
     std::shared_ptr<sf::Texture> texture;
     sf::Text text;
     sf::Clock timer;
-
+    sf::Font font;
 
 };
 
