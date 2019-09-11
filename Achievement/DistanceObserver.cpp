@@ -20,6 +20,7 @@ void DistanceObserver::detach() {
 
 void DistanceObserver::update() {
     distanceTraveled = distanceTraveled + abs(subject->getPosition().x - startPosX);
+    startPosX = subject->getPosition().x;
     if (distanceTraveled >= distanceMax) {
         subject->unlock(AchievementType::DISTANCE);
         detach();

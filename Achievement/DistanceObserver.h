@@ -16,6 +16,8 @@ class DistanceObserver : public Observer {
 public:
     explicit DistanceObserver(Player *p);
 
+    ~DistanceObserver() final = default;
+
     void attach() override;
 
     void detach() override;
