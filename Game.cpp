@@ -9,9 +9,9 @@
 Game::Game(const shared_ptr<sf::RenderWindow> &rw, const sf::Font &font)
         : gameState(new MainMenuState{}), renderWin(rw), font(font),
           mainMenu(rw, "Sources/Pngs/main.png", font),
-          opMenu(rw, "Sources/Pngs/main.png", font),
-          pauseMenu(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
-          gameOver(rw, "Sources/Pngs/wallpaper_1.jpeg", font),
+          opMenu(rw, "Sources/Pngs/menus.jpg", font),
+          pauseMenu(rw, "Sources/Pngs/menus.jpg", font),
+          gameOver(rw, "Sources/Pngs/menus.jpg", font),
           player(3, weaponFactory.createWeapon(WeaponType::pistol).get(), nullptr, 100, 20),
           playerView(sf::FloatRect(renderWin->getPosition().x, renderWin->getPosition().y, renderWin->getSize().x,
                                    renderWin->getSize().y)), playerHud(rw, font), event() {
