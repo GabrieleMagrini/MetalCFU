@@ -34,7 +34,7 @@ void Player::notify() {
 Player::Player(int l, Weapon *w, Usable *u, int hp, int s, int x, int y) :
         lives(l),
         GameCharacter(hp, x, y, s, w, u, 4, 4, 10, 10, 0, 4, false,
-                      "Sources/Pngs/player textures/playerTexture.bmp"), achievement(""), nKill(0) {
+                      "Sources/Pngs/player textures/playerTexture.bmp"), achievement(""), nKill(0), granadeCounter(0) {
 
 
 }
@@ -54,8 +54,8 @@ void Player::unlock(AchievementType ac) {
             achievement = Achievement{"Homicidal fury"};
             break;
         }
-        case AchievementType::WIN: {
-            achievement = Achievement{"Masterpiece"};
+        case AchievementType::BOOM: {
+            achievement = Achievement{"BOOOM BABY!!"};
             break;
         }
         default:
@@ -79,4 +79,12 @@ void Player::addNKill() {
 
 int Player::getNKill() const {
     return nKill;
+}
+
+void Player::addGranadeCounter() {
+    granadeCounter++;
+}
+
+int Player::getGranadeCounter() const {
+    return granadeCounter;
 }

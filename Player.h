@@ -14,7 +14,7 @@
 #include "Achievement/Achievement.h"
 
 enum class AchievementType {
-    DISTANCE, KILL, WIN
+    DISTANCE, KILL, BOOM
 };
 
 class Player : public GameCharacter, public Subject {
@@ -41,9 +41,15 @@ public:
     int getNKill() const;
 
     void addNKill();
+
+    void addGranadeCounter();
+
+    int getGranadeCounter() const;
+
 private:
     int lives;
     int nKill;
+    int granadeCounter;
     std::list<Observer *> observers;
     Achievement achievement;
 };
