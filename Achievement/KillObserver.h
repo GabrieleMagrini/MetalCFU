@@ -12,7 +12,7 @@ class KillObserver : public Observer {
 public:
     explicit KillObserver(Player *p);
 
-    ~KillObserver() final = default;
+    ~KillObserver() final;
 
     void attach() override;
 

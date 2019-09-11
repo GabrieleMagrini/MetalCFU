@@ -22,3 +22,7 @@ void KillObserver::update() {
         detach();
     }
 }
+
+KillObserver::~KillObserver() {
+    detach();
+}
