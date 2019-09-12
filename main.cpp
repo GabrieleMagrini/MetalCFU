@@ -15,7 +15,7 @@
 
 int main() {
 
-    std::shared_ptr<RenderWindow> rw(new sf::RenderWindow(sf::VideoMode(1280, 720), "Metal CFU"));
+    std::shared_ptr<RenderWindow> rw(new sf::RenderWindow(sf::VideoMode(1280, 720), "Metal CFU", sf::Style::Close));
     sf::Font font;
     font.loadFromFile("Sources/Raleway-Medium.ttf");
     Game g(rw, font);
