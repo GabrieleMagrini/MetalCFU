@@ -343,6 +343,7 @@ void Game::loop() {
                             screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
                                                static_cast<int>(renderWin->getView().getSize().y));
                             screenShoot.update(*renderWin);
+                            renderWin->clear();
                             pauseMenu.setTextureBackGround(screenShoot);
                             pauseGameState();
                             break;
