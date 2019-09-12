@@ -120,11 +120,9 @@ void Game::loop() {
     enemyShotSound.setBuffer(enemyShoot);
     enemyShotSound.setVolume(50);
 
-    sf::SoundBuffer music;
-    music.loadFromFile("Sources/Sounds/jungle.wav");
-    sf::SoundBuffer musicLevel;
-    sf::Sound gameMusic;
-    gameMusic.setBuffer(music);
+    sf::Music gameMusic;
+    gameMusic.openFromFile("Sources/Sounds/jungle.wav");
+    gameMusic.setVolume(75);
 
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
@@ -132,12 +130,12 @@ void Game::loop() {
     DistanceObserver distanceObserver(&player);
     KillObserver killObserver(&player);
     BoomObserver boomObserver(&player);
-
+    gameMusic.play();
 
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
             while (renderWin->pollEvent(event)) {
-                gameMusic.play();
+
 
                 if (event.type == sf::Event::Closed)
                     exitGameState();
@@ -151,27 +149,18 @@ void Game::loop() {
                     //Dynamically changin music,map and wallpapers according to levels
 
                     std::stringstream musicStream;
-                    String M;
                     musicStream << "Sources/Sounds/level_" << mapCount << ".wav";
-                    M = musicStream.str();
-
-                    musicLevel.loadFromFile(M);
-                    gameMusic.setBuffer(musicLevel);
-
-                    std::stringstream stream;
-                    String s;
-                    stream << "Sources/Maps/mappa" << mapCount << ".txt";
-                    s = stream.str();
+                    gameMusic.openFromFile(musicStream.str());
 
                     std::stringstream back;
-                    String b;
                     back << "Sources/Pngs/wallpaper_" << mapCount << ".jpeg";
-                    b = back.str();
-                    textBackGround.loadFromFile(b);
+                    textBackGround.loadFromFile(back.str());
 
                     //creating the map
+                    std::stringstream stream;
+                    stream << "Sources/Maps/mappa" << mapCount << ".txt";
+                    blocks = map.createMap(std::ifstream(stream.str()));
 
-                    blocks = map.createMap(std::ifstream(s));
                     for (auto &numEnemy : blocks) {           //calculate enemies from quantity of spawnPoint in the map
                         if (numEnemy.isSpawnPoint()) {
                             enemyVectorSize += 1;
@@ -230,6 +219,7 @@ void Game::loop() {
                     }
                     tempGranade = nullptr;
 
+                    gameMusic.play();
                     enemyShootClock = vector<sf::Clock>(enemies.size());
                     animationClock.restart();
                     weaponClock.restart();
@@ -279,9 +269,11 @@ void Game::loop() {
                         if (!volume) {
                             shotSound.setVolume(0);
                             enemyShotSound.setVolume(0);
+                            gameMusic.setVolume(0);
                         } else {
                             shotSound.setVolume(50);
                             enemyShotSound.setVolume(50);
+                            gameMusic.setVolume(75);
                         }
                         ss.str("");
                         mainMenuState();
@@ -300,7 +292,7 @@ void Game::loop() {
                            (sf::Mouse::getPosition(*renderWin).x);
 
             while (renderWin->pollEvent(event)) {
-                gameMusic.play();
+
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
                 if (event.type == sf::Event::MouseButtonPressed) {
@@ -863,6 +855,9 @@ void Game::loop() {
                     if (pauseMenu.isBackGameButtonPressed()) {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
+
+                        gameMusic.pause();
+                        gameMusic.openFromFile("Sources/Sounds/jungle.wav");
                         mapCount = 1;
                         enemies.clear();
                         bullets.clear();
@@ -880,6 +875,7 @@ void Game::loop() {
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
+                        gameMusic.play();
                         mainMenuState();
                         usleep(100000);
                     }
@@ -905,7 +901,8 @@ void Game::loop() {
                     if (gameOver.isExitButtonPressed()) {
                         exitGameState();
                     } else if (gameOver.isMainMenuPressed()) {
-                        gameMusic.setBuffer(music);
+                        gameMusic.pause();
+                        gameMusic.openFromFile("Sources/Sounds/jungle.wav");
                         enemies.clear();
                         bullets.clear();
                         Bulletz.clear();
@@ -923,7 +920,7 @@ void Game::loop() {
                         for (int i = 0; i < player.getDimWeapon(); i++) {
                             player.removeWeapon(i);
                         }
-
+                        gameMusic.play();
                         mainMenuState();
                         usleep(100000);
                     } else if (gameOver.isNextLevelPressed()) {
