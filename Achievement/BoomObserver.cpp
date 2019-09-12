@@ -10,7 +10,6 @@ BoomObserver::BoomObserver(Player *p) : subject(p), granadeCounter(1) {
 
 BoomObserver::~BoomObserver() {
     detach();
-    delete subject;
 }
 
 void BoomObserver::attach() {

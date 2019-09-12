@@ -29,5 +29,4 @@ void DistanceObserver::update() {
 
 DistanceObserver::~DistanceObserver() {
     detach();
-    delete subject;
 }
