@@ -13,6 +13,7 @@ Hud::Hud(std::shared_ptr<sf::RenderWindow> renderWin, const sf::Font &font) : re
     rectangleWeapon.setFillColor(sf::Color::Transparent);
     rectangleWeapon.setOutlineThickness(2);
     rectangleWeapon.setOutlineColor(sf::Color::Red);
+    rectangleWeapon.setFillColor(sf::Color(255, 255, 255, 100));
     rectangleWeapon.setSize(
             sf::Vector2f(weaponAmmo.getLocalBounds().width + 2, weaponAmmo.getLocalBounds().height + 15));
     rectangleWeapon.setPosition(weaponAmmo.getPosition().x - 1, weaponAmmo.getPosition().y - 1);
@@ -26,7 +27,7 @@ Hud::Hud(std::shared_ptr<sf::RenderWindow> renderWin, const sf::Font &font) : re
     maxSizeX = 298;
     lifeBorder.setOutlineColor(sf::Color::Black);
     lifeBorder.setOutlineThickness(2);
-    lifeBorder.setFillColor(sf::Color::Transparent);
+    lifeBorder.setFillColor(sf::Color(255, 255, 255, 100));
     lifeBorder.setPosition(10, 10);
 
     life.setSize(sf::Vector2f(298, 18));
@@ -35,11 +36,11 @@ Hud::Hud(std::shared_ptr<sf::RenderWindow> renderWin, const sf::Font &font) : re
 }
 
 void Hud::render() {
+    renderWin->draw(rectangleWeapon);
     renderWin->draw(weaponAmmo);
     renderWin->draw(lives);
     renderWin->draw(lifeBorder);
     renderWin->draw(life);
-    renderWin->draw(rectangleWeapon);
 }
 
 void Hud::update(Player &p, sf::View &view) {
