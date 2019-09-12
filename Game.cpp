@@ -264,8 +264,17 @@ void Game::loop() {
                         stringstream ss;
                         ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
                         if (resolution != ss.str()) {
-                            renderWin->setSize(opMenu.getResolution());
 
+
+                            if (opMenu.getResolution().x > sf::VideoMode::getDesktopMode().width) {
+                                renderWin->setSize(sf::Vector2u(1280, 720));
+                                renderWin->setPosition(sf::Vector2i(
+                                        sf::VideoMode::getDesktopMode().width / 2 - renderWin->getSize().x / 2, 0));
+                            } else {
+                                renderWin->setPosition(sf::Vector2i(0, 0));
+                                renderWin->setSize(opMenu.getResolution());
+
+                            }
                         }
                         if (!volume) {
                             shotSound.setVolume(0);
