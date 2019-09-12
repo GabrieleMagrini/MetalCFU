@@ -118,15 +118,23 @@ void Game::loop() {
     sf::Sound enemyShotSound;
     enemyShotSound.setBuffer(enemyShoot);
 
+    sf::SoundBuffer music;
+    music.loadFromFile("Sources/Sounds/jungle.wav");
+    sf::SoundBuffer musicLevel;
+    sf::Sound gameMusic;
+    gameMusic.setBuffer(music);
+
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
     DistanceObserver distanceObserver(&player);
     KillObserver killObserver(&player);
     BoomObserver boomObserver(&player);
 
+
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
             while (renderWin->pollEvent(event)) {
+                gameMusic.play();
 
                 if (event.type == sf::Event::Closed)
                     exitGameState();
@@ -134,7 +142,19 @@ void Game::loop() {
                 if (event.type == sf::Event::MouseButtonReleased || mainMenu.isNextLevel()) {
                 }
                 if (mainMenu.isStartButtonPressed() || mainMenu.isNextLevel()) {
+
                     mainMenu.setNextLevel(false);
+
+                    //Dynamically changin music,map and wallpapers according to levels
+
+                    std::stringstream musicStream;
+                    String M;
+                    musicStream << "Sources/Sounds/level_" << mapCount << ".wav";
+                    M = musicStream.str();
+
+                    musicLevel.loadFromFile(M);
+                    gameMusic.setBuffer(musicLevel);
+
                     std::stringstream stream;
                     String s;
                     stream << "Sources/Maps/mappa" << mapCount << ".txt";
@@ -146,9 +166,10 @@ void Game::loop() {
                     b = back.str();
                     textBackGround.loadFromFile(b);
 
+                    //creating the map
 
                     blocks = map.createMap(std::ifstream(s));
-                    for (auto &numEnemy : blocks) { //calculate enemies from quantity of spawnPoint in the map
+                    for (auto &numEnemy : blocks) {           //calculate enemies from quantity of spawnPoint in the map
                         if (numEnemy.isSpawnPoint()) {
                             enemyVectorSize += 1;
                         }
@@ -276,7 +297,7 @@ void Game::loop() {
                            (sf::Mouse::getPosition(*renderWin).x);
 
             while (renderWin->pollEvent(event)) {
-
+                gameMusic.play();
                 if (event.type == sf::Event::Closed)
                     renderWin->close();
                 if (event.type == sf::Event::MouseButtonPressed) {
@@ -877,6 +898,7 @@ void Game::loop() {
                     if (gameOver.isExitButtonPressed()) {
                         exitGameState();
                     } else if (gameOver.isMainMenuPressed()) {
+                        gameMusic.setBuffer(music);
                         enemies.clear();
                         bullets.clear();
                         Bulletz.clear();
