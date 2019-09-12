@@ -23,7 +23,7 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
             break;
         case EnemyType::Kamikaze:
             result = unique_ptr<Enemy>(
-                    new Enemy{75, 0, 0, 40, nullptr, nullptr, nullptr, "Sources/Pngs/player textures/dx/1.png",
+                    new Enemy{75, 0, 0, 40, nullptr, nullptr, nullptr, "Sources/Pngs/Enemies/soldier.png",
                               1, 0, 8});
             break;
         case EnemyType::Boss:

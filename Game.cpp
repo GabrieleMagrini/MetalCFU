@@ -167,7 +167,8 @@ void Game::loop() {
                         }
                     }
                     enemyVectorSize -= 1;
-                    enemies = std::vector<Enemy>(enemyVectorSize, *enemyFactory.createEnemy(EnemyType::Soldier));
+                    enemies = std::vector<Enemy>(enemyVectorSize - 1, *enemyFactory.createEnemy(EnemyType::Soldier));
+                    enemies.push_back(*enemyFactory.createEnemy(EnemyType::Kamikaze));
                     globalInteractable.push_back(new Trampoline{});
                     globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                     globalInteractable.push_back(new Barrier{});
@@ -598,20 +599,23 @@ void Game::loop() {
             //UPDATE ENEMY
             for (int x = 0; x < enemies.size(); x++) {  //adding behaviour to the enemy
                 (enemies[x]).checkBehaviour(player);
-                if (enemies[x].getBehaviour()->getName() == "Attack") {
-                    if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
-                        Bulletz[x].push_back(Ammo{});
-                        Bulletz[x].back().setPosition(enemies[x].getWeapon()->getPosition());
-                        Bulletz[x].back().setIsShot(true);
-                        enemies[x].Action(player, Bulletz[x].back());
+                if (enemies[x].getWeapon() != nullptr) {
+                    if (enemies[x].getBehaviour()->getName() == "Attack") {
+                        if (enemyShootClock[x].getElapsedTime().asSeconds() > enemies[x].getWeapon()->getCoolDown() * 3) {
+                            Bulletz[x].push_back(Ammo{});
+                            Bulletz[x].back().setPosition(enemies[x].getWeapon()->getPosition());
+                            Bulletz[x].back().setIsShot(true);
+                            enemies[x].Action(player, Bulletz[x].back());
 
-                        enemyShootClock[x].restart();
-                        sf::Vector2f EnI = enemies[x].getPosition();
-                        sf::Vector2f EnF = player.getPosition();
-                        enemies[x].getAimInitial().push_back(EnI);
-                        enemies[x].getAimFinal().push_back(EnF);
-                        enemyShotSound.play();
-                    }
+                            enemyShootClock[x].restart();
+                            sf::Vector2f EnI = enemies[x].getPosition();
+                            sf::Vector2f EnF = player.getPosition();
+                            enemies[x].getAimInitial().push_back(EnI);
+                            enemies[x].getAimFinal().push_back(EnF);
+                            enemyShotSound.play();
+                        }
+                    } else
+                        enemies[x].Action(player, Bulletz[x].back());
                 } else
                     enemies[x].Action(player, Bulletz[x].back());
             }
@@ -621,15 +625,17 @@ void Game::loop() {
                 Inventory<Weapon> w;
                 Inventory<Usable *> u;
                 Weapon a;
-                if (enemies[i].getHp() == 0 || enemies[i].getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
-
-                    enemies[i].releaseInventory(w, u);
-                    w.removeElement(enemies[i].getSelectedWeapon(), a);
-                    a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
-                                                 a.getTexture()->getSize().y / 2 - 1));
+                if (enemies[i].getHp() <= 0 || enemies[i].getPosition().y > blocks[blocks.size() - 1].getPosition().y) {
+                    if (enemies[i].getWeapon() != nullptr) {
+                        enemies[i].releaseInventory(w, u);
+                        w.removeElement(enemies[i].getSelectedWeapon(), a);
+                        a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
+                                                     a.getTexture()->getSize().y / 2 - 1));
+                        globalWeapon.push_back(a);
+                    }
                     Bulletz.erase(Bulletz.begin() +
                                   i);                                                 //Erase the bullet shoot from the dead enemy
-                    globalWeapon.push_back(a);
+
                     enemies.erase(enemies.begin() + i);
                     player.addNKill();
                     player.notify();
@@ -638,10 +644,12 @@ void Game::loop() {
             }
 
             for (auto &enemy : enemies) { //Enemy Weapon position update
-                enemy.getWeapon()->setTextures(player.getPosition().x, enemy.getPosition().x);
-                enemy.getWeapon()->setPosition(enemy.getWeapon()->getPosition().x,
-                                               enemy.getPosition().y + enemy.getLocalBounds().width / 2 +
-                                               7);
+                if (enemy.getWeapon() != nullptr) {
+                    enemy.getWeapon()->setTextures(player.getPosition().x, enemy.getPosition().x);
+                    enemy.getWeapon()->setPosition(enemy.getWeapon()->getPosition().x,
+                                                   enemy.getPosition().y + enemy.getLocalBounds().width / 2 +
+                                                   7);
+                }
             }
 
 
@@ -964,7 +972,9 @@ void Game::renderMap() {
     for (auto &enemy : enemies) {                               //rendering Enemy
 
         renderWin->draw(enemy);
-        renderWin->draw(*enemy.getWeapon());
+        if (enemy.getWeapon() != nullptr) {
+            renderWin->draw(*enemy.getWeapon());
+        }
     }
 
 }

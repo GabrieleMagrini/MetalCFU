@@ -33,10 +33,10 @@ void Enemy::setBehaviour(Behaviour *behaviour) {
 }
 
 void Enemy::checkBehaviour(Player &p) {
-    if ((abs(getPosX() - p.getPosX())) < 250) {
+    if ((abs(getPosX() - p.getPosX())) < 250 && this->getWeapon() != nullptr && this->getHp() > 25) {
         Enemy::behaviour = new attackBehaviour{};
     } else {
-        if (this->getHp() < 10)
+        if (this->getWeapon() == nullptr || this->getHp() <= 25)
             Enemy::behaviour = new suicidalBehaviour{};
         else
             Enemy::behaviour = new patrolBehaviour{};
