@@ -919,6 +919,7 @@ void Game::loop() {
                     if (gameOver.isExitButtonPressed()) {
                         exitGameState();
                     } else if (gameOver.isMainMenuPressed()) {
+                        gameOver.setFinalWin(false);
                         gameMusic.pause();
                         gameMusic.openFromFile("Sources/Sounds/jungle.wav");
                         enemies.clear();

@@ -17,7 +17,7 @@ GameOverMenu::GameOverMenu(std::shared_ptr<sf::RenderWindow> rw, const std::stri
                     renderWin->getView().getCenter().y + mainMenu.getShape().getLocalBounds().height, 400, 100,
                     font, "Next Level",
                     "GUI/texture/idleGreenButton.png", "GUI/texture/hoverGreenButton.png",
-                    "GUI/texture/pressedGreenButton.png"), win(false) {
+                    "GUI/texture/pressedGreenButton.png"), win(false), finalWin(false) {
     if (!bgTexure.loadFromFile(filename))
         std::cerr << "error while open file : " << filename << std::endl;
     backGround.setPosition(0, 0);
