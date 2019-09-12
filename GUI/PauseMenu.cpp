@@ -23,6 +23,10 @@ PauseMenu::PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &im
     textBackGround.loadFromFile(imageFileName);
     backGround.setTexture(textBackGround);
     backGround.setPosition(0, 0);
+    mainMenuButton.setPosition(renderWin->getView().getCenter().x + 10,
+                               renderWin->getView().getCenter().y / 2.0f);
+    backGameButton.setPosition(renderWin->getView().getCenter().x - 400,
+                               renderWin->getView().getCenter().y / 2.0f);
 
 }
 
@@ -33,10 +37,10 @@ void PauseMenu::update() {
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
 
     mainMenuButton.setPosition(renderWin->getView().getCenter().x + 10,
-                               renderWin->getView().getCenter().y - renderWin->getSize().y / 4.0f);
-    mainMenuButton.update(worldPos);
+                               renderWin->getView().getCenter().y / 2.0f);
     backGameButton.setPosition(renderWin->getView().getCenter().x - 400,
-                               renderWin->getView().getCenter().y - renderWin->getSize().y / 4.0f);
+                               renderWin->getView().getCenter().y / 2.0f);
+    mainMenuButton.update(worldPos);
     backGameButton.update(worldPos);
 }
 
