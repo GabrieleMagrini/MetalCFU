@@ -339,15 +339,17 @@ void Game::loop() {
                 if (event.type == sf::Event::KeyPressed) {
                     int numKey = 0;
                     switch (event.key.code) {
-                        case sf::Keyboard::Escape:
-                            screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
-                                               static_cast<int>(renderWin->getView().getSize().y));
-                            screenShoot.update(*renderWin);
+                        case sf::Keyboard::Escape: {
+                            //screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
+                            //                   static_cast<int>(renderWin->getView().getSize().y));
+                            //screenShoot.update(*renderWin);
+                            sf::Image image = renderWin->capture();
+                            screenShoot.loadFromImage(image);
                             renderWin->clear();
                             pauseMenu.setTextureBackGround(screenShoot);
                             pauseGameState();
                             break;
-
+                        }
                         case sf::Keyboard::D:
                             dKeyPressed = true;
                             break;
