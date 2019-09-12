@@ -33,6 +33,7 @@ void Enemy::setBehaviour(Behaviour *behaviour) {
 }
 
 void Enemy::checkBehaviour(Player &p) {
+    delete behaviour;
     if ((abs(getPosX() - p.getPosX())) < 250) {
         Enemy::behaviour = new attackBehaviour{};
     } else {
