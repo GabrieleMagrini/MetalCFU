@@ -19,9 +19,10 @@ PauseMenu::PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &im
                          "Main Menu",
                          "GUI/texture/idleGreenButton.png",
                          "GUI/texture/hoverGreenButton.png",
-                         "GUI/texture/pressedGreenButton.png") {
-    textBackGround.loadFromFile(imageFileName);
-    backGround.setTexture(textBackGround);
+                         "GUI/texture/pressedGreenButton.png"),
+          textBackGround(std::make_shared<sf::Texture>(sf::Texture{})) {
+    textBackGround->loadFromFile(imageFileName);
+    backGround.setTexture(*textBackGround);
     backGround.setPosition(0, 0);
     mainMenuButton.setPosition(renderWin->getView().getCenter().x + 10,
                                renderWin->getView().getCenter().y / 2.0f);
@@ -31,7 +32,7 @@ PauseMenu::PauseMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &im
 }
 
 void PauseMenu::update() {
-    backGround.setTextureRect(sf::IntRect(0, 0, textBackGround.getSize().x, textBackGround.getSize().y));
+    backGround.setTextureRect(sf::IntRect(0, 0, textBackGround->getSize().x, textBackGround->getSize().y));
 
     auto mousePos = sf::Mouse::getPosition(*renderWin);
     auto worldPos = renderWin->mapPixelToCoords(mousePos);
@@ -61,13 +62,13 @@ bool PauseMenu::isMainMenuButtonPressed() {
 }
 
 void PauseMenu::setTextureBackGround(const sf::Texture &texture) {
-    textBackGround = texture;
+    textBackGround = std::make_shared<sf::Texture>(sf::Texture(texture));
 
-    backGround.setTexture(textBackGround);
-    backGround.setTextureRect(sf::IntRect(0, 0, textBackGround.getSize().x, textBackGround.getSize().y));
+    backGround.setTexture(*textBackGround);
+    backGround.setTextureRect(sf::IntRect(0, 0, textBackGround->getSize().x, textBackGround->getSize().y));
     backGround.setPosition(0, 0);
-    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(textBackGround.getSize().x);
-    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(textBackGround.getSize().y);
+    float scalex = static_cast<float>(renderWin->getSize().x) / static_cast<float>(textBackGround->getSize().x);
+    float scaley = static_cast<float>(renderWin->getSize().y) / static_cast<float>(textBackGround->getSize().y);
 
     backGround.setScale(scalex, scaley);
 

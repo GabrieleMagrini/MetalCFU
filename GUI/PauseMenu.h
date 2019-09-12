@@ -29,7 +29,7 @@ private:
 
     std::shared_ptr<sf::RenderWindow> renderWin;
 
-    sf::Texture textBackGround;
+    std::shared_ptr<sf::Texture> textBackGround;
     sf::Sprite backGround;
 
     Button backGameButton;
