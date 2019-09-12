@@ -39,7 +39,6 @@ Box<T>::Box(T t): gift(t) {
 
 template<typename T>
 T Box<T>::dropGift() {
-    if (hp <= 0)
         return gift;
 }
 
