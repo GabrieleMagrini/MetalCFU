@@ -172,11 +172,12 @@ void Game::loop() {
                     backGround.setPosition(-500, -100);
                     backGround.setScale(scaleX + 1, scaleY + 1);
 
-                    player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
-                                    100, 20, 100, 300};
-                    player.setUsable(new Granade{30, 3});
+
 
                     if (mapCount <= 1) {
+                        player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
+                                        100, 20, 100, 300};
+                        player.setUsable(new Granade{30, 3});
                         player.subscribe(&distanceObserver);
                         player.subscribe(&killObserver);
                         player.subscribe(&boomObserver);
