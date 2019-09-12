@@ -88,8 +88,8 @@ void MainMenu::render() {
 
     } else {
         backText.loadFromFile("Sources/Pngs/loadin_screen.png");
-        float scaleX = static_cast<float>(renderWin->getSize().x) / static_cast<float>(backText.getSize().x);
-        float scaleY = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
+        float scaleX = static_cast<float>(renderWin->getView().getSize().x) / static_cast<float>(backText.getSize().x);
+        float scaleY = static_cast<float>(renderWin->getView().getSize().y) / static_cast<float>(backText.getSize().y);
         backGround.setTexture(backText);
         backGround.setScale(scaleX, scaleY);
         backGround.setPosition(0, 0);
