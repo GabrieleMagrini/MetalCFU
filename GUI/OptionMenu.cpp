@@ -167,11 +167,8 @@ void OptionMenu::saveButtonUpdate(std::string &resolution, bool &vol) {
     }
     if (volInfo != volButton.getString()) {
         volInfo = volButton.getString();
-        vol = false;
-
-        if (volInfo == "On")
-            vol = true;
     }
+    vol = volumeOn;
 }
 
 /***
