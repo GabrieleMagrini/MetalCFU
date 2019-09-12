@@ -112,14 +112,17 @@ void Game::loop() {
     playerShoot.loadFromFile("Sources/Sounds/shot.wav");
     sf::Sound shotSound;
     shotSound.setBuffer(playerShoot);
+    shotSound.setVolume(50);
 
     sf::SoundBuffer enemyShoot;
     enemyShoot.loadFromFile("Sources/Sounds/enemyShoot.wav");
     sf::Sound enemyShotSound;
     enemyShotSound.setBuffer(enemyShoot);
+    enemyShotSound.setVolume(50);
 
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
+
     DistanceObserver distanceObserver(&player);
     KillObserver killObserver(&player);
     BoomObserver boomObserver(&player);
@@ -256,8 +259,8 @@ void Game::loop() {
                             shotSound.setVolume(0);
                             enemyShotSound.setVolume(0);
                         } else {
-                            shotSound.setVolume(100);
-                            enemyShotSound.setVolume(100);
+                            shotSound.setVolume(50);
+                            enemyShotSound.setVolume(50);
                         }
                         ss.str("");
                         mainMenuState();
@@ -302,6 +305,10 @@ void Game::loop() {
                                 }
                                 canShoot = false;
                             }
+
+                            break;
+
+                        default:
 
                             break;
                     }
