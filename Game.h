@@ -102,7 +102,7 @@ private:
     Hud playerHud;
 
     sf::Event event;
-    //TODO
+
 };
 
 
