@@ -18,7 +18,7 @@ class Enemy : public GameCharacter {
 public:
     Enemy(int hp, int x, int y, int s, Behaviour *b, Weapon *w, Usable *p, const string &filename = "", int mw = 1,
           int mu = 1,
-          int sx = 0, int sy = 10, int sw = 0, int su = 0, int steps = 50, bool presence = false);
+          int sx = 0, int sy = 10, int sw = 0, int su = 0);
 
     ~Enemy() final;
 
@@ -33,9 +33,7 @@ public:
 private:
     int startPosX;
     int startPosY;
-    int steps;
     Behaviour *behaviour;
-    bool playerPresence;
 };
 
 
