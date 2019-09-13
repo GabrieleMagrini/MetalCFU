@@ -28,8 +28,8 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
             break;
         case EnemyType::Boss:
             result = unique_ptr<Enemy>(
-                    new Enemy{500, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::AK_47)).get(), nullptr,
-                              "Sources/Pngs/player textures/dx/1.png", 0, 0, 3});
+                    new Enemy{500, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::INV)).get(), nullptr,
+                              "Sources/Pngs/Enemies/god.png", 1, 0, 3});
     }
     return result;
 
