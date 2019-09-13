@@ -127,9 +127,9 @@ void Game::loop() {
     std::unique_ptr<Granade> tempGranade = nullptr;
     sf::Texture screenShoot;
 
-    DistanceObserver distanceObserver(&player);
-    KillObserver killObserver(&player);
-    BoomObserver boomObserver(&player);
+    auto distanceObserver = new DistanceObserver(&player);
+    auto killObserver = new KillObserver(&player);
+    auto boomObserver = new BoomObserver(&player);
     gameMusic.play();
 
     while (renderWin->isOpen()) {
@@ -193,12 +193,9 @@ void Game::loop() {
                                         100, 20, 100, 300};
                         player.setUsable(new Granade{30, 3});
 
-                        distanceObserver = DistanceObserver(&player);
-                        player.subscribe(&distanceObserver);
-                        killObserver = KillObserver(&player);
-                        player.subscribe(&killObserver);
-                        boomObserver = BoomObserver(&player);
-                        player.subscribe(&boomObserver);
+                        distanceObserver = new DistanceObserver(&player);
+                        killObserver = new KillObserver(&player);
+                        boomObserver = new BoomObserver(&player);
                     }
                     for (auto &block : blocks) {
                         if (block.isSpawnPoint()) {
@@ -876,7 +873,6 @@ void Game::loop() {
                     if (pauseMenu.isBackGameButtonPressed()) {
                         startGameState();
                     } else if (pauseMenu.isMainMenuButtonPressed()) {
-
                         gameMusic.pause();
                         gameMusic.openFromFile("Sources/Sounds/jungle.wav");
                         mapCount = 1;
@@ -908,6 +904,9 @@ void Game::loop() {
             pauseMenu.render();
 
         } else if (gameState->getStateName() == "ExitGame") {  // exit game
+            delete killObserver;
+            delete boomObserver;
+            delete distanceObserver;
             renderWin->close();
             return;
 
