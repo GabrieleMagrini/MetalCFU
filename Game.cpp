@@ -100,10 +100,6 @@ void Game::loop() {
     int enemyVectorSize = 0;
     sf::Vector2f spawnPlayer;
 
-    float xStart = 0;
-    float yStart = 0;
-    float xPressed = 0;
-    float yPressed = 0;
     vector<Ammo> bullets;
     vector<Ammo> enemyBullets;
     vector<vector<Ammo>> Bulletz;
@@ -312,16 +308,16 @@ void Game::loop() {
                     switch (event.mouseButton.button) {                                               //Managing the shoot case through the left mouse button
                         case sf::Mouse::Left :
                             if (canShoot) {
-                                xStart = renderWin->getSize().x / 2. + player.getWeapon()->getGlobalBounds().width / 2;
-                                yStart = renderWin->getSize().y / 2. +
-                                         (player.getWeapon()->getGlobalBounds().height / 2) +
-                                         10;
-                                xPressed = (sf::Mouse::getPosition(*renderWin).x);
-                                yPressed = sf::Mouse::getPosition(*renderWin).y;
-                                Vector2f Start(xStart, yStart);
-                                player.getAimInitial().push_back(Start);
-                                Vector2f Fin(xPressed, yPressed);
-                                player.getAimFinal().push_back(Fin);
+                                Vector2f start(renderWin->getView().getCenter().x +
+                                               player.getWeapon()->getGlobalBounds().width / 2,
+                                               renderWin->getView().getCenter().y +
+                                               (player.getWeapon()->getGlobalBounds().height / 2) +
+                                               10);
+
+                                auto mousePos = sf::Mouse::getPosition(*renderWin);
+                                auto worldPos = renderWin->mapPixelToCoords(mousePos);
+                                player.getAimInitial().push_back(start);
+                                player.getAimFinal().push_back(worldPos);
 
                                 if (!player.getWeapon()->getCurrentAmmo().empty() ||
                                     player.getWeapon()->getName() == "pistol") {
@@ -643,7 +639,8 @@ void Game::loop() {
                         w.removeElement(enemies[i].getSelectedWeapon(), a);
                         a.setTextureRect(sf::IntRect(0, 0, a.getTexture()->getSize().x / 2 - 1,
                                                      a.getTexture()->getSize().y / 2 - 1));
-                        globalWeapon.push_back(a);
+                        if (a.getName() != "INV")
+                            globalWeapon.push_back(a);
                     }
                     Bulletz.erase(Bulletz.begin() +
                                   i);                                                 //Erase the bullet shoot from the dead enemy
