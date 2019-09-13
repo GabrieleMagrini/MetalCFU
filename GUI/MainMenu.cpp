@@ -67,6 +67,16 @@ MainMenu::MainMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &file
     float scaleY = static_cast<float>(renderWin->getSize().y) / static_cast<float>(backText.getSize().y);
 
     backGround.setScale(scaleX, scaleY);
+
+    authors.setFont(font);
+    authors.setString("Authors: Emanuele Nencioni, Gabriele Magrini");
+    authors.setCharacterSize(20);
+    authors.setPosition(renderWin->getView().getCenter().x - authors.getLocalBounds().width / 2,
+                        renderWin->getSize().y + 20);
+    authors.setOutlineThickness(2);
+    authors.setFillColor(sf::Color(255, 255, 255, 175));
+
+
 }
 
 /***
@@ -94,10 +104,13 @@ void MainMenu::render() {
         backGround.setScale(scaleX, scaleY);
         backGround.setPosition(0, 0);
     }
+    renderWin->draw(authors);
     renderWin->display();
 }
 
 void MainMenu::update() {
+    authors.setPosition(renderWin->getView().getCenter().x - authors.getLocalBounds().width / 2,
+                        renderWin->getSize().y - 30);
     backGround.setTextureRect(sf::IntRect(0, 0, static_cast<int>(renderWin->getView().getSize().x),
                                           static_cast<int>(renderWin->getView().getSize().y)));
     auto mousePos = sf::Mouse::getPosition(*renderWin);

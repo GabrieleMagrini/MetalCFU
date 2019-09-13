@@ -35,6 +35,7 @@ private:
     Button startButton;
     Button optionButton;
     Button exitButton;
+    sf::Text authors;
     bool nextLevel;
 
 };
