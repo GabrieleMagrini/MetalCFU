@@ -258,24 +258,25 @@ void Game::loop() {
                         mainMenuState();
                         usleep(100000);
                     } else if (opMenu.isSaveButtonPressed()) {
-                        std::string resolution;
+                        bool fullScreen;
                         bool volume;
-                        opMenu.saveButtonUpdate(resolution, volume);
+                        opMenu.saveButtonUpdate(fullScreen, volume);
                         stringstream ss;
                         ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
-                        if (resolution != ss.str()) {
-
-
-                            if (opMenu.getResolution().x > sf::VideoMode::getDesktopMode().width) {
-                                renderWin->setSize(sf::Vector2u(1280, 720));
-                                renderWin->setPosition(sf::Vector2i(
-                                        sf::VideoMode::getDesktopMode().width / 2 - renderWin->getSize().x / 2, 0));
+                        if (fullScreen) {
+                            renderWin->setPosition(sf::Vector2i(0, 0));
+                            renderWin->setSize(sf::Vector2u(sf::VideoMode::getDesktopMode().width,
+                                                            sf::VideoMode::getDesktopMode().height));
+                            //renderWin->setSize(sf::Vector2u(1280, 720));
+                            //renderWin->setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - renderWin->getSize().x / 2, 0));
                             } else {
-                                renderWin->setPosition(sf::Vector2i(0, 0));
-                                renderWin->setSize(opMenu.getResolution());
+                            renderWin->setSize(sf::Vector2u(1280, 720));
+                            renderWin->setPosition(
+                                    sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - renderWin->getSize().x / 2,
+                                                 0));
 
                             }
-                        }
+
                         if (!volume) {
                             shotSound.setVolume(0);
                             enemyShotSound.setVolume(0);
@@ -285,7 +286,6 @@ void Game::loop() {
                             enemyShotSound.setVolume(50);
                             gameMusic.setVolume(75);
                         }
-                        ss.str("");
                         mainMenuState();
                         usleep(100000);
                     }
@@ -340,9 +340,6 @@ void Game::loop() {
                     int numKey = 0;
                     switch (event.key.code) {
                         case sf::Keyboard::Escape: {
-                            //screenShoot.create(static_cast<int>(renderWin->getView().getSize().x),
-                            //                   static_cast<int>(renderWin->getView().getSize().y));
-                            //screenShoot.update(*renderWin);
                             sf::Image image = renderWin->capture();
                             screenShoot.loadFromImage(image);
                             renderWin->clear();

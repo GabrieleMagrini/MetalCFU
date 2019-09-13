@@ -13,7 +13,7 @@
  * @param font of the Button
  */
 OptionMenu::OptionMenu(std::shared_ptr<sf::RenderWindow> rw, const std::string &filename, const sf::Font &font)
-        : renderWin(std::move(rw)), volumeOn(true), highRes(false), volInfo("On"), resInfo("1280x720"),
+        : renderWin(std::move(rw)), volumeOn(true), fullScreen(false), volInfo("On"), resInfo("1280x720"),
           resButton(renderWin->getSize().x / 2.0f + 10, 210, 100, 30, font, "1280x720",
                     "GUI/texture/idleGreenButton.png",
                     "GUI/texture/hoverGreenButton.png",
@@ -131,12 +131,12 @@ void OptionMenu::volumeButtonUpdate() {
  */
 void OptionMenu::resButtonUpdate() {
 
-        if (!highRes) {
-            resButton.setString("1920x1080");
-            highRes = true;
+    if (!fullScreen) {
+        resButton.setString("FullScreen");
+        fullScreen = true;
         } else {
             resButton.setString("1280x720");
-            highRes = false;
+        fullScreen = false;
         }
 
 }
@@ -159,44 +159,8 @@ void OptionMenu::cancelButtonUpdate() {
  * @param resolution
  * @param vol
  */
-void OptionMenu::saveButtonUpdate(std::string &resolution, bool &vol) {
-    resolution = "";
-    if (resInfo != resButton.getString()) {
-        resInfo = resButton.getString();
-        resolution = resInfo;
-    }
-    if (volInfo != volButton.getString()) {
-        volInfo = volButton.getString();
-    }
+void OptionMenu::saveButtonUpdate(bool &resolution, bool &vol) {
+    resolution = fullScreen;
+
     vol = volumeOn;
-}
-
-/***
- * trasform string "widthXheight" form to a Vector2u
- * @return Vector2u
- */
-sf::Vector2u OptionMenu::getResolution() {
-    char res[resInfo.size() + 1];
-
-    char width[5];
-    char height[5];
-
-    strcpy(res, resInfo.c_str());
-    int c = 0;
-    for (int i = 0; i < (resInfo.size() + 1); i++) {
-        if (res[c] != 'x') {
-            c++;
-        }
-
-        if (res[i] != 'x') {
-            if (c >= i) {
-                width[i] = res[i];
-            } else
-                height[i - c - 1] = res[i];
-        }
-    }
-
-    sf::Vector2u vec(std::atoi(width), std::atoi(height));
-
-    return vec;
 }

@@ -34,13 +34,12 @@ public:
 
     void cancelButtonUpdate();
 
-    void saveButtonUpdate(std::string &resolution, bool &vol);
+    void saveButtonUpdate(bool &resolution, bool &vol);
 
-    sf::Vector2u getResolution();
 private:
 
     bool volumeOn;
-    bool highRes; //booleano che indica se la risoluzione del gioco è alta o bassa.
+    bool fullScreen; //booleano che indica se la risoluzione del gioco è alta o bassa.
 
     std::string volInfo;
     std::string resInfo;
