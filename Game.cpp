@@ -264,18 +264,18 @@ void Game::loop() {
                         stringstream ss;
                         ss << renderWin->getSize().x << "x" << renderWin->getSize().y;
                         if (fullScreen) {
-                            renderWin->setPosition(sf::Vector2i(0, 0));
-                            renderWin->setSize(sf::Vector2u(sf::VideoMode::getDesktopMode().width,
-                                                            sf::VideoMode::getDesktopMode().height));
-                            //renderWin->setSize(sf::Vector2u(1280, 720));
-                            //renderWin->setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - renderWin->getSize().x / 2, 0));
+                            if (renderWin->getSize().x != sf::VideoMode::getDesktopMode().width &&
+                                renderWin->getSize().y != sf::VideoMode::getDesktopMode().height)
+                                renderWin->create(sf::VideoMode(1280, 720), "Metal CFU", sf::Style::Fullscreen);
                             } else {
-                            renderWin->setSize(sf::Vector2u(1280, 720));
+
+                            renderWin->create(sf::VideoMode(1280, 720), "Metal CFU", sf::Style::Close);
                             renderWin->setPosition(
                                     sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - renderWin->getSize().x / 2,
                                                  0));
-
                             }
+                        renderWin->setFramerateLimit(30);
+                        renderWin->setKeyRepeatEnabled(false);
 
                         if (!volume) {
                             shotSound.setVolume(0);
