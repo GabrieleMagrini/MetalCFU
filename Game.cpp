@@ -596,6 +596,7 @@ void Game::loop() {
                         bullets.erase(bullets.begin() + z);
                         player.getAimInitial().erase(player.getAimInitial().begin() + z);
                         player.getAimFinal().erase(player.getAimFinal().begin() + z);
+                        z--;
                     }
                 }
             }
@@ -884,6 +885,8 @@ void Game::loop() {
                         globalInteractable.clear();
                         globalUsable.clear();
                         globalAttachments.clear();
+                        player.getAimFinal().clear();
+                        player.getAimInitial().clear();
                         aKeyPressed = false;
                         dKeyPressed = false;
                         spaceKeyPressed = false;
@@ -933,6 +936,8 @@ void Game::loop() {
                         globalInteractable.clear();
                         globalUsable.clear();
                         globalAttachments.clear();
+                        player.getAimFinal().clear();
+                        player.getAimInitial().clear();
                         aKeyPressed = false;
                         dKeyPressed = false;
                         spaceKeyPressed = false;
@@ -943,6 +948,8 @@ void Game::loop() {
                         mainMenuState();
                         usleep(100000);
                     } else if (gameOver.isNextLevelPressed()) {
+                        player.getAimFinal().clear();
+                        player.getAimInitial().clear();
                         mapCount += 1;
                         enemies.clear();
                         bullets.clear();
