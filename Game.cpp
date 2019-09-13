@@ -167,8 +167,9 @@ void Game::loop() {
                         }
                     }
                     enemyVectorSize -= 1;
-                    enemies = std::vector<Enemy>(enemyVectorSize - 1, *enemyFactory.createEnemy(EnemyType::Soldier));
+                    enemies = std::vector<Enemy>(enemyVectorSize - 2, *enemyFactory.createEnemy(EnemyType::Soldier));
                     enemies.push_back(*enemyFactory.createEnemy(EnemyType::Kamikaze));
+                    enemies.push_back(*enemyFactory.createEnemy(EnemyType::Tank));
                     globalInteractable.push_back(new Trampoline{});
                     globalInteractable.push_back(new Box<Weapon>{*weaponFactory.createWeapon(WeaponType::M4)});
                     globalInteractable.push_back(new Barrier{});
