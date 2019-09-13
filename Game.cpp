@@ -192,8 +192,12 @@ void Game::loop() {
                         player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
                                         100, 20, 100, 300};
                         player.setUsable(new Granade{30, 3});
+
+                        distanceObserver = DistanceObserver(&player);
                         player.subscribe(&distanceObserver);
+                        killObserver = KillObserver(&player);
                         player.subscribe(&killObserver);
+                        boomObserver = BoomObserver(&player);
                         player.subscribe(&boomObserver);
                     }
                     for (auto &block : blocks) {
