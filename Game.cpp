@@ -875,24 +875,14 @@ void Game::loop() {
                         gameMusic.pause();
                         gameMusic.openFromFile("Sources/Sounds/jungle.wav");
                         mapCount = 1;
-                        enemies.clear();
                         bullets.clear();
                         Bulletz.clear();
                         enemyVectorSize = 0;
                         enemyBullets.clear();
-                        globalWeapon.clear();
-                        blocks.clear();
-                        globalInteractable.clear();
-                        globalUsable.clear();
-                        globalAttachments.clear();
-                        player.getAimFinal().clear();
-                        player.getAimInitial().clear();
                         aKeyPressed = false;
                         dKeyPressed = false;
                         spaceKeyPressed = false;
-                        for (int i = 0; i < player.getDimWeapon(); i++) {
-                            player.removeWeapon(i);
-                        }
+                        clear();
                         gameMusic.play();
                         mainMenuState();
                         usleep(100000);
@@ -925,25 +915,15 @@ void Game::loop() {
                         gameOver.setFinalWin(false);
                         gameMusic.pause();
                         gameMusic.openFromFile("Sources/Sounds/jungle.wav");
-                        enemies.clear();
                         bullets.clear();
                         Bulletz.clear();
                         enemyVectorSize = 0;
                         enemyBullets.clear();
                         mapCount = 1;
-                        globalWeapon.clear();
-                        blocks.clear();
-                        globalInteractable.clear();
-                        globalUsable.clear();
-                        globalAttachments.clear();
-                        player.getAimFinal().clear();
-                        player.getAimInitial().clear();
                         aKeyPressed = false;
                         dKeyPressed = false;
                         spaceKeyPressed = false;
-                        for (int i = 0; i < player.getDimWeapon(); i++) {
-                            player.removeWeapon(i);
-                        }
+                        clear();
                         gameMusic.play();
                         mainMenuState();
                         usleep(100000);
@@ -995,4 +975,18 @@ void Game::renderMap() {
         }
     }
 
+}
+
+void Game::clear() {
+    globalWeapon.clear();
+    blocks.clear();
+    globalInteractable.clear();
+    globalUsable.clear();
+    globalAttachments.clear();
+    player.getAimFinal().clear();
+    player.getAimInitial().clear();
+    enemies.clear();
+    for (int i = 0; i < player.getDimWeapon(); i++) {
+        player.removeWeapon(i);
+    }
 }

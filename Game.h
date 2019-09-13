@@ -75,6 +75,8 @@ private:
 
     void renderMap();
 
+    void clear();
+
     Player player;
     std::unique_ptr<GameState> gameState;
     OptionMenu opMenu;
