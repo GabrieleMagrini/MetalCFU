@@ -18,8 +18,8 @@ std::unique_ptr<Enemy> EnemyFactory::createEnemy(EnemyType et) {
             break;
         case EnemyType::Tank:
             result = unique_ptr<Enemy>(
-                    new Enemy{200, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::M4)).get(), nullptr,
-                              "Sources/Pngs/player textures/dx/1.png", 1, 0, 2});
+                    new Enemy{500, 0, 0, 10, nullptr, (wf.createWeapon(WeaponType::M4)).get(), nullptr,
+                              "Sources/Pngs/Enemies/tank.png", 1, 0, 2});
             break;
         case EnemyType::Kamikaze:
             result = unique_ptr<Enemy>(
