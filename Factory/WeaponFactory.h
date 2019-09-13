@@ -9,7 +9,7 @@
 #include <memory>
 
 enum class WeaponType {
-    pistol, AK_47, M4, AWP
+    pistol, AK_47, M4, AWP, INV
 };
 
 class WeaponFactory {
