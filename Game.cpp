@@ -193,7 +193,7 @@ void Game::loop() {
                     if (mapCount <= 1) {
                         player = Player{3, weaponFactory.createWeapon(WeaponType::pistol).get(), new MedKit{},
                                         100, 20, 100, 300};
-                        player.setUsable(new Granade{30, 3});
+                        player.setUsable(new Granade{7, 3});
 
                         distanceObserver = new DistanceObserver(&player);
                         killObserver = new KillObserver(&player);
