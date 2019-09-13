@@ -308,19 +308,18 @@ void Game::loop() {
                     switch (event.mouseButton.button) {                                               //Managing the shoot case through the left mouse button
                         case sf::Mouse::Left :
                             if (canShoot) {
-                                Vector2f start(renderWin->getView().getCenter().x +
-                                               player.getWeapon()->getGlobalBounds().width / 2,
-                                               renderWin->getView().getCenter().y +
-                                               (player.getWeapon()->getGlobalBounds().height / 2) +
-                                               10);
-
-                                auto mousePos = sf::Mouse::getPosition(*renderWin);
-                                auto worldPos = renderWin->mapPixelToCoords(mousePos);
-                                player.getAimInitial().push_back(start);
-                                player.getAimFinal().push_back(worldPos);
-
                                 if (!player.getWeapon()->getCurrentAmmo().empty() ||
                                     player.getWeapon()->getName() == "pistol") {
+                                    Vector2f start(renderWin->getView().getCenter().x +
+                                                   player.getWeapon()->getGlobalBounds().width / 2,
+                                                   renderWin->getView().getCenter().y +
+                                                   (player.getWeapon()->getGlobalBounds().height / 2) +
+                                                   10);
+
+                                    auto mousePos = sf::Mouse::getPosition(*renderWin);
+                                    auto worldPos = renderWin->mapPixelToCoords(mousePos);
+                                    player.getAimInitial().push_back(start);
+                                    player.getAimFinal().push_back(worldPos);
                                     bullets.push_back(player.getWeapon()->shoot());
                                     player.getWeapon()->setShoot(true);
                                     shotSound.play();
