@@ -26,6 +26,7 @@ private:
     sf::RectangleShape life;
     sf::RectangleShape lifeBorder;
     sf::RectangleShape rectangleWeapon;
+    sf::RectangleShape rectangleLives;
     int maxSizeX;
 };
 
