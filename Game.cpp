@@ -127,6 +127,7 @@ void Game::loop() {
     auto killObserver = new KillObserver(&player);
     auto boomObserver = new BoomObserver(&player);
     gameMusic.play();
+    gameMusic.setLoop(true);
 
     while (renderWin->isOpen()) {
         if (gameState->getStateName() == "MainMenu") {    //MainMenu loop
@@ -147,6 +148,7 @@ void Game::loop() {
                     std::stringstream musicStream;
                     musicStream << "Sources/Sounds/level_" << mapCount << ".wav";
                     gameMusic.openFromFile(musicStream.str());
+                    gameMusic.setLoop(true);
 
                     std::stringstream back;
                     back << "Sources/Pngs/wallpaper_" << mapCount << ".jpeg";
