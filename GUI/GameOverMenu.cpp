@@ -28,8 +28,10 @@ GameOverMenu::GameOverMenu(std::shared_ptr<sf::RenderWindow> rw, const std::stri
     backGround.setScale(scaleX, scaleY);
 
     text.setFont(font);
-    text.setFillColor(sf::Color::Red);
-    text.setCharacterSize(50);
+    text.setFillColor(sf::Color(255, 77, 64, 175));
+    text.setOutlineColor(sf::Color::Black);
+    text.setOutlineThickness(2);
+    text.setCharacterSize(60);
 }
 
 const sf::Texture &GameOverMenu::getBgTexure() const {
