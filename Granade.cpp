@@ -9,7 +9,7 @@
  * @param g
  * @return
  */
-int Granade::use(GameCharacter &g) {
+void Granade::use(GameCharacter &g) {
 
     if (!collision && explosionTime > 0) {
         if (direction == 1)
@@ -17,7 +17,6 @@ int Granade::use(GameCharacter &g) {
         if (direction == 0)
             move(-7, 0);
     }
-    return 0;
 }
 
 /**

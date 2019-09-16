@@ -19,7 +19,7 @@ public:
 
     ~Granade() final = default;
 
-    int use(GameCharacter &g) override;
+    void use(GameCharacter &g) override;
 
     int getExplosionTime() const;
 

@@ -20,7 +20,8 @@ public:
         texture->loadFromFile(fileName);
         setTexture(*texture);
     };
-    virtual int use(GameCharacter &g) = 0;
+
+    virtual void use(GameCharacter &g) = 0;
     ~Usable() override = default;
 
     int getData() const {

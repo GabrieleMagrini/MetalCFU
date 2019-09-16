@@ -16,7 +16,7 @@ public:
     };
     ~MedKit() override = default;
 
-    int use(GameCharacter &g) override;
+    void use(GameCharacter &g) override;
 };
 
 
