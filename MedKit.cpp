@@ -10,4 +10,5 @@ int MedKit::use(GameCharacter &g) {
     if (temp > 100)
         temp = 100;
     g.setHp(temp);
+    return 0;
 }
